@@ -6,3 +6,4 @@ step 250 loss 1.047 real_val_exact 12/46 154s
 step 500 loss 0.994 real_val_exact 17/46 309s
 step 750 loss 0.962 real_val_exact 14/46 462s
 step 1000 loss 0.967 real_val_exact 15/46 610s
+step 1999 (final; log inode lost — see LESSONS.md) weights saved 10:16:37
