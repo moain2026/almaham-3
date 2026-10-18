@@ -47,6 +47,12 @@ TORCH_THREADS=3 nohup python3 train_det.py locator 20000 weights/locator_t.pt ..
 - 10:50Z أضفت إلى `eval_locator_real.py` مقياس `recall_tight_top3` (أفضل IoU بين أعلى 3 قمم فوق العتبة) لقياس ما يربحه اختيار السطر بعد القارئ. على الأوزان الحالية (~12.5k): tight **31/46**، top3 31/46 (أي أن القمم الأخرى فوق LOC_PEAK_MIN=0.25 قليلة؛ الأخطاء الـ15 صناديق ضعيفة التطابق IoU 0.15–0.5 أكثر منها سطراً خطأ، و3 صور (23074, 23088, 23092) سطر خطأ تماماً).
 - 10:45Z رفعت `lab/plausibility.py` + 13 اختبار + `docs/research/agentT-algorithms-2026-10-18.md` (2927b68).
 
+- 11:05Z **end-to-end A/B (المهمة 3):** locator_t@14000 + reader_ft3a (قارئ A الحالي في التطبيق):
+  `python3 export_onnx.py /tmp/loc_s14000.pt weights/reader_ft3a.pt /tmp/models_t14 && python3 eval_e2e.py /tmp/models_t14 t14000`
+  ⇒ **A: 16/46 exact** (كان 12/46 مع locator_ft3a)، wrong_confident 0، digit_acc 0.484، p50 18.5ms؛ B: 12/46. العتاد: Xeon 2.8GHz CPU، ORT خيطان (ليس جوالاً).
+  حسب القاعدة (تجاوز أفضل e2e A في `digitnet_*.json`) نُسخ ONNX إلى `app/meterocr/src/main/assets/models/` (line_locator.onnx من locator_t@14000، digit_reader.onnx = reader_ft3a بدون تغيير). الأوزان: `lab/weights/locator_t14000.pt`.
+  تحفّظ: الفرق 4 صور على n=46 (ضمن ضوضاء معتبرة)، والاختيار بالـ46 يحمل تحيّزاً — يُؤكَّد على ERP val وعلى الجوال. `MODEL_CARD.md` لم أعدّله (app/** ملك A) — يحتاج تحديثاً من A.
+
 ## كل 500 خطوة (الخطوة العامة = خطوة اللوغ بعد الاستئناف + 1000)
 - 0: loss 15.707 val 0/196
 - 500: loss 8.054 val 0/196
@@ -77,6 +83,8 @@ TORCH_THREADS=3 nohup python3 train_det.py locator 20000 weights/locator_t.pt ..
 - 12500: loss 1.260 val 162/196
 - 13000: loss 1.206 val 165/196
 - 13500: loss 1.190 val 163/196
+- 14000: loss 1.200 val 164/196
+- 14500: loss 1.228 val 161/196
 ## Checkpoints
 | step | val اصطناعي | loss | سطر حقيقي IoU>0.5 | وقت |
 |---|---|---|---|---|
