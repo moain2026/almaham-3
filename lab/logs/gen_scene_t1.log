@@ -1,0 +1,2 @@
+argv ['gen_det_data.py', 'scene', '12000', '../data/synth/scene_t1', '201']
+(12000, 256, 256, 3) 136436 boxes

@@ -1,0 +1,2 @@
+argv ['gen_det_data.py', 'line', '16000', '../data/synth/line_t2', '102']
+(16000, 64, 448, 3) 159847 boxes
