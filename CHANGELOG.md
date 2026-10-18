@@ -45,3 +45,4 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - 3 قراءات غلط في ground_truth v1 (23106, 23109, 23113) + 23086, 23091, 23072. انظر LESSONS.
 ### Deprecated
 - `benchmark/data/archive/ground_truth_v1.csv`، `docs/research/archive/research_decision_v1.md`، `benchmark/results/archive/`.
+- 2026-10-18 agent B: v0.1.1 pre-release = ONE APK only (owner): almaham-meter-0.1.1-arm64.apk, field, 37,849,126 B, sha256 9eaf497e…145e5c (stat/aapt2 native-code arm64-v8a). armv7/bench not published. ≤20 MB not reached: ORT 1.31 = 34,208,672 B; minimal ORT .so built 2,455,568 B but needs .ort assets (agent A). R8 build not yet run on device.
