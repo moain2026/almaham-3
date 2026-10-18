@@ -1,5 +1,6 @@
 ## [Unreleased] — 2026-10-18 (جولة 2، فرع genspark_ai_developer)
 ### Added
+- `app/meterocr/.../ForensicReader.kt` + `ForensicReaderTest.kt` + مثبّتات `test/resources/forensic/` + `lab/make_forensic_fixtures.py` (وكيل B).
 - `benchmark/data/digit_boxes.json` + `digit_spans_manual.json` + `lab/make_digit_boxes.py` (وكيل B، عقد §3).
 - `lab/forensic_reader.py` + `lab/eval_forensic_reader.py` (وكيل B، عقد §2).
 - `app/`: مشروع Android (Kotlin + Compose + CameraX 1.5.0 + ONNX Runtime 1.31): موديول `meterocr` (config, RectGeometry, ReadingAssembler,

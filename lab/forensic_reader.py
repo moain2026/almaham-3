@@ -30,7 +30,7 @@ import numpy as np
 
 WORK_H = 96
 BG_K_FRAC = 0.45
-SHEARS = [round(-0.35 + 0.025 * i, 3) for i in range(29)]
+SHEARS = [(-350 + 25 * i) / 1000.0 for i in range(29)]   # same doubles in Kotlin
 INT_DIGITS = 6
 H_TOL = 0.15
 ONE_W = 0.45
@@ -59,8 +59,8 @@ MIN_LEN_HIGH = 5
 def resize_box(img, out_w, out_h):
     """Box-average resize with integer source bins [floor(i*s), max(floor((i+1)*s), floor(i*s)+1))."""
     h, w = img.shape
-    ys = [(int(i * h / out_h), max(int((i + 1) * h / out_h), int(i * h / out_h) + 1)) for i in range(out_h)]
-    xs = [(int(j * w / out_w), max(int((j + 1) * w / out_w), int(j * w / out_w) + 1)) for j in range(out_w)]
+    ys = [(i * h // out_h, max((i + 1) * h // out_h, i * h // out_h + 1)) for i in range(out_h)]
+    xs = [(j * w // out_w, max((j + 1) * w // out_w, j * w // out_w + 1)) for j in range(out_w)]
     ii = np.zeros((h + 1, w + 1), np.float64)
     ii[1:, 1:] = img.astype(np.float64).cumsum(0).cumsum(1)
     out = np.empty((out_h, out_w), np.float64)
@@ -152,6 +152,21 @@ def shear(mask, k):
     return out
 
 
+def median(v):
+    s = sorted(v)
+    n = len(s)
+    return float(s[n // 2]) if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2.0
+
+
+def percentile(v, q):
+    """numpy 'linear' percentile."""
+    s = sorted(v)
+    pos = (len(s) - 1) * q / 100.0
+    lo = int(pos)
+    hi = min(lo + 1, len(s) - 1)
+    return s[lo] + (s[hi] - s[lo]) * (pos - lo)
+
+
 # ------------------------------------------------------------------ pipeline
 def channel(bgr, variant):
     b, g, r = (bgr[..., i].astype(np.int32) for i in range(3))
@@ -164,7 +179,7 @@ def channel(bgr, variant):
 
 def ink_mask(lum_full):
     h, w = lum_full.shape
-    out_w = max(1, int(w * WORK_H / h))
+    out_w = max(1, w * WORK_H // h)
     lum = resize_box(lum_full, out_w, WORK_H)
     k = max(3, int(WORK_H * BG_K_FRAC)) | 1
     dark = np.clip(close_rect(lum, k) - lum, 0, None)
@@ -186,9 +201,11 @@ def clean(mask):
 
 
 def deskew(mask):
-    best, bk = -1.0, 0.0
+    """argmax over SHEARS of the column-projection variance, computed exactly in integers: n*sum(x^2) - (sum x)^2."""
+    best, bk = -1, 0.0
     for k in SHEARS:
-        v = float(np.var(shear(mask, k).sum(0)))
+        col = shear(mask, k).sum(0).astype(np.int64)
+        v = int(col.size * int((col * col).sum()) - int(col.sum()) ** 2)
         if v > best:
             best, bk = v, k
     return shear(mask, bk), bk
@@ -211,7 +228,7 @@ def ref_height(boxes, H):
         return None
     votes = [(sum(1 for o in hs if abs(o - h) <= H_TOL * h), h) for h in hs]
     top = max(v[0] for v in votes)
-    return float(np.median([h for c, h in votes if c == top]))
+    return median([h for c, h in votes if c == top])
 
 
 def main_boxes(mask):
@@ -234,7 +251,7 @@ def main_boxes(mask):
     if not main:
         return [], ref
     wide = [b[2] for b in main if b[2] > ONE_W * ref * 0.55] or [main[0][2]]
-    wmed = float(np.median(wide))
+    wmed = median(wide)
     runs, cur = [], [main[0]]
     for a, b in zip(main, main[1:]):
         if b[0] - (a[0] + a[2]) > 1.6 * wmed:
@@ -253,10 +270,11 @@ def seg_values(mask, box, typical_w):
     out = []
     for s in SEG_ORDER:
         a, b, c, d = WIN[s]
-        x0, x1 = int(x + a * bw), int(x + c * bw)
+        x0, x1 = int(x + a * bw), int(x + c * bw)          # int() truncates toward zero (same as Kotlin toInt())
         y0, y1 = int(y + b * bh), int(y + d * bh)
-        win = mask[max(0, y0):max(y0 + 1, y1), max(0, x0):max(x0 + 1, x1)]
-        out.append(float(win.mean()) if win.size else 0.0)
+        xs, xe = max(0, x0), min(mask.shape[1], max(x0 + 1, x1))
+        ys, ye = max(0, y0), min(mask.shape[0], max(y0 + 1, y1))
+        out.append(float(mask[ys:ye, xs:xe].sum()) / ((ye - ys) * (xe - xs)) if ye > ys and xe > xs else 0.0)
     return out
 
 
@@ -291,7 +309,7 @@ def read_variant(bgr, variant):
     boxes, _ = main_boxes(mask)
     if not boxes:
         return []
-    typical_w = float(np.percentile([b[2] for b in boxes], 75))
+    typical_w = percentile([b[2] for b in boxes], 75)
     segs = [None if b[2] < ONE_W * typical_w else seg_values(mask, b, typical_w) for b in boxes]
     vals = [v for s in segs if s for v in s]
     thr, lo, hi = two_cluster(vals) if vals else (0.4, 0.0, 1.0)
@@ -303,7 +321,7 @@ def read_variant(bgr, variant):
         x, y, w, h = b
         cy = y + h / 2.0                                   # undo the shear at the box centre for crop coordinates
         dx = k * (cy - WORK_H / 2.0)
-        box = [round((x + dx) * s, 1), round(y * s, 1), round((x + w + dx) * s, 1), round((y + h) * s, 1)]
+        box = [(x + dx) * s, y * s, (x + w + dx) * s, (y + h) * s]
         if sg is None:
             out.append((1, CONF_ONE, box, [0, 1, 1, 0, 0, 0, 0]))
         else:
@@ -330,7 +348,7 @@ def read_line(crop_bgr):
             p = CONF_HIGH
         else:
             p = min(CONF_LOW_CAP, conf * n_agree / len(VARIANTS))
-        digits.append({"cls": int(c), "conf": round(float(p), 3), "box": box, "segments": bits})
+        digits.append({"cls": int(c), "conf": float(p), "box": box, "segments": bits})
     unanimous = texts.count(win) == len(VARIANTS)
     if unanimous and all(d["conf"] >= 0.8 for d in digits):
         status = "OK"
