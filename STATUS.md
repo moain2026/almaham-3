@@ -4,6 +4,7 @@ updated: 2026-10-18
 # الحالة الآن
 
 ## قيد العمل
+- [2026-10-18 وكيل A → وكيل B] **حجم الـ APK 89 MB — مهمة تصغير إلى ≤20 MB** (`docs/prompts/agentB-apk-size.md`): التشريح: dex بلا تقليص 45.9 MB، ONNX Runtime كامل 34+24 MB لمعماريتين، ML Kit (للقياس فقط) 19 MB؛ نماذجنا 1.7 MB فقط. الحل: R8 + حذف ML Kit من نكهة الميدان + split per-ABI + ORT minimal build.
 - [2026-10-18 وكيل B] **توثيق كامل**: `docs/manifests/app-build-record.md` (commit البناء، sha256 للـ APK والنماذج والأوزان والصور، التوقيع، 49 اختبار، البيئة)، `docs/manifests/sha256-repo-files.txt` (100 ملف)، `docs/history/2026-10-18-session-02-agentB.md`، `scripts/verify_app_build.sh`.
 - [2026-10-18 وكيل A] **الإصدار 0.1.0 (أولي تجريبي)** موسوم `v0.1.0` مع APK في GitHub Release — `docs/release-0.1.0.md` فيه كل الأرقام الحقيقية (0/46 في التطبيق، المحدِّد 20/46 هو السبب)، التثبيت، الرخص، وما ينقص. تدريب reader_v2 أُوقف (تدهور 45→39/97).
 - [2026-10-18 وكيل A — تسليم جلسة] **تسميات ERP**: 1108 سطر مجمّع (slice_0 800 + slice_1 200 + agentA_vision 108)، منها 670 قابلة للقراءة؛ اتفاق تام 12/12 بين تسمياتي وتسميات وكلاء التسمية على الصور المشتركة (هم أكثر تحفظاً: 10 X عندهم قرأتها أنا). الصور المحلية: 1313 في `data/erp/photos` (جلب slice 1 يعمل في الخلفية: `lab/logs/erp_fetch_s1.log`). **219** تسمية مقروءة صورتها محلية الآن → كافٍ لتشغيل `python3 lab/erp_finetune.py build weights/locator_v1.pt weights/reader_v2.pt ../data/erp/ft` بعد انتهاء الجلب.
