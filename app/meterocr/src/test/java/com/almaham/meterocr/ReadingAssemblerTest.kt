@@ -104,3 +104,40 @@ class ReadingAssemblerTest {
         assertEquals(Warning.NONE, ReadingValidator.validate("5259", 2259, maxConsumption = 3000))
     }
 }
+
+class LatticeAndSegmentTest {
+    private fun box(cls: Int, x: Float, y: Float = 10f, w: Float = 20f, h: Float = 40f, score: Float = 0.9f) =
+        Detection(cls, score, x, y, x + w, y + h)
+
+    @Test
+    fun latticePredictsTheMissingCell() {
+        val dets = listOf(box(0, 10f), box(0, 40f), box(6, 70f), box(1, 130f), box(9, 160f))
+        val r = ReadingAssembler.assemble(dets, 400f, 64f)
+        assertEquals(ReadingStatus.MISSING_DIGIT, r.status)
+        val cells = ReadingAssembler.missingCells(r.digits)
+        assertEquals(1, cells.size)
+        assertEquals(100f, cells[0][0], 1e-3f)
+        assertEquals(120f, cells[0][2], 1e-3f)
+    }
+
+    @Test
+    fun segmentPatternAgreement() {
+        // perfect '8' ink (all segments on) agrees fully with 8 and disagrees with 0 on segment g
+        val all = FloatArray(7) { 0.9f }
+        assertEquals(1f, SegmentVerifier.agreement(all, 8), 1e-6f)
+        assertEquals(6f / 7f, SegmentVerifier.agreement(all, 0), 1e-6f)
+        // measured '0' (g off) -> best class 0
+        val zero = floatArrayOf(0.9f, 0.9f, 0.9f, 0.9f, 0.9f, 0.9f, 0.1f)
+        assertEquals(0, SegmentVerifier.bestPatternClass(zero).first)
+        // ghost segments: faint uniform ink stays OFF -> pattern of '1'
+        val one = floatArrayOf(0.15f, 0.9f, 0.9f, 0.15f, 0.12f, 0.14f, 0.13f)
+        assertEquals(1, SegmentVerifier.bestPatternClass(one).first)
+    }
+
+    @Test
+    fun segmentDisagreementMakesDigitUncertain() {
+        val d = Digit(8, 0.95f, 0f, 0f, 20f, 40f, segAgree = 5f / 7f)
+        assertTrue(d.uncertain)
+        assertFalse(d.copy(segAgree = 1f).uncertain)
+    }
+}

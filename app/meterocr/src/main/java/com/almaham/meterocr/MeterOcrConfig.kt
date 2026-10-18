@@ -36,6 +36,10 @@ object MeterOcrConfig {
     const val ALT_RATIO = 0.5f
     const val MAX_INTEGER_DIGITS = 7
     const val MIN_INTEGER_DIGITS = 1
+    const val SEG_AGREE_MIN = 6f / 7f        // >1 segment mismatch with the measured 7-seg pattern -> uncertain
+    const val LATTICE_MIN_DIGITS = 3
+    const val LATTICE_FILL_TOL = 0.3f
+    const val LATTICE_PEAK_MIN = 0.08f       // re-read threshold at lattice-predicted cells
 
     // ---- evidence image ---------------------------------------------------------------------------------
     const val EVIDENCE_LONG_EDGE_PX = 1280

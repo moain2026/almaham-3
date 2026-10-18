@@ -87,12 +87,37 @@ class MeterReader(context: Context) : AutoCloseable {
         val dets = PeakDecoder.decode(peaks, size, offs, C.READER_CLASSES, C.READER_INPUT_H / C.OUTPUT_STRIDE,
             C.READER_INPUT_W / C.OUTPUT_STRIDE, C.READER_PEAK_MIN)
         val t4 = SystemClock.elapsedRealtimeNanos()
-        val reading = ReadingAssembler.assemble(dets, C.READER_INPUT_W.toFloat(), C.READER_INPUT_H.toFloat())
+        var reading = ReadingAssembler.assemble(dets, C.READER_INPUT_W.toFloat(), C.READER_INPUT_H.toFloat())
+        if (reading.status == ReadingStatus.MISSING_DIGIT) {
+            val extra = latticeReread(peaks, reading.digits)
+            if (extra.isNotEmpty()) reading = ReadingAssembler.assemble(dets + extra, C.READER_INPUT_W.toFloat(), C.READER_INPUT_H.toFloat())
+        }
+        val verified = SegmentVerifier.verify(SegmentVerifier.gray(readIn), readIn.width, readIn.height, reading.digits)
+        reading = reading.copy(digits = verified)
         val t5 = SystemClock.elapsedRealtimeNanos()
         locIn.recycle()
         fun ms(a: Long, b: Long) = (b - a) / 1_000_000f
         return ReadResult(reading, lineRect, best?.score ?: 0f,
             StageTimes(ms(t0, t1), ms(t1, t2), ms(t2, t3), ms(t3, t4), ms(t4, t5)), readIn)
+    }
+
+    /** For every cell the pitch lattice predicts, take the strongest digit class in the raw heat-map (3x3 window). */
+    private fun latticeReread(peaks: FloatArray, digits: List<Digit>): List<Detection> {
+        val hw = C.READER_INPUT_W / C.OUTPUT_STRIDE
+        val hh = C.READER_INPUT_H / C.OUTPUT_STRIDE
+        val plane = hw * hh
+        val out = ArrayList<Detection>()
+        for (cell in ReadingAssembler.missingCells(digits)) {
+            val cx = ((cell[0] + cell[2]) / 2 / C.OUTPUT_STRIDE).toInt()
+            val cy = ((cell[1] + cell[3]) / 2 / C.OUTPUT_STRIDE).toInt()
+            var best = C.LATTICE_PEAK_MIN; var bestCls = -1
+            for (c in 0 until 10) for (y in maxOf(0, cy - 1)..minOf(hh - 1, cy + 1)) for (x in maxOf(0, cx - 1)..minOf(hw - 1, cx + 1)) {
+                val v = peaks[c * plane + y * hw + x]
+                if (v > best) { best = v; bestCls = c }
+            }
+            if (bestCls >= 0) out.add(Detection(bestCls, best, cell[0], cell[1], cell[2], cell[3]))
+        }
+        return out
     }
 
     private fun padded(r: RectF, w: Int, h: Int): Rect {

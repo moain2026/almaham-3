@@ -203,8 +203,8 @@ def lcd_palette():
     fg = tuple(int(np.clip(fg_l + random.randint(-15, 15), 0, 255)) for _ in range(3))
     if kind == "blue" and random.random() < 0.5:  # bluish dark segments
         fg = (int(min(255, fg[0] + 60)), fg[1], fg[2])
-    contrast = random.choices([random.uniform(0.12, 0.35), random.uniform(0.35, 0.7), random.uniform(0.7, 1.0)],
-                              [0.25, 0.35, 0.4])[0]
+    contrast = random.choices([random.uniform(0.1, 0.3), random.uniform(0.3, 0.65), random.uniform(0.65, 1.0)],
+                              [0.3, 0.35, 0.35])[0]
     fg = mix(bg, fg, contrast)
     ga = random.choices([0.0, random.uniform(0.05, 0.2), random.uniform(0.2, 0.5)], [0.3, 0.4, 0.3])[0]
     ghost = mix(bg, fg, ga)
@@ -304,6 +304,14 @@ def render_display(lw, lh):
             cv2.polylines(panel, [pts], True, fg, 1, cv2.LINE_AA)
         else:
             cv2.circle(panel, (int(ix), int(iy)), int(s / 2), fg, -1)
+    # coarse LCD pixel grain (23069-like) and faint column lines
+    if random.random() < 0.35:
+        g = np.random.normal(0, random.uniform(6, 18), (lh // 2 + 1, lw // 2 + 1, 1)).astype(np.float32)
+        g = cv2.resize(g, (lw, lh), interpolation=cv2.INTER_NEAREST)[..., None]
+        panel = np.clip(panel.astype(np.float32) + g, 0, 255).astype(np.uint8)
+    if random.random() < 0.25:
+        step = random.randint(3, 7)
+        panel[:, ::step] = np.clip(panel[:, ::step].astype(np.int16) - random.randint(5, 20), 0, 255).astype(np.uint8)
     # polariser streaks / reflections inside glass
     if random.random() < 0.5:
         f = panel.astype(np.float32)

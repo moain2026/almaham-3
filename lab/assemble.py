@@ -33,6 +33,9 @@ CONFIG = {
     "MAX_INTEGER_DIGITS": 7,      # electricity meters: at most 7 integer digits
     "MIN_INTEGER_DIGITS": 1,
     "DOT_CLASS": 10,
+    "SEG_AGREE_MIN": 6 / 7,       # a digit whose measured 7-segment pattern differs in >1 segment is uncertain
+    "LATTICE_MIN_DIGITS": 3,      # digits needed to estimate the pitch lattice
+    "LATTICE_FILL_TOL": 0.3,      # a gap of k*pitch (+-tol*pitch) with k>=2 means k-1 missing cells
 }
 
 CLS_LINE = 11  # synth2.CLS_LINE (duplicated to avoid importing the generator in the app-side reference)
@@ -48,6 +51,8 @@ class Digit:
     y2: float
     alt_cls: int = -1
     alt_score: float = 0.0
+    seg_agree: float = 1.0   # seven-segment pattern agreement with cls (segverify.py); 1.0 = all 7 segments match
+    seg_cls: int = -1        # class suggested by the measured segment pattern
 
     @property
     def cx(self):
@@ -67,7 +72,8 @@ class Digit:
 
     @property
     def uncertain(self):
-        return self.score < CONFIG["DIGIT_CONF_MIN"] or self.alt_score >= CONFIG["ALT_RATIO"] * self.score
+        return (self.score < CONFIG["DIGIT_CONF_MIN"] or self.alt_score >= CONFIG["ALT_RATIO"] * self.score
+                or self.seg_agree < CONFIG["SEG_AGREE_MIN"])
 
 
 @dataclass
@@ -172,6 +178,29 @@ def integer_part(line: List[Digit], dots: List[Digit]) -> List[Digit]:
                 ds = ds[:i + 1]
                 break
     return ds
+
+
+def missing_cells(ds: List[Digit]) -> List[tuple]:
+    """Pitch-lattice gap analysis: returns boxes (x1,y1,x2,y2) of cells the lattice says exist between detected
+    digits but no detection covered (a dropped digit). Empty list when the run is regular."""
+    if len(ds) < CONFIG["LATTICE_MIN_DIGITS"]:
+        return []
+    pitches = [ds[i + 1].cx - ds[i].cx for i in range(len(ds) - 1)]
+    pitch = median(pitches)
+    if pitch <= 0:
+        return []
+    out = []
+    for i, p in enumerate(pitches):
+        k = round(p / pitch)
+        if k >= 2 and abs(p - k * pitch) <= CONFIG["LATTICE_FILL_TOL"] * pitch * k:
+            a, b = ds[i], ds[i + 1]
+            w = (a.w + b.w) / 2
+            for j in range(1, k):
+                cx = a.cx + j * p / k
+                y1 = a.y1 + (b.y1 - a.y1) * j / k
+                y2 = a.y2 + (b.y2 - a.y2) * j / k
+                out.append((cx - w / 2, y1, cx + w / 2, y2))
+    return out
 
 
 def structure_ok(ds: List[Digit]) -> bool:

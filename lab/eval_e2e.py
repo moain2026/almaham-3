@@ -18,10 +18,12 @@ import onnxruntime as ort
 
 import assemble
 import paths
+import segverify
 from det_model import decode
 
 LOC_IN, RD_H, RD_W = 256, 64, 448
 LOC_PEAK_MIN, LINE_MIN_H, PAD_X, PAD_Y, RD_PEAK_MIN = 0.25, 6.0, 0.18, 0.45, 0.30  # == MeterOcrConfig
+LATTICE_PEAK_MIN = 0.08  # re-read threshold for lattice-predicted cells (MeterOcrConfig.LATTICE_PEAK_MIN)
 
 
 def letterbox(img, dw, dh, centre_x=True):
@@ -68,9 +70,25 @@ class Engine:
             sx1, sy1, sx2, sy2, rect = 0, 0, W, H, None
         ri, _, _, _ = letterbox(crop[sy1:sy2, sx1:sx2], RD_W, RD_H, centre_x=False)
         t3 = time.perf_counter()
-        dets = decode(*self.run(self.rd, ri), RD_PEAK_MIN)
+        peaks, size, offs = self.run(self.rd, ri)
+        dets = decode(peaks, size, offs, RD_PEAK_MIN)
         t4 = time.perf_counter()
         r = assemble.assemble(dets, RD_W, RD_H)
+        if r.status == "MISSING_DIGIT":
+            # lattice re-read: for every cell the pitch lattice predicts, take the strongest class at that cell
+            # from the raw heat-map with a much lower threshold (the digit is there, the peak was just weak).
+            extra = []
+            for (x1, y1, x2, y2) in assemble.missing_cells(r.digits):
+                cx, cy = int(((x1 + x2) / 2) / 4), int(((y1 + y2) / 2) / 4)
+                cy0, cy1 = max(0, cy - 1), min(peaks.shape[1], cy + 2)
+                cx0, cx1 = max(0, cx - 1), min(peaks.shape[2], cx + 2)
+                win = peaks[:10, cy0:cy1, cx0:cx1]
+                if win.size and win.max() > LATTICE_PEAK_MIN:
+                    c = int(np.unravel_index(win.argmax(), win.shape)[0])
+                    extra.append((c, float(win.max()), x1, y1, x2, y2))
+            if extra:
+                r = assemble.assemble(dets + extra, RD_W, RD_H)
+        segverify.verify(cv2.cvtColor(ri, cv2.COLOR_BGR2GRAY), r.digits)
         t5 = time.perf_counter()
         ms = {"loc_prep": (t1 - t0) * 1e3, "locate": (t2 - t1) * 1e3, "line_prep": (t3 - t2) * 1e3,
               "read": (t4 - t3) * 1e3, "assemble": (t5 - t4) * 1e3}

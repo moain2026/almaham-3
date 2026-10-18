@@ -9,12 +9,14 @@ data class Detection(val cls: Int, val score: Float, val x1: Float, val y1: Floa
 data class Digit(
     val cls: Int, val score: Float, val x1: Float, val y1: Float, val x2: Float, val y2: Float,
     val altCls: Int = -1, val altScore: Float = 0f,
+    /** Seven-segment pattern agreement with [cls] from SegmentVerifier; 1.0 = all 7 segments match. */
+    val segAgree: Float = 1f, val segCls: Int = -1,
 ) {
     val cx get() = (x1 + x2) / 2f
     val cy get() = (y1 + y2) / 2f
     val h get() = y2 - y1
     val w get() = x2 - x1
-    val uncertain get() = score < C.DIGIT_CONF_MIN || altScore >= C.ALT_RATIO * score
+    val uncertain get() = score < C.DIGIT_CONF_MIN || altScore >= C.ALT_RATIO * score || segAgree < C.SEG_AGREE_MIN
 }
 
 enum class ReadingStatus { OK, EMPTY, MISSING_DIGIT, TOO_MANY_DIGITS }
@@ -102,6 +104,27 @@ object ReadingAssembler {
             if (split >= 0) ds = ds.subList(0, split + 1)
         }
         return ds
+    }
+
+    /** Pitch-lattice gap analysis: cells the regular pitch predicts between detected digits but nothing covered. */
+    fun missingCells(ds: List<Digit>): List<FloatArray> {
+        if (ds.size < C.LATTICE_MIN_DIGITS) return emptyList()
+        val pitches = (0 until ds.size - 1).map { ds[it + 1].cx - ds[it].cx }
+        val pitch = median(pitches)
+        if (pitch <= 0f) return emptyList()
+        val out = ArrayList<FloatArray>()
+        for ((i, p) in pitches.withIndex()) {
+            val k = Math.round(p / pitch)
+            if (k >= 2 && Math.abs(p - k * pitch) <= C.LATTICE_FILL_TOL * pitch * k) {
+                val a = ds[i]; val b = ds[i + 1]; val w = (a.w + b.w) / 2f
+                for (j in 1 until k) {
+                    val cx = a.cx + j * p / k
+                    val y1 = a.y1 + (b.y1 - a.y1) * j / k; val y2 = a.y2 + (b.y2 - a.y2) * j / k
+                    out.add(floatArrayOf(cx - w / 2, y1, cx + w / 2, y2))
+                }
+            }
+        }
+        return out
     }
 
     fun structureOk(ds: List<Digit>): Boolean {
