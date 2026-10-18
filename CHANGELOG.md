@@ -2,6 +2,7 @@
 - meterocr: `MeterReader.read/close` @Synchronized؛ إزالة INTERNET/ACCESS_NETWORK_STATE ومزوّد التيليمتري من AAR ONNX Runtime عند دمج الـ manifest (offline فعلياً).
 - lab/train_det.py: حفظ نقطة وتقييم كل 250 خطوة (كان 500).
 ### Added
+- `docs/manifests/` (سجل البناء والهاشات، إعداد AVD)، `docs/history/2026-10-18-session-02-agentB.md`، `scripts/verify_app_build.sh` (وكيل B).
 - demo: autobench intent، CaptureLog، rectcheck، x86_64 في debug؛ إصلاح كراشين (وكيل B). `docs/phone-test-emulator_x86_64_api30.md`.
 - `app/meterocr/.../ForensicReader.kt` + `ForensicReaderTest.kt` + مثبّتات `test/resources/forensic/` + `lab/make_forensic_fixtures.py` (وكيل B).
 - `benchmark/data/digit_boxes.json` + `digit_spans_manual.json` + `lab/make_digit_boxes.py` (وكيل B، عقد §3).
