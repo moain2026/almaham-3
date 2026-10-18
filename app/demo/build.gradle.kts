@@ -17,6 +17,10 @@ android {
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
     }
     buildTypes {
+        debug {
+            // x86_64 only in debug so the app also runs on an emulator (no real phone in the sandbox). Release stays ARM.
+            ndk { abiFilters += listOf("x86_64") }
+        }
         release {
             isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("debug")

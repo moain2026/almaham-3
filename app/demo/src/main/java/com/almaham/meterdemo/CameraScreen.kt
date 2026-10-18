@@ -76,6 +76,10 @@ data class ShutterEvent(
     val viewH: Float,
     val scale: PreviewScale,
     val shutterNanos: Long,
+    /** press -> ImageProxy delivered (ms). Answers "does the press capture instantly?" on a real phone. */
+    val pressToFrameMs: Float = 0f,
+    val zsl: Boolean = false,
+    val zoom: Float = 1f,
 )
 
 private val Amber = Color(0xFFF2B233)
@@ -100,6 +104,7 @@ fun CameraScreen(onCaptured: (ShutterEvent) -> Unit, onClose: () -> Unit) {
     var viewSize by remember { mutableStateOf(Size.Zero) }
     var rect by remember { mutableStateOf<NormRect?>(null) }
     var pressed by remember { mutableStateOf(false) }
+    var zslOn by remember { mutableStateOf(false) }
     val handleRadiusPx = with(density) { MeterOcrConfig.RECT_HANDLE_TOUCH_RADIUS_DP.dp.toPx() }
 
     DisposableEffect(Unit) { onDispose { rect?.let { RectangleState.save(ctx, it) } } }
@@ -118,6 +123,7 @@ fun CameraScreen(onCaptured: (ShutterEvent) -> Unit, onClose: () -> Unit) {
                         val preview = Preview.Builder().build().also { it.surfaceProvider = surfaceProvider }
                         val selector = CameraSelector.DEFAULT_BACK_CAMERA
                         val zsl = provider.getCameraInfo(selector).isZslSupported
+                        zslOn = zsl
                         val capture = ImageCapture.Builder()
                             .setCaptureMode(if (zsl) ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG else ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                             .setResolutionSelector(ResolutionSelector.Builder()
@@ -249,7 +255,9 @@ fun CameraScreen(onCaptured: (ShutterEvent) -> Unit, onClose: () -> Unit) {
                         capture.takePicture(executor, object : ImageCapture.OnImageCapturedCallback() {
                             override fun onCaptureSuccess(image: ImageProxy) {
                                 RectangleState.save(ctx, r)
-                                onCaptured(ShutterEvent(image, r, size.width, size.height, PreviewScale.FILL_CENTER, shutterNanos))
+                                val pressToFrame = (SystemClock.elapsedRealtimeNanos() - shutterNanos) / 1_000_000f
+                                onCaptured(ShutterEvent(image, r, size.width, size.height, PreviewScale.FILL_CENTER, shutterNanos,
+                                    pressToFrame, zslOn, zoom))
                             }
 
                             override fun onError(exception: ImageCaptureException) {

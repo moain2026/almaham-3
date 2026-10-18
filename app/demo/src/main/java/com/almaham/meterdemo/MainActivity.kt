@@ -68,7 +68,10 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun App() {
-        var screen by remember { mutableStateOf(Screen.ENTRY) }
+        // `adb shell am start -n com.almaham.meterdemo/.MainActivity --ez autobench true` opens batch mode and runs it
+        // (no taps needed — used for emulator/phone benchmarking; brief §7.2).
+        val autoBench = remember { intent?.getBooleanExtra("autobench", false) == true }
+        var screen by remember { mutableStateOf(if (autoBench) Screen.BATCH else Screen.ENTRY) }
         var state by remember { mutableStateOf(EntryState()) }
         var source by remember { mutableStateOf(Source.CAMERA) }
         var lastTotalMs by remember { mutableStateOf(0f) }
@@ -76,9 +79,11 @@ class MainActivity : ComponentActivity() {
         var lastMinConf by remember { mutableStateOf(0f) }
         val scope = rememberCoroutineScope()
         val evidenceDir = remember { File(getExternalFilesDir(null), "evidence").apply { mkdirs() } }
+        val rectCheckDir = remember { File(getExternalFilesDir(null), "rectcheck").apply { mkdirs() } }
+        val captureLog = remember { CaptureLog(File(getExternalFilesDir(null), "captures_log.csv")) }
 
         // Warm-up when the entry screen opens (brief §5: never at press time).
-        LaunchedEffect(Unit) { withContext(Dispatchers.Default) { reader.warmUp() } }
+        LaunchedEffect(Unit) { withContext(Dispatchers.Default) { synchronized(reader) { reader.warmUp() } } }
 
         val cameraPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { ok ->
             if (ok) screen = Screen.CAMERA
@@ -134,16 +139,28 @@ class MainActivity : ComponentActivity() {
                         val jpeg = pipeline.jpegBytes(ev.image)
                         ev.image.close()
                         val crop = pipeline.cropFromJpeg(jpeg, ev.rectInView, ev.viewW, ev.viewH, ev.scale, rotation)
+                        val geometry = pipeline.lastGeometry
                         val outcome = pipeline.readCrop(crop, ev.shutterNanos)
                         val st = applyOutcome(outcome)
                         withContext(Dispatchers.Main) { state = st; lastTotalMs = outcome.read.times.totalMs; lastStatus = outcome.read.reading.status; lastMinConf = outcome.read.reading.minConfidence }
-                        val (_, enc) = pipeline.saveEvidence(outcome.crop, evidenceDir, "meter_${System.currentTimeMillis()}")
+                        val name = "meter_${System.currentTimeMillis()}"
+                        val (_, enc) = pipeline.saveEvidence(outcome.crop, evidenceDir, name)
                         withContext(Dispatchers.Main) { state = state.copy(evidenceBytes = enc.bytes.size) }
+                        // phone-test instrumentation (after the number is on screen; never on the fast path)
+                        val checkFile = geometry?.let { runCatching { pipeline.saveRectCheck(jpeg, it, rectCheckDir, name) }.getOrNull() }
+                        captureLog.append(CaptureRecord(
+                            name = name, pressToFrameMs = ev.pressToFrameMs, captureToNumberMs = outcome.captureToNumberMs,
+                            engineMs = outcome.read.times.totalMs, value = outcome.read.reading.value,
+                            status = outcome.read.reading.status.name, evidenceBytes = enc.bytes.size,
+                            rawW = geometry?.rawW ?: 0, rawH = geometry?.rawH ?: 0, rotation = rotation,
+                            cropW = outcome.crop.width, cropH = outcome.crop.height, zsl = ev.zsl, zoom = ev.zoom,
+                            rectCheck = checkFile?.name ?: "",
+                        ))
                     }
                 },
                 onClose = { screen = Screen.ENTRY },
             )
-            Screen.BATCH -> BatchScreen(reader) { screen = Screen.ENTRY }
+            Screen.BATCH -> BatchScreen(reader, autoStart = autoBench) { screen = Screen.ENTRY }
         }
     }
 
@@ -159,7 +176,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun BatchScreen(reader: MeterReader, onBack: () -> Unit) {
+private fun BatchScreen(reader: MeterReader, autoStart: Boolean = false, onBack: () -> Unit) {
     val ctx = androidx.compose.ui.platform.LocalContext.current
     val bench = remember { BatchBenchmark(ctx, reader) }
     var lines by remember { mutableStateOf(listOf("الصور تُقرأ من: ${bench.photosDir}", "ادفعها بـ: adb push photos/ ${bench.photosDir}")) }
@@ -167,7 +184,7 @@ private fun BatchScreen(reader: MeterReader, onBack: () -> Unit) {
     val scope = rememberCoroutineScope()
     Column(Modifier.fillMaxSize().background(Color(0xFF151410)).padding(16.dp)) {
         Text("الاختبار الجماعي — 49 صورة × (A مستطيل، B كاملة) × (DigitNet، ML Kit)", color = Color.White, fontSize = 16.sp)
-        Button(enabled = !running, onClick = {
+        val start: () -> Unit = {
             running = true
             lines = listOf("بدأ…")
             scope.launch(Dispatchers.Default) {
@@ -178,7 +195,11 @@ private fun BatchScreen(reader: MeterReader, onBack: () -> Unit) {
                 val s = bench.summary(rows).toString(2)
                 withContext(Dispatchers.Main) { lines = listOf("انتهى. الملفات في ${bench.outDir}", s) + lines; running = false }
             }
-        }, modifier = Modifier.padding(vertical = 8.dp)) { Text(if (running) "جاري التشغيل…" else "تشغيل") }
+        }
+        LaunchedEffect(autoStart) { if (autoStart) start() }
+        Button(enabled = !running, onClick = start, modifier = Modifier.padding(vertical = 8.dp)) {
+            Text(if (running) "جاري التشغيل…" else "تشغيل")
+        }
         TextButton(onClick = onBack) { Text("رجوع", color = Color(0xFFF2B233)) }
         Column(Modifier.verticalScroll(rememberScrollState())) {
             for (l in lines) Text(l, color = Color(0xFFCFCFCF), fontSize = 12.sp)

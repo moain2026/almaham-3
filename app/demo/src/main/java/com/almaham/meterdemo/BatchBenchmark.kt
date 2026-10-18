@@ -104,15 +104,16 @@ class BatchBenchmark(private val ctx: Context, private val reader: MeterReader) 
         val rows = ArrayList<BenchRow>()
         val total = truth.size * 6
         var done = 0
-        reader.warmUp()
+        synchronized(reader) { reader.warmUp() }
         for (t in truth) {
             val f = File(photosDir, t.file)
             if (!f.exists()) continue
-            val full = loadUpright(f)
+            // an unreadable file (e.g. pushed with wrong owner) must not crash the whole batch run
+            val full = runCatching { loadUpright(f) }.getOrNull() ?: continue
             val a = crop(full, boxes[t.file] ?: NormRect(0f, 0f, 1f, 1f))
             for ((mode, bmp) in listOf("A" to a, "B" to full)) {
                 val t0 = SystemClock.elapsedRealtimeNanos()
-                val r = reader.read(bmp)
+                val r = synchronized(reader) { reader.read(bmp) }
                 val tot = (SystemClock.elapsedRealtimeNanos() - t0) / 1_000_000f
                 val ev = if (mode == "A") EvidenceImage.encode(bmp).bytes.size else 0
                 val row = BenchRow(t.file, mode, "digitnet", t.reading, r.reading.value, r.reading.status.name, r.reading.confident,
