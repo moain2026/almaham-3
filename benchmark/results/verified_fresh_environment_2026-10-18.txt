@@ -1,0 +1,537 @@
+Sun Oct 18 11:37:13 UTC 2026
+7842d07ebca84bcce1fe373c8d86bb46da42f5f9
+No broken requirements found.
+From https://github.com/moain2026/almaham-3
+ * branch            5486ed44510ca1930e1dc119eee08b47a3d6486f -> FETCH_HEAD
+test_argb_decodes_channels_and_preserves_pixels (test_optical_evidence.BenchmarkContractTests.test_argb_decodes_channels_and_preserves_pixels) ... ok
+test_bad_argb_rejected_before_large_allocation (test_optical_evidence.BenchmarkContractTests.test_bad_argb_rejected_before_large_allocation) ... ok
+test_error_denominators_and_no_answers (test_optical_evidence.BenchmarkContractTests.test_error_denominators_and_no_answers) ... ok
+test_legacy_short_answer_filter_is_not_universal (test_optical_evidence.BenchmarkContractTests.test_legacy_short_answer_filter_is_not_universal) ... ok
+test_empty_sample_cannot_establish_accuracy (test_optical_evidence.BoundTests.test_empty_sample_cannot_establish_accuracy) ... ok
+test_zero_errors_on_46_does_not_prove_one_percent (test_optical_evidence.BoundTests.test_zero_errors_on_46_does_not_prove_one_percent) ... ok
+test_abstentions_count_in_denominator (test_optical_evidence.ConsensusTests.test_abstentions_count_in_denominator) ... ok
+test_conflicting_duplicate_rejected (test_optical_evidence.ConsensusTests.test_conflicting_duplicate_rejected) ... ok
+test_duplicate_examinations_idempotent (test_optical_evidence.ConsensusTests.test_duplicate_examinations_idempotent) ... ok
+test_empty_and_tied_votes_abstain (test_optical_evidence.ConsensusTests.test_empty_and_tied_votes_abstain) ... ok
+test_one_family_cannot_impersonate_two (test_optical_evidence.ConsensusTests.test_one_family_cannot_impersonate_two) ... ok
+test_third_family_conflict_is_not_outvoted (test_optical_evidence.ConsensusTests.test_third_family_conflict_is_not_outvoted) ... ok
+test_two_families_agree (test_optical_evidence.ConsensusTests.test_two_families_agree) ... ok
+test_duplicate_symbol_is_one_identity (test_optical_evidence.IdentityTests.test_duplicate_symbol_is_one_identity) ... ok
+test_generated_qr_and_code128_decode (test_optical_evidence.IdentityTests.test_generated_qr_and_code128_decode) ... ok
+test_no_fuzzy_registry_correction (test_optical_evidence.IdentityTests.test_no_fuzzy_registry_correction) ... ok
+test_serial_leading_zeros_not_removed (test_optical_evidence.IdentityTests.test_serial_leading_zeros_not_removed) ... ok
+test_two_meter_barcodes_not_guessed (test_optical_evidence.IdentityTests.test_two_meter_barcodes_not_guessed) ... ok
+test_untrusted_payload_not_executed_or_treated_as_serial (test_optical_evidence.IdentityTests.test_untrusted_payload_not_executed_or_treated_as_serial) ... ok
+test_background_plane_cancels (test_optical_evidence.PhotometryTests.test_background_plane_cancels) ... ok
+test_bad_input_rejected (test_optical_evidence.PhotometryTests.test_bad_input_rejected) ... ok
+test_blank_image_abstains (test_optical_evidence.PhotometryTests.test_blank_image_abstains) ... ok
+test_dark_stroke_survives_and_holes_stay_clean (test_optical_evidence.PhotometryTests.test_dark_stroke_survives_and_holes_stay_clean) ... ok
+test_geometry_can_reconstruct_missing_cell_without_label (test_optical_evidence.PhotometryTests.test_geometry_can_reconstruct_missing_cell_without_label) ... ok
+test_multiplicative_illumination_invariance (test_optical_evidence.PhotometryTests.test_multiplicative_illumination_invariance) ... ok
+test_all_single_erasures_keep_truth (test_optical_evidence.SegmentLogicTests.test_all_single_erasures_keep_truth) ... ok
+test_all_supported_glyphs (test_optical_evidence.SegmentLogicTests.test_all_supported_glyphs) ... ok
+test_distance_one_cannot_correct_single_bit_errors (test_optical_evidence.SegmentLogicTests.test_distance_one_cannot_correct_single_bit_errors) ... ok
+test_erased_middle_is_not_forced_to_zero_or_eight (test_optical_evidence.SegmentLogicTests.test_erased_middle_is_not_forced_to_zero_or_eight) ... ok
+test_every_ternary_word_is_exact_constraint_intersection (test_optical_evidence.SegmentLogicTests.test_every_ternary_word_is_exact_constraint_intersection) ... ok
+test_invalid_states (test_optical_evidence.SegmentLogicTests.test_invalid_states) ... ok
+test_missing_all_evidence_is_not_zero (test_optical_evidence.SegmentLogicTests.test_missing_all_evidence_is_not_zero) ... ok
+test_complete_observed_digit_keeps_conditional_value (test_profile_reader.AcceptancePolicyTests.test_complete_observed_digit_keeps_conditional_value) ... ok
+test_missing_evidence_never_accepts (test_profile_reader.AcceptancePolicyTests.test_missing_evidence_never_accepts) ... ok
+test_policy_never_invents_rejected_candidate (test_profile_reader.AcceptancePolicyTests.test_policy_never_invents_rejected_candidate) ... ok
+test_unique_digit_with_unobserved_segment_is_not_accepted (test_profile_reader.AcceptancePolicyTests.test_unique_digit_with_unobserved_segment_is_not_accepted) ... ok
+test_all_white_has_no_usable_evidence (test_profile_reader.OcclusionFusionTests.test_all_white_has_no_usable_evidence) ... ok
+test_any_known_conflict_abstains (test_profile_reader.OcclusionFusionTests.test_any_known_conflict_abstains) ... ok
+test_duplicate_frames_do_not_raise_support (test_profile_reader.OcclusionFusionTests.test_duplicate_frames_do_not_raise_support) ... ok
+test_frame_order_does_not_change_fusion (test_profile_reader.OcclusionFusionTests.test_frame_order_does_not_change_fusion) ... ok
+test_occluded_segments_are_unknown_not_off (test_profile_reader.OcclusionFusionTests.test_occluded_segments_are_unknown_not_off) ... ok
+test_reading_change_never_assembled_into_hybrid_number (test_profile_reader.OcclusionFusionTests.test_reading_change_never_assembled_into_hybrid_number) ... ok
+test_same_occlusion_does_not_hallucinate (test_profile_reader.OcclusionFusionTests.test_same_occlusion_does_not_hallucinate) ... ok
+test_two_complementary_occlusions_recover_reading (test_profile_reader.OcclusionFusionTests.test_two_complementary_occlusions_recover_reading) ... ok
+test_full_enroll_read_command_chain (test_profile_reader.PrivateCLITests.test_full_enroll_read_command_chain) ... ok
+test_no_private_outputs_outside_ignored_data (test_profile_reader.PrivateCLITests.test_no_private_outputs_outside_ignored_data) ... ok
+test_preview_does_not_overwrite_profile (test_profile_reader.PrivateCLITests.test_preview_does_not_overwrite_profile) ... ok
+test_profile_round_trip (test_profile_reader.PrivateCLITests.test_profile_round_trip) ... ok
+test_report_escapes_untrusted_title (test_profile_reader.PrivateCLITests.test_report_escapes_untrusted_title) ... ok
+test_template_hash_tamper_detected (test_profile_reader.PrivateCLITests.test_template_hash_tamper_detected) ... ok
+test_bad_and_overlapping_cells_rejected (test_profile_reader.ProfileTests.test_bad_and_overlapping_cells_rejected) ... ok
+test_bad_input_rejected (test_profile_reader.ProfileTests.test_bad_input_rejected) ... ok
+test_changed_aspect_ratio_rejected (test_profile_reader.ProfileTests.test_changed_aspect_ratio_rejected) ... ok
+test_explicit_profile_is_valid (test_profile_reader.ProfileTests.test_explicit_profile_is_valid) ... ok
+test_no_frames_and_excess_frames_rejected (test_profile_reader.ProfileTests.test_no_frames_and_excess_frames_rejected) ... ok
+test_read_all_digit_shapes (test_profile_reader.ProfileTests.test_read_all_digit_shapes) ... ok
+test_reference_digits_do_not_supply_the_answer (test_profile_reader.ProfileTests.test_reference_digits_do_not_supply_the_answer) ... ok
+test_static_alignment_mask_excludes_every_digit (test_profile_reader.ProfileTests.test_static_alignment_mask_excludes_every_digit) ... ok
+test_unverified_profile_never_accepts (test_profile_reader.ProfileTests.test_unverified_profile_never_accepts) ... ok
+test_bad_quad_rejected (test_profile_reader.RegistrationTests.test_bad_quad_rejected) ... ok
+test_explicit_homography_identity (test_profile_reader.RegistrationTests.test_explicit_homography_identity) ... ok
+test_small_rotation_translation_registers (test_profile_reader.RegistrationTests.test_small_rotation_translation_registers) ... ok
+test_static_background_registers_different_digits (test_profile_reader.RegistrationTests.test_static_background_registers_different_digits) ... ok
+test_textureless_template_rejected (test_profile_reader.RegistrationTests.test_textureless_template_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 64 tests in 2.881s
+
+OK
+lint OK
+<fresh_clone>/data/clean_demo/demo.html
+peer forensic_reader 23066: {'value': '6', 'status': 'MISSING_DIGIT', 'ms_single_run': 403.2276999996611}
+peer forensic_reader 23070: {'value': '211', 'status': 'MISSING_DIGIT', 'ms_single_run': 394.5783119997941}
+peer forensic_reader 23082: {'value': '782', 'status': 'UNSURE', 'ms_single_run': 376.0841779999282}
+peer forensic_reader 23091: {'value': '293', 'status': 'UNSURE', 'ms_single_run': 678.5439660002339}
+peer forensic_reader 23108: {'value': '2921', 'status': 'UNSURE', 'ms_single_run': 384.0516420000313}
+peer multi_algo 23066: {'value': '6719', 'agree': 163, 'valid': 184, 'n_examinations': 792, 'ms_single_run': 3208.1812840001476}
+peer multi_algo 23070: {'value': '2226', 'agree': 2, 'valid': 8, 'n_examinations': 792, 'ms_single_run': 2994.7943889997077}
+peer multi_algo 23082: {'value': '782', 'agree': 204, 'valid': 247, 'n_examinations': 792, 'ms_single_run': 2333.524086000125}
+peer multi_algo 23091: {'value': '243', 'agree': 51, 'valid': 161, 'n_examinations': 792, 'ms_single_run': 3766.9668659996205}
+peer multi_algo 23108: {'value': '2921', 'agree': 59, 'valid': 126, 'n_examinations': 792, 'ms_single_run': 2256.4562930001557}
+{
+  "fixture_summary": {
+    "optical_top1": {
+      "n": 5,
+      "exact": 4,
+      "wrong_accepted": 0,
+      "abstained": 1,
+      "coverage": 0.8,
+      "error_among_accepted": 0.0,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 0.5271291954984121
+    },
+    "optical_top1_confirmed_reference_only": {
+      "n": 4,
+      "exact": 3,
+      "wrong_accepted": 0,
+      "abstained": 1,
+      "coverage": 0.75,
+      "error_among_accepted": 0.0,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 0.6315968501359613
+    },
+    "optical_conditional": {
+      "n": 5,
+      "exact": 2,
+      "wrong_accepted": 0,
+      "abstained": 3,
+      "coverage": 0.4,
+      "error_among_accepted": 0.0,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 0.7763932022500211
+    },
+    "optical_conditional_confirmed_reference_only": {
+      "n": 4,
+      "exact": 1,
+      "wrong_accepted": 0,
+      "abstained": 3,
+      "coverage": 0.25,
+      "error_among_accepted": 0.0,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 0.95
+    },
+    "sevenseg": {
+      "n": 5,
+      "exact": 2,
+      "wrong_accepted": 3,
+      "abstained": 0,
+      "coverage": 1.0,
+      "error_among_accepted": 0.6,
+      "wrong_per_total": 0.6,
+      "zero_error_upper95_if_independent": null
+    },
+    "sevenseg2": {
+      "n": 5,
+      "exact": 3,
+      "wrong_accepted": 2,
+      "abstained": 0,
+      "coverage": 1.0,
+      "error_among_accepted": 0.4,
+      "wrong_per_total": 0.4,
+      "zero_error_upper95_if_independent": null
+    },
+    "sevenseg6": {
+      "n": 5,
+      "exact": 3,
+      "wrong_accepted": 2,
+      "abstained": 0,
+      "coverage": 1.0,
+      "error_among_accepted": 0.4,
+      "wrong_per_total": 0.4,
+      "zero_error_upper95_if_independent": null
+    },
+    "peer_forensic_reader_top1": {
+      "n": 5,
+      "exact": 2,
+      "wrong_accepted": 3,
+      "abstained": 0,
+      "coverage": 1.0,
+      "error_among_accepted": 0.6,
+      "wrong_per_total": 0.6,
+      "zero_error_upper95_if_independent": null
+    },
+    "peer_forensic_reader_OK_only": {
+      "n": 5,
+      "exact": 0,
+      "wrong_accepted": 0,
+      "abstained": 5,
+      "coverage": 0.0,
+      "error_among_accepted": null,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 1.0
+    },
+    "peer_multi_algo_top1": {
+      "n": 5,
+      "exact": 4,
+      "wrong_accepted": 1,
+      "abstained": 0,
+      "coverage": 1.0,
+      "error_among_accepted": 0.2,
+      "wrong_per_total": 0.2,
+      "zero_error_upper95_if_independent": null
+    },
+    "peer_multi_algo_gate0.2": {
+      "n": 5,
+      "exact": 4,
+      "wrong_accepted": 1,
+      "abstained": 0,
+      "coverage": 1.0,
+      "error_among_accepted": 0.2,
+      "wrong_per_total": 0.2,
+      "zero_error_upper95_if_independent": null
+    },
+    "peer_multi_algo_gate0.3": {
+      "n": 5,
+      "exact": 4,
+      "wrong_accepted": 0,
+      "abstained": 1,
+      "coverage": 0.8,
+      "error_among_accepted": 0.0,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 0.5271291954984121
+    },
+    "peer_multi_algo_gate0.4": {
+      "n": 5,
+      "exact": 3,
+      "wrong_accepted": 0,
+      "abstained": 2,
+      "coverage": 0.6,
+      "error_among_accepted": 0.0,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 0.6315968501359613
+    },
+    "peer_multi_algo_gate0.5": {
+      "n": 5,
+      "exact": 2,
+      "wrong_accepted": 0,
+      "abstained": 3,
+      "coverage": 0.4,
+      "error_among_accepted": 0.0,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 0.7763932022500211
+    }
+  },
+  "warmed_timing_ms": {
+    "p50": 57.42103500006124,
+    "p95": 59.51459780008008,
+    "max": 59.766415000012785
+  },
+  "nuisance_probe_summary": {
+    "original": {
+      "n": 5,
+      "exact": 2,
+      "wrong_accepted": 0,
+      "abstained": 3,
+      "coverage": 0.4,
+      "error_among_accepted": 0.0,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 0.7763932022500211
+    },
+    "dimmer": {
+      "n": 5,
+      "exact": 0,
+      "wrong_accepted": 0,
+      "abstained": 5,
+      "coverage": 0.0,
+      "error_among_accepted": null,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 1.0
+    },
+    "gamma_1.4": {
+      "n": 5,
+      "exact": 2,
+      "wrong_accepted": 0,
+      "abstained": 3,
+      "coverage": 0.4,
+      "error_among_accepted": 0.0,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 0.7763932022500211
+    },
+    "blur_sigma1": {
+      "n": 5,
+      "exact": 0,
+      "wrong_accepted": 0,
+      "abstained": 5,
+      "coverage": 0.0,
+      "error_among_accepted": null,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 1.0
+    },
+    "rotate_2deg": {
+      "n": 5,
+      "exact": 1,
+      "wrong_accepted": 0,
+      "abstained": 4,
+      "coverage": 0.2,
+      "error_among_accepted": 0.0,
+      "wrong_per_total": 0.0,
+      "zero_error_upper95_if_independent": 0.95
+    },
+    "erased_vertical_strip": {
+      "n": 5,
+      "exact": 0,
+      "wrong_accepted": 2,
+      "abstained": 3,
+      "coverage": 0.4,
+      "error_among_accepted": 1.0,
+      "wrong_per_total": 0.4,
+      "zero_error_upper95_if_independent": null
+    }
+  },
+  "identity_exact": 24,
+  "output": "data/reproduced_optical.json"
+}
+{
+  "synthetic_summary": {
+    "clean": {
+      "n": 30,
+      "correct": 30,
+      "wrong_nonempty": 0,
+      "abstained": 0,
+      "p50_ms_sandbox": 64.07334849996005
+    },
+    "complementary_occlusions": {
+      "n": 30,
+      "correct": 30,
+      "wrong_nonempty": 0,
+      "abstained": 0,
+      "p50_ms_sandbox": 128.52944699989166
+    },
+    "occlusion_a": {
+      "n": 30,
+      "correct": 0,
+      "wrong_nonempty": 0,
+      "abstained": 30,
+      "p50_ms_sandbox": 64.24109649992715
+    },
+    "registered_motion": {
+      "n": 30,
+      "correct": 30,
+      "wrong_nonempty": 0,
+      "abstained": 0,
+      "p50_ms_sandbox": 90.04209399972751
+    }
+  },
+  "stress_summary": {
+    "mixed_nuisance": {
+      "n": 60,
+      "correct": 60,
+      "wrong_nonempty": 0,
+      "abstained": 0,
+      "p50_ms_sandbox": 91.70966600004249
+    },
+    "mixed_nuisance_local_glare": {
+      "n": 60,
+      "correct": 1,
+      "wrong_nonempty": 2,
+      "abstained": 57,
+      "p50_ms_sandbox": 91.6056569999455
+    }
+  },
+  "real_summary": {
+    "blur_sigma1": {
+      "n": 5,
+      "correct": 1,
+      "wrong_nonempty": 0,
+      "abstained": 4,
+      "p50_ms_sandbox": 58.60370900018097
+    },
+    "derived_exposure_stack": {
+      "n": 5,
+      "correct": 2,
+      "wrong_nonempty": 0,
+      "abstained": 3,
+      "p50_ms_sandbox": 174.21760699994593
+    },
+    "dimmer": {
+      "n": 5,
+      "correct": 2,
+      "wrong_nonempty": 0,
+      "abstained": 3,
+      "p50_ms_sandbox": 58.32592599995223
+    },
+    "erased_vertical_strip": {
+      "n": 5,
+      "correct": 0,
+      "wrong_nonempty": 0,
+      "abstained": 5,
+      "p50_ms_sandbox": 57.9840765001336
+    },
+    "gamma_1.4": {
+      "n": 5,
+      "correct": 1,
+      "wrong_nonempty": 0,
+      "abstained": 4,
+      "p50_ms_sandbox": 58.31763800006229
+    },
+    "original": {
+      "n": 5,
+      "correct": 1,
+      "wrong_nonempty": 0,
+      "abstained": 4,
+      "p50_ms_sandbox": 58.622646499998154
+    },
+    "original_plus_occlusion": {
+      "n": 5,
+      "correct": 3,
+      "wrong_nonempty": 0,
+      "abstained": 2,
+      "p50_ms_sandbox": 115.75905749987214
+    },
+    "rotate_2deg": {
+      "n": 5,
+      "correct": 2,
+      "wrong_nonempty": 0,
+      "abstained": 3,
+      "p50_ms_sandbox": 58.22302049978134
+    }
+  }
+}
+{
+  "posthoc_summary": {
+    "synthetic": {
+      "clean": {
+        "n": 30,
+        "correct": 30,
+        "wrong_nonempty": 0,
+        "abstained": 0,
+        "p50_ms_sandbox": 62.98422450004182
+      },
+      "complementary_occlusions": {
+        "n": 30,
+        "correct": 30,
+        "wrong_nonempty": 0,
+        "abstained": 0,
+        "p50_ms_sandbox": 126.30676699996002
+      },
+      "occlusion_a": {
+        "n": 30,
+        "correct": 0,
+        "wrong_nonempty": 0,
+        "abstained": 30,
+        "p50_ms_sandbox": 63.11458249979296
+      },
+      "registered_motion": {
+        "n": 30,
+        "correct": 30,
+        "wrong_nonempty": 0,
+        "abstained": 0,
+        "p50_ms_sandbox": 89.69532699984484
+      }
+    },
+    "stress": {
+      "mixed_nuisance": {
+        "n": 60,
+        "correct": 60,
+        "wrong_nonempty": 0,
+        "abstained": 0,
+        "p50_ms_sandbox": 93.31913549999626
+      },
+      "mixed_nuisance_local_glare": {
+        "n": 60,
+        "correct": 0,
+        "wrong_nonempty": 0,
+        "abstained": 60,
+        "p50_ms_sandbox": 94.43800849999207
+      }
+    },
+    "real": {
+      "blur_sigma1": {
+        "n": 5,
+        "correct": 1,
+        "wrong_nonempty": 0,
+        "abstained": 4,
+        "p50_ms_sandbox": 63.376942500099176
+      },
+      "derived_exposure_stack": {
+        "n": 5,
+        "correct": 1,
+        "wrong_nonempty": 0,
+        "abstained": 4,
+        "p50_ms_sandbox": 178.1334934998995
+      },
+      "dimmer": {
+        "n": 5,
+        "correct": 1,
+        "wrong_nonempty": 0,
+        "abstained": 4,
+        "p50_ms_sandbox": 60.59780750001664
+      },
+      "erased_vertical_strip": {
+        "n": 5,
+        "correct": 0,
+        "wrong_nonempty": 0,
+        "abstained": 5,
+        "p50_ms_sandbox": 59.20892400013145
+      },
+      "gamma_1.4": {
+        "n": 5,
+        "correct": 1,
+        "wrong_nonempty": 0,
+        "abstained": 4,
+        "p50_ms_sandbox": 59.06451499981813
+      },
+      "original": {
+        "n": 5,
+        "correct": 1,
+        "wrong_nonempty": 0,
+        "abstained": 4,
+        "p50_ms_sandbox": 60.4650960001436
+      },
+      "original_plus_occlusion": {
+        "n": 5,
+        "correct": 1,
+        "wrong_nonempty": 0,
+        "abstained": 4,
+        "p50_ms_sandbox": 133.0016174999855
+      },
+      "rotate_2deg": {
+        "n": 5,
+        "correct": 0,
+        "wrong_nonempty": 0,
+        "abstained": 5,
+        "p50_ms_sandbox": 60.71873699988828
+      }
+    }
+  },
+  "fresh_summary": {
+    "fresh_local_glare": {
+      "n": 40,
+      "correct": 1,
+      "wrong_nonempty": 0,
+      "abstained": 39,
+      "p50_ms_sandbox": 94.77299299987862
+    },
+    "fresh_mixed": {
+      "n": 40,
+      "correct": 40,
+      "wrong_nonempty": 0,
+      "abstained": 0,
+      "p50_ms_sandbox": 92.94568100017386
+    }
+  }
+}
+
+CLEAN-ENVIRONMENT COMPARISON
+64/64 unit tests pass in isolated venv installed from requirements-optical.txt.
+Optical fixture predictions, cached consensus and synthetic barcode results match.
+360 profile/policy scenario rows match value/status/states/candidates exactly.
+Timing intentionally excluded from comparison.
+Synthetic HTML demonstration regenerated successfully.
+Runtime source commit tested: 7842d07ebca84bcce1fe373c8d86bb46da42f5f9
