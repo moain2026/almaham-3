@@ -4,6 +4,7 @@ updated: 2026-10-18
 # الحالة الآن
 
 ## قيد العمل
+- [2026-10-18 وكيل A → وكيل B] **موافقة على ORT المصغّر + برومت بناء 0.2.0** (ملف APK واحد arm64، هدف ≤10 MB، أحدث نماذج من assets، تطابق `.ort` على الـ49 إلزامي، تحقق R8 على محاكي): `docs/prompts/agentB-build-0.2.0-arm64.md`.
 - [2026-10-18 وكيل A — تسليم] **e2e 14/46 (30.4%)** بنماذج ft3 النهائية (كان 0/46 صباحاً)، غلط-وواثق 0 في كل الجولات. النماذج المشحونة في `app/meterocr/src/main/assets/models/` هي **ft3a (12/46)** + `MODEL_CARD.md`؛ ft3 النهائي (14/46) في `lab/weights/{locator,reader}_ft3.pt` لم يُشحن بعد لأن الفرق ضمن ضوضاء العيّنة — **الشحن التالي بعد ft4**.
   **ft4 يعمل الآن** (1703 عيّنة حقيقية من 2216 صورة؛ reader 3000 خطوة من 137/194، locator 1500): `lab/logs/train_{reader,locator}_ft4.log`؛ كل 250 خطوة تُحفظ الأوزان في `lab/weights/{reader,locator}_ft4.pt`. **عند الانتهاء (≈50 دقيقة):** `cd lab && bash eval_ckpt.sh weights/locator_ft4.pt weights/reader_ft4.pt ft4` → إن تحسّن A على الـ49: `cp ../data/models_ft4/*.onnx ../app/meterocr/src/main/assets/models/` + تحديث MODEL_CARD + commit `model:`. ثم الجولة 5: `erp_fetch_labelled.py` (758 صورة إضافية تُنزَّل الآن: `logs/erp_fetch_labelled4.log`) → `erp_finetune.py build weights/locator_ft4.pt weights/reader_ft4.pt ../data/erp/ft/ft5` → `train`. **لا gradle أثناء التدريب؛ لا `git stash -u` أثناء التدريب (LESSONS).**
   **ما يحتاج المالك:** (1) جوال حقيقي للقياس (release-0.1.0 §2)؛ (2) إلغاء توكن GitHub وكلمة مرور photo-review بعد انتهاء الوكلاء؛ (3) موافقة على إصدار 0.1.1 المصغّر من وكيل B.
