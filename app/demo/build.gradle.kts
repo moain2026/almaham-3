@@ -30,12 +30,14 @@ android {
         create("field") { dimension = "use" }
         create("bench") { dimension = "use"; versionNameSuffix = "-bench" }
     }
-    // One APK per CPU architecture instead of both in one file. Debug keeps x86_64 for the emulator.
+    // One APK per CPU architecture instead of both in one file (phones: arm64-v8a, armeabi-v7a).
+    // x86_64 only when building for the emulator: ./gradlew -Pemulator ...
     splits {
         abi {
             isEnable = true
             reset()
-            include("arm64-v8a", "armeabi-v7a", "x86_64")
+            if (project.hasProperty("emulator")) include("arm64-v8a", "armeabi-v7a", "x86_64")
+            else include("arm64-v8a", "armeabi-v7a")
             isUniversalApk = false
         }
     }

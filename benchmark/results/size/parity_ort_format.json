@@ -1,0 +1,64 @@
+{
+ "n_images": 10,
+ "max_abs_diff": {
+  "loc_peaks": 0.10318613052368164,
+  "loc_size": 1.4901161193847656e-08,
+  "loc_offset": 1.30385160446167e-08,
+  "rd_peaks": 0.04175752401351929,
+  "rd_size": 1.239776611328125e-05,
+  "rd_offset": 4.76837158203125e-07
+ },
+ "same_reading_from_reader_heatmaps": 10,
+ "rows": [
+  {
+   "file": "23065.jpg",
+   "ref": "",
+   "other": ""
+  },
+  {
+   "file": "23066.jpg",
+   "ref": "2",
+   "other": "2"
+  },
+  {
+   "file": "23067.jpg",
+   "ref": "",
+   "other": ""
+  },
+  {
+   "file": "23068.jpg",
+   "ref": "6",
+   "other": "6"
+  },
+  {
+   "file": "23069.jpg",
+   "ref": "66",
+   "other": "66"
+  },
+  {
+   "file": "23070.jpg",
+   "ref": "",
+   "other": ""
+  },
+  {
+   "file": "23071.jpg",
+   "ref": "6",
+   "other": "6"
+  },
+  {
+   "file": "23072.jpg",
+   "ref": "",
+   "other": ""
+  },
+  {
+   "file": "23073.jpg",
+   "ref": "66",
+   "other": "66"
+  },
+  {
+   "file": "23074.jpg",
+   "ref": "9",
+   "other": "9"
+  }
+ ]
+}
