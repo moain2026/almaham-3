@@ -148,10 +148,10 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun applyOutcome(o: CaptureOutcome): EntryState {
-        val value = o.read.reading.value
+        val value = o.read.voted.value
         val thumb = Bitmap.createScaledBitmap(o.crop, 240, (240f * o.crop.height / o.crop.width).toInt().coerceAtLeast(1), true)
         return EntryState(
-            value = value, autoRead = true, edited = false, uncertainIndices = o.read.reading.uncertainIndices,
+            value = value, autoRead = true, edited = false, uncertainIndices = o.read.voted.uncertainIndices,
             thumbnail = thumb, evidenceBytes = 0, captureToNumberMs = o.captureToNumberMs, engineValue = value,
             warning = ReadingValidator.validate(value, DummyData.PREVIOUS),
         )

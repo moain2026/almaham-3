@@ -13,6 +13,7 @@ import com.almaham.meterocr.NormRect
 import com.almaham.meterocr.NumberCleaner
 import com.almaham.meterocr.ReadingStatus
 import com.almaham.meterocr.RectGeometry
+import com.almaham.meterocr.Vote
 import com.google.android.gms.tasks.Tasks
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
@@ -101,7 +102,7 @@ class BatchBenchmark(private val ctx: Context, private val reader: MeterReader) 
         val truth = loadTruth()
         val boxes = loadBoxes()
         val rows = ArrayList<BenchRow>()
-        val total = truth.size * 4
+        val total = truth.size * 6
         var done = 0
         reader.warmUp()
         for (t in truth) {
@@ -117,6 +118,13 @@ class BatchBenchmark(private val ctx: Context, private val reader: MeterReader) 
                 val row = BenchRow(t.file, mode, "digitnet", t.reading, r.reading.value, r.reading.status.name, r.reading.confident,
                     r.reading.minConfidence, r.times.locatorPrepMs + r.times.locatorMs, r.times.linePrepMs + r.times.readerMs, tot, ev)
                 rows.add(row); progress(++done, total, row)
+                val fv = r.forensic?.text?.let { NumberCleaner.stripLeadingZeros(it) } ?: ""
+                rows.add(BenchRow(t.file, mode, "forensic", t.reading, fv, r.forensic?.status ?: "NO_LINE",
+                    r.forensic?.digits?.all { it.conf >= Vote.HIGH } == true, r.forensic?.digits?.minOfOrNull { it.conf.toFloat() } ?: 0f,
+                    0f, r.times.forensicMs, r.times.forensicMs, 0))
+                val vrow = BenchRow(t.file, mode, "vote", t.reading, r.voted.value, r.voted.status, r.voted.confident,
+                    r.voted.digits.minOfOrNull { it.conf } ?: 0f, 0f, 0f, tot, 0)
+                rows.add(vrow); progress(++done, total, vrow)
                 r.readerInput.recycle()
                 val (mv, mc, mms) = mlkitRead(bmp)
                 val mrow = BenchRow(t.file, mode, "mlkit", t.reading, mv, if (mv.isEmpty()) ReadingStatus.EMPTY.name else "OK", mv.isNotEmpty(), mc, 0f, mms, mms, 0)

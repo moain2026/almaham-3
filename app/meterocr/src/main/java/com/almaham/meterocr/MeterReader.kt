@@ -17,13 +17,19 @@ import com.almaham.meterocr.MeterOcrConfig as C
 /** Wall-clock milliseconds of each stage, measured with SystemClock.elapsedRealtimeNanos. */
 data class StageTimes(
     val locatorPrepMs: Float, val locatorMs: Float, val linePrepMs: Float, val readerMs: Float, val assembleMs: Float,
+    val forensicMs: Float = 0f,
 ) {
-    val totalMs get() = locatorPrepMs + locatorMs + linePrepMs + readerMs + assembleMs
+    val totalMs get() = locatorPrepMs + locatorMs + linePrepMs + readerMs + assembleMs + forensicMs
 }
 
 /** Result of one read on one rectangle crop. */
 data class ReadResult(
+    /** Neural (DigitNet) reading with per-digit confidence. */
     val reading: Reading,
+    /** Deterministic ForensicReader result on the tight located line (null when no line was located). */
+    val forensic: ForensicReader.Result?,
+    /** Final per-digit vote of both engines — this is what the entry field shows. */
+    val voted: VotedReading,
     /** Located main line in crop pixels (null when the locator found nothing and the whole crop was read). */
     val lineRect: RectF?,
     val lineScore: Float,
@@ -95,10 +101,23 @@ class MeterReader(context: Context) : AutoCloseable {
         val verified = SegmentVerifier.verify(SegmentVerifier.gray(readIn), readIn.width, readIn.height, reading.digits)
         reading = reading.copy(digits = verified)
         val t5 = SystemClock.elapsedRealtimeNanos()
+        // Second engine: deterministic reader on the TIGHT located line (it is sensitive to padding; measured in
+        // docs/benchmark_report.md §7). Skipped when no line was located.
+        val forensic = lineRect?.let { r ->
+            val tight = Rect(r.left.toInt().coerceIn(0, crop.width - 1), r.top.toInt().coerceIn(0, crop.height - 1),
+                r.right.toInt().coerceIn(1, crop.width), r.bottom.toInt().coerceIn(1, crop.height))
+            if (tight.width() < 8 || tight.height() < 6) null else {
+                val px = IntArray(tight.width() * tight.height())
+                crop.getPixels(px, 0, tight.width(), tight.left, tight.top, tight.width(), tight.height())
+                ForensicReader.readLine(px, tight.width(), tight.height())
+            }
+        }
+        val voted = Vote.vote(reading, forensic)
+        val t6 = SystemClock.elapsedRealtimeNanos()
         locIn.recycle()
         fun ms(a: Long, b: Long) = (b - a) / 1_000_000f
-        return ReadResult(reading, lineRect, best?.score ?: 0f,
-            StageTimes(ms(t0, t1), ms(t1, t2), ms(t2, t3), ms(t3, t4), ms(t4, t5)), readIn)
+        return ReadResult(reading, forensic, voted, lineRect, best?.score ?: 0f,
+            StageTimes(ms(t0, t1), ms(t1, t2), ms(t2, t3), ms(t3, t4), ms(t4, t5), ms(t5, t6)), readIn)
     }
 
     /** For every cell the pitch lattice predicts, take the strongest digit class in the raw heat-map (3x3 window). */
