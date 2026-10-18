@@ -11,19 +11,32 @@ android {
         applicationId = "com.almaham.meterdemo"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.1.1"
         vectorDrawables.useSupportLibrary = true
-        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
     }
     buildTypes {
-        debug {
-            // x86_64 only in debug so the app also runs on an emulator (no real phone in the sandbox). Release stays ARM.
-            ndk { abiFilters += listOf("x86_64") }
-        }
         release {
-            isMinifyEnabled = false
+            // R8: shrink + obfuscate code and drop unused resources (docs/apk-size-report.md). Keep rules: proguard-rules.pro.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+    // field = what readers install (no ML Kit). bench = same app + ML Kit baseline for the batch comparison.
+    flavorDimensions += "use"
+    productFlavors {
+        create("field") { dimension = "use" }
+        create("bench") { dimension = "use"; versionNameSuffix = "-bench" }
+    }
+    // One APK per CPU architecture instead of both in one file. Debug keeps x86_64 for the emulator.
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "armeabi-v7a", "x86_64")
+            isUniversalApk = false
         }
     }
     compileOptions {
@@ -52,6 +65,6 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
     // Baseline comparison engine (brief §6.a). Google ML Kit: proprietary but royalty-free ("ML Kit Terms"); bundled model ~4MB.
-    implementation("com.google.mlkit:text-recognition:16.0.1")
+    "benchImplementation"("com.google.mlkit:text-recognition:16.0.1")
     testImplementation("junit:junit:4.13.2")
 }

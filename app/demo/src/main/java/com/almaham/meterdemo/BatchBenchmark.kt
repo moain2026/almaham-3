@@ -14,10 +14,6 @@ import com.almaham.meterocr.NumberCleaner
 import com.almaham.meterocr.ReadingStatus
 import com.almaham.meterocr.RectGeometry
 import com.almaham.meterocr.Vote
-import com.google.android.gms.tasks.Tasks
-import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import org.json.JSONObject
 import java.io.File
 
@@ -46,7 +42,7 @@ data class BenchRow(
  * <external files dir>/photos/ (pushed with adb, never bundled). Output: bench_<device>.csv + bench_summary.json.
  */
 class BatchBenchmark(private val ctx: Context, private val reader: MeterReader) {
-    private val mlkit = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+    private val mlkit: MlKitBaseline = MlKitBaselineFactory.create()
     val photosDir: File = File(ctx.getExternalFilesDir(null), "photos")
     val outDir: File = ctx.getExternalFilesDir(null)!!
 
@@ -85,12 +81,12 @@ class BatchBenchmark(private val ctx: Context, private val reader: MeterReader) 
         return Bitmap.createBitmap(b, p.left, p.top, p.width, p.height)
     }
 
-    /** ML Kit baseline: longest run of digits (with optional dot) in the recognised text, integer part, cleaned. */
-    private fun mlkitRead(b: Bitmap): Triple<String, Float, Float> {
+    /** ML Kit baseline (flavor `bench` only; `field` has no ML Kit and returns unavailable -> rows skipped). */
+    private fun mlkitRead(b: Bitmap): Triple<String, Float, Float>? {
+        if (!mlkit.available) return null
         val t0 = SystemClock.elapsedRealtimeNanos()
-        val text = runCatching { Tasks.await(mlkit.process(InputImage.fromBitmap(b, 0))) }.getOrNull()
+        val raw = mlkit.lines(b)
         val ms = (SystemClock.elapsedRealtimeNanos() - t0) / 1_000_000f
-        val raw = text?.textBlocks?.flatMap { it.lines }?.map { it.text } ?: emptyList()
         val cands = raw.flatMap { Regex("\\d{2,8}(?:[.,]\\d{1,2})?").findAll(it).map { m -> m.value }.toList() }
         val best = cands.maxByOrNull { it.substringBefore('.').substringBefore(',').length } ?: ""
         val integer = best.substringBefore('.').substringBefore(',')
@@ -127,7 +123,8 @@ class BatchBenchmark(private val ctx: Context, private val reader: MeterReader) 
                     r.voted.digits.minOfOrNull { it.conf } ?: 0f, 0f, 0f, tot, 0)
                 rows.add(vrow); progress(++done, total, vrow)
                 r.readerInput.recycle()
-                val (mv, mc, mms) = mlkitRead(bmp)
+                val ml = mlkitRead(bmp) ?: continue
+                val (mv, mc, mms) = ml
                 val mrow = BenchRow(t.file, mode, "mlkit", t.reading, mv, if (mv.isEmpty()) ReadingStatus.EMPTY.name else "OK", mv.isNotEmpty(), mc, 0f, mms, mms, 0)
                 rows.add(mrow); progress(++done, total, mrow)
             }
