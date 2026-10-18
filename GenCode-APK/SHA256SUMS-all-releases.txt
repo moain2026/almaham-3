@@ -1,0 +1,3 @@
+8940f7372997f39dcaab120ec84c2afa2ec4865b277ad63a12bacb9cb2be3b3f  almaham-meter-0.2.1-arm64.apk
+c65869162744373c96d29cb9bcfdaa621b3623d062429d4c54b66e1b1c906e7d  almaham-meter-0.2.0-arm64.apk
+9eaf497eaa1d48bbf83f9ab2a1684f945ff6f8756042844dfc4bd12b27145e5c  almaham-meter-0.1.1-arm64.apk
