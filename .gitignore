@@ -32,3 +32,8 @@ local.properties
 *.iml
 .idea/
 .DS_Store
+# android build outputs / local sdk path
+/app/local.properties
+/app/.gradle/
+/app/**/build/
+/app/.kotlin/

@@ -1,0 +1,1330 @@
+{
+ "summary": {
+  "n_readable": 46,
+  "exact": 0,
+  "exact_clear": 0,
+  "n_clear": 32,
+  "empty": 14,
+  "wrong": 32,
+  "wrong_confident": 1,
+  "confident_total": 1,
+  "confident_correct": 0,
+  "digit_acc": 0.0109,
+  "unreadable_rejected": 2,
+  "unreadable_n": 3,
+  "p50_ms": 41.5,
+  "p95_ms": 79.5,
+  "max_ms": 94.0,
+  "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)",
+  "stage_loc_prep_p50_ms": 5.83,
+  "stage_locate_p50_ms": 19.9,
+  "stage_line_prep_p50_ms": 7.07,
+  "stage_read_p50_ms": 5.8,
+  "stage_assemble_p50_ms": 0.09
+ },
+ "models": "../app/meterocr/src/main/assets/models",
+ "rows": [
+  {
+   "file": "23065.jpg",
+   "mode": "B",
+   "truth": "2410",
+   "type": "SMART_MT10",
+   "difficulty": "hard",
+   "uncertain_gt": "1",
+   "raw": "2",
+   "value": "2",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.347,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 6.13,
+    "locate": 12.94,
+    "line_prep": 6.94,
+    "read": 15.07,
+    "assemble": 0.07,
+    "total": 41.16
+   }
+  },
+  {
+   "file": "23066.jpg",
+   "mode": "B",
+   "truth": "6719",
+   "type": "TOMAS_STATIC",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.83,
+    "locate": 22.49,
+    "line_prep": 30.46,
+    "read": 2.98,
+    "assemble": 0.05,
+    "total": 61.8
+   }
+  },
+  {
+   "file": "23067.jpg",
+   "mode": "B",
+   "truth": "5337",
+   "type": "SMART_MT10",
+   "difficulty": "hard",
+   "uncertain_gt": "0",
+   "raw": "00",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.323,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0,
+    1
+   ],
+   "ms": {
+    "loc_prep": 5.81,
+    "locate": 9.07,
+    "line_prep": 22.79,
+    "read": 3.11,
+    "assemble": 0.11,
+    "total": 40.89
+   }
+  },
+  {
+   "file": "23068.jpg",
+   "mode": "B",
+   "truth": "86",
+   "type": "TOMAS_STATIC",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.85,
+    "locate": 19.9,
+    "line_prep": 18.83,
+    "read": 2.93,
+    "assemble": 0.03,
+    "total": 47.54
+   }
+  },
+  {
+   "file": "23069.jpg",
+   "mode": "B",
+   "truth": "2559",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "03",
+   "value": "3",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.368,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.8,
+    "locate": 6.72,
+    "line_prep": 6.55,
+    "read": 3.98,
+    "assemble": 0.11,
+    "total": 23.16
+   }
+  },
+  {
+   "file": "23070.jpg",
+   "mode": "B",
+   "truth": "21",
+   "type": "CRYSTAL",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.87,
+    "locate": 7.99,
+    "line_prep": 6.68,
+    "read": 10.68,
+    "assemble": 0.03,
+    "total": 31.25
+   }
+  },
+  {
+   "file": "23071.jpg",
+   "mode": "B",
+   "truth": "6509",
+   "type": "SMART_MT10",
+   "difficulty": "hard",
+   "uncertain_gt": "1",
+   "raw": "3",
+   "value": "3",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.407,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.95,
+    "locate": 20.55,
+    "line_prep": 6.71,
+    "read": 32.81,
+    "assemble": 16.16,
+    "total": 82.18
+   }
+  },
+  {
+   "file": "23072.jpg",
+   "mode": "B",
+   "truth": "",
+   "type": "SMART_MT10",
+   "difficulty": "unreadable",
+   "uncertain_gt": "1",
+   "raw": "6",
+   "value": "6",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.399,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 11.56,
+    "locate": 9.67,
+    "line_prep": 7.22,
+    "read": 17.03,
+    "assemble": 0.12,
+    "total": 45.6
+   }
+  },
+  {
+   "file": "23073.jpg",
+   "mode": "B",
+   "truth": "7990",
+   "type": "SMART_MT10",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "35",
+   "value": "35",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.315,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0,
+    1
+   ],
+   "ms": {
+    "loc_prep": 5.8,
+    "locate": 9.57,
+    "line_prep": 7.93,
+    "read": 3.54,
+    "assemble": 0.1,
+    "total": 26.93
+   }
+  },
+  {
+   "file": "23074.jpg",
+   "mode": "B",
+   "truth": "9550",
+   "type": "EMETER_GREEN",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "081",
+   "value": "81",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.304,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0,
+    1,
+    2
+   ],
+   "ms": {
+    "loc_prep": 5.86,
+    "locate": 7.39,
+    "line_prep": 7.33,
+    "read": 12.15,
+    "assemble": 0.12,
+    "total": 32.85
+   }
+  },
+  {
+   "file": "23075.jpg",
+   "mode": "B",
+   "truth": "7990",
+   "type": "SMART_MT10",
+   "difficulty": "hard",
+   "uncertain_gt": "0",
+   "raw": "027",
+   "value": "27",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.338,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0,
+    1,
+    2
+   ],
+   "ms": {
+    "loc_prep": 5.91,
+    "locate": 22.65,
+    "line_prep": 18.83,
+    "read": 4.29,
+    "assemble": 0.15,
+    "total": 51.84
+   }
+  },
+  {
+   "file": "23076.jpg",
+   "mode": "B",
+   "truth": "303",
+   "type": "CRYSTAL",
+   "difficulty": "hard",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.84,
+    "locate": 23.98,
+    "line_prep": 6.83,
+    "read": 3.61,
+    "assemble": 0.03,
+    "total": 40.3
+   }
+  },
+  {
+   "file": "23077.jpg",
+   "mode": "B",
+   "truth": "7589",
+   "type": "SMART_MT10",
+   "difficulty": "hard",
+   "uncertain_gt": "0",
+   "raw": "0",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.305,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 10.94,
+    "locate": 7.38,
+    "line_prep": 6.78,
+    "read": 3.74,
+    "assemble": 0.11,
+    "total": 28.94
+   }
+  },
+  {
+   "file": "23078.jpg",
+   "mode": "B",
+   "truth": "1724",
+   "type": "TOMAS_STATIC",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.83,
+    "locate": 6.52,
+    "line_prep": 6.53,
+    "read": 3.55,
+    "assemble": 0.03,
+    "total": 22.46
+   }
+  },
+  {
+   "file": "23079.jpg",
+   "mode": "B",
+   "truth": "7990",
+   "type": "SMART_MT10",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "07",
+   "value": "7",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.312,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0,
+    1
+   ],
+   "ms": {
+    "loc_prep": 6.06,
+    "locate": 25.25,
+    "line_prep": 18.82,
+    "read": 15.95,
+    "assemble": 0.11,
+    "total": 66.18
+   }
+  },
+  {
+   "file": "23080.jpg",
+   "mode": "B",
+   "truth": "5078",
+   "type": "SMART_MT10",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "60",
+   "value": "60",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.316,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0,
+    1
+   ],
+   "ms": {
+    "loc_prep": 5.81,
+    "locate": 30.85,
+    "line_prep": 18.88,
+    "read": 14.33,
+    "assemble": 0.1,
+    "total": 69.96
+   }
+  },
+  {
+   "file": "23081.jpg",
+   "mode": "B",
+   "truth": "4998",
+   "type": "EMETER_GREEN",
+   "difficulty": "hard",
+   "uncertain_gt": "0",
+   "raw": "0",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.372,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.79,
+    "locate": 28.03,
+    "line_prep": 6.91,
+    "read": 10.48,
+    "assemble": 0.09,
+    "total": 51.29
+   }
+  },
+  {
+   "file": "23082.jpg",
+   "mode": "B",
+   "truth": "782",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.9,
+    "locate": 26.35,
+    "line_prep": 19.44,
+    "read": 12.96,
+    "assemble": 0.03,
+    "total": 64.68
+   }
+  },
+  {
+   "file": "23083.jpg",
+   "mode": "B",
+   "truth": "532",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "6",
+   "value": "6",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.303,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 6.82,
+    "locate": 22.54,
+    "line_prep": 6.78,
+    "read": 4.11,
+    "assemble": 0.09,
+    "total": 40.34
+   }
+  },
+  {
+   "file": "23084.jpg",
+   "mode": "B",
+   "truth": "1259",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.92,
+    "locate": 9.22,
+    "line_prep": 6.74,
+    "read": 16.2,
+    "assemble": 0.03,
+    "total": 38.11
+   }
+  },
+  {
+   "file": "23085.jpg",
+   "mode": "B",
+   "truth": "1989",
+   "type": "EMETER_GREEN",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "0",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.316,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.8,
+    "locate": 6.88,
+    "line_prep": 6.57,
+    "read": 16.23,
+    "assemble": 0.07,
+    "total": 35.55
+   }
+  },
+  {
+   "file": "23086.jpg",
+   "mode": "B",
+   "truth": "2392",
+   "type": "EMETER_GREEN",
+   "difficulty": "hard",
+   "uncertain_gt": "1",
+   "raw": "0",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.338,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.9,
+    "locate": 12.16,
+    "line_prep": 37.7,
+    "read": 38.18,
+    "assemble": 0.12,
+    "total": 94.05
+   }
+  },
+  {
+   "file": "23087.jpg",
+   "mode": "B",
+   "truth": "",
+   "type": "SMART_MT10",
+   "difficulty": "unreadable",
+   "uncertain_gt": "1",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 4.39,
+    "locate": 27.37,
+    "line_prep": 5.64,
+    "read": 4.09,
+    "assemble": 0.03,
+    "total": 41.52
+   }
+  },
+  {
+   "file": "23088.jpg",
+   "mode": "B",
+   "truth": "31265",
+   "type": "EMETER_GREEN",
+   "difficulty": "hard",
+   "uncertain_gt": "1",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 4.42,
+    "locate": 37.31,
+    "line_prep": 5.31,
+    "read": 17.96,
+    "assemble": 0.03,
+    "total": 65.03
+   }
+  },
+  {
+   "file": "23089.jpg",
+   "mode": "B",
+   "truth": "538",
+   "type": "TAGADOD",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 4.45,
+    "locate": 27.92,
+    "line_prep": 16.64,
+    "read": 4.31,
+    "assemble": 0.03,
+    "total": 53.36
+   }
+  },
+  {
+   "file": "23090.jpg",
+   "mode": "B",
+   "truth": "490",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 4.53,
+    "locate": 8.75,
+    "line_prep": 5.9,
+    "read": 3.73,
+    "assemble": 0.03,
+    "total": 22.94
+   }
+  },
+  {
+   "file": "23091.jpg",
+   "mode": "B",
+   "truth": "243",
+   "type": "TAGADOD",
+   "difficulty": "hard",
+   "uncertain_gt": "1",
+   "raw": "2",
+   "value": "2",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.364,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 4.44,
+    "locate": 6.45,
+    "line_prep": 5.34,
+    "read": 24.26,
+    "assemble": 0.1,
+    "total": 40.58
+   }
+  },
+  {
+   "file": "23092.jpg",
+   "mode": "B",
+   "truth": "5619",
+   "type": "EMETER_GREEN",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "5",
+   "value": "5",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.311,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 4.42,
+    "locate": 26.26,
+    "line_prep": 13.29,
+    "read": 20.68,
+    "assemble": 0.07,
+    "total": 64.72
+   }
+  },
+  {
+   "file": "23093.jpg",
+   "mode": "B",
+   "truth": "",
+   "type": "SMART_MT10",
+   "difficulty": "unreadable",
+   "uncertain_gt": "1",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 4.48,
+    "locate": 33.37,
+    "line_prep": 5.47,
+    "read": 10.26,
+    "assemble": 0.03,
+    "total": 53.61
+   }
+  },
+  {
+   "file": "23094.jpg",
+   "mode": "B",
+   "truth": "21",
+   "type": "CRYSTAL",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.72,
+    "locate": 9.34,
+    "line_prep": 19.44,
+    "read": 3.62,
+    "assemble": 0.05,
+    "total": 38.17
+   }
+  },
+  {
+   "file": "23095.jpg",
+   "mode": "B",
+   "truth": "26684",
+   "type": "TOMAS_STATIC",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "6",
+   "value": "6",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.339,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 4.44,
+    "locate": 6.65,
+    "line_prep": 5.22,
+    "read": 3.46,
+    "assemble": 0.1,
+    "total": 19.87
+   }
+  },
+  {
+   "file": "23096.jpg",
+   "mode": "B",
+   "truth": "3283",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "60",
+   "value": "60",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.325,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0,
+    1
+   ],
+   "ms": {
+    "loc_prep": 4.38,
+    "locate": 11.41,
+    "line_prep": 21.32,
+    "read": 4.28,
+    "assemble": 0.1,
+    "total": 41.49
+   }
+  },
+  {
+   "file": "23097.jpg",
+   "mode": "B",
+   "truth": "1020",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "006",
+   "value": "6",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.305,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0,
+    1,
+    2
+   ],
+   "ms": {
+    "loc_prep": 4.38,
+    "locate": 21.21,
+    "line_prep": 5.42,
+    "read": 5.8,
+    "assemble": 0.13,
+    "total": 36.94
+   }
+  },
+  {
+   "file": "23098.jpg",
+   "mode": "B",
+   "truth": "52",
+   "type": "CRYSTAL",
+   "difficulty": "hard",
+   "uncertain_gt": "0",
+   "raw": "0",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.38,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.8,
+    "locate": 38.93,
+    "line_prep": 6.6,
+    "read": 28.03,
+    "assemble": 0.11,
+    "total": 79.46
+   }
+  },
+  {
+   "file": "23099.jpg",
+   "mode": "B",
+   "truth": "3394",
+   "type": "TOMAS_SMART",
+   "difficulty": "hard",
+   "uncertain_gt": "1",
+   "raw": "0",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.33,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.8,
+    "locate": 20.49,
+    "line_prep": 18.81,
+    "read": 16.48,
+    "assemble": 0.11,
+    "total": 61.7
+   }
+  },
+  {
+   "file": "23100.jpg",
+   "mode": "B",
+   "truth": "32",
+   "type": "CRYSTAL",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "0",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.336,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.81,
+    "locate": 7.97,
+    "line_prep": 6.79,
+    "read": 15.08,
+    "assemble": 0.12,
+    "total": 35.77
+   }
+  },
+  {
+   "file": "23101.jpg",
+   "mode": "B",
+   "truth": "1671",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 7.0,
+    "locate": 25.73,
+    "line_prep": 18.86,
+    "read": 29.26,
+    "assemble": 0.07,
+    "total": 80.92
+   }
+  },
+  {
+   "file": "23102.jpg",
+   "mode": "B",
+   "truth": "2260",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "2",
+   "value": "2",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.306,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.78,
+    "locate": 15.68,
+    "line_prep": 6.92,
+    "read": 2.89,
+    "assemble": 0.09,
+    "total": 31.35
+   }
+  },
+  {
+   "file": "23103.jpg",
+   "mode": "B",
+   "truth": "2850",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "0",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.528,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.86,
+    "locate": 21.69,
+    "line_prep": 18.82,
+    "read": 21.85,
+    "assemble": 0.1,
+    "total": 68.33
+   }
+  },
+  {
+   "file": "23104.jpg",
+   "mode": "B",
+   "truth": "2231",
+   "type": "TOMAS_SMART",
+   "difficulty": "hard",
+   "uncertain_gt": "0",
+   "raw": "6",
+   "value": "6",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.323,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.85,
+    "locate": 25.03,
+    "line_prep": 18.85,
+    "read": 16.34,
+    "assemble": 0.09,
+    "total": 66.16
+   }
+  },
+  {
+   "file": "23105.jpg",
+   "mode": "B",
+   "truth": "2231",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "0",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.344,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.87,
+    "locate": 20.94,
+    "line_prep": 18.85,
+    "read": 4.25,
+    "assemble": 0.1,
+    "total": 50.01
+   }
+  },
+  {
+   "file": "23106.jpg",
+   "mode": "B",
+   "truth": "4305",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "255",
+   "value": "255",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.311,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0,
+    1,
+    2
+   ],
+   "ms": {
+    "loc_prep": 6.0,
+    "locate": 19.17,
+    "line_prep": 7.07,
+    "read": 4.26,
+    "assemble": 0.15,
+    "total": 36.65
+   }
+  },
+  {
+   "file": "23107.jpg",
+   "mode": "B",
+   "truth": "2058",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "6",
+   "value": "6",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.337,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 6.21,
+    "locate": 8.09,
+    "line_prep": 7.12,
+    "read": 3.52,
+    "assemble": 0.09,
+    "total": 25.03
+   }
+  },
+  {
+   "file": "23108.jpg",
+   "mode": "B",
+   "truth": "2921",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "3",
+   "value": "3",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.354,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 6.04,
+    "locate": 8.63,
+    "line_prep": 6.79,
+    "read": 30.66,
+    "assemble": 0.17,
+    "total": 52.29
+   }
+  },
+  {
+   "file": "23109.jpg",
+   "mode": "B",
+   "truth": "2887",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.87,
+    "locate": 6.58,
+    "line_prep": 7.01,
+    "read": 12.48,
+    "assemble": 0.03,
+    "total": 31.97
+   }
+  },
+  {
+   "file": "23110.jpg",
+   "mode": "B",
+   "truth": "2526",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "5",
+   "value": "5",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.33,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 6.14,
+    "locate": 26.16,
+    "line_prep": 34.99,
+    "read": 3.6,
+    "assemble": 0.12,
+    "total": 71.02
+   }
+  },
+  {
+   "file": "23111.jpg",
+   "mode": "B",
+   "truth": "1593",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "0",
+   "value": "0",
+   "status": "OK",
+   "ok": false,
+   "confident": true,
+   "min_conf": 0.487,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.91,
+    "locate": 22.44,
+    "line_prep": 19.77,
+    "read": 4.28,
+    "assemble": 0.07,
+    "total": 52.48
+   }
+  },
+  {
+   "file": "23112.jpg",
+   "mode": "B",
+   "truth": "2662",
+   "type": "TOMAS_SMART",
+   "difficulty": "hard",
+   "uncertain_gt": "0",
+   "raw": "",
+   "value": "",
+   "status": "EMPTY",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.0,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [],
+   "ms": {
+    "loc_prep": 5.76,
+    "locate": 21.15,
+    "line_prep": 19.45,
+    "read": 4.26,
+    "assemble": 0.04,
+    "total": 50.66
+   }
+  },
+  {
+   "file": "23113.jpg",
+   "mode": "B",
+   "truth": "3018",
+   "type": "TOMAS_SMART",
+   "difficulty": "clear",
+   "uncertain_gt": "0",
+   "raw": "3",
+   "value": "3",
+   "status": "OK",
+   "ok": false,
+   "confident": false,
+   "min_conf": 0.317,
+   "line_score": 0.0,
+   "line_found": false,
+   "uncertain_idx": [
+    0
+   ],
+   "ms": {
+    "loc_prep": 5.82,
+    "locate": 12.68,
+    "line_prep": 6.84,
+    "read": 3.9,
+    "assemble": 0.18,
+    "total": 29.41
+   }
+  }
+ ]
+}

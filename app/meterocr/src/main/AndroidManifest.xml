@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!--
+      onnxruntime-android 1.31.0's own manifest declares INTERNET + ACCESS_NETWORK_STATE and a
+      ContentProvider `ai.onnxruntime.TelemetryInitializer` (logs UnsatisfiedLinkError / "Receiver
+      not registered" on emulator API 30, see docs/phone-test-emulator_x86_64_api30.md).
+      The meter reader is strictly offline (privacy requirement): strip the provider and the two
+      network permissions at manifest-merge time. Inference itself needs none of them.
+    -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
+
+    <application>
+        <provider
+            android:name="ai.onnxruntime.TelemetryInitializer"
+            android:authorities="${applicationId}.onnxruntime_telemetry_initializer"
+            tools:node="remove" />
+    </application>
+</manifest>

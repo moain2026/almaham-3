@@ -1,0 +1,371 @@
+{
+ "summary": {
+  "ckpt": "/tmp/loc_snap.pt",
+  "argv": [
+   "eval_locator_real.py",
+   "/tmp/loc_snap.pt",
+   "t_s2000"
+  ],
+  "n": 46,
+  "recall_iou50": 17,
+  "recall_pct": 37.0,
+  "found": 44,
+  "iou_median": 0.419,
+  "ms_p50": 18.75,
+  "miss": [
+   "23065.jpg",
+   "23066.jpg",
+   "23067.jpg",
+   "23069.jpg",
+   "23070.jpg",
+   "23071.jpg",
+   "23073.jpg",
+   "23074.jpg",
+   "23075.jpg",
+   "23077.jpg",
+   "23079.jpg",
+   "23080.jpg",
+   "23081.jpg",
+   "23085.jpg",
+   "23086.jpg",
+   "23088.jpg",
+   "23092.jpg",
+   "23094.jpg",
+   "23097.jpg",
+   "23098.jpg",
+   "23099.jpg",
+   "23100.jpg",
+   "23101.jpg",
+   "23102.jpg",
+   "23104.jpg",
+   "23108.jpg",
+   "23110.jpg",
+   "23112.jpg",
+   "23113.jpg"
+  ]
+ },
+ "rows": [
+  {
+   "file": "23065.jpg",
+   "iou": 0.37,
+   "score": 0.308,
+   "found": true,
+   "ms": 78.39
+  },
+  {
+   "file": "23066.jpg",
+   "iou": 0.367,
+   "score": 0.338,
+   "found": true,
+   "ms": 25.28
+  },
+  {
+   "file": "23067.jpg",
+   "iou": 0.45,
+   "score": 0.299,
+   "found": true,
+   "ms": 16.43
+  },
+  {
+   "file": "23068.jpg",
+   "iou": 0.531,
+   "score": 0.387,
+   "found": true,
+   "ms": 20.85
+  },
+  {
+   "file": "23069.jpg",
+   "iou": 0.324,
+   "score": 0.271,
+   "found": true,
+   "ms": 16.6
+  },
+  {
+   "file": "23070.jpg",
+   "iou": 0.127,
+   "score": 0.263,
+   "found": true,
+   "ms": 29.89
+  },
+  {
+   "file": "23071.jpg",
+   "iou": 0.392,
+   "score": 0.377,
+   "found": true,
+   "ms": 16.32
+  },
+  {
+   "file": "23073.jpg",
+   "iou": 0.374,
+   "score": 0.294,
+   "found": true,
+   "ms": 24.76
+  },
+  {
+   "file": "23074.jpg",
+   "iou": 0.0,
+   "score": 0.271,
+   "found": true,
+   "ms": 39.04
+  },
+  {
+   "file": "23075.jpg",
+   "iou": 0.0,
+   "score": 0.321,
+   "found": true,
+   "ms": 18.22
+  },
+  {
+   "file": "23076.jpg",
+   "iou": 0.608,
+   "score": 0.268,
+   "found": true,
+   "ms": 18.49
+  },
+  {
+   "file": "23077.jpg",
+   "iou": 0.408,
+   "score": 0.255,
+   "found": true,
+   "ms": 17.9
+  },
+  {
+   "file": "23078.jpg",
+   "iou": 0.68,
+   "score": 0.342,
+   "found": true,
+   "ms": 22.12
+  },
+  {
+   "file": "23079.jpg",
+   "iou": 0.328,
+   "score": 0.308,
+   "found": true,
+   "ms": 21.22
+  },
+  {
+   "file": "23080.jpg",
+   "iou": 0.463,
+   "score": 0.327,
+   "found": true,
+   "ms": 19.91
+  },
+  {
+   "file": "23081.jpg",
+   "iou": 0.0,
+   "score": 0.284,
+   "found": true,
+   "ms": 43.16
+  },
+  {
+   "file": "23082.jpg",
+   "iou": 0.566,
+   "score": 0.341,
+   "found": true,
+   "ms": 17.38
+  },
+  {
+   "file": "23083.jpg",
+   "iou": 0.529,
+   "score": 0.376,
+   "found": true,
+   "ms": 26.15
+  },
+  {
+   "file": "23084.jpg",
+   "iou": 0.507,
+   "score": 0.274,
+   "found": true,
+   "ms": 18.76
+  },
+  {
+   "file": "23085.jpg",
+   "iou": 0.0,
+   "score": 0.267,
+   "found": true,
+   "ms": 16.49
+  },
+  {
+   "file": "23086.jpg",
+   "iou": 0.364,
+   "score": 0.272,
+   "found": true,
+   "ms": 20.69
+  },
+  {
+   "file": "23088.jpg",
+   "iou": 0.0,
+   "score": 0.0,
+   "found": false,
+   "ms": 26.97
+  },
+  {
+   "file": "23089.jpg",
+   "iou": 0.752,
+   "score": 0.375,
+   "found": true,
+   "ms": 21.49
+  },
+  {
+   "file": "23090.jpg",
+   "iou": 0.579,
+   "score": 0.428,
+   "found": true,
+   "ms": 23.37
+  },
+  {
+   "file": "23091.jpg",
+   "iou": 0.909,
+   "score": 0.337,
+   "found": true,
+   "ms": 15.6
+  },
+  {
+   "file": "23092.jpg",
+   "iou": 0.0,
+   "score": 0.0,
+   "found": false,
+   "ms": 18.65
+  },
+  {
+   "file": "23094.jpg",
+   "iou": 0.0,
+   "score": 0.283,
+   "found": true,
+   "ms": 15.6
+  },
+  {
+   "file": "23095.jpg",
+   "iou": 0.564,
+   "score": 0.387,
+   "found": true,
+   "ms": 16.11
+  },
+  {
+   "file": "23096.jpg",
+   "iou": 0.772,
+   "score": 0.313,
+   "found": true,
+   "ms": 18.73
+  },
+  {
+   "file": "23097.jpg",
+   "iou": 0.316,
+   "score": 0.449,
+   "found": true,
+   "ms": 19.37
+  },
+  {
+   "file": "23098.jpg",
+   "iou": 0.0,
+   "score": 0.25,
+   "found": true,
+   "ms": 17.98
+  },
+  {
+   "file": "23099.jpg",
+   "iou": 0.482,
+   "score": 0.354,
+   "found": true,
+   "ms": 28.11
+  },
+  {
+   "file": "23100.jpg",
+   "iou": 0.0,
+   "score": 0.3,
+   "found": true,
+   "ms": 19.44
+  },
+  {
+   "file": "23101.jpg",
+   "iou": 0.408,
+   "score": 0.314,
+   "found": true,
+   "ms": 17.56
+  },
+  {
+   "file": "23102.jpg",
+   "iou": 0.461,
+   "score": 0.341,
+   "found": true,
+   "ms": 17.31
+  },
+  {
+   "file": "23103.jpg",
+   "iou": 0.507,
+   "score": 0.292,
+   "found": true,
+   "ms": 19.19
+  },
+  {
+   "file": "23104.jpg",
+   "iou": 0.367,
+   "score": 0.38,
+   "found": true,
+   "ms": 17.09
+  },
+  {
+   "file": "23105.jpg",
+   "iou": 0.526,
+   "score": 0.423,
+   "found": true,
+   "ms": 18.84
+  },
+  {
+   "file": "23106.jpg",
+   "iou": 0.69,
+   "score": 0.387,
+   "found": true,
+   "ms": 14.74
+  },
+  {
+   "file": "23107.jpg",
+   "iou": 0.642,
+   "score": 0.343,
+   "found": true,
+   "ms": 23.21
+  },
+  {
+   "file": "23108.jpg",
+   "iou": 0.453,
+   "score": 0.288,
+   "found": true,
+   "ms": 27.14
+  },
+  {
+   "file": "23109.jpg",
+   "iou": 0.69,
+   "score": 0.35,
+   "found": true,
+   "ms": 14.27
+  },
+  {
+   "file": "23110.jpg",
+   "iou": 0.292,
+   "score": 0.282,
+   "found": true,
+   "ms": 18.52
+  },
+  {
+   "file": "23111.jpg",
+   "iou": 0.764,
+   "score": 0.282,
+   "found": true,
+   "ms": 18.69
+  },
+  {
+   "file": "23112.jpg",
+   "iou": 0.43,
+   "score": 0.267,
+   "found": true,
+   "ms": 18.57
+  },
+  {
+   "file": "23113.jpg",
+   "iou": 0.368,
+   "score": 0.266,
+   "found": true,
+   "ms": 16.72
+  }
+ ]
+}
