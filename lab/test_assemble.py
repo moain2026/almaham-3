@@ -52,8 +52,17 @@ def test_empty_when_no_digits():
     assert A.assemble([], 100, 50).value == ""
 
 
-def test_too_many_digits():
+def test_nine_regular_digits_cut_at_six_integer_cells():
+    # ADR/bench §8: on a regular lattice, cells 7+ are decimals even when full height and the dot is missed.
     dets = [box(1, 10 + i * 30) for i in range(9)]
+    r = A.assemble(dets, 400, 64)
+    assert r.status == "OK" and r.text == "111111"
+
+
+def test_too_many_digits_irregular_lattice():
+    # Irregular spacing: the 6-cell prior must NOT apply, so 9 digits stay TOO_MANY_DIGITS.
+    xs = [10, 40, 70, 100, 150, 180, 210, 260, 290]
+    dets = [box(1, x) for x in xs]
     assert A.assemble(dets, 400, 64).status == "TOO_MANY_DIGITS"
 
 

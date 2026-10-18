@@ -70,8 +70,18 @@ class ReadingAssemblerTest {
     }
 
     @Test
-    fun tooManyDigits() {
+    fun nineRegularDigitsCutAtSixIntegerCells() {
+        // == lab/test_assemble.py: regular lattice -> cells 7+ are decimals (INTEGER_CELLS_DEFAULT).
         val dets = (0 until 9).map { box(1, 10f + it * 30f) }
+        val r = ReadingAssembler.assemble(dets, 400f, 64f)
+        assertEquals(ReadingStatus.OK, r.status)
+        assertEquals("111111", r.text)
+    }
+
+    @Test
+    fun tooManyDigitsIrregularLattice() {
+        val xs = listOf(10f, 40f, 70f, 100f, 150f, 180f, 210f, 260f, 290f)
+        val dets = xs.map { box(1, it) }
         assertEquals(ReadingStatus.TOO_MANY_DIGITS, ReadingAssembler.assemble(dets, 400f, 64f).status)
     }
 
