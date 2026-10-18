@@ -3,3 +3,6 @@ argv ['erp_finetune.py', 'train', 'weights/reader_ft3.pt', '../data/erp/ft/ft4',
   peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
 step 0 loss 0.932 real_val_exact 137/194 4s
 step 250 loss 0.822 real_val_exact 144/194 193s
+step 500 loss 0.814 real_val_exact 146/194 355s
+step 750 loss 0.817 real_val_exact 147/194 515s
+step 1000 loss 0.814 real_val_exact 148/194 673s
