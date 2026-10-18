@@ -1,0 +1,168 @@
+rows 1800 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 1800 rows, 0 conflicts
+total 1800 unreadable X 812 panel P 28
+digit histogram [('0', 2792), ('1', 386), ('2', 414), ('3', 378), ('4', 332), ('5', 329), ('6', 310), ('7', 274), ('8', 255), ('9', 259)]
+length histogram [(5, 32), (6, 927), (7, 1)]
+2290f94 data(erp): labels slice 1, 1800 photos
+rows 2000 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 2000 rows, 0 conflicts
+total 2000 unreadable X 917 panel P 36
+digit histogram [('0', 3001), ('1', 423), ('2', 472), ('3', 417), ('4', 370), ('5', 356), ('6', 340), ('7', 307), ('8', 288), ('9', 276)]
+length histogram [(5, 33), (6, 1013), (7, 1)]
+f28af75 data(erp): labels slice 1, 2000 photos
+rows 2200 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 2200 rows, 0 conflicts
+total 2200 unreadable X 1004 panel P 46
+digit histogram [('0', 3264), ('1', 456), ('2', 527), ('3', 475), ('4', 404), ('5', 391), ('6', 385), ('7', 332), ('8', 323), ('9', 308)]
+length histogram [(5, 36), (6, 1113), (7, 1)]
+fa7dc90 data(erp): labels slice 1, 2200 photos
+rows 2400 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 2400 rows, 0 conflicts
+total 2400 unreadable X 1091 panel P 55
+digit histogram [('0', 3530), ('1', 501), ('2', 586), ('3', 510), ('4', 434), ('5', 439), ('6', 430), ('7', 361), ('8', 358), ('9', 339)]
+length histogram [(5, 37), (6, 1216), (7, 1)]
+840a744 data(erp): labels slice 1, 2400 photos
+rows 2400 missing 200
+../benchmark/data/erp/labels_slice_1.csv: 2400 rows, 0 conflicts
+total 2400 unreadable X 1091 panel P 55
+digit histogram [('0', 3530), ('1', 501), ('2', 586), ('3', 510), ('4', 434), ('5', 439), ('6', 430), ('7', 361), ('8', 358), ('9', 339)]
+length histogram [(5, 37), (6, 1216), (7, 1)]
+e90b706 data(erp): labels slice 1, 2400 photos
+rows 800 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 800 rows, 0 conflicts
+total 800 unreadable X 403 panel P 5
+digit histogram [('0', 1185), ('1', 158), ('2', 161), ('3', 150), ('4', 136), ('5', 135), ('6', 128), ('7', 101), ('8', 94), ('9', 90)]
+length histogram [(5, 14), (6, 378)]
+72df609 data(erp): labels slice 1, 800 photos
+rows 1000 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 1000 rows, 0 conflicts
+total 1000 unreadable X 512 panel P 8
+digit histogram [('0', 1435), ('1', 199), ('2', 195), ('3', 183), ('4', 172), ('5', 161), ('6', 151), ('7', 131), ('8', 112), ('9', 124)]
+length histogram [(5, 17), (6, 463)]
+d456188 data(erp): labels slice 1, 1000 photos
+rows 1200 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 1200 rows, 0 conflicts
+total 1200 unreadable X 613 panel P 9
+digit histogram [('0', 1728), ('1', 236), ('2', 234), ('3', 220), ('4', 204), ('5', 197), ('6', 182), ('7', 158), ('8', 135), ('9', 154)]
+length histogram [(5, 20), (6, 558)]
+e1533bd data(erp): labels slice 1, 1200 photos
+rows 1400 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 1400 rows, 0 conflicts
+total 1400 unreadable X 714 panel P 12
+digit histogram [('0', 1993), ('1', 282), ('2', 278), ('3', 262), ('4', 234), ('5', 225), ('6', 211), ('7', 190), ('8', 159), ('9', 185)]
+length histogram [(5, 25), (6, 649)]
+a87042a data(erp): labels slice 1, 1400 photos
+rows 1800 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 1800 rows, 0 conflicts
+total 1800 unreadable X 938 panel P 28
+digit histogram [('0', 2424), ('1', 348), ('2', 365), ('3', 333), ('4', 284), ('5', 286), ('6', 272), ('7', 232), ('8', 210), ('9', 221)]
+length histogram [(5, 30), (6, 803), (7, 1)]
+0f79915 data(erp): labels slice 1, 1800 photos
+rows 2000 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 2000 rows, 0 conflicts
+total 2000 unreadable X 1058 panel P 36
+digit histogram [('0', 2597), ('1', 382), ('2', 416), ('3', 362), ('4', 315), ('5', 310), ('6', 296), ('7', 259), ('8', 233), ('9', 237)]
+length histogram [(5, 30), (6, 875), (7, 1)]
+ec9811f data(erp): labels slice 1, 2000 photos
+rows 2400 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 2400 rows, 0 conflicts
+total 2400 unreadable X 1255 panel P 55
+digit histogram [('0', 3064), ('1', 454), ('2', 523), ('3', 447), ('4', 370), ('5', 384), ('6', 378), ('7', 310), ('8', 285), ('9', 292)]
+length histogram [(5, 34), (6, 1055), (7, 1)]
+fa6b25f data(erp): labels slice 1, 2400 photos
+rows 2600 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 2600 rows, 0 conflicts
+total 2600 unreadable X 1362 panel P 61
+digit histogram [('0', 3298), ('1', 486), ('2', 577), ('3', 482), ('4', 396), ('5', 412), ('6', 407), ('7', 338), ('8', 308), ('9', 321)]
+length histogram [(5, 38), (6, 1138), (7, 1)]
+4909166 data(erp): labels slice 1, 2600 photos
+rows 3000 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 3000 rows, 0 conflicts
+total 3000 unreadable X 1565 panel P 76
+digit histogram [('0', 3749), ('1', 554), ('2', 682), ('3', 561), ('4', 463), ('5', 486), ('6', 481), ('7', 398), ('8', 363), ('9', 373)]
+length histogram [(5, 45), (6, 1313), (7, 1)]
+183498e data(erp): labels slice 1, 3000 photos
+rows 3200 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 3200 rows, 0 conflicts
+total 3200 unreadable X 1663 panel P 88
+digit histogram [('0', 3992), ('1', 587), ('2', 737), ('3', 602), ('4', 497), ('5', 513), ('6', 505), ('7', 420), ('8', 396), ('9', 400)]
+length histogram [(5, 46), (6, 1402), (7, 1)]
+e1af4fa data(erp): labels slice 1, 3200 photos
+rows 3400 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 3400 rows, 0 conflicts
+total 3400 unreadable X 1769 panel P 95
+digit histogram [('0', 4206), ('1', 627), ('2', 787), ('3', 642), ('4', 527), ('5', 550), ('6', 528), ('7', 447), ('8', 432), ('9', 422)]
+length histogram [(5, 49), (6, 1486), (7, 1)]
+d0348c2 data(erp): labels slice 1, 3400 photos
+rows 3600 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 3600 rows, 0 conflicts
+total 3600 unreadable X 1875 panel P 104
+digit histogram [('0', 4422), ('1', 666), ('2', 833), ('3', 674), ('4', 557), ('5', 584), ('6', 564), ('7', 467), ('8', 459), ('9', 450)]
+length histogram [(5, 51), (6, 1569), (7, 1)]
+291b3f9 data(erp): labels slice 1, 3600 photos
+rows 3800 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 3800 rows, 0 conflicts
+total 3800 unreadable X 1981 panel P 114
+digit histogram [('0', 4635), ('1', 702), ('2', 888), ('3', 698), ('4', 577), ('5', 626), ('6', 593), ('7', 494), ('8', 486), ('9', 481)]
+length histogram [(5, 51), (6, 1653), (7, 1)]
+53a7055 data(erp): labels slice 1, 3800 photos
+rows 4000 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 4000 rows, 0 conflicts
+total 4000 unreadable X 2087 panel P 121
+digit histogram [('0', 4859), ('1', 727), ('2', 950), ('3', 745), ('4', 620), ('5', 647), ('6', 619), ('7', 520), ('8', 510), ('9', 504)]
+length histogram [(5, 52), (6, 1739), (7, 1)]
+1cdf374 data(erp): labels slice 1, 4000 photos
+rows 4200 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 4200 rows, 0 conflicts
+total 4200 unreadable X 2201 panel P 129
+digit histogram [('0', 5075), ('1', 753), ('2', 1002), ('3', 774), ('4', 646), ('5', 676), ('6', 651), ('7', 542), ('8', 531), ('9', 519)]
+length histogram [(5, 52), (6, 1817), (7, 1)]
+54adff8 data(erp): labels slice 1, 4200 photos
+rows 4400 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 4400 rows, 0 conflicts
+total 4400 unreadable X 2306 panel P 135
+digit histogram [('0', 5303), ('1', 798), ('2', 1044), ('3', 813), ('4', 677), ('5', 711), ('6', 678), ('7', 566), ('8', 567), ('9', 543)]
+length histogram [(5, 55), (6, 1903), (7, 1)]
+c1233d8 data(erp): labels slice 1, 4400 photos
+rows 4600 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 4600 rows, 0 conflicts
+total 4600 unreadable X 2408 panel P 143
+digit histogram [('0', 5526), ('1', 841), ('2', 1092), ('3', 850), ('4', 713), ('5', 749), ('6', 712), ('7', 591), ('8', 593), ('9', 572)]
+length histogram [(5, 56), (6, 1992), (7, 1)]
+5486ed4 data(erp): labels slice 1, 4600 photos
+rows 4800 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 4800 rows, 0 conflicts
+total 4800 unreadable X 2528 panel P 145
+digit histogram [('0', 5712), ('1', 880), ('2', 1141), ('3', 884), ('4', 745), ('5', 774), ('6', 742), ('7', 607), ('8', 625), ('9', 597)]
+length histogram [(5, 56), (6, 2070), (7, 1)]
+5907ef4 data(erp): labels slice 1, 4800 photos
+rows 5000 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 5000 rows, 0 conflicts
+total 5000 unreadable X 2641 panel P 152
+digit histogram [('0', 5914), ('1', 907), ('2', 1194), ('3', 917), ('4', 765), ('5', 804), ('6', 775), ('7', 631), ('8', 652), ('9', 627)]
+length histogram [(5, 57), (6, 2149), (7, 1)]
+4506686 data(erp): labels slice 1, 5000 photos
+rows 5200 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 5200 rows, 0 conflicts
+total 5200 unreadable X 2739 panel P 162
+digit histogram [('0', 6135), ('1', 939), ('2', 1243), ('3', 953), ('4', 798), ('5', 840), ('6', 816), ('7', 668), ('8', 682), ('9', 660)]
+length histogram [(5, 61), (6, 2237), (7, 1)]
+b0bb1d0 data(erp): labels slice 1, 5200 photos
+rows 5400 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 5400 rows, 0 conflicts
+total 5400 unreadable X 2839 panel P 164
+digit histogram [('0', 6385), ('1', 987), ('2', 1298), ('3', 997), ('4', 837), ('5', 878), ('6', 848), ('7', 693), ('8', 707), ('9', 691)]
+length histogram [(5, 62), (6, 2334), (7, 1)]
+0995146 data(erp): labels slice 1, 5400 photos
+rows 5800 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 5800 rows, 0 conflicts
+total 5800 unreadable X 3044 panel P 179
+digit histogram [('0', 6837), ('1', 1069), ('2', 1401), ('3', 1071), ('4', 899), ('5', 945), ('6', 920), ('7', 749), ('8', 759), ('9', 742)]
+length histogram [(5, 71), (6, 2505), (7, 1)]
+5a095de data(erp): labels slice 1, 5800 photos
+rows 5916 missing 0
+../benchmark/data/erp/labels_slice_1.csv: 5916 rows, 0 conflicts
+total 5916 unreadable X 3108 panel P 182
+digit histogram [('0', 6967), ('1', 1085), ('2', 1434), ('3', 1095), ('4', 913), ('5', 966), ('6', 941), ('7', 759), ('8', 770), ('9', 757)]
+length histogram [(5, 71), (6, 2553), (7, 2)]
+af7b8af data(erp): labels slice 1, 5916 photos
