@@ -15,6 +15,7 @@
 | `train_rec.py` | تدريب بتوليد مباشر (أبطأ) + `load_real`/`real_eval` |
 | `eval_rec.py` | تقييم checkpoint على الـ46 (وضع L) ← `benchmark/results/engines/` |
 | `locate.py` + `eval_locate.py` | محدّد سطر كلاسيكي (مرفوض: 17/46) |
+| `erp_vlm_label.py` | تسمية صور ERP آلياً بنموذج رؤية: 3 قراءات مستقلة + إجماع + مراجعة يدوية (تسميات ضعيفة للتدريب، ليست حقيقة تقييم) |
 | **المحركات الجاهزة** | |
 | `engines.py`, `run_raw.py`, `score.py` | PP-OCR عبر RapidOCR: تشغيل خام ثم تقييم |
 | `bench_rapid.py` | نسخة أقدم (تكتب `engines/rapid_*.json`) |
