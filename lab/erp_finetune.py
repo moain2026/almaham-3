@@ -74,7 +74,7 @@ def build(loc_ckpt, rd_ckpt, out_prefix):
     rd.load_state_dict(torch.load(rd_ckpt, map_location="cpu"))
     rd.eval()
     labels = load_labels()
-    reasons = {"ok_exact": 0, "ok_relabel": 0, "no_photo": 0, "test_photo": 0, "no_line": 0, "count_mismatch": 0, "irregular": 0, "unreadable": 0}
+    reasons = {"ok_exact": 0, "ok_relabel": 0, "ok_lattice": 0, "no_photo": 0, "test_photo": 0, "no_line": 0, "count_mismatch": 0, "irregular": 0, "unreadable": 0}
     X, B, keys = [], [], []
     LX, LB = [], []  # locator shard: whole-photo 256 letterbox + tight LINE box
     hist = np.zeros(10, int)
@@ -104,6 +104,16 @@ def build(loc_ckpt, rd_ckpt, out_prefix):
         ri, _, _, _ = letterbox(im[sy1:sy2, sx1:sx2], RD_W, RD_H, centre_x=False)
         r = assemble.assemble(decode(*run_net(rd, ri), RD_PEAK_MIN), RD_W, RD_H)
         ds = r.digits
+        if len(ds) != len(text) and len(ds) >= 3:
+            # lattice rescue: the detections span exactly len(text) cells of a regular pitch -> re-split into cells
+            cxs = np.sort(np.array([(d.x1 + d.x2) / 2 for d in ds]))
+            gaps = np.diff(cxs)
+            pitch = np.median(gaps[gaps > 0.5 * np.median(gaps)])  # ignore split-digit gaps
+            n_cells = int(round((cxs[-1] - cxs[0]) / pitch)) + 1
+            if n_cells == len(text) and gaps.max() / pitch < 2.6:
+                w = float(np.median([d.x2 - d.x1 for d in ds])); y1 = float(np.median([d.y1 for d in ds])); y2 = float(np.median([d.y2 for d in ds]))
+                ds = [assemble.Digit(0, 1.0, cxs[0] + k * pitch - w / 2, y1, cxs[0] + k * pitch + w / 2, y2) for k in range(len(text))]
+                reasons["ok_lattice"] += 1
         if len(ds) != len(text):
             reasons["count_mismatch"] += 1
             continue
