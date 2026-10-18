@@ -5,6 +5,8 @@ For every photo in benchmark/data/line_boxes.json: crop the mode-A rectangle (me
 eval_e2e.py, letterbox to 256x256 (mid-grey, centred), run DigitNet(1).forward_export, decode with the app
 thresholds (LOC_PEAK_MIN, LINE_MIN_H from eval_e2e.py), take the TOP peak and compute IoU against the reference
 main-line box mapped into the crop. Hit = IoU > 0.5. Target (M3): >= 95%.
+Secondary metric recall_tight_iou50: IoU vs the union of the integer-digit boxes in digit_boxes.json — the same
+definition synth2.py uses for the LINE box (line_boxes.json is a looser band, median 1.25x digit height).
 The 49 photos are evaluation only — nothing here feeds training or threshold tuning.
 Writes benchmark/results/engines/locator_<tag>_real.json (per-image IoU + summary).
 """
@@ -30,6 +32,7 @@ def main(ckpt, tag):
     m.eval()
     mb = json.load(open(paths.METER_BOXES))
     lb = {k: v for k, v in json.load(open(paths.LINE_BOXES)).items() if not k.startswith("_")}
+    db = json.load(open(paths.BENCH_DATA / "digit_boxes.json"))  # eval-only tight per-digit boxes (contract §3)
     rows = []
     for fn, (lx1, ly1, lx2, ly2) in sorted(lb.items()):
         im = load_upright(fn)
@@ -45,14 +48,18 @@ def main(ckpt, tag):
         ms = (time.perf_counter() - t0) * 1e3
         dets = [d for d in decode(p[0].numpy(), sz[0].numpy(), of[0].numpy(), LOC_PEAK_MIN) if d[5] - d[3] >= LINE_MIN_H]
         best = max(dets, key=lambda d: d[1], default=None)
-        iou, score = 0.0, 0.0
+        tb = np.array(db[fn]["boxes"]) if fn in db else None
+        tight = None if tb is None else (tb[:, 0].min() * W - ox, tb[:, 1].min() * H - oy, tb[:, 2].max() * W - ox, tb[:, 3].max() * H - oy)
+        iou, score, iou_t = 0.0, 0.0, 0.0
         if best:
             box = [(v - (px if i % 2 == 0 else py)) / s for i, v in enumerate(best[2:])]
             iou, score = assemble.iou(box, ref), best[1]
-        rows.append({"file": fn, "iou": round(float(iou), 3), "score": round(float(score), 3), "found": best is not None,
+            iou_t = assemble.iou(box, tight) if tight is not None else 0.0
+        rows.append({"file": fn, "iou": round(float(iou), 3), "iou_tight": round(float(iou_t), 3), "score": round(float(score), 3), "found": best is not None,
                      "ms": round(ms, 2)})
     hit = sum(r["iou"] > 0.5 for r in rows)
     summ = {"ckpt": ckpt, "argv": sys.argv, "n": len(rows), "recall_iou50": hit, "recall_pct": round(100 * hit / len(rows), 1),
+            "recall_tight_iou50": sum(r["iou_tight"] > 0.5 for r in rows),
             "found": sum(r["found"] for r in rows), "iou_median": round(st.median(r["iou"] for r in rows), 3),
             "ms_p50": round(st.median(r["ms"] for r in rows), 2),
             "miss": [r["file"] for r in rows if r["iou"] <= 0.5]}
