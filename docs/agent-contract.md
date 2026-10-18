@@ -50,3 +50,7 @@ B يضيف `benchmark/data/erp/line_boxes.json` و`digit_boxes.json` بنفس ا
 
 ## 6. قياس الجوال (B)
 `adb push photos/ /sdcard/Android/data/com.almaham.meterdemo/files/photos` → وضع الاختبار الجماعي → رفع `bench_<device>.csv` + `bench_summary_<device>.json` إلى `benchmark/results/phone/` مع اسم الجهاز وإصدار أندرويد.
+
+
+## §7 تعريف السطر (ADR-0005، 2026-10-18)
+السطر = اتحاد صناديق الأرقام بلا هامش. مقياس M3 الرسمي = IoU>0.5 مع اتحاد `digit_boxes.json` (`recall_tight_iou50`). مقياس `line_boxes` ثانوي. وكيل T: اجعل الضيّق هو المقياس الأساسي في `eval_locator_real.py` واللوغ؛ لا تغيير في `synth2.py`.
