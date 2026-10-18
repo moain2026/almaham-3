@@ -1,0 +1,41 @@
+argv ['train_det.py', 'locator', '20000', 'weights/locator_t.pt', '../data/synth/scene_t1,../data/synth/scene_t2,../data/synth/scene_t3'] threads 3
+train 35280 val 720 input 256 256
+/home/user/repos/almaham-3/lab/train_det.py:130: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+  peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
+step 0 loss 15.707 val 0/196 3s
+step 500 loss 8.054 val 0/196 308s
+step 1000 loss 3.666 val 33/196 609s
+RESUME step 1000 (process killed by sandbox shell timeout; OneCycle restarts) cmd: TORCH_THREADS=3 python3 train_det.py locator 19000 weights/locator_t.pt ../data/synth/scene_t1,../data/synth/scene_t2,../data/synth/scene_t3 weights/locator_t.pt
+argv ['train_det.py', 'locator', '19000', 'weights/locator_t.pt', '../data/synth/scene_t1,../data/synth/scene_t2,../data/synth/scene_t3', 'weights/locator_t.pt'] threads 3
+train 35280 val 720 input 256 256
+/home/user/repos/almaham-3/lab/train_det.py:130: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+  peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
+step 0 loss 3.843 val 34/196 3s
+step 500 loss 3.092 val 70/196 320s
+step 1000 loss 2.782 val 108/196 628s
+step 1500 loss 2.507 val 93/196 935s
+step 2000 loss 2.243 val 105/196 1246s
+step 2500 loss 2.055 val 138/196 1555s
+step 3000 loss 2.007 val 134/196 1855s
+step 3500 loss 1.895 val 131/196 2165s
+step 4000 loss 1.804 val 134/196 2457s
+step 4500 loss 1.705 val 145/196 2754s
+step 5000 loss 1.657 val 150/196 3052s
+step 5500 loss 1.601 val 149/196 3352s
+step 6000 loss 1.617 val 153/196 3648s
+step 6500 loss 1.545 val 151/196 3963s
+step 7000 loss 1.525 val 151/196 4269s
+step 7500 loss 1.492 val 150/196 4589s
+step 8000 loss 1.409 val 152/196 4900s
+step 8500 loss 1.444 val 151/196 5207s
+step 9000 loss 1.424 val 154/196 5515s
+step 9500 loss 1.364 val 158/196 5835s
+step 10000 loss 1.342 val 160/196 6140s
+step 10500 loss 1.298 val 165/196 6446s
+step 11000 loss 1.330 val 156/196 6752s
+step 11500 loss 1.260 val 162/196 7055s
+step 12000 loss 1.206 val 165/196 7365s
+step 12500 loss 1.190 val 163/196 7659s
+step 13000 loss 1.200 val 164/196 7959s
+step 13500 loss 1.228 val 161/196 8272s
+EARLY STOP at global step 14500 (val best 165, no gain 3000 steps)

@@ -54,6 +54,12 @@ TORCH_THREADS=3 nohup python3 train_det.py locator 20000 weights/locator_t.pt ..
   تحفّظ: الفرق 4 صور على n=46 (ضمن ضوضاء معتبرة)، والاختيار بالـ46 يحمل تحيّزاً — يُؤكَّد على ERP val وعلى الجوال. `MODEL_CARD.md` لم أعدّله (app/** ملك A) — يحتاج تحديثاً من A.
 
 - 11:03Z e2e step 14500: locator_t@14500 + reader_ft3a.pt: A exact 17/46, wrong_confident 0, p50 18.3ms (best previous A = 16). cmd: export_onnx.py + eval_e2e.py /tmp/models_t14500 t14500
+## النتيجة النهائية (11:10Z)
+- **إيقاف مبكر** عند الخطوة العامة 14500 (قاعدة المالك: val الاصطناعي لم يتحسن 3000 خطوة؛ أفضل val 165/196 عند ~11500).
+- `eval_locator_real.py lab/weights/locator_t.pt t_final` ⇒ مقياس M3 الرسمي (ADR-0005) **tight 26/46 (56.5%)**، top3 26/46، وُجد سطر في 45/46، شريط الشاشة 17/46. (أعلى لقطة عابرة: 31/46 ~12.5k؛ لا نختار بالـ46.)
+- **end-to-end (مع reader_ft3a): A 17/46، wrong_confident 0، p50 18.3ms** (CPU sandbox) — أفضل من كل `digitnet_*_A.json` السابقة (ft3 14، ft3a 12) ⇒ ONNX في `app/meterocr/src/main/assets/models/` (0735b8a). `MODEL_CARD.md` يحتاج تحديثاً من A.
+- هدف M3 (≥95%) **لم يتحقق** بالاصطناعي وحده. الخطوة التالية: ضبط دقيق على ERP (`erp_finetune.py train … locator`) يبدأ من `lab/weights/locator_t.pt` (وكيل A)، + اختيار السطر بعد القارئ و`plausibility.py` (انظر `docs/research/agentT-algorithms-2026-10-18.md`).
+
 ## كل 500 خطوة (الخطوة العامة = خطوة اللوغ بعد الاستئناف + 1000)
 - 0: loss 15.707 val 0/196
 - 500: loss 8.054 val 0/196

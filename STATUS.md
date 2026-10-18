@@ -68,6 +68,7 @@ updated: 2026-10-18
 - تدريب على داتا Copel-AMR / UFPR-AMR (رخصة أكاديمية).
 
 ## تم مؤخراً
+- [2026-10-18 وكيل T] **انتهى تدريب locator_t** (إيقاف مبكر 14500): M3 tight 26/46، e2e A 17/46 wrong_confident 0 (في assets). التالي: ERP fine-tune من locator_t.
 - [2026-10-18 وكيل T] e2e A **17/46** (locator_t@14500 + reader_ft3a.pt)، wrong_confident 0 ⇒ ONNX إلى assets/models.
 - [2026-10-18 وكيل T] e2e A **16/46** (locator_t@14000 + reader_ft3a؛ كان 12/46)، wrong_confident 0 ⇒ ONNX نُسخ إلى assets/models (`benchmark/results/engines/digitnet_t14000_A.json`). MODEL_CARD يحتاج تحديثاً من A.
 - [2026-10-18] agentT locator step 14000: synth val 164/196، سطر حقيقي IoU>0.5 = 17/46 (37.0%), IoU med 0.432, tight 26/46, found 42 (`docs/training-log-agentT.md`).
