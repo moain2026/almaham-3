@@ -8,6 +8,8 @@
 4. **الصور الـ49 (خاصة، غير موجودة في git — ADR-0004):**
    - المصدر: قناة Telegram ‏@AlabbasiTech، الرسائل 23065–23113 بتاريخ 2026-10-18 (القائمة في `benchmark/data/photos_manifest.json`)،
      أو أرشيف `meters.zip` عند المالك (34MB، مجلد `correct_49_meter_photos/photos/`).
+   - **نسخة احتياطية خاصة (رابط غير منشور في git لأن المستودع عام):** أُرسلت للمالك في المحادثة بتاريخ 2026-10-18
+     باسم `almaham3_private_data_2026-10-18` (tar.gz، 91MB). فكّها ثم `unzip meters.zip`.
    - ضعها في `data/photos/` (أو `export METER_PHOTOS_DIR=/path`).
    - `bash scripts/verify_photos.sh` ⇒ لازم `OK: 49/49 photos match`.
    - ⚠️ **لا تخلطها** مع `maeen_latest_49_photos` (رسائل 26313–29081): تلك صور تصاميم UI وليست عدادات.
