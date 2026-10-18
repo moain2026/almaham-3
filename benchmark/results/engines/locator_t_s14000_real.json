@@ -1,0 +1,465 @@
+{
+ "summary": {
+  "ckpt": "/tmp/loc_snap.pt",
+  "argv": [
+   "eval_locator_real.py",
+   "/tmp/loc_snap.pt",
+   "t_s14000"
+  ],
+  "n": 46,
+  "recall_iou50": 17,
+  "recall_pct": 37.0,
+  "recall_tight_iou50": 26,
+  "recall_tight_top3": 27,
+  "found": 42,
+  "iou_median": 0.432,
+  "ms_p50": 17.97,
+  "miss": [
+   "23065.jpg",
+   "23066.jpg",
+   "23067.jpg",
+   "23068.jpg",
+   "23069.jpg",
+   "23070.jpg",
+   "23071.jpg",
+   "23073.jpg",
+   "23074.jpg",
+   "23076.jpg",
+   "23077.jpg",
+   "23079.jpg",
+   "23080.jpg",
+   "23081.jpg",
+   "23082.jpg",
+   "23085.jpg",
+   "23086.jpg",
+   "23088.jpg",
+   "23092.jpg",
+   "23094.jpg",
+   "23095.jpg",
+   "23097.jpg",
+   "23098.jpg",
+   "23100.jpg",
+   "23102.jpg",
+   "23103.jpg",
+   "23104.jpg",
+   "23109.jpg",
+   "23112.jpg"
+  ]
+ },
+ "rows": [
+  {
+   "file": "23065.jpg",
+   "iou": 0.328,
+   "iou_tight": 0.197,
+   "iou_tight_top3": 0.197,
+   "score": 0.5,
+   "found": true,
+   "ms": 72.34
+  },
+  {
+   "file": "23066.jpg",
+   "iou": 0.333,
+   "iou_tight": 0.65,
+   "iou_tight_top3": 0.65,
+   "score": 0.538,
+   "found": true,
+   "ms": 26.72
+  },
+  {
+   "file": "23067.jpg",
+   "iou": 0.466,
+   "iou_tight": 0.517,
+   "iou_tight_top3": 0.517,
+   "score": 0.336,
+   "found": true,
+   "ms": 25.91
+  },
+  {
+   "file": "23068.jpg",
+   "iou": 0.369,
+   "iou_tight": 0.467,
+   "iou_tight_top3": 0.467,
+   "score": 0.413,
+   "found": true,
+   "ms": 18.34
+  },
+  {
+   "file": "23069.jpg",
+   "iou": 0.417,
+   "iou_tight": 0.578,
+   "iou_tight_top3": 0.578,
+   "score": 0.521,
+   "found": true,
+   "ms": 17.78
+  },
+  {
+   "file": "23070.jpg",
+   "iou": 0.17,
+   "iou_tight": 0.134,
+   "iou_tight_top3": 0.134,
+   "score": 0.34,
+   "found": true,
+   "ms": 20.21
+  },
+  {
+   "file": "23071.jpg",
+   "iou": 0.496,
+   "iou_tight": 0.549,
+   "iou_tight_top3": 0.549,
+   "score": 0.458,
+   "found": true,
+   "ms": 20.12
+  },
+  {
+   "file": "23073.jpg",
+   "iou": 0.159,
+   "iou_tight": 0.0,
+   "iou_tight_top3": 0.456,
+   "score": 0.339,
+   "found": true,
+   "ms": 18.16
+  },
+  {
+   "file": "23074.jpg",
+   "iou": 0.0,
+   "iou_tight": 0.0,
+   "iou_tight_top3": 0.0,
+   "score": 0.313,
+   "found": true,
+   "ms": 19.8
+  },
+  {
+   "file": "23075.jpg",
+   "iou": 0.573,
+   "iou_tight": 0.475,
+   "iou_tight_top3": 0.475,
+   "score": 0.378,
+   "found": true,
+   "ms": 14.8
+  },
+  {
+   "file": "23076.jpg",
+   "iou": 0.283,
+   "iou_tight": 0.199,
+   "iou_tight_top3": 0.199,
+   "score": 0.384,
+   "found": true,
+   "ms": 20.97
+  },
+  {
+   "file": "23077.jpg",
+   "iou": 0.379,
+   "iou_tight": 0.557,
+   "iou_tight_top3": 0.557,
+   "score": 0.407,
+   "found": true,
+   "ms": 38.18
+  },
+  {
+   "file": "23078.jpg",
+   "iou": 0.534,
+   "iou_tight": 0.496,
+   "iou_tight_top3": 0.496,
+   "score": 0.37,
+   "found": true,
+   "ms": 21.88
+  },
+  {
+   "file": "23079.jpg",
+   "iou": 0.485,
+   "iou_tight": 0.579,
+   "iou_tight_top3": 0.579,
+   "score": 0.429,
+   "found": true,
+   "ms": 16.29
+  },
+  {
+   "file": "23080.jpg",
+   "iou": 0.394,
+   "iou_tight": 0.523,
+   "iou_tight_top3": 0.523,
+   "score": 0.477,
+   "found": true,
+   "ms": 21.86
+  },
+  {
+   "file": "23081.jpg",
+   "iou": 0.273,
+   "iou_tight": 0.198,
+   "iou_tight_top3": 0.198,
+   "score": 0.327,
+   "found": true,
+   "ms": 19.04
+  },
+  {
+   "file": "23082.jpg",
+   "iou": 0.497,
+   "iou_tight": 0.599,
+   "iou_tight_top3": 0.599,
+   "score": 0.47,
+   "found": true,
+   "ms": 18.75
+  },
+  {
+   "file": "23083.jpg",
+   "iou": 0.586,
+   "iou_tight": 0.628,
+   "iou_tight_top3": 0.628,
+   "score": 0.505,
+   "found": true,
+   "ms": 17.78
+  },
+  {
+   "file": "23084.jpg",
+   "iou": 0.548,
+   "iou_tight": 0.547,
+   "iou_tight_top3": 0.65,
+   "score": 0.288,
+   "found": true,
+   "ms": 17.28
+  },
+  {
+   "file": "23085.jpg",
+   "iou": 0.0,
+   "iou_tight": 0.0,
+   "iou_tight_top3": 0.0,
+   "score": 0.0,
+   "found": false,
+   "ms": 16.58
+  },
+  {
+   "file": "23086.jpg",
+   "iou": 0.426,
+   "iou_tight": 0.331,
+   "iou_tight_top3": 0.331,
+   "score": 0.447,
+   "found": true,
+   "ms": 18.46
+  },
+  {
+   "file": "23088.jpg",
+   "iou": 0.0,
+   "iou_tight": 0.0,
+   "iou_tight_top3": 0.0,
+   "score": 0.0,
+   "found": false,
+   "ms": 15.4
+  },
+  {
+   "file": "23089.jpg",
+   "iou": 0.852,
+   "iou_tight": 0.584,
+   "iou_tight_top3": 0.584,
+   "score": 0.45,
+   "found": true,
+   "ms": 18.72
+  },
+  {
+   "file": "23090.jpg",
+   "iou": 0.562,
+   "iou_tight": 0.562,
+   "iou_tight_top3": 0.562,
+   "score": 0.544,
+   "found": true,
+   "ms": 20.86
+  },
+  {
+   "file": "23091.jpg",
+   "iou": 0.604,
+   "iou_tight": 0.763,
+   "iou_tight_top3": 0.763,
+   "score": 0.409,
+   "found": true,
+   "ms": 16.4
+  },
+  {
+   "file": "23092.jpg",
+   "iou": 0.0,
+   "iou_tight": 0.0,
+   "iou_tight_top3": 0.0,
+   "score": 0.0,
+   "found": false,
+   "ms": 17.65
+  },
+  {
+   "file": "23094.jpg",
+   "iou": 0.276,
+   "iou_tight": 0.234,
+   "iou_tight_top3": 0.234,
+   "score": 0.348,
+   "found": true,
+   "ms": 18.12
+  },
+  {
+   "file": "23095.jpg",
+   "iou": 0.254,
+   "iou_tight": 0.636,
+   "iou_tight_top3": 0.636,
+   "score": 0.464,
+   "found": true,
+   "ms": 16.66
+  },
+  {
+   "file": "23096.jpg",
+   "iou": 0.774,
+   "iou_tight": 0.787,
+   "iou_tight_top3": 0.787,
+   "score": 0.478,
+   "found": true,
+   "ms": 15.76
+  },
+  {
+   "file": "23097.jpg",
+   "iou": 0.451,
+   "iou_tight": 0.625,
+   "iou_tight_top3": 0.625,
+   "score": 0.555,
+   "found": true,
+   "ms": 17.82
+  },
+  {
+   "file": "23098.jpg",
+   "iou": 0.0,
+   "iou_tight": 0.0,
+   "iou_tight_top3": 0.0,
+   "score": 0.0,
+   "found": false,
+   "ms": 18.49
+  },
+  {
+   "file": "23099.jpg",
+   "iou": 0.6,
+   "iou_tight": 0.707,
+   "iou_tight_top3": 0.707,
+   "score": 0.611,
+   "found": true,
+   "ms": 16.61
+  },
+  {
+   "file": "23100.jpg",
+   "iou": 0.31,
+   "iou_tight": 0.265,
+   "iou_tight_top3": 0.265,
+   "score": 0.435,
+   "found": true,
+   "ms": 15.77
+  },
+  {
+   "file": "23101.jpg",
+   "iou": 0.574,
+   "iou_tight": 0.606,
+   "iou_tight_top3": 0.606,
+   "score": 0.339,
+   "found": true,
+   "ms": 19.33
+  },
+  {
+   "file": "23102.jpg",
+   "iou": 0.395,
+   "iou_tight": 0.43,
+   "iou_tight_top3": 0.43,
+   "score": 0.523,
+   "found": true,
+   "ms": 16.11
+  },
+  {
+   "file": "23103.jpg",
+   "iou": 0.424,
+   "iou_tight": 0.43,
+   "iou_tight_top3": 0.43,
+   "score": 0.492,
+   "found": true,
+   "ms": 15.72
+  },
+  {
+   "file": "23104.jpg",
+   "iou": 0.357,
+   "iou_tight": 0.5,
+   "iou_tight_top3": 0.5,
+   "score": 0.464,
+   "found": true,
+   "ms": 19.12
+  },
+  {
+   "file": "23105.jpg",
+   "iou": 0.828,
+   "iou_tight": 0.732,
+   "iou_tight_top3": 0.732,
+   "score": 0.573,
+   "found": true,
+   "ms": 17.28
+  },
+  {
+   "file": "23106.jpg",
+   "iou": 0.726,
+   "iou_tight": 0.858,
+   "iou_tight_top3": 0.858,
+   "score": 0.569,
+   "found": true,
+   "ms": 17.71
+  },
+  {
+   "file": "23107.jpg",
+   "iou": 0.63,
+   "iou_tight": 0.649,
+   "iou_tight_top3": 0.649,
+   "score": 0.573,
+   "found": true,
+   "ms": 17.46
+  },
+  {
+   "file": "23108.jpg",
+   "iou": 0.62,
+   "iou_tight": 0.669,
+   "iou_tight_top3": 0.669,
+   "score": 0.389,
+   "found": true,
+   "ms": 17.78
+  },
+  {
+   "file": "23109.jpg",
+   "iou": 0.438,
+   "iou_tight": 0.519,
+   "iou_tight_top3": 0.519,
+   "score": 0.465,
+   "found": true,
+   "ms": 17.6
+  },
+  {
+   "file": "23110.jpg",
+   "iou": 0.56,
+   "iou_tight": 0.549,
+   "iou_tight_top3": 0.708,
+   "score": 0.545,
+   "found": true,
+   "ms": 15.48
+  },
+  {
+   "file": "23111.jpg",
+   "iou": 0.711,
+   "iou_tight": 0.789,
+   "iou_tight_top3": 0.789,
+   "score": 0.501,
+   "found": true,
+   "ms": 22.55
+  },
+  {
+   "file": "23112.jpg",
+   "iou": 0.388,
+   "iou_tight": 0.499,
+   "iou_tight_top3": 0.61,
+   "score": 0.407,
+   "found": true,
+   "ms": 27.61
+  },
+  {
+   "file": "23113.jpg",
+   "iou": 0.61,
+   "iou_tight": 0.635,
+   "iou_tight_top3": 0.635,
+   "score": 0.589,
+   "found": true,
+   "ms": 15.38
+  }
+ ]
+}

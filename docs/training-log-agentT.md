@@ -75,6 +75,8 @@ TORCH_THREADS=3 nohup python3 train_det.py locator 20000 weights/locator_t.pt ..
 - 11500: loss 1.298 val 165/196
 - 12000: loss 1.330 val 156/196
 - 12500: loss 1.260 val 162/196
+- 13000: loss 1.206 val 165/196
+- 13500: loss 1.190 val 163/196
 ## Checkpoints
 | step | val اصطناعي | loss | سطر حقيقي IoU>0.5 | وقت |
 |---|---|---|---|---|
@@ -84,3 +86,4 @@ TORCH_THREADS=3 nohup python3 train_det.py locator 20000 weights/locator_t.pt ..
 | 8000 | 151/196 | 1.525 | 11/46 (23.9%), IoU med 0.365, tight 23/46, found 41 | 09:54Z |
 | 10000 | 154/196 | 1.424 | 11/46 (23.9%), IoU med 0.371, tight 21/46, found 40 | 10:15Z |
 | 12000 | 156/196 | 1.330 | 15/46 (32.6%), IoU med 0.396, tight 23/46, found 40 | 10:35Z |
+| 14000 | 164/196 | 1.200 | 17/46 (37.0%), IoU med 0.432, tight 26/46, found 42 | 10:55Z |
