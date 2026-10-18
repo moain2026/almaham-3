@@ -2,7 +2,7 @@
 
 Usage:
   python3 erp_finetune.py build  <locator.pt> <reader.pt> <out_prefix>      # labels -> line crops + weak boxes
-  python3 erp_finetune.py train  <reader_init.pt> <real_prefix> <synth_prefixes> <steps> <out.pt>
+  python3 erp_finetune.py train  <init.pt> <real_prefix> <synth_prefixes> <steps> <out.pt> [reader|locator]
 
 build:
   * reads every benchmark/data/erp/labels*.csv (filename,text,...); keeps digit-only texts (skips X/P).
@@ -39,7 +39,9 @@ import paths
 from det_model import DigitNet, READER_CLASSES, LOCATOR_CLASSES, decode, focal_loss, reg_loss
 from eval_e2e import LOC_IN, RD_H, RD_W, LOC_PEAK_MIN, LINE_MIN_H, PAD_X, PAD_Y, RD_PEAK_MIN, letterbox
 from synth2 import CLS_LINE
-from train_det import Shards, BATCH
+
+LATTICE_MAX_RATIO = 1.5  # max/min centre pitch allowed in an accepted weak label
+from train_det import Shards, BATCH, validate
 
 torch.set_num_threads(int(os.environ.get("TORCH_THREADS", "2")))
 ERP = paths.DATA / "erp"
@@ -72,8 +74,9 @@ def build(loc_ckpt, rd_ckpt, out_prefix):
     rd.load_state_dict(torch.load(rd_ckpt, map_location="cpu"))
     rd.eval()
     labels = load_labels()
-    reasons = {"ok_exact": 0, "ok_relabel": 0, "no_photo": 0, "test_photo": 0, "no_line": 0, "count_mismatch": 0, "unreadable": 0}
+    reasons = {"ok_exact": 0, "ok_relabel": 0, "no_photo": 0, "test_photo": 0, "no_line": 0, "count_mismatch": 0, "irregular": 0, "unreadable": 0}
     X, B, keys = [], [], []
+    LX, LB = [], []  # locator shard: whole-photo 256 letterbox + tight LINE box
     hist = np.zeros(10, int)
     for fn, text in sorted(labels.items()):
         p = ERP / "photos" / fn
@@ -104,6 +107,13 @@ def build(loc_ckpt, rd_ckpt, out_prefix):
         if len(ds) != len(text):
             reasons["count_mismatch"] += 1
             continue
+        # regular lattice check: centre pitch and heights must be consistent, else a decimal/ghost cell got swapped in
+        cx = np.array([(d.x1 + d.x2) / 2 for d in ds])
+        hs = np.array([d.y2 - d.y1 for d in ds])
+        gaps = np.diff(np.sort(cx))
+        if len(gaps) and (gaps.max() / max(gaps.min(), 1e-6) > LATTICE_MAX_RATIO or hs.min() / hs.max() < 0.75):
+            reasons["irregular"] += 1
+            continue
         reasons["ok_exact" if r.text == text else "ok_relabel"] += 1
         i = len(X)
         X.append(ri)
@@ -113,6 +123,13 @@ def build(loc_ckpt, rd_ckpt, out_prefix):
         lb = np.array([[d.x1, d.y1, d.x2, d.y2] for d in ds])
         B.append((i, CLS_LINE, lb[:, 0].min(), lb[:, 1].min(), lb[:, 2].max(), lb[:, 3].max()))
         keys.append(fn[:8])
+        # Locator sample (ADR-0005: LINE = tight union of digit boxes). Map reader-crop coords -> photo -> 256 letterbox.
+        rs = min(RD_W / (sx2 - sx1), RD_H / (sy2 - sy1))
+        roy = (RD_H - int(round((sy2 - sy1) * rs))) // 2
+        gx1, gx2 = sx1 + lb[:, 0].min() / rs, sx1 + lb[:, 2].max() / rs
+        gy1, gy2 = sy1 + (lb[:, 1].min() - roy) / rs, sy1 + (lb[:, 3].max() - roy) / rs
+        LX.append(li)
+        LB.append((len(LX) - 1, CLS_LINE, gx1 * s + ox, gy1 * s + oy, gx2 * s + ox, gy2 * s + oy))
     if not X:
         print("nothing accepted", reasons)
         return
@@ -131,6 +148,15 @@ def build(loc_ckpt, rd_ckpt, out_prefix):
         np.save(f"{out_prefix}_{name}_X.npy", Xi)
         np.save(f"{out_prefix}_{name}_B.npy", Bi)
         print(name, Xi.shape, len(Bi), "boxes")
+    LX = np.stack(LX)
+    LB = np.array(LB, np.float32)
+    for name, pick in (("train", lambda k: k not in val_keys), ("val", lambda k: k in val_keys)):
+        idx = [i for i, k in enumerate(keys) if pick(k)]
+        remap = {old: new for new, old in enumerate(idx)}
+        Bi = np.array([(remap[int(b[0])], *b[1:]) for b in LB if int(b[0]) in remap], np.float32).reshape(-1, 6)
+        np.save(f"{out_prefix}_loc_{name}_X.npy", LX[idx])
+        np.save(f"{out_prefix}_loc_{name}_B.npy", Bi)
+        print("locator", name, LX[idx].shape, len(Bi), "boxes")
     rep = {"reasons": reasons, "accepted": len(X), "class_hist": hist.tolist(), "n_train_keys": len(uniq) - len(val_keys), "n_val_keys": len(val_keys)}
     json.dump(rep, open(f"{out_prefix}_report.json", "w"), indent=1)
     print(json.dumps(rep))
@@ -154,18 +180,21 @@ def real_exact(model, data):
     return ok, n
 
 
-def train(init, real_prefix, synth_prefixes, steps, out):
+def train(init, real_prefix, synth_prefixes, steps, out, kind="reader", lr=2e-4):
+    """kind=reader: shards <prefix>_{train,val}; kind=locator: shards <prefix>_loc_{train,val}.
+    lr 2e-4 (reader_v2 regressed 45->39/97 when resumed at 5e-4 — lab/logs/train_reader_v2_aborted.log)."""
     print("argv", sys.argv, "threads", torch.get_num_threads(), flush=True)
-    real = Shards([real_prefix + "_train"], "reader")
+    pre = real_prefix + ("_loc" if kind == "locator" else "")
+    real = Shards([pre + "_train"], kind)
     real.val_idx = []
-    realval = Shards([real_prefix + "_val"], "reader")
+    realval = Shards([pre + "_val"], kind)
     realval.val_idx = realval.train_idx + realval.val_idx
-    synth = Shards(synth_prefixes.split(","), "reader")
-    model = DigitNet(READER_CLASSES)
+    synth = Shards(synth_prefixes.split(","), kind)
+    model = DigitNet(READER_CLASSES if kind == "reader" else LOCATOR_CLASSES)
     model.load_state_dict(torch.load(init, map_location="cpu"))
-    opt = torch.optim.AdamW(model.parameters(), 5e-4, weight_decay=1e-4)
+    opt = torch.optim.AdamW(model.parameters(), lr, weight_decay=1e-4)
     sch = torch.optim.lr_scheduler.CosineAnnealingLR(opt, steps)
-    B = BATCH["reader"]
+    B = BATCH[kind]
     run, t0 = None, time.time()
     for step in range(steps):
         xr, hr, sr, orr, mr = real.batch(B // 2)
@@ -175,16 +204,20 @@ def train(init, real_prefix, synth_prefixes, steps, out):
         loss = focal_loss(hm, heat) + 0.1 * reg_loss(wh, size, mask) + reg_loss(of, off, mask)
         opt.zero_grad(); loss.backward(); nn.utils.clip_grad_norm_(model.parameters(), 10); opt.step(); sch.step()
         run = loss.item() if run is None else 0.98 * run + 0.02 * loss.item()
-        if step % 500 == 0 or step == steps - 1:
+        if step % 250 == 0 or step == steps - 1:
             torch.save(model.state_dict(), out)
-            ok, n = real_exact(model, realval)
-            print(f"step {step} loss {run:.3f} real_val_exact {ok}/{n} {time.time() - t0:.0f}s", flush=True)
+            if kind == "reader":
+                ok, n = real_exact(model, realval)
+                print(f"step {step} loss {run:.3f} real_val_exact {ok}/{n} {time.time() - t0:.0f}s", flush=True)
+            else:
+                ok, n = validate(model, realval, 10**6)
+                print(f"step {step} loss {run:.3f} real_val_line_iou50 {ok}/{n} {time.time() - t0:.0f}s", flush=True)
 
 
 if __name__ == "__main__":
     if sys.argv[1] == "build":
         build(sys.argv[2], sys.argv[3], sys.argv[4])
     elif sys.argv[1] == "train":
-        train(sys.argv[2], sys.argv[3], sys.argv[4], int(sys.argv[5]), sys.argv[6])
+        train(sys.argv[2], sys.argv[3], sys.argv[4], int(sys.argv[5]), sys.argv[6], sys.argv[7] if len(sys.argv) > 7 else "reader")
     else:
         print(__doc__)
