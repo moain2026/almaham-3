@@ -1,3 +1,14 @@
+## [Unreleased] — 2026-10-18 (جولة 2، فرع genspark_ai_developer)
+### Added
+- `app/`: مشروع Android (Kotlin + Compose + CameraX 1.5.0 + ONNX Runtime 1.31): موديول `meterocr` (config, RectGeometry, ReadingAssembler,
+  ReadingValidator, PeakDecoder, MeterReader, EvidenceImage, ReadingLog) + تطبيق `demo` (شاشة إدخال، كاميرا بمستطيل/زوم/فلاش/ZSL،
+  خط معالجة بعد الضغطة، وضع اختبار جماعي A/B × DigitNet/ML Kit). 35 اختبار وحدات.
+- `lab/synth2.py` مولّد مشاهد بصناديق لكل رقم (DSEG OFL + إجرائي)، `det_model.py` DigitNet، `train_det.py`, `gen_det_data.py`,
+  `assemble.py` (+10 اختبارات)، `export_onnx.py`, `eval_e2e.py`, `eval_reader_oracle.py`, `report.py`.
+- وثائق: `docs/research/research_decision_v3.md`, `docs/benchmark_report.md` (+tables), `docs/migration-plan.md`, `app/README.md`.
+### Measured
+- DigitNet v1 (تدريب جزئي): 0/46 end-to-end، 3/46 قارئ فقط على قصّ مثالي، p50 50ms على CPU x86. التفاصيل في benchmark_report.md.
+
 # Changelog
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
