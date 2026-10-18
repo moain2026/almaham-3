@@ -1,0 +1,776 @@
+[
+{
+"file": "23065.jpg",
+"truth": "2410",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 8.8,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"why": "no vertical strokes"
+}
+},
+{
+"file": "23066.jpg",
+"truth": "6719",
+"value": "147",
+"ok": false,
+"min_conf": 0.3,
+"ms": 177.6,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "147",
+"n": 3,
+"P/h": 1.2,
+"W/h": 0.32,
+"hits": 5,
+"strokes": 5
+}
+},
+{
+"file": "23067.jpg",
+"truth": "5337",
+"value": "8",
+"ok": false,
+"min_conf": 0.18,
+"ms": 75.4,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "08",
+"n": 2,
+"P/h": 0.71,
+"W/h": 0.32,
+"hits": 2,
+"strokes": 2
+}
+},
+{
+"file": "23068.jpg",
+"truth": "86",
+"value": "2",
+"ok": false,
+"min_conf": 0.41,
+"ms": 73.5,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "02",
+"n": 2,
+"P/h": 0.66,
+"W/h": 0.42,
+"hits": 2,
+"strokes": 2
+}
+},
+{
+"file": "23069.jpg",
+"truth": "2559",
+"value": "69",
+"ok": false,
+"min_conf": 0.24,
+"ms": 161.9,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "69",
+"n": 2,
+"P/h": 0.77,
+"W/h": 0.39,
+"hits": 5,
+"strokes": 5
+}
+},
+{
+"file": "23070.jpg",
+"truth": "21",
+"value": "110",
+"ok": false,
+"min_conf": 0.0,
+"ms": 192.5,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "110",
+"n": 3,
+"P/h": 0.74,
+"W/h": 0.49,
+"hits": 6,
+"strokes": 6
+}
+},
+{
+"file": "23071.jpg",
+"truth": "6509",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 7.0,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"why": "no vertical strokes"
+}
+},
+{
+"file": "23073.jpg",
+"truth": "7990",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 72.8,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"why": "low contrast",
+"contrast": 0.1
+}
+},
+{
+"file": "23074.jpg",
+"truth": "9550",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 6.7,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"why": "no vertical strokes"
+}
+},
+{
+"file": "23075.jpg",
+"truth": "7990",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 6.7,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"why": "no vertical strokes"
+}
+},
+{
+"file": "23076.jpg",
+"truth": "303",
+"value": "66",
+"ok": false,
+"min_conf": 0.13,
+"ms": 73.3,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "66",
+"n": 2,
+"P/h": 0.85,
+"W/h": 0.39,
+"hits": 2,
+"strokes": 2
+}
+},
+{
+"file": "23077.jpg",
+"truth": "7589",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 6.0,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"why": "no vertical strokes"
+}
+},
+{
+"file": "23078.jpg",
+"truth": "1724",
+"value": "1696",
+"ok": false,
+"min_conf": 0.12,
+"ms": 160.6,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "1696",
+"n": 4,
+"P/h": 1.36,
+"W/h": 0.44,
+"hits": 5,
+"strokes": 5
+}
+},
+{
+"file": "23079.jpg",
+"truth": "7990",
+"value": "717774",
+"ok": false,
+"min_conf": 0.06,
+"ms": 145.7,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "717774",
+"n": 6,
+"P/h": 0.82,
+"W/h": 0.66,
+"hits": 4,
+"strokes": 4
+}
+},
+{
+"file": "23080.jpg",
+"truth": "5078",
+"value": "88",
+"ok": false,
+"min_conf": 0.1,
+"ms": 73.1,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "88",
+"n": 2,
+"P/h": 0.85,
+"W/h": 0.56,
+"hits": 2,
+"strokes": 2
+}
+},
+{
+"file": "23081.jpg",
+"truth": "4998",
+"value": "601198",
+"ok": false,
+"min_conf": 0.07,
+"ms": 163.8,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "601198",
+"n": 6,
+"P/h": 0.71,
+"W/h": 0.49,
+"hits": 5,
+"strokes": 5
+}
+},
+{
+"file": "23082.jpg",
+"truth": "782",
+"value": "7914",
+"ok": false,
+"min_conf": 0.07,
+"ms": 251.3,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "7914",
+"n": 4,
+"P/h": 0.55,
+"W/h": 0.35,
+"hits": 8,
+"strokes": 8
+}
+},
+{
+"file": "23083.jpg",
+"truth": "532",
+"value": "86",
+"ok": false,
+"min_conf": 0.12,
+"ms": 99.1,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "86",
+"n": 2,
+"P/h": 1.17,
+"W/h": 0.7,
+"hits": 3,
+"strokes": 3
+}
+},
+{
+"file": "23084.jpg",
+"truth": "1259",
+"value": "8161",
+"ok": false,
+"min_conf": 0.0,
+"ms": 477.4,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "8161",
+"n": 4,
+"P/h": 0.68,
+"W/h": 0.44,
+"hits": 14,
+"strokes": 14
+}
+},
+{
+"file": "23085.jpg",
+"truth": "1989",
+"value": "26",
+"ok": false,
+"min_conf": 0.34,
+"ms": 102.3,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "26",
+"n": 2,
+"P/h": 0.63,
+"W/h": 0.3,
+"hits": 3,
+"strokes": 3
+}
+},
+{
+"file": "23086.jpg",
+"truth": "2392",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 8.6,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"why": "no vertical strokes"
+}
+},
+{
+"file": "23088.jpg",
+"truth": "31265",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 8.3,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"why": "no vertical strokes"
+}
+},
+{
+"file": "23089.jpg",
+"truth": "538",
+"value": "980018",
+"ok": false,
+"min_conf": 0.0,
+"ms": 591.5,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "980018",
+"n": 6,
+"P/h": 0.68,
+"W/h": 0.3,
+"hits": 19,
+"strokes": 19
+}
+},
+{
+"file": "23090.jpg",
+"truth": "490",
+"value": "7801",
+"ok": false,
+"min_conf": 0.01,
+"ms": 406.3,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "007801",
+"n": 6,
+"P/h": 0.55,
+"W/h": 0.3,
+"hits": 13,
+"strokes": 13
+}
+},
+{
+"file": "23091.jpg",
+"truth": "243",
+"value": "243",
+"ok": true,
+"min_conf": 0.38,
+"ms": 626.2,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "000243",
+"n": 6,
+"P/h": 0.74,
+"W/h": 0.42,
+"hits": 20,
+"strokes": 20
+}
+},
+{
+"file": "23092.jpg",
+"truth": "5619",
+"value": "77914",
+"ok": false,
+"min_conf": 0.0,
+"ms": 409.4,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "077914",
+"n": 6,
+"P/h": 0.55,
+"W/h": 0.3,
+"hits": 13,
+"strokes": 13
+}
+},
+{
+"file": "23094.jpg",
+"truth": "21",
+"value": "10",
+"ok": false,
+"min_conf": 0.35,
+"ms": 128.2,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "10",
+"n": 2,
+"P/h": 1.52,
+"W/h": 0.75,
+"hits": 4,
+"strokes": 4
+}
+},
+{
+"file": "23095.jpg",
+"truth": "26684",
+"value": "77",
+"ok": false,
+"min_conf": 0.33,
+"ms": 132.7,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "77",
+"n": 2,
+"P/h": 0.63,
+"W/h": 0.32,
+"hits": 4,
+"strokes": 4
+}
+},
+{
+"file": "23096.jpg",
+"truth": "3283",
+"value": "3911",
+"ok": false,
+"min_conf": 0.0,
+"ms": 286.3,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "003911",
+"n": 6,
+"P/h": 0.55,
+"W/h": 0.3,
+"hits": 9,
+"strokes": 9
+}
+},
+{
+"file": "23097.jpg",
+"truth": "1020",
+"value": "78181",
+"ok": false,
+"min_conf": 0.07,
+"ms": 159.8,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "78181",
+"n": 5,
+"P/h": 0.87,
+"W/h": 0.51,
+"hits": 5,
+"strokes": 5
+}
+},
+{
+"file": "23098.jpg",
+"truth": "52",
+"value": "78",
+"ok": false,
+"min_conf": 0.09,
+"ms": 196.8,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "78",
+"n": 2,
+"P/h": 0.58,
+"W/h": 0.3,
+"hits": 6,
+"strokes": 6
+}
+},
+{
+"file": "23099.jpg",
+"truth": "3394",
+"value": "116",
+"ok": false,
+"min_conf": 0.07,
+"ms": 162.5,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "116",
+"n": 3,
+"P/h": 0.9,
+"W/h": 0.44,
+"hits": 5,
+"strokes": 5
+}
+},
+{
+"file": "23100.jpg",
+"truth": "32",
+"value": "144999",
+"ok": false,
+"min_conf": 0.06,
+"ms": 73.6,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "144999",
+"n": 6,
+"P/h": 0.58,
+"W/h": 0.3,
+"hits": 2,
+"strokes": 2
+}
+},
+{
+"file": "23101.jpg",
+"truth": "1671",
+"value": "0",
+"ok": false,
+"min_conf": 0.03,
+"ms": 132.9,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "00",
+"n": 2,
+"P/h": 0.55,
+"W/h": 0.42,
+"hits": 4,
+"strokes": 4
+}
+},
+{
+"file": "23102.jpg",
+"truth": "2260",
+"value": "22361",
+"ok": false,
+"min_conf": 0.19,
+"ms": 373.5,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "22361",
+"n": 5,
+"P/h": 0.55,
+"W/h": 0.32,
+"hits": 11,
+"strokes": 12
+}
+},
+{
+"file": "23103.jpg",
+"truth": "2850",
+"value": "959377",
+"ok": false,
+"min_conf": 0.0,
+"ms": 345.6,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "959377",
+"n": 6,
+"P/h": 0.55,
+"W/h": 0.37,
+"hits": 10,
+"strokes": 11
+}
+},
+{
+"file": "23104.jpg",
+"truth": "2231",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 3.9,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"why": "no vertical strokes"
+}
+},
+{
+"file": "23105.jpg",
+"truth": "2231",
+"value": "30671",
+"ok": false,
+"min_conf": 0.0,
+"ms": 132.7,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "30671",
+"n": 5,
+"P/h": 0.58,
+"W/h": 0.39,
+"hits": 4,
+"strokes": 4
+}
+},
+{
+"file": "23106.jpg",
+"truth": "4305",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 4.5,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"why": "no vertical strokes"
+}
+},
+{
+"file": "23107.jpg",
+"truth": "2058",
+"value": "1061",
+"ok": false,
+"min_conf": 0.2,
+"ms": 159.3,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "1061",
+"n": 4,
+"P/h": 0.9,
+"W/h": 0.68,
+"hits": 5,
+"strokes": 5
+}
+},
+{
+"file": "23108.jpg",
+"truth": "2921",
+"value": "202611",
+"ok": false,
+"min_conf": 0.0,
+"ms": 318.2,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "202611",
+"n": 6,
+"P/h": 0.55,
+"W/h": 0.32,
+"hits": 9,
+"strokes": 10
+}
+},
+{
+"file": "23109.jpg",
+"truth": "2887",
+"value": "866666",
+"ok": false,
+"min_conf": 0.01,
+"ms": 244.2,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "866666",
+"n": 6,
+"P/h": 0.58,
+"W/h": 0.3,
+"hits": 8,
+"strokes": 8
+}
+},
+{
+"file": "23110.jpg",
+"truth": "2526",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 6.7,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"why": "no vertical strokes"
+}
+},
+{
+"file": "23111.jpg",
+"truth": "1593",
+"value": "995",
+"ok": false,
+"min_conf": 0.0,
+"ms": 126.3,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "995",
+"n": 3,
+"P/h": 0.55,
+"W/h": 0.32,
+"hits": 4,
+"strokes": 4
+}
+},
+{
+"file": "23112.jpg",
+"truth": "2662",
+"value": "132",
+"ok": false,
+"min_conf": 0.25,
+"ms": 186.8,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "132",
+"n": 3,
+"P/h": 0.77,
+"W/h": 0.63,
+"hits": 6,
+"strokes": 6
+}
+},
+{
+"file": "23113.jpg",
+"truth": "3018",
+"value": "10482",
+"ok": false,
+"min_conf": 0.09,
+"ms": 397.2,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "10482",
+"n": 5,
+"P/h": 0.6,
+"W/h": 0.37,
+"hits": 12,
+"strokes": 13
+}
+}
+]

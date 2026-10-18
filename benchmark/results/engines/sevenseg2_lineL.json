@@ -1,0 +1,772 @@
+[
+{
+"file": "23065.jpg",
+"truth": "2410",
+"value": "6",
+"ok": false,
+"min_conf": 0.38,
+"ms": 22.0,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "6",
+"contrast": 0.7,
+"cells": 1,
+"pitch": 13.8,
+"shear": 0.0
+}
+},
+{
+"file": "23066.jpg",
+"truth": "6719",
+"value": "7",
+"ok": false,
+"min_conf": 0.45,
+"ms": 11.1,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "7",
+"contrast": 0.23,
+"cells": 1,
+"pitch": 21.2,
+"shear": 0.0
+}
+},
+{
+"file": "23067.jpg",
+"truth": "5337",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 16.4,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"why": "low contrast",
+"contrast": 0.10125000278155008
+}
+},
+{
+"file": "23068.jpg",
+"truth": "86",
+"value": "6",
+"ok": false,
+"min_conf": 0.28,
+"ms": 11.5,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "6",
+"contrast": 0.18,
+"cells": 1,
+"pitch": 192.5,
+"shear": 0.15
+}
+},
+{
+"file": "23069.jpg",
+"truth": "2559",
+"value": "6",
+"ok": false,
+"min_conf": 0.42,
+"ms": 10.4,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "6",
+"contrast": 0.17,
+"cells": 1,
+"pitch": 207.5,
+"shear": 0.05
+}
+},
+{
+"file": "23070.jpg",
+"truth": "21",
+"value": "116",
+"ok": false,
+"min_conf": 0.0,
+"ms": 12.9,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "116",
+"contrast": 0.33,
+"cells": 3,
+"pitch": 49.0,
+"shear": 0.075
+}
+},
+{
+"file": "23071.jpg",
+"truth": "6509",
+"value": "7",
+"ok": false,
+"min_conf": 0.24,
+"ms": 11.8,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "7",
+"contrast": 0.17,
+"cells": 1,
+"pitch": 48.8,
+"shear": 0.0
+}
+},
+{
+"file": "23073.jpg",
+"truth": "7990",
+"value": "6",
+"ok": false,
+"min_conf": 0.32,
+"ms": 10.0,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "6",
+"contrast": 0.23,
+"cells": 1,
+"pitch": 56.2,
+"shear": 0.0
+}
+},
+{
+"file": "23074.jpg",
+"truth": "9550",
+"value": "6",
+"ok": false,
+"min_conf": 0.31,
+"ms": 11.0,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "6",
+"contrast": 0.3,
+"cells": 1,
+"pitch": 21.2,
+"shear": 0.025
+}
+},
+{
+"file": "23075.jpg",
+"truth": "7990",
+"value": "9",
+"ok": false,
+"min_conf": 0.32,
+"ms": 10.7,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "9",
+"contrast": 0.41,
+"cells": 1,
+"pitch": 11.2,
+"shear": 0.075
+}
+},
+{
+"file": "23076.jpg",
+"truth": "303",
+"value": "6",
+"ok": false,
+"min_conf": 0.55,
+"ms": 11.7,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "6",
+"contrast": 0.16,
+"cells": 1,
+"pitch": 66.2,
+"shear": 0.1
+}
+},
+{
+"file": "23077.jpg",
+"truth": "7589",
+"value": "993611",
+"ok": false,
+"min_conf": 0.04,
+"ms": 13.1,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "993611",
+"contrast": 0.7,
+"cells": 6,
+"pitch": 12.0,
+"shear": 0.05
+}
+},
+{
+"file": "23078.jpg",
+"truth": "1724",
+"value": "113311",
+"ok": false,
+"min_conf": 0.08,
+"ms": 13.1,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "113311",
+"contrast": 0.54,
+"cells": 6,
+"pitch": 26.0,
+"shear": 0.125
+}
+},
+{
+"file": "23079.jpg",
+"truth": "7990",
+"value": "0",
+"ok": false,
+"min_conf": 0.24,
+"ms": 10.8,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "0",
+"contrast": 0.13,
+"cells": 1,
+"pitch": 145.0,
+"shear": 0.175
+}
+},
+{
+"file": "23080.jpg",
+"truth": "5078",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 11.5,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"why": "low contrast",
+"contrast": 0.08559321363766986
+}
+},
+{
+"file": "23081.jpg",
+"truth": "4998",
+"value": "6",
+"ok": false,
+"min_conf": 0.37,
+"ms": 10.6,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "6",
+"contrast": 0.34,
+"cells": 1,
+"pitch": 147.5,
+"shear": 0.0
+}
+},
+{
+"file": "23082.jpg",
+"truth": "782",
+"value": "782",
+"ok": true,
+"min_conf": 0.45,
+"ms": 14.5,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "000782",
+"contrast": 0.62,
+"cells": 6,
+"pitch": 25.0,
+"shear": 0.025
+}
+},
+{
+"file": "23083.jpg",
+"truth": "532",
+"value": "1",
+"ok": false,
+"min_conf": 0.14,
+"ms": 9.9,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "1",
+"contrast": 0.55,
+"cells": 1,
+"pitch": 40.0,
+"shear": 0.05
+}
+},
+{
+"file": "23084.jpg",
+"truth": "1259",
+"value": "1259",
+"ok": true,
+"min_conf": 0.01,
+"ms": 13.8,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "001259",
+"contrast": 0.45,
+"cells": 6,
+"pitch": 24.0,
+"shear": 0.05
+}
+},
+{
+"file": "23085.jpg",
+"truth": "1989",
+"value": "99",
+"ok": false,
+"min_conf": 0.32,
+"ms": 11.0,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "99",
+"contrast": 0.16,
+"cells": 2,
+"pitch": 34.0,
+"shear": 0.075
+}
+},
+{
+"file": "23086.jpg",
+"truth": "2392",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 14.2,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"why": "low contrast",
+"contrast": 0.11630037426948547
+}
+},
+{
+"file": "23088.jpg",
+"truth": "31265",
+"value": "",
+"ok": false,
+"min_conf": null,
+"ms": 14.3,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"why": "low contrast",
+"contrast": 0.11660493413607281
+}
+},
+{
+"file": "23089.jpg",
+"truth": "538",
+"value": "36",
+"ok": false,
+"min_conf": 0.25,
+"ms": 11.0,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "36",
+"contrast": 0.35,
+"cells": 2,
+"pitch": 42.0,
+"shear": -0.15
+}
+},
+{
+"file": "23090.jpg",
+"truth": "490",
+"value": "490",
+"ok": true,
+"min_conf": 0.35,
+"ms": 13.0,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "000490",
+"contrast": 0.64,
+"cells": 6,
+"pitch": 26.0,
+"shear": 0.025
+}
+},
+{
+"file": "23091.jpg",
+"truth": "243",
+"value": "243",
+"ok": true,
+"min_conf": 0.29,
+"ms": 15.6,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "000243",
+"contrast": 0.45,
+"cells": 6,
+"pitch": 50.0,
+"shear": 0.05
+}
+},
+{
+"file": "23092.jpg",
+"truth": "5619",
+"value": "8",
+"ok": false,
+"min_conf": 0.0,
+"ms": 15.2,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "8",
+"contrast": 0.2,
+"cells": 1,
+"pitch": 31.2,
+"shear": 0.125
+}
+},
+{
+"file": "23094.jpg",
+"truth": "21",
+"value": "21",
+"ok": true,
+"min_conf": 0.26,
+"ms": 12.3,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "21",
+"contrast": 0.65,
+"cells": 2,
+"pitch": 34.0,
+"shear": 0.025
+}
+},
+{
+"file": "23095.jpg",
+"truth": "26684",
+"value": "2668",
+"ok": false,
+"min_conf": 0.37,
+"ms": 13.9,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "02668",
+"contrast": 0.85,
+"cells": 5,
+"pitch": 26.0,
+"shear": 0.0
+}
+},
+{
+"file": "23096.jpg",
+"truth": "3283",
+"value": "7",
+"ok": false,
+"min_conf": 0.5,
+"ms": 9.5,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "7",
+"contrast": 0.27,
+"cells": 1,
+"pitch": 28.8,
+"shear": 0.125
+}
+},
+{
+"file": "23097.jpg",
+"truth": "1020",
+"value": "85",
+"ok": false,
+"min_conf": 0.0,
+"ms": 12.1,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "85",
+"contrast": 0.26,
+"cells": 2,
+"pitch": 26.0,
+"shear": 0.025
+}
+},
+{
+"file": "23098.jpg",
+"truth": "52",
+"value": "52",
+"ok": true,
+"min_conf": 0.34,
+"ms": 14.0,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "52",
+"contrast": 0.25,
+"cells": 2,
+"pitch": 36.0,
+"shear": -0.1
+}
+},
+{
+"file": "23099.jpg",
+"truth": "3394",
+"value": "3",
+"ok": false,
+"min_conf": 0.32,
+"ms": 12.7,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "03",
+"contrast": 0.36,
+"cells": 2,
+"pitch": 23.0,
+"shear": 0.15
+}
+},
+{
+"file": "23100.jpg",
+"truth": "32",
+"value": "180",
+"ok": false,
+"min_conf": 0.05,
+"ms": 12.7,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "180",
+"contrast": 0.47,
+"cells": 3,
+"pitch": 55.0,
+"shear": 0.2
+}
+},
+{
+"file": "23101.jpg",
+"truth": "1671",
+"value": "317",
+"ok": false,
+"min_conf": 0.04,
+"ms": 13.6,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "317",
+"contrast": 0.42,
+"cells": 3,
+"pitch": 80.5,
+"shear": 0.0
+}
+},
+{
+"file": "23102.jpg",
+"truth": "2260",
+"value": "2260",
+"ok": true,
+"min_conf": 0.36,
+"ms": 13.4,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "02260",
+"contrast": 0.36,
+"cells": 5,
+"pitch": 27.0,
+"shear": 0.0
+}
+},
+{
+"file": "23103.jpg",
+"truth": "2850",
+"value": "2850",
+"ok": true,
+"min_conf": 0.1,
+"ms": 13.5,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "02850",
+"contrast": 0.4,
+"cells": 5,
+"pitch": 25.5,
+"shear": 0.0
+}
+},
+{
+"file": "23104.jpg",
+"truth": "2231",
+"value": "6",
+"ok": false,
+"min_conf": 0.72,
+"ms": 7.4,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "6",
+"contrast": 0.23,
+"cells": 1,
+"pitch": 18.8,
+"shear": 0.05
+}
+},
+{
+"file": "23105.jpg",
+"truth": "2231",
+"value": "11",
+"ok": false,
+"min_conf": 0.0,
+"ms": 10.0,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "11",
+"contrast": 0.32,
+"cells": 2,
+"pitch": 47.0,
+"shear": 0.15
+}
+},
+{
+"file": "23106.jpg",
+"truth": "4305",
+"value": "7",
+"ok": false,
+"min_conf": 0.12,
+"ms": 8.2,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "7",
+"contrast": 0.31,
+"cells": 1,
+"pitch": 28.8,
+"shear": 0.225
+}
+},
+{
+"file": "23107.jpg",
+"truth": "2058",
+"value": "2058",
+"ok": true,
+"min_conf": 0.27,
+"ms": 13.1,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "002058",
+"contrast": 0.62,
+"cells": 6,
+"pitch": 28.0,
+"shear": -0.025
+}
+},
+{
+"file": "23108.jpg",
+"truth": "2921",
+"value": "0",
+"ok": false,
+"min_conf": 0.39,
+"ms": 10.0,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "00",
+"contrast": 0.67,
+"cells": 2,
+"pitch": 26.0,
+"shear": -0.05
+}
+},
+{
+"file": "23109.jpg",
+"truth": "2887",
+"value": "2887",
+"ok": true,
+"min_conf": 0.36,
+"ms": 11.9,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "002887",
+"contrast": 0.51,
+"cells": 6,
+"pitch": 23.0,
+"shear": 0.0
+}
+},
+{
+"file": "23110.jpg",
+"truth": "2526",
+"value": "1",
+"ok": false,
+"min_conf": 0.0,
+"ms": 11.5,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "1",
+"contrast": 0.25,
+"cells": 1,
+"pitch": 122.5,
+"shear": -0.125
+}
+},
+{
+"file": "23111.jpg",
+"truth": "1593",
+"value": "628",
+"ok": false,
+"min_conf": 0.04,
+"ms": 9.9,
+"dev": false,
+"difficulty": "clear",
+"info": {
+"raw": "00628",
+"contrast": 0.39,
+"cells": 5,
+"pitch": 32.0,
+"shear": 0.0
+}
+},
+{
+"file": "23112.jpg",
+"truth": "2662",
+"value": "61906",
+"ok": false,
+"min_conf": 0.05,
+"ms": 10.5,
+"dev": false,
+"difficulty": "hard",
+"info": {
+"raw": "061906",
+"contrast": 0.3,
+"cells": 6,
+"pitch": 30.5,
+"shear": 0.05
+}
+},
+{
+"file": "23113.jpg",
+"truth": "3018",
+"value": "38",
+"ok": false,
+"min_conf": 0.25,
+"ms": 9.9,
+"dev": true,
+"difficulty": "clear",
+"info": {
+"raw": "0038",
+"contrast": 0.4,
+"cells": 4,
+"pitch": 29.0,
+"shear": 0.025
+}
+}
+]
