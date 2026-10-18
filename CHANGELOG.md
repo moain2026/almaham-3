@@ -1,4 +1,6 @@
 ## [Unreleased] — 2026-10-18 (جولة 2، فرع genspark_ai_developer)
+- meterocr: `MeterReader.read/close` @Synchronized؛ إزالة INTERNET/ACCESS_NETWORK_STATE ومزوّد التيليمتري من AAR ONNX Runtime عند دمج الـ manifest (offline فعلياً).
+- lab/train_det.py: حفظ نقطة وتقييم كل 250 خطوة (كان 500).
 ### Added
 - demo: autobench intent، CaptureLog، rectcheck، x86_64 في debug؛ إصلاح كراشين (وكيل B). `docs/phone-test-emulator_x86_64_api30.md`.
 - `app/meterocr/.../ForensicReader.kt` + `ForensicReaderTest.kt` + مثبّتات `test/resources/forensic/` + `lab/make_forensic_fixtures.py` (وكيل B).

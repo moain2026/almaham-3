@@ -175,9 +175,9 @@ def main():
         opt.step()
         sch.step()
         run = loss.item() if run is None else 0.98 * run + 0.02 * loss.item()
-        if step % 500 == 0 or step == steps - 1:
+        if step % 250 == 0 or step == steps - 1:
             torch.save(model.state_dict(), out)
-            ok, n = validate(model, data, 200 if step < steps - 1 else 400)
+            ok, n = validate(model, data, 100 if step < steps - 1 else 400)
             print(f"step {step} loss {run:.3f} val {ok}/{n} {time.time() - t0:.0f}s", flush=True)
 
 

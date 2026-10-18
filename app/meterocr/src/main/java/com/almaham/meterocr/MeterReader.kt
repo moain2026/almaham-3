@@ -68,7 +68,14 @@ class MeterReader(context: Context) : AutoCloseable {
         blank.recycle()
     }
 
-    /** @param crop the reader's rectangle crop, upright, any size. */
+    /**
+     * @param crop the reader's rectangle crop, upright, any size.
+     *
+     * Synchronized: the input buffers (locBuf/readBuf) are reused across calls, so two threads
+     * (e.g. warm-up on the entry screen + batch benchmark) must never run the engine concurrently
+     * (observed as BufferUnderflowException — see docs/phone-test-emulator_x86_64_api30.md).
+     */
+    @Synchronized
     fun read(crop: Bitmap): ReadResult {
         val t0 = SystemClock.elapsedRealtimeNanos()
         val lb = RectGeometry.letterbox(crop.width, crop.height, C.LOCATOR_INPUT, C.LOCATOR_INPUT)
@@ -195,6 +202,7 @@ class MeterReader(context: Context) : AutoCloseable {
         return out
     }
 
+    @Synchronized
     override fun close() {
         locator.close()
         reader.close()

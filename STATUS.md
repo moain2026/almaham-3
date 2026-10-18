@@ -4,6 +4,7 @@ updated: 2026-10-18
 # الحالة الآن
 
 ## قيد العمل
+- [2026-10-18 وكيل A] **meterocr** `MeterReader.read/close` صارا `@Synchronized` (طلب وكيل B بعد كراش BufferUnderflow)؛ واكتشاف خصوصية: AAR `onnxruntime-android 1.31.0` يضيف بنفسه صلاحيتي INTERNET وACCESS_NETWORK_STATE ومزوّد `TelemetryInitializer` — حُذفت الثلاثة في `meterocr/AndroidManifest.xml` عبر `tools:node="remove"` (التطبيق صار بلا أي صلاحية شبكة). تدريب القارئ v2 (2500 خطوة، استئناف من s2000) يعمل: `lab/logs/train_reader_v2.log`.
 - labels slice 0: 200 done, 87 unreadable (1 P) — تسمية آلية بنموذج رؤية لا بشرية (3 قراءات مستقلة، يُقبل الإجماع فقط وإلا X)، عيّنة ≥10% من الأرقام روجعت يدوياً
 - [2026-10-18 وكيل B] **T1 (جزئي)** التطبيق يُبنى (44 اختبار وحدات ناجحة) ويُثبَّت ويفتح على **محاكي** x86_64 API30 بلا KVM؛ أُصلح كراشان في demo (استدعاء المحرك المتزامن، صورة غير مقروءة)، وأضيف `--ez autobench true` و`captures_log.csv` و`rectcheck/`. الاختبار الجماعي لم يكتمل (صلاحيات تخزين المحاكي) وبنود الكاميرا (أ–د) تحتاج **جوالاً حقيقياً** — `docs/phone-test-emulator_x86_64_api30.md`.
 - labels slice 1: 200 done, 79 unreadable (3 P) — تسمية آلية بنموذج رؤية لا بشرية (3 قراءات مستقلة بتعليمات مختلفة، يُقبل الإجماع فقط وإلا X)، عيّنة 10% روجعت يدوياً
