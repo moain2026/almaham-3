@@ -56,6 +56,7 @@ updated: 2026-10-18
 - تدريب على داتا Copel-AMR / UFPR-AMR (رخصة أكاديمية).
 
 ## تم مؤخراً
+- [2026-10-18] agentT locator step 4000: synth val 134/196، سطر حقيقي IoU>0.5 = 12/46 (26.1%), IoU med 0.424, found 42 (`docs/training-log-agentT.md`).
 - [2026-10-18] agentT locator step 2000: synth val 108/196، سطر حقيقي IoU>0.5 = 17/46 (37.0%), IoU med 0.419, found 44 (`docs/training-log-agentT.md`).
 - [2026-10-18] برومت مفتوح لوكيل خارجي: `docs/brief/04_برومت_الوكيل_المفتوح.md` (المالك يرسله مع meters.zip).
 - [2026-10-18] توحيد كل الشغل في هذا المستودع + توثيق كامل + تحقق من clone جديد (كل الأرقام طابقت). انظر `docs/history/2026-10-18-session-01.md`.
