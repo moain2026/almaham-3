@@ -65,6 +65,7 @@ updated: 2026-10-18
 - تدريب على داتا Copel-AMR / UFPR-AMR (رخصة أكاديمية).
 
 ## تم مؤخراً
+- [2026-10-18 وكيل T] `lab/plausibility.py` (فحص معقولية بالقراءة السابقة + تصحيح الخانة ببديل القارئ نفسه + تصويت عدة إطارات؛ Python نقي للنقل إلى Kotlin) + 13 اختبار تمر + توصيات `docs/research/agentT-algorithms-2026-10-18.md`.
 - [2026-10-18] agentT locator step 12000: synth val 156/196، سطر حقيقي IoU>0.5 = 15/46 (32.6%), IoU med 0.396, tight 23/46, found 40 (`docs/training-log-agentT.md`).
 - [2026-10-18] agentT locator step 10000: synth val 154/196، سطر حقيقي IoU>0.5 = 11/46 (23.9%), IoU med 0.371, tight 21/46, found 40 (`docs/training-log-agentT.md`).
 - [2026-10-18] agentT locator step 8000: synth val 151/196، سطر حقيقي IoU>0.5 = 11/46 (23.9%), IoU med 0.365, tight 23/46, found 41 (`docs/training-log-agentT.md`).
