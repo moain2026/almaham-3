@@ -1,0 +1,28 @@
+{
+ "reasons": {
+  "ok_exact": 445,
+  "ok_relabel": 478,
+  "ok_lattice": 113,
+  "no_photo": 608,
+  "test_photo": 0,
+  "no_line": 39,
+  "count_mismatch": 633,
+  "irregular": 272,
+  "unreadable": 0
+ },
+ "accepted": 923,
+ "class_hist": [
+  2733,
+  353,
+  421,
+  344,
+  321,
+  302,
+  275,
+  251,
+  277,
+  252
+ ],
+ "n_train_keys": 662,
+ "n_val_keys": 116
+}

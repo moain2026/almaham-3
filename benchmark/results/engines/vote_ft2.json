@@ -1,0 +1,783 @@
+{
+ "summary": {
+  "A_neural": {
+   "exact": 3,
+   "empty": 2,
+   "wrong_confident": 0,
+   "n": 46
+  },
+  "A_forensic": {
+   "exact": 5,
+   "empty": 3,
+   "wrong_confident": 2,
+   "n": 46
+  },
+  "A_vote": {
+   "exact": 7,
+   "empty": 0,
+   "wrong_confident": 2,
+   "n": 46
+  },
+  "L_neural": {
+   "exact": 7,
+   "empty": 0,
+   "wrong_confident": 1,
+   "n": 46
+  },
+  "L_forensic": {
+   "exact": 0,
+   "empty": 3,
+   "wrong_confident": 0,
+   "n": 46
+  },
+  "L_vote": {
+   "exact": 5,
+   "empty": 0,
+   "wrong_confident": 0,
+   "n": 46
+  }
+ },
+ "models": "../data/models_ft2",
+ "rows": {
+  "A": [
+   {
+    "file": "23065.jpg",
+    "truth": "2410",
+    "neural": "53",
+    "forensic": "6",
+    "vote": "53",
+    "vote_conf": false
+   },
+   {
+    "file": "23066.jpg",
+    "truth": "6719",
+    "neural": "671960",
+    "forensic": "6719",
+    "vote": "601969",
+    "vote_conf": false
+   },
+   {
+    "file": "23067.jpg",
+    "truth": "5337",
+    "neural": "3308",
+    "forensic": "2",
+    "vote": "3308",
+    "vote_conf": false
+   },
+   {
+    "file": "23068.jpg",
+    "truth": "86",
+    "neural": "860",
+    "forensic": "61",
+    "vote": "860",
+    "vote_conf": false
+   },
+   {
+    "file": "23069.jpg",
+    "truth": "2559",
+    "neural": "2560",
+    "forensic": "6",
+    "vote": "2566",
+    "vote_conf": false
+   },
+   {
+    "file": "23070.jpg",
+    "truth": "21",
+    "neural": "21",
+    "forensic": "7",
+    "vote": "21",
+    "vote_conf": false
+   },
+   {
+    "file": "23071.jpg",
+    "truth": "6509",
+    "neural": "504",
+    "forensic": "8",
+    "vote": "504",
+    "vote_conf": false
+   },
+   {
+    "file": "23073.jpg",
+    "truth": "7990",
+    "neural": "40",
+    "forensic": "3",
+    "vote": "40",
+    "vote_conf": false
+   },
+   {
+    "file": "23074.jpg",
+    "truth": "9550",
+    "neural": "6000",
+    "forensic": "",
+    "vote": "6000",
+    "vote_conf": false
+   },
+   {
+    "file": "23075.jpg",
+    "truth": "7990",
+    "neural": "901",
+    "forensic": "",
+    "vote": "901",
+    "vote_conf": false
+   },
+   {
+    "file": "23076.jpg",
+    "truth": "303",
+    "neural": "383",
+    "forensic": "2",
+    "vote": "383",
+    "vote_conf": false
+   },
+   {
+    "file": "23077.jpg",
+    "truth": "7589",
+    "neural": "604",
+    "forensic": "1",
+    "vote": "601",
+    "vote_conf": false
+   },
+   {
+    "file": "23078.jpg",
+    "truth": "1724",
+    "neural": "172413",
+    "forensic": "1724",
+    "vote": "1724",
+    "vote_conf": true
+   },
+   {
+    "file": "23079.jpg",
+    "truth": "7990",
+    "neural": "89010",
+    "forensic": "1",
+    "vote": "89011",
+    "vote_conf": false
+   },
+   {
+    "file": "23080.jpg",
+    "truth": "5078",
+    "neural": "788",
+    "forensic": "",
+    "vote": "788",
+    "vote_conf": false
+   },
+   {
+    "file": "23081.jpg",
+    "truth": "4998",
+    "neural": "49987",
+    "forensic": "21",
+    "vote": "49987",
+    "vote_conf": false
+   },
+   {
+    "file": "23082.jpg",
+    "truth": "782",
+    "neural": "792",
+    "forensic": "77772",
+    "vote": "7772",
+    "vote_conf": false
+   },
+   {
+    "file": "23083.jpg",
+    "truth": "532",
+    "neural": "622",
+    "forensic": "777",
+    "vote": "777",
+    "vote_conf": true
+   },
+   {
+    "file": "23084.jpg",
+    "truth": "1259",
+    "neural": "1258",
+    "forensic": "771279",
+    "vote": "771279",
+    "vote_conf": false
+   },
+   {
+    "file": "23085.jpg",
+    "truth": "1989",
+    "neural": "89",
+    "forensic": "9",
+    "vote": "89",
+    "vote_conf": false
+   },
+   {
+    "file": "23086.jpg",
+    "truth": "2392",
+    "neural": "3829",
+    "forensic": "6",
+    "vote": "3829",
+    "vote_conf": false
+   },
+   {
+    "file": "23088.jpg",
+    "truth": "31265",
+    "neural": "",
+    "forensic": "1",
+    "vote": "1",
+    "vote_conf": false
+   },
+   {
+    "file": "23089.jpg",
+    "truth": "538",
+    "neural": "5388",
+    "forensic": "3",
+    "vote": "5388",
+    "vote_conf": false
+   },
+   {
+    "file": "23090.jpg",
+    "truth": "490",
+    "neural": "490",
+    "forensic": "491",
+    "vote": "490",
+    "vote_conf": false
+   },
+   {
+    "file": "23091.jpg",
+    "truth": "243",
+    "neural": "283",
+    "forensic": "1002",
+    "vote": "282",
+    "vote_conf": false
+   },
+   {
+    "file": "23092.jpg",
+    "truth": "5619",
+    "neural": "",
+    "forensic": "1",
+    "vote": "1",
+    "vote_conf": false
+   },
+   {
+    "file": "23094.jpg",
+    "truth": "21",
+    "neural": "721",
+    "forensic": "7",
+    "vote": "721",
+    "vote_conf": false
+   },
+   {
+    "file": "23095.jpg",
+    "truth": "26684",
+    "neural": "266840",
+    "forensic": "2668",
+    "vote": "2668",
+    "vote_conf": true
+   },
+   {
+    "file": "23096.jpg",
+    "truth": "3283",
+    "neural": "229",
+    "forensic": "6641",
+    "vote": "6621",
+    "vote_conf": false
+   },
+   {
+    "file": "23097.jpg",
+    "truth": "1020",
+    "neural": "102",
+    "forensic": "1",
+    "vote": "102",
+    "vote_conf": false
+   },
+   {
+    "file": "23098.jpg",
+    "truth": "52",
+    "neural": "1527",
+    "forensic": "77",
+    "vote": "1527",
+    "vote_conf": false
+   },
+   {
+    "file": "23099.jpg",
+    "truth": "3394",
+    "neural": "8344",
+    "forensic": "3",
+    "vote": "8004",
+    "vote_conf": false
+   },
+   {
+    "file": "23100.jpg",
+    "truth": "32",
+    "neural": "3209",
+    "forensic": "21",
+    "vote": "3221",
+    "vote_conf": false
+   },
+   {
+    "file": "23101.jpg",
+    "truth": "1671",
+    "neural": "6724",
+    "forensic": "0",
+    "vote": "6724",
+    "vote_conf": false
+   },
+   {
+    "file": "23102.jpg",
+    "truth": "2260",
+    "neural": "2250",
+    "forensic": "472160",
+    "vote": "2260",
+    "vote_conf": false
+   },
+   {
+    "file": "23103.jpg",
+    "truth": "2850",
+    "neural": "2840",
+    "forensic": "2850",
+    "vote": "2840",
+    "vote_conf": false
+   },
+   {
+    "file": "23104.jpg",
+    "truth": "2231",
+    "neural": "0",
+    "forensic": "111",
+    "vote": "111",
+    "vote_conf": false
+   },
+   {
+    "file": "23105.jpg",
+    "truth": "2231",
+    "neural": "2",
+    "forensic": "19",
+    "vote": "12",
+    "vote_conf": false
+   },
+   {
+    "file": "23106.jpg",
+    "truth": "4305",
+    "neural": "430",
+    "forensic": "305",
+    "vote": "405",
+    "vote_conf": false
+   },
+   {
+    "file": "23107.jpg",
+    "truth": "2058",
+    "neural": "205",
+    "forensic": "2058",
+    "vote": "2058",
+    "vote_conf": true
+   },
+   {
+    "file": "23108.jpg",
+    "truth": "2921",
+    "neural": "92",
+    "forensic": "31",
+    "vote": "91",
+    "vote_conf": false
+   },
+   {
+    "file": "23109.jpg",
+    "truth": "2887",
+    "neural": "2",
+    "forensic": "2887",
+    "vote": "2887",
+    "vote_conf": true
+   },
+   {
+    "file": "23110.jpg",
+    "truth": "2526",
+    "neural": "4",
+    "forensic": "6",
+    "vote": "6",
+    "vote_conf": false
+   },
+   {
+    "file": "23111.jpg",
+    "truth": "1593",
+    "neural": "1593",
+    "forensic": "9",
+    "vote": "1593",
+    "vote_conf": false
+   },
+   {
+    "file": "23112.jpg",
+    "truth": "2662",
+    "neural": "2562",
+    "forensic": "767",
+    "vote": "2762",
+    "vote_conf": false
+   },
+   {
+    "file": "23113.jpg",
+    "truth": "3018",
+    "neural": "3038",
+    "forensic": "3",
+    "vote": "3038",
+    "vote_conf": false
+   }
+  ],
+  "L": [
+   {
+    "file": "23065.jpg",
+    "truth": "2410",
+    "neural": "24",
+    "forensic": "711",
+    "vote": "711",
+    "vote_conf": false
+   },
+   {
+    "file": "23066.jpg",
+    "truth": "6719",
+    "neural": "671960",
+    "forensic": "7",
+    "vote": "671960",
+    "vote_conf": false
+   },
+   {
+    "file": "23067.jpg",
+    "truth": "5337",
+    "neural": "533788",
+    "forensic": "14",
+    "vote": "533718",
+    "vote_conf": false
+   },
+   {
+    "file": "23068.jpg",
+    "truth": "86",
+    "neural": "8602",
+    "forensic": "6",
+    "vote": "8602",
+    "vote_conf": false
+   },
+   {
+    "file": "23069.jpg",
+    "truth": "2559",
+    "neural": "2650",
+    "forensic": "4",
+    "vote": "2650",
+    "vote_conf": false
+   },
+   {
+    "file": "23070.jpg",
+    "truth": "21",
+    "neural": "48",
+    "forensic": "",
+    "vote": "48",
+    "vote_conf": false
+   },
+   {
+    "file": "23071.jpg",
+    "truth": "6509",
+    "neural": "61944",
+    "forensic": "3",
+    "vote": "61944",
+    "vote_conf": false
+   },
+   {
+    "file": "23073.jpg",
+    "truth": "7990",
+    "neural": "7000",
+    "forensic": "77",
+    "vote": "7070",
+    "vote_conf": false
+   },
+   {
+    "file": "23074.jpg",
+    "truth": "9550",
+    "neural": "0",
+    "forensic": "",
+    "vote": "0",
+    "vote_conf": false
+   },
+   {
+    "file": "23075.jpg",
+    "truth": "7990",
+    "neural": "709",
+    "forensic": "11",
+    "vote": "711",
+    "vote_conf": false
+   },
+   {
+    "file": "23076.jpg",
+    "truth": "303",
+    "neural": "303",
+    "forensic": "5111",
+    "vote": "301",
+    "vote_conf": false
+   },
+   {
+    "file": "23077.jpg",
+    "truth": "7589",
+    "neural": "643",
+    "forensic": "4",
+    "vote": "643",
+    "vote_conf": false
+   },
+   {
+    "file": "23078.jpg",
+    "truth": "1724",
+    "neural": "172413",
+    "forensic": "5",
+    "vote": "172413",
+    "vote_conf": false
+   },
+   {
+    "file": "23079.jpg",
+    "truth": "7990",
+    "neural": "799818",
+    "forensic": "6",
+    "vote": "799816",
+    "vote_conf": false
+   },
+   {
+    "file": "23080.jpg",
+    "truth": "5078",
+    "neural": "78",
+    "forensic": "4",
+    "vote": "78",
+    "vote_conf": false
+   },
+   {
+    "file": "23081.jpg",
+    "truth": "4998",
+    "neural": "40987",
+    "forensic": "73",
+    "vote": "40987",
+    "vote_conf": false
+   },
+   {
+    "file": "23082.jpg",
+    "truth": "782",
+    "neural": "792",
+    "forensic": "15",
+    "vote": "712",
+    "vote_conf": false
+   },
+   {
+    "file": "23083.jpg",
+    "truth": "532",
+    "neural": "622",
+    "forensic": "2",
+    "vote": "622",
+    "vote_conf": false
+   },
+   {
+    "file": "23084.jpg",
+    "truth": "1259",
+    "neural": "1269",
+    "forensic": "1",
+    "vote": "1261",
+    "vote_conf": false
+   },
+   {
+    "file": "23085.jpg",
+    "truth": "1989",
+    "neural": "89",
+    "forensic": "7",
+    "vote": "89",
+    "vote_conf": false
+   },
+   {
+    "file": "23086.jpg",
+    "truth": "2392",
+    "neural": "202",
+    "forensic": "1",
+    "vote": "202",
+    "vote_conf": false
+   },
+   {
+    "file": "23088.jpg",
+    "truth": "31265",
+    "neural": "8860",
+    "forensic": "1",
+    "vote": "8861",
+    "vote_conf": false
+   },
+   {
+    "file": "23089.jpg",
+    "truth": "538",
+    "neural": "538",
+    "forensic": "3",
+    "vote": "538",
+    "vote_conf": false
+   },
+   {
+    "file": "23090.jpg",
+    "truth": "490",
+    "neural": "400",
+    "forensic": "6",
+    "vote": "400",
+    "vote_conf": false
+   },
+   {
+    "file": "23091.jpg",
+    "truth": "243",
+    "neural": "24",
+    "forensic": "9",
+    "vote": "24",
+    "vote_conf": false
+   },
+   {
+    "file": "23092.jpg",
+    "truth": "5619",
+    "neural": "0",
+    "forensic": "7",
+    "vote": "0",
+    "vote_conf": false
+   },
+   {
+    "file": "23094.jpg",
+    "truth": "21",
+    "neural": "126",
+    "forensic": "2711",
+    "vote": "2716",
+    "vote_conf": false
+   },
+   {
+    "file": "23095.jpg",
+    "truth": "26684",
+    "neural": "266840",
+    "forensic": "1",
+    "vote": "266840",
+    "vote_conf": false
+   },
+   {
+    "file": "23096.jpg",
+    "truth": "3283",
+    "neural": "3283",
+    "forensic": "9",
+    "vote": "3283",
+    "vote_conf": false
+   },
+   {
+    "file": "23097.jpg",
+    "truth": "1020",
+    "neural": "20",
+    "forensic": "1",
+    "vote": "21",
+    "vote_conf": false
+   },
+   {
+    "file": "23098.jpg",
+    "truth": "52",
+    "neural": "0",
+    "forensic": "7",
+    "vote": "0",
+    "vote_conf": false
+   },
+   {
+    "file": "23099.jpg",
+    "truth": "3394",
+    "neural": "8",
+    "forensic": "3",
+    "vote": "8",
+    "vote_conf": false
+   },
+   {
+    "file": "23100.jpg",
+    "truth": "32",
+    "neural": "0",
+    "forensic": "7",
+    "vote": "0",
+    "vote_conf": false
+   },
+   {
+    "file": "23101.jpg",
+    "truth": "1671",
+    "neural": "167",
+    "forensic": "62",
+    "vote": "162",
+    "vote_conf": false
+   },
+   {
+    "file": "23102.jpg",
+    "truth": "2260",
+    "neural": "2280",
+    "forensic": "260",
+    "vote": "2260",
+    "vote_conf": false
+   },
+   {
+    "file": "23103.jpg",
+    "truth": "2850",
+    "neural": "205",
+    "forensic": "1",
+    "vote": "205",
+    "vote_conf": false
+   },
+   {
+    "file": "23104.jpg",
+    "truth": "2231",
+    "neural": "2771",
+    "forensic": "2",
+    "vote": "2771",
+    "vote_conf": false
+   },
+   {
+    "file": "23105.jpg",
+    "truth": "2231",
+    "neural": "222",
+    "forensic": "19",
+    "vote": "212",
+    "vote_conf": false
+   },
+   {
+    "file": "23106.jpg",
+    "truth": "4305",
+    "neural": "4305",
+    "forensic": "23",
+    "vote": "4325",
+    "vote_conf": false
+   },
+   {
+    "file": "23107.jpg",
+    "truth": "2058",
+    "neural": "2058",
+    "forensic": "58",
+    "vote": "2058",
+    "vote_conf": false
+   },
+   {
+    "file": "23108.jpg",
+    "truth": "2921",
+    "neural": "242",
+    "forensic": "11",
+    "vote": "211",
+    "vote_conf": false
+   },
+   {
+    "file": "23109.jpg",
+    "truth": "2887",
+    "neural": "2887",
+    "forensic": "28",
+    "vote": "2028",
+    "vote_conf": false
+   },
+   {
+    "file": "23110.jpg",
+    "truth": "2526",
+    "neural": "0",
+    "forensic": "13",
+    "vote": "10",
+    "vote_conf": false
+   },
+   {
+    "file": "23111.jpg",
+    "truth": "1593",
+    "neural": "1597",
+    "forensic": "11",
+    "vote": "1511",
+    "vote_conf": false
+   },
+   {
+    "file": "23112.jpg",
+    "truth": "2662",
+    "neural": "2662",
+    "forensic": "6",
+    "vote": "2662",
+    "vote_conf": false
+   },
+   {
+    "file": "23113.jpg",
+    "truth": "3018",
+    "neural": "301080",
+    "forensic": "",
+    "vote": "301080",
+    "vote_conf": false
+   }
+  ]
+ }
+}
