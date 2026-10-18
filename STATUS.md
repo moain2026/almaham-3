@@ -4,6 +4,7 @@ updated: 2026-10-18
 # الحالة الآن
 
 ## قيد العمل
+- labels slice 0: 200 done, 87 unreadable (1 P) — تسمية آلية بنموذج رؤية لا بشرية (3 قراءات مستقلة، يُقبل الإجماع فقط وإلا X)، عيّنة ≥10% من الأرقام روجعت يدوياً
 - [2026-10-18 وكيل B] **T4** `app/meterocr/.../ForensicReader.kt` (نقل حرفي لـ forensic_reader.py بلا OpenCV) + `ForensicReaderTest` (4 اختبارات ناجحة): يطابق Python على 5 قصوص ثابتة (النص، الحالة، الفئة، conf ±1e-6، الصندوق ±1e-5، المقاطع). الأمر: `cd app && ./gradlew :meterocr:testDebugUnitTest --tests '*ForensicReaderTest*'` (JDK17، سندبوكس). المثبّتات من `lab/make_forensic_fixtures.py`.
 - [2026-10-18 وكيل B] **T3** `benchmark/data/digit_boxes.json` (عقد §3، 46 صورة، تقييم فقط): مدى يدوي لكل صورة على قصّ line_boxes (عرض CLAHE) مقسوم بخطوة ثابتة؛ المصدر `benchmark/data/digit_spans_manual.json`، المولّد `lab/make_digit_boxes.py`. الصور المائلة (23106، 23110) تقريبية.
 - [2026-10-18 وكيل B] **T2 القارئ الحتمي** `lab/forensic_reader.py` (عقد §2، 3 فحوص مستقلة max/gray/green + تصويت): exact **11/46** (holdout 5/36)، خانات conf≥0.8 = **56/57 = 98.2%** (holdout 97.1%) — القاعدة مُعايَرة على نفس الـ46 (in-sample). الأمر: `cd lab && python3 eval_forensic_reader.py` → `benchmark/results/engines/forensic_reader_lineL.json`، سندبوكس x86 p50 414ms (Python خالص).
