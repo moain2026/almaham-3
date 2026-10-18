@@ -75,3 +75,4 @@ updated: 2026-10-18
 - [2026-10-18] ground_truth v2 (تصحيح 3 قراءات غلط في v1) + مستطيلات A/الشاشة/السطر.
 - [2026-10-18] قياس PP-OCRv5/v6 و ERP baseline على الوضعين A و B.
 - 2026-10-18 agent B: v0.1.1 pre-release = ONE APK only (owner): almaham-meter-0.1.1-arm64.apk, field, 37,849,126 B, sha256 9eaf497e…145e5c (stat/aapt2 native-code arm64-v8a). armv7/bench not published. ≤20 MB not reached: ORT 1.31 = 34,208,672 B; minimal ORT .so built 2,455,568 B but needs .ort assets (agent A). R8 build not yet run on device.
+- 2026-10-18 agent B: docs — docs/apk-size-report.md (all byte tables, commands, ORT-minimal 2,455,568 B, LiteRT 4,320,480 B, parity 10/10), handoff docs/handoff/agentB-to-agentA-apk-size-0.1.1.md, release-0.1.0 §2 install note, app-build-record 0.1.1, artifacts/ort-minimal AAR.

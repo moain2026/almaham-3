@@ -22,6 +22,9 @@
 **الاختبارات:** انظر §5 (نتيجة البناء الفعلية لهذا الإصدار).
 
 ## 2. التثبيت والتجربة على جوال حقيقي
+> **تحديث 0.1.1 (وكيل B):** ثبّت **`almaham-meter-0.1.1-arm64.apk`** من GitHub Release `v0.1.1` (جوالات 64-bit فقط، 37,849,126 B):
+> `adb install -r almaham-meter-0.1.1-arm64.apk`. نسخة bench (مع ML Kit للاختبار الجماعي) تُبنى محلياً: `./gradlew :demo:assembleBenchRelease`. التفاصيل: `docs/apk-size-report.md`.
+
 ```bash
 adb install -r demo-debug.apk
 # تجربة يدوية: افتح التطبيق ← «التقاط» ← وجّه المستطيل على شاشة العداد ← اضغط.

@@ -86,3 +86,12 @@ exact 11/46 (DEV 6/10، HOLDOUT 5/36)؛ خانات conf≥0.8: 57، الصحيح
 | `19e7cd83387aff0ecd3546e53b655cb20eb6da55` | 08:39:53 | T1 إصلاحات demo + تقرير المحاكي |
 | (على main) `bdf12076e273e699b808e2fb9fe80823f8854fe6` | — | تحليل Anyline/Laroca + SQL التصدير |
 | (على main) `9f8a054` | — | النسخة الأصلية من مختبر الحتمي (نُقلت للفرع بـ cherry-pick = a497500) |
+
+## 0.1.1 (وكيل B، 2026-10-18)
+| الملف | البايت | sha256 | منشور |
+|---|---|---|---|
+| almaham-meter-0.1.1-arm64.apk (= demo-field-arm64-v8a-release.apk) | 37,849,126 | 9eaf497eaa1d48bbf83f9ab2a1684f945ff6f8756042844dfc4bd12b27145e5c | نعم، Release v0.1.1 (pre) |
+| demo-field-armeabi-v7a-release.apk | 27,787,924 | 64e1788fcecbf8c23d9b8d3c2195f0fa654ccf47bc949e86c47286cbab1121db | لا |
+| demo-bench-arm64-v8a-release.apk | 50,659,989 | 7e84ab75bfb337a96ae5881c405320c2aea66cbadcd69d2f1edb0c409df3307a | لا |
+| onnxruntime-minimal-1.23.2-arm64.aar | 1,252,102 | 877286fb0b55f19571c472b52ab1a81ded295ef36cffabc5e7af2429082299b6 | في git: artifacts/ort-minimal/ |
+الأمر: `./gradlew --no-daemon :demo:assembleFieldRelease`. التفاصيل: docs/apk-size-report.md.
