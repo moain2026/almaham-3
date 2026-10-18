@@ -3,6 +3,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 ### Added
+- مختبر جنائي: `lab/sevenseg4.py` `sevenseg5.py` `sevenseg6.py` `forensic_grid.py` + `docs/research/forensic-lab-2026-10-18.md`.
 - `docs/research/how-they-do-it-2026-10-18.md`: تحليل Anyline/Laroca/MDPI + الحل المقترح + خطة تدريب على صور ERP المعتمدة.
 - `scripts/export_erp_training.sql`: تصدير القراءات `confirmed` مع مفاتيح الصور (الجزء الصحيح فقط).
 - `docs/brief/04_برومت_الوكيل_المفتوح.md`: برومت مفتوح لوكيل خارجي (يشرح الهدف والقيود والمعايير بدون فرض طريقة).
