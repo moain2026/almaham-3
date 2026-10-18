@@ -1,0 +1,349 @@
+{
+"ort": "1.23.2",
+"ext": "ort",
+"rows": {
+"23065.jpg": {
+"value": "523",
+"raw": "523",
+"status": "OK",
+"confident": false,
+"truth": "2410"
+},
+"23066.jpg": {
+"value": "6719",
+"raw": "006719",
+"status": "OK",
+"confident": false,
+"truth": "6719"
+},
+"23067.jpg": {
+"value": "533788",
+"raw": "00533788",
+"status": "TOO_MANY_DIGITS",
+"confident": false,
+"truth": "5337"
+},
+"23068.jpg": {
+"value": "86",
+"raw": "00086",
+"status": "OK",
+"confident": true,
+"truth": "86"
+},
+"23069.jpg": {
+"value": "2500",
+"raw": "002500",
+"status": "OK",
+"confident": false,
+"truth": "2559"
+},
+"23070.jpg": {
+"value": "248",
+"raw": "248",
+"status": "OK",
+"confident": false,
+"truth": "21"
+},
+"23071.jpg": {
+"value": "509",
+"raw": "000509",
+"status": "OK",
+"confident": false,
+"truth": "6509"
+},
+"23072.jpg": {
+"value": "",
+"raw": "",
+"status": "EMPTY",
+"confident": false,
+"truth": ""
+},
+"23073.jpg": {
+"value": "7170",
+"raw": "007170",
+"status": "OK",
+"confident": false,
+"truth": "7990"
+},
+"23074.jpg": {
+"value": "",
+"raw": "",
+"status": "EMPTY",
+"confident": false,
+"truth": "9550"
+},
+"23075.jpg": {
+"value": "9",
+"raw": "000009",
+"status": "OK",
+"confident": false,
+"truth": "7990"
+},
+"23076.jpg": {
+"value": "308168",
+"raw": "308168",
+"status": "OK",
+"confident": false,
+"truth": "303"
+},
+"23077.jpg": {
+"value": "751424",
+"raw": "0751424",
+"status": "OK",
+"confident": false,
+"truth": "7589"
+},
+"23078.jpg": {
+"value": "1724",
+"raw": "001724",
+"status": "OK",
+"confident": false,
+"truth": "1724"
+},
+"23079.jpg": {
+"value": "7990",
+"raw": "007990",
+"status": "OK",
+"confident": false,
+"truth": "7990"
+},
+"23080.jpg": {
+"value": "78",
+"raw": "000078",
+"status": "OK",
+"confident": false,
+"truth": "5078"
+},
+"23081.jpg": {
+"value": "47087",
+"raw": "0047087",
+"status": "OK",
+"confident": false,
+"truth": "4998"
+},
+"23082.jpg": {
+"value": "782",
+"raw": "000782",
+"status": "OK",
+"confident": false,
+"truth": "782"
+},
+"23083.jpg": {
+"value": "532",
+"raw": "000532",
+"status": "OK",
+"confident": false,
+"truth": "532"
+},
+"23084.jpg": {
+"value": "1259",
+"raw": "001259",
+"status": "OK",
+"confident": false,
+"truth": "1259"
+},
+"23085.jpg": {
+"value": "89",
+"raw": "00089",
+"status": "OK",
+"confident": false,
+"truth": "1989"
+},
+"23086.jpg": {
+"value": "2",
+"raw": "02",
+"status": "OK",
+"confident": false,
+"truth": "2392"
+},
+"23087.jpg": {
+"value": "0",
+"raw": "0",
+"status": "OK",
+"confident": false,
+"truth": ""
+},
+"23088.jpg": {
+"value": "",
+"raw": "",
+"status": "EMPTY",
+"confident": false,
+"truth": "31265"
+},
+"23089.jpg": {
+"value": "538",
+"raw": "000538",
+"status": "OK",
+"confident": false,
+"truth": "538"
+},
+"23090.jpg": {
+"value": "490",
+"raw": "000490",
+"status": "OK",
+"confident": false,
+"truth": "490"
+},
+"23091.jpg": {
+"value": "283",
+"raw": "000283",
+"status": "OK",
+"confident": false,
+"truth": "243"
+},
+"23092.jpg": {
+"value": "9",
+"raw": "0009",
+"status": "OK",
+"confident": false,
+"truth": "5619"
+},
+"23093.jpg": {
+"value": "80",
+"raw": "80",
+"status": "OK",
+"confident": false,
+"truth": ""
+},
+"23094.jpg": {
+"value": "2159",
+"raw": "2159",
+"status": "OK",
+"confident": false,
+"truth": "21"
+},
+"23095.jpg": {
+"value": "26684",
+"raw": "026684",
+"status": "OK",
+"confident": false,
+"truth": "26684"
+},
+"23096.jpg": {
+"value": "3283",
+"raw": "003283",
+"status": "OK",
+"confident": false,
+"truth": "3283"
+},
+"23097.jpg": {
+"value": "1020",
+"raw": "001020",
+"status": "OK",
+"confident": false,
+"truth": "1020"
+},
+"23098.jpg": {
+"value": "5218",
+"raw": "5218",
+"status": "OK",
+"confident": false,
+"truth": "52"
+},
+"23099.jpg": {
+"value": "9331",
+"raw": "009331",
+"status": "OK",
+"confident": false,
+"truth": "3394"
+},
+"23100.jpg": {
+"value": "329",
+"raw": "329",
+"status": "OK",
+"confident": false,
+"truth": "32"
+},
+"23101.jpg": {
+"value": "1671",
+"raw": "001671",
+"status": "OK",
+"confident": false,
+"truth": "1671"
+},
+"23102.jpg": {
+"value": "2250",
+"raw": "002250",
+"status": "OK",
+"confident": false,
+"truth": "2260"
+},
+"23103.jpg": {
+"value": "4603412",
+"raw": "0004603412",
+"status": "TOO_MANY_DIGITS",
+"confident": false,
+"truth": "2850"
+},
+"23104.jpg": {
+"value": "271",
+"raw": "000271",
+"status": "OK",
+"confident": false,
+"truth": "2231"
+},
+"23105.jpg": {
+"value": "2231",
+"raw": "002231",
+"status": "OK",
+"confident": false,
+"truth": "2231"
+},
+"23106.jpg": {
+"value": "4905",
+"raw": "004905",
+"status": "OK",
+"confident": false,
+"truth": "4305"
+},
+"23107.jpg": {
+"value": "2058",
+"raw": "002058",
+"status": "OK",
+"confident": false,
+"truth": "2058"
+},
+"23108.jpg": {
+"value": "2421",
+"raw": "002421",
+"status": "OK",
+"confident": false,
+"truth": "2921"
+},
+"23109.jpg": {
+"value": "2087",
+"raw": "002087",
+"status": "OK",
+"confident": false,
+"truth": "2887"
+},
+"23110.jpg": {
+"value": "0",
+"raw": "00",
+"status": "OK",
+"confident": false,
+"truth": "2526"
+},
+"23111.jpg": {
+"value": "1593",
+"raw": "001593",
+"status": "OK",
+"confident": false,
+"truth": "1593"
+},
+"23112.jpg": {
+"value": "2563",
+"raw": "002563",
+"status": "OK",
+"confident": false,
+"truth": "2662"
+},
+"23113.jpg": {
+"value": "3018",
+"raw": "003018",
+"status": "OK",
+"confident": false,
+"truth": "3018"
+}
+}
+}
