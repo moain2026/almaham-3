@@ -4,7 +4,7 @@
 (بدون إنترنت) يقرأ رقم الشاشة ← الرقم يتعبّى في خانة «القراءة الحالية» مع تحقق بالألوان. لو نجح، ينتقل الكود
 للمشروع الرئيسي [`moain2026/almaham-2`](https://github.com/moain2026/almaham-2).
 
-> **ابدأ من:** [`docs/PLAN.md`](docs/PLAN.md) (الخطة والأرقام الآن) ← [`STATUS.md`](STATUS.md) (وين وصلنا الآن) ← [`AGENTS.md`](AGENTS.md) (القواعد والأوامر)
+> **وكيل جديد؟ ابدأ من:** [`docs/prompts/SUCCESSOR-AGENT.md`](docs/prompts/SUCCESSOR-AGENT.md) ← [`docs/PLAN.md`](docs/PLAN.md) (الخطة والأرقام الآن) ← [`STATUS.md`](STATUS.md) (وين وصلنا الآن) ← [`AGENTS.md`](AGENTS.md) (القواعد والأوامر)
 > ← [`docs/brief/`](docs/brief/) (المهمة الأصلية كما سلّمها المالك).
 
 ## الحالة باختصار (2026-10-18)

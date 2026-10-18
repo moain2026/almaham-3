@@ -1,3 +1,8 @@
+## [Unreleased] — 2026-10-18 جلسة A الأخيرة
+- e2e 0→19/46 عبر ضبط دقيق على ERP (ft2–ft4) + إصلاح حدّ الكسر؛ غلط-وواثق 0.
+- docs: PLAN.md، SUCCESSOR-AGENT.md، train-digitnet.md كامل، ADR-0005، برومتات B.
+- tests: قاعدة 6 خانات (Python 11/11، Kotlin 45/45).
+
 ## [0.1.0-alpha] — 2026-10-18 — النسخة الأولية التجريبية (`v0.1.0`)
 - APK تجريبي على GitHub Release؛ 49 اختبار وحدات؛ صلاحية CAMERA فقط. الأرقام والحدود في `docs/release-0.1.0.md`.
 
