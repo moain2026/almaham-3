@@ -50,16 +50,20 @@ def main(ckpt, tag):
         best = max(dets, key=lambda d: d[1], default=None)
         tb = np.array(db[fn]["boxes"]) if fn in db else None
         tight = None if tb is None else (tb[:, 0].min() * W - ox, tb[:, 1].min() * H - oy, tb[:, 2].max() * W - ox, tb[:, 3].max() * H - oy)
-        iou, score, iou_t = 0.0, 0.0, 0.0
+        iou, score, iou_t, top3_t = 0.0, 0.0, 0.0, 0.0
         if best:
             box = [(v - (px if i % 2 == 0 else py)) / s for i, v in enumerate(best[2:])]
             iou, score = assemble.iou(box, ref), best[1]
             iou_t = assemble.iou(box, tight) if tight is not None else 0.0
-        rows.append({"file": fn, "iou": round(float(iou), 3), "iou_tight": round(float(iou_t), 3), "score": round(float(score), 3), "found": best is not None,
+            for dd in sorted(dets, key=lambda d: -d[1])[:3]:  # top-3 peaks: what a post-reader line choice could reach
+                bb = [(v - (px if i % 2 == 0 else py)) / s for i, v in enumerate(dd[2:])]
+                top3_t = max(top3_t, assemble.iou(bb, tight) if tight is not None else 0.0)
+        rows.append({"file": fn, "iou": round(float(iou), 3), "iou_tight": round(float(iou_t), 3), "iou_tight_top3": round(float(top3_t), 3), "score": round(float(score), 3), "found": best is not None,
                      "ms": round(ms, 2)})
     hit = sum(r["iou"] > 0.5 for r in rows)
     summ = {"ckpt": ckpt, "argv": sys.argv, "n": len(rows), "recall_iou50": hit, "recall_pct": round(100 * hit / len(rows), 1),
             "recall_tight_iou50": sum(r["iou_tight"] > 0.5 for r in rows),
+            "recall_tight_top3": sum(r["iou_tight_top3"] > 0.5 for r in rows),
             "found": sum(r["found"] for r in rows), "iou_median": round(st.median(r["iou"] for r in rows), 3),
             "ms_p50": round(st.median(r["ms"] for r in rows), 2),
             "miss": [r["file"] for r in rows if r["iou"] <= 0.5]}

@@ -44,6 +44,9 @@ TORCH_THREADS=3 nohup python3 train_det.py locator 20000 weights/locator_t.pt ..
 
 - 10:08Z المهمة 4: نُزّلت كل صور ERP المسمّاة الجديدة بـ `ERP_USER=… python3 erp_fetch_labelled.py` ⇒ 2349 صورة محلياً (من 2383 مسمّاة مقروءة). A بدأ `locator_ft2` من locator_t@~6000 على 361 عيّنة ضعيفة.
 
+- 10:50Z أضفت إلى `eval_locator_real.py` مقياس `recall_tight_top3` (أفضل IoU بين أعلى 3 قمم فوق العتبة) لقياس ما يربحه اختيار السطر بعد القارئ. على الأوزان الحالية (~12.5k): tight **31/46**، top3 31/46 (أي أن القمم الأخرى فوق LOC_PEAK_MIN=0.25 قليلة؛ الأخطاء الـ15 صناديق ضعيفة التطابق IoU 0.15–0.5 أكثر منها سطراً خطأ، و3 صور (23074, 23088, 23092) سطر خطأ تماماً).
+- 10:45Z رفعت `lab/plausibility.py` + 13 اختبار + `docs/research/agentT-algorithms-2026-10-18.md` (2927b68).
+
 ## كل 500 خطوة (الخطوة العامة = خطوة اللوغ بعد الاستئناف + 1000)
 - 0: loss 15.707 val 0/196
 - 500: loss 8.054 val 0/196
@@ -71,6 +74,7 @@ TORCH_THREADS=3 nohup python3 train_det.py locator 20000 weights/locator_t.pt ..
 - 11000: loss 1.342 val 160/196
 - 11500: loss 1.298 val 165/196
 - 12000: loss 1.330 val 156/196
+- 12500: loss 1.260 val 162/196
 ## Checkpoints
 | step | val اصطناعي | loss | سطر حقيقي IoU>0.5 | وقت |
 |---|---|---|---|---|
