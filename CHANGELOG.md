@@ -1,5 +1,6 @@
 ## [Unreleased] — 2026-10-18 (جولة 2، فرع genspark_ai_developer)
 ### Added
+- `lab/forensic_reader.py` + `lab/eval_forensic_reader.py` (وكيل B، عقد §2).
 - `app/`: مشروع Android (Kotlin + Compose + CameraX 1.5.0 + ONNX Runtime 1.31): موديول `meterocr` (config, RectGeometry, ReadingAssembler,
   ReadingValidator, PeakDecoder, MeterReader, EvidenceImage, ReadingLog) + تطبيق `demo` (شاشة إدخال، كاميرا بمستطيل/زوم/فلاش/ZSL،
   خط معالجة بعد الضغطة، وضع اختبار جماعي A/B × DigitNet/ML Kit). 35 اختبار وحدات.
