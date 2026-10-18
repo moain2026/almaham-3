@@ -4,3 +4,9 @@ argv ['erp_finetune.py', 'train', 'weights/locator_t.pt', '../data/erp/ft/ft2', 
 step 0 loss 1.744 real_val_line_iou50 40/46 3s
 step 250 loss 1.419 real_val_line_iou50 46/46 258s
 step 500 loss 1.325 real_val_line_iou50 44/46 509s
+step 750 loss 1.303 real_val_line_iou50 45/46 754s
+step 1000 loss 1.260 real_val_line_iou50 45/46 1027s
+step 1250 loss 1.222 real_val_line_iou50 45/46 1277s
+step 1500 loss 1.178 real_val_line_iou50 45/46 1525s
+step 1750 loss 1.104 real_val_line_iou50 46/46 1848s
+killed at step ~1750 (superseded by locator_ft3; weights locator_ft2.pt = step 1750 ckpt)
