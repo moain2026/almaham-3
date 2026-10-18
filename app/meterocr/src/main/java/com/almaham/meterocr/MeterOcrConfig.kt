@@ -29,7 +29,8 @@ object MeterOcrConfig {
     const val MERGE_IOU = 0.45f
     const val LINE_OVERLAP = 0.4f
     const val HEIGHT_SIMILAR = 0.6f
-    const val SMALL_DIGIT_RATIO = 0.8f
+    const val SMALL_DIGIT_RATIO = 0.65f    // 0.8 cut real 6-cell readings early (bench §8)
+    const val INTEGER_CELLS_DEFAULT = 6    // Yemeni LCD meters: 6 integer cells; cells 7+ in a regular lattice are decimals
     const val GAP_MISSING = 1.75f
     const val GAP_SPLIT = 2.6f
     const val DIGIT_CONF_MIN = 0.45f

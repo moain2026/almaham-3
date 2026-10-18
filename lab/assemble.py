@@ -25,7 +25,8 @@ CONFIG = {
     "MERGE_IOU": 0.45,            # same box, different class -> alternatives
     "LINE_OVERLAP": 0.4,          # vertical overlap ratio to be on the same line
     "HEIGHT_SIMILAR": 0.6,        # min height ratio for two digits to be on the same line
-    "SMALL_DIGIT_RATIO": 0.8,     # a digit shorter than this x median -> decimal part
+    "SMALL_DIGIT_RATIO": 0.65,    # a digit shorter than this x median -> decimal part (0.8 cut real 6-cell readings early)
+    "INTEGER_CELLS_DEFAULT": 6,   # Yemeni LCD meters: 6 integer cells; with >=7 digits in a regular lattice, cells 7+ are decimals
     "GAP_MISSING": 1.75,          # a gap larger than this x median pitch -> a digit was missed
     "GAP_SPLIT": 2.6,             # a gap larger than this x median pitch -> a different number (e.g. unit text)
     "DIGIT_CONF_MIN": 0.45,       # below this a digit is uncertain
@@ -168,6 +169,14 @@ def integer_part(line: List[Digit], dots: List[Digit]) -> List[Digit]:
         if ds[i].h < CONFIG["SMALL_DIGIT_RATIO"] * ref:
             cut = min(cut, i)
             break
+    # cell-count prior: on real meters the decimal digits are often the same height as the integers and the dot is
+    # faint, so with >= INTEGER_CELLS_DEFAULT+1 digits in a regular lattice and no earlier cut, cut at the default.
+    n0 = CONFIG["INTEGER_CELLS_DEFAULT"]
+    if cut > n0 and len(ds) > n0:
+        pitches = [ds[i + 1].cx - ds[i].cx for i in range(len(ds) - 1)]
+        med = median(pitches)
+        if med > 0 and all(abs(p - med) <= 0.35 * med for p in pitches):
+            cut = n0
     ds = ds[:cut]
     # large gap: stop at the first gap that cannot be part of the same number
     if len(ds) >= 3:

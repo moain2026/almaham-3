@@ -96,6 +96,14 @@ object ReadingAssembler {
             val ref = median(ds.subList(0, i).map { it.h })
             if (ds[i].h < C.SMALL_DIGIT_RATIO * ref) { cut = minOf(cut, i); break }
         }
+        // Cell-count prior (== assemble.py): decimals on real LCD meters are often full height with a faint dot;
+        // with more than INTEGER_CELLS_DEFAULT digits in a regular lattice and no earlier cut, cut at the default.
+        val n0 = C.INTEGER_CELLS_DEFAULT
+        if (cut > n0 && ds.size > n0) {
+            val pitches = (0 until ds.size - 1).map { ds[it + 1].cx - ds[it].cx }
+            val med = median(pitches)
+            if (med > 0f && pitches.all { kotlin.math.abs(it - med) <= 0.35f * med }) cut = n0
+        }
         ds = ds.subList(0, cut)
         if (ds.size >= 3) {
             val pitches = (0 until ds.size - 1).map { ds[it + 1].cx - ds[it].cx }
