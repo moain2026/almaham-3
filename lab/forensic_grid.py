@@ -1,5 +1,5 @@
 """Forensic multi-hypothesis grid: 23 image variants (channels, inversion, CLAHE, retinex, de-glare inpaint, NLM, unsharp, gamma...) x readers v1/v2/v6, then cross-variant vote. Usage: python3 forensic_grid.py"""
-import json,time,cv2,numpy as np,gt,paths,sevenseg as v1,sevenseg2 as v2,sevenseg6 as v6
+import json,cv2,numpy as np,gt,paths,sevenseg as v1,sevenseg2 as v2,sevenseg6 as v6
 from eval_sevenseg import DEV
 lines=json.load(open(paths.LINE_BOXES))
 def g3(x): x=np.clip(x,0,255).astype(np.uint8); return cv2.merge([x,x,x])
@@ -37,7 +37,7 @@ for vn,f in V.items():
         okd=okh=0;outs={}
         for it,c in data:
             try: v,_,_=r.read_line(f(c))
-            except Exception as e: v=""
+            except Exception: v=""
             outs[it.name[:5]]=v
             if v==it.reading:
                 if it.name[:5] in DEV: okd+=1

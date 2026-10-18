@@ -1,0 +1,7 @@
+# Independent no-training lab; does not replace requirements-lab.txt for training.
+numpy==2.3.5
+opencv-python-headless==4.11.0.86
+pillow==12.3.0
+zxing-cpp==2.3.0
+pyflakes==3.4.0
+ruff==0.14.1

@@ -7,7 +7,21 @@
 > **ابدأ من:** [`STATUS.md`](STATUS.md) (وين وصلنا الآن) ← [`AGENTS.md`](AGENTS.md) (القواعد والأوامر)
 > ← [`docs/brief/`](docs/brief/) (المهمة الأصلية كما سلّمها المالك).
 
-## الحالة باختصار (2026-10-18)
+## هذا الفرع: التسليم الكامل لتجارب القراءة بلا تدريب
+
+الفرع `genspark_ai_developer_optical_20261018` يحتوي شجرة المستودع الأصلية كاملة مع جميع إضافات المختبر والنتائج والتوثيق.
+لا يدمج تلقائيًا أحدث تطبيق Android في فرع الوكلاء الآخرين.
+
+- **للانتقال إلى بيئة جديدة:** [`docs/runbooks/optical-fresh-environment.md`](docs/runbooks/optical-fresh-environment.md).
+- **للوكيل الذي سيكمل:** [`docs/history/2026-10-18-optical-sprint-handoff.md`](docs/history/2026-10-18-optical-sprint-handoff.md).
+- **التشغيل والمعايرة وقراءة صور جديدة:** [`docs/runbooks/profile-reader.md`](docs/runbooks/profile-reader.md).
+- **المتطلبات المستقلة:** `requirements-optical.txt`؛ لا تحتاج تدريبًا أو نماذج PP-OCR لبدء هذا المختبر.
+- **اختبار النقل:** clone نظيف + virtualenv مستقل، 64 اختبارًا و360 حالة profile/policy مطابقة للنتائج المسجلة؛
+  السجل [`benchmark/results/verified_fresh_environment_2026-10-18.txt`](benchmark/results/verified_fresh_environment_2026-10-18.txt).
+- **الحكم:** نموذج بحثي يعمل، لا دقة ميدانية ≥95% ولا إذن فوترة آلية. النجاح الاصطناعي منفصل عن ضعف التغطية الحقيقية.
+- [طلب الدمج البحثي #2](https://github.com/moain2026/almaham-3/pull/2)؛ لم يُدمج في main.
+
+## الحالة التاريخية لخط main عند بدء التجارب (2026-10-18)
 - **المرحلة:** البحث والقرار + تدريب المحرك. **التطبيق نفسه لم يُكتب بعد** (`app/` غير موجود).
 - **أفضل محرك جاهز:** نموذج الـ ERP الحالي 17/46 (37%) — رخصته AGPL فممنوع في المنتج.
 - **محركنا SegReader:** 15/46 (33%) على قصّ مثالي للسطر، بعد 4000 خطوة تدريب اصطناعي. **الهدف ≥95%.**
@@ -33,7 +47,10 @@
 | `lab/` | كود البحث والتدريب (Python) + الأوزان + سجلات التدريب |
 | `scripts/` | تنزيل النماذج، التحقق من الصور، فحص المستودع |
 
-## تشغيل سريع
+## التشغيل التاريخي لمحركات خط main
+
+لتشغيل التجارب الجديدة في هذا الفرع اتبع دليل الانتقال أعلاه؛ الأوامر التالية تخص محركات التدريب/المقارنة الأصلية.
+
 ```bash
 git clone https://github.com/moain2026/almaham-3.git && cd almaham-3
 pip install -r requirements-lab.txt
