@@ -37,3 +37,4 @@ local.properties
 /app/.gradle/
 /app/**/build/
 /app/.kotlin/
+dist/*.apk

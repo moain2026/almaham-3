@@ -1,3 +1,6 @@
+## [0.1.0-alpha] — 2026-10-18 — النسخة الأولية التجريبية (`v0.1.0`)
+- APK تجريبي على GitHub Release؛ 49 اختبار وحدات؛ صلاحية CAMERA فقط. الأرقام والحدود في `docs/release-0.1.0.md`.
+
 ## [Unreleased] — 2026-10-18 (جولة 2، فرع genspark_ai_developer)
 - meterocr: `MeterReader.read/close` @Synchronized؛ إزالة INTERNET/ACCESS_NETWORK_STATE ومزوّد التيليمتري من AAR ONNX Runtime عند دمج الـ manifest (offline فعلياً).
 - lab/train_det.py: حفظ نقطة وتقييم كل 250 خطوة (كان 500).
