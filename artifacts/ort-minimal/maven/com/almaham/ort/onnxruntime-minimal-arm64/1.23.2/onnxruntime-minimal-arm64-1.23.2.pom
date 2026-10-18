@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.almaham.ort</groupId>
+  <artifactId>onnxruntime-minimal-arm64</artifactId>
+  <version>1.23.2</version>
+  <packaging>aar</packaging>
+  <description>ONNX Runtime 1.23.2 minimal build (MIT), arm64-v8a, ops of our two models only. Built by agent B: artifacts/ort-minimal/run_build.sh</description>
+  <licenses><license><name>MIT</name></license></licenses>
+</project>

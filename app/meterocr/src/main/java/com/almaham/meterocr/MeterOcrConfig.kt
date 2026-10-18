@@ -6,8 +6,8 @@ package com.almaham.meterocr
  */
 object MeterOcrConfig {
     // ---- models (assets/models) ------------------------------------------------------------------
-    const val LOCATOR_MODEL_ASSET = "models/line_locator.onnx"
-    const val READER_MODEL_ASSET = "models/digit_reader.onnx"
+    const val LOCATOR_MODEL_ASSET = "models/line_locator.ort"
+    const val READER_MODEL_ASSET = "models/digit_reader.ort"
     const val LOCATOR_INPUT = 256          // square, letterboxed rectangle crop
     const val READER_INPUT_H = 64
     const val READER_INPUT_W = 448

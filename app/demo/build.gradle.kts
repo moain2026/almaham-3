@@ -11,8 +11,8 @@ android {
         applicationId = "com.almaham.meterdemo"
         minSdk = 24
         targetSdk = 35
-        versionCode = 2
-        versionName = "0.1.1"
+        versionCode = 3
+        versionName = "0.2.0"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -30,14 +30,13 @@ android {
         create("field") { dimension = "use" }
         create("bench") { dimension = "use"; versionNameSuffix = "-bench" }
     }
-    // One APK per CPU architecture instead of both in one file (phones: arm64-v8a, armeabi-v7a).
-    // x86_64 only when building for the emulator: ./gradlew -Pemulator ...
+    // One APK per CPU architecture. 0.2.0 ships arm64-v8a only.
     splits {
         abi {
             isEnable = true
             reset()
-            if (project.hasProperty("emulator")) include("arm64-v8a", "armeabi-v7a", "x86_64")
-            else include("arm64-v8a", "armeabi-v7a")
+            // 0.2.0: arm64-v8a only (the minimal ORT AAR is arm64-only; owner tests on a 64-bit phone)
+            include("arm64-v8a")
             isUniversalApk = false
         }
     }
