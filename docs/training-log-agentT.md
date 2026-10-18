@@ -53,6 +53,7 @@ TORCH_THREADS=3 nohup python3 train_det.py locator 20000 weights/locator_t.pt ..
   حسب القاعدة (تجاوز أفضل e2e A في `digitnet_*.json`) نُسخ ONNX إلى `app/meterocr/src/main/assets/models/` (line_locator.onnx من locator_t@14000، digit_reader.onnx = reader_ft3a بدون تغيير). الأوزان: `lab/weights/locator_t14000.pt`.
   تحفّظ: الفرق 4 صور على n=46 (ضمن ضوضاء معتبرة)، والاختيار بالـ46 يحمل تحيّزاً — يُؤكَّد على ERP val وعلى الجوال. `MODEL_CARD.md` لم أعدّله (app/** ملك A) — يحتاج تحديثاً من A.
 
+- 11:03Z e2e step 14500: locator_t@14500 + reader_ft3a.pt: A exact 17/46, wrong_confident 0, p50 18.3ms (best previous A = 16). cmd: export_onnx.py + eval_e2e.py /tmp/models_t14500 t14500
 ## كل 500 خطوة (الخطوة العامة = خطوة اللوغ بعد الاستئناف + 1000)
 - 0: loss 15.707 val 0/196
 - 500: loss 8.054 val 0/196
