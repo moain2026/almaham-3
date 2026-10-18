@@ -1,0 +1,12 @@
+# Exact versions used for every number in benchmark/results (sandbox, Python 3.13.14, x86_64 CPU).
+numpy==2.5.4
+opencv-python-headless==5.0.0.93
+pillow==12.3.0
+onnx==1.23.2
+onnxruntime==1.31.0
+rapidocr==3.10.0
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.14.1+cpu
+# dev
+pyflakes==4.0.3
+ruff==0.17.1

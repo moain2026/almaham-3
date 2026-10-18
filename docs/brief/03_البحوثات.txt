@@ -1,0 +1,114 @@
+بحوثات: قراءة العداد من الصورة بسرعة ودقة
+===========================================
+تاريخ البحث: 18 أكتوبر 2026. كل مصدر معه رابطه وإيش نستفيد منه بالضبط.
+ملاحظة: أرقام السرعة هنا من الوثائق والأوراق، والرقم الحقيقي لازم ينقاس على هواتفنا وصورنا. هذا شغل التطبيق التجريبي.
+
+
+الخلاصة في سطور
+---------------
+1. الكاميرا: CameraX على أندرويد، مع وضع Zero-Shutter Lag. يعني لحظة الضغط تنأخذ الصورة من آخر الإطارات المحفوظة في الذاكرة بدون تأخير الغالق.
+2. القص: نحوّل المستطيل من إحداثيات الشاشة لإحداثيات الصورة بدقة، مع مراعاة الدوران، ونقص في الذاكرة بدون حفظ ملف كبير.
+3. القراءة: نبدأ بـ ML Kit (جاهز ومجاني وأوفلاين) كأساس للمقارنة، ونجرّب معه PaddleOCR PP-OCRv5 mobile. الحل الأقوى على المدى الطويل: موديل صغير خاص فينا من خطوتين، كاشف لمكان الشاشة ثم قارئ أرقام، مدرّب على صور عداداتنا.
+4. شاشات العدادات من نوع seven-segment، والقارئ العام يخلط فيها بين أرقام زي 1 و7، و5 و6، و8 و0. علشان كذا الموديل الخاص أدق.
+5. المنطق بعد القراءة مهم بقد الموديل: نستعمل القراءة السابقة ومعدل الاستهلاك عشان نختار الرقم الصحيح بين الاحتمالات ونكشف الغلط.
+
+
+1) الكاميرا والالتقاط السريع
+----------------------------
+- Android CameraX: Zero-Shutter Lag
+  https://developer.android.com/media/camera/camerax/take-photo/zsl
+  الوضع اسمه CAPTURE_MODE_ZERO_SHUTTER_LAG، ويشتغل من CameraX 1.2 فما فوق وأندرويد 6 فما فوق، ولازم الجهاز يدعم PRIVATE reprocessing (نتحقق بـ isZslSupported). يحفظ آخر 3 إطارات في الذاكرة، فالضغطة تاخذ إطار جاهز. ما يشتغل لو الفلاش ON أو AUTO، ولو ما اشتغل يرجع تلقائياً لـ MINIMIZE_LATENCY.
+- خيارات الالتقاط في CameraX
+  https://developer.android.com/media/camera/camerax/take-photo/options
+  CAPTURE_MODE_MINIMIZE_LATENCY يقدّم السرعة على الجودة.
+- ML Kit Analyzer مع CameraX
+  https://developer.android.com/media/camera/camerax/mlkitanalyzer
+  يربط ML Kit مع ImageAnalysis مباشرة. فيه ملاحظة من المطورين إن MlKitAnalyzer كان أبطأ من Analyzer مكتوب يدوي:
+  https://stackoverflow.com/questions/74109891/mlkitanalyzer-for-android-camerax-is-slow-for-text-recognition
+  يعني لازم نقيس، ولا نفترض إن الجاهز أسرع.
+- فكرة بديلة للالتقاط نقيسها: لحظة الضغط ناخذ آخر إطار من ImageAnalysis (بدقة 1920×1080 مثلاً) بدل ImageCapture. أسرع شي ممكن لأنه ما فيه غالق أصلاً، بس الجودة أقل شوي. نقارن الطريقتين بالأرقام.
+- Flutter: لو المشروع الرئيسي Flutter، فيه ملاحظات إن بث الإطارات من الكاميرا لـ Dart ثقيل على الهواتف الضعيفة:
+  https://medium.com/kbtg-life/real-time-machine-learning-with-flutter-camera-bbcf1b5c3193
+  الأفضل إن الكاميرا والقص والقراءة تصير في كود native (Kotlin)، ويرجع لـ Flutter الرقم والصورة المقصوصة بس.
+
+
+2) جودة الصورة بدون تأخير
+--------------------------
+- كشف الصورة المهزوزة بـ Laplacian variance (سريع جداً)
+  https://pyimagesearch.com/2015/09/07/blur-detection-with-opencv/
+  نستعمله بعد الالتقاط مش قبله: لو الصورة مهزوزة بقوة، نطلع تنبيه صغير "الصورة مهزوزة، تبي تعيد؟" بدون ما نمنع الحفظ.
+- ML Kit يقول إن كل حرف يحتاج 16×16 بكسل على الأقل، وفوق 24×24 ما فيه فايدة إضافية:
+  https://developers.google.com/ml-kit/vision/text-recognition/v2/android
+  يعني ما نحتاج دقة عالية للقراءة. الدقة العالية للصورة المحفوظة فقط.
+
+
+3) محركات القراءة
+-----------------
+أ. Google ML Kit Text Recognition v2 (الأساس، نبدأ فيه)
+  https://developers.google.com/ml-kit/vision/text-recognition/v2/android
+  - يشتغل على الجهاز وبدون إنترنت، وأندرويد API 21 فما فوق.
+  - النسخة bundled تزيد حجم التطبيق حوالي 4 ميجا، والموديل جاهز من أول تشغيل. النسخة unbundled تزيد 260KB بس، لكن يحتاج تنزيل من Google Play Services. للتجربة نستعمل bundled.
+  - سريع بشكل real-time للأحرف اللاتينية والأرقام.
+  - عيبه: قارئ عام مش متخصص في seven-segment.
+  - Flutter: الحزمة google_mlkit_text_recognition
+    https://fluttergems.dev/packages/google_mlkit_text_recognition/
+  - مثال كامل CameraX مع ML Kit لماسح VIN (فكرته قريبة من فكرتنا):
+    https://atomicrobot.com/blog/mlkit-on-device-ocr-android/
+
+ب. PaddleOCR PP-OCRv5 (mobile) (نجربه وننافس فيه ML Kit)
+  https://github.com/PaddlePaddle/PaddleOCR
+  https://arxiv.org/html/2507.05595v1  (التقرير التقني لـ PaddleOCR 3.0)
+  https://huggingface.co/PaddlePaddle/PP-OCRv5_mobile_rec
+  - فيه نسخة mobile خفيفة للأجهزة الطرفية، ورخصته Apache 2.0.
+  - يتشغل عن طريق ONNX Runtime Mobile أو Paddle Lite. نقدر نستعمل موديل الـ recognition بس على شاشة العداد المقصوصة.
+
+ج. موديل خاص فينا (الأقوى على المدى الطويل)
+  الخطوة الأولى، كاشف مكان شاشة العداد: YOLO11n يتصدّر لـ LiteRT/TFLite بصيغة INT8
+    https://docs.ultralytics.com/integrations/litert
+    فيه كمان plugin رسمي لـ Flutter يشغّل ملفات tflite.
+  الخطوة الثانية، قارئ الأرقام: واحد من هذي:
+    - CRNN مع CTC على سطر الأرقام كامل (سريع جداً وصغير).
+    - PARSeq-tiny (دقيق جداً في قراءة النصوص، بس أثقل):
+      https://github.com/baudm/parseq  و  https://huggingface.co/baudm/parseq-tiny
+    - مصنّف لكل رقم لحاله بعد تقسيم الشاشة، زي مشروع AI-on-the-edge-device اللي يقرأ العدادات على شريحة ESP32 الصغيرة:
+      https://github.com/jomjol/AI-on-the-edge-device
+      https://jomjol.github.io/AI-on-the-edge-device-docs/
+  - مثال جاهز لقراءة seven-segment بـ TFLite:
+    https://github.com/renjithsasidharan/seven-segment-ocr
+  - التسريع: LiteRT مع GPU delegate، وفيه كمان ML Drift الجديد:
+    https://developers.google.com/edge/litert/android/gpu
+    https://developers.googleblog.com/litert-maximum-performance-simplified/
+  - البيانات: الـ 49 صورة تكفي للاختبار، مش للتدريب. للتدريب نستعمل الصور المعتمدة القديمة في النظام مع قراءتها الصحيحة. هذي أقوى داتا عندنا، لأنها من عداداتنا وظروفنا الحقيقية.
+
+
+4) أبحاث أكاديمية في قراءة العدادات (أهم مرجع علمي)
+--------------------------------------------------
+- Laroca وفريقه (جامعة UFPR مع شركة كهرباء Copel في البرازيل). هذي أقرب حالة لحالتنا: شركة كهرباء وموظفين يصوّرون في الميدان.
+  * Convolutional Neural Networks for Automatic Meter Reading (2019)
+    https://raysonlaroca.github.io/papers/laroca2019convolutional.pdf
+  * Towards Image-based Automatic Meter Reading in Unconstrained Scenarios (2021)
+    https://raysonlaroca.github.io/papers/laroca2021towards-published.pdf
+    https://arxiv.org/html/2009.10181v5
+    فيه موديل Fast-OCR الخفيف، وطريقة تصحيح ميلان الشاشة باستخدام زواياها الأربع.
+  * Copel-AMR dataset: فيها 12,500 صورة عداد من الميدان، بدقة 640×480، وفيها صور مهزوزة ومتسخة وفيها انعكاسات، و20% منها ما تنقرأ أصلاً. للبحث الأكاديمي فقط ومش للاستخدام التجاري.
+    https://github.com/raysonlaroca/copel-amr-dataset
+  * UFPR-AMR dataset: فيها 2,000 صورة، وكل عداد فيها 5 أرقام، ومصوّرة بـ 3 هواتف. للبحث الأكاديمي فقط.
+    https://github.com/raysonlaroca/ufpr-amr-dataset
+  ملاحظة الرخصة: الداتا هذي ما نستعملها في تدريب موديل تجاري. نستفيد من طريقتهم ونتائجهم بس.
+- Image-Based Automatic Energy Meter Reading Using YOLOv3 (2022)، فيها 10,000 صورة لـ 5 أنواع عدادات كهرباء:
+  https://www.sciencedirect.com/org/science/article/pii/S1546221822002594
+- Water Meter Reading Based on Text Recognition (IEEE Access 2025): استعملوا YOLOv8 لكشف مكان العداد وقارنوا 6 طرق لقراءة الأرقام:
+  https://ieeexplore.ieee.org/iel8/6287639/10820123/10908809.pdf
+- قائمة شاملة لكل الأبحاث في قراءة العدادات:
+  https://github.com/ZZZHANG-jx/Awesome-Image-based-Meter-Recognition-Reading
+
+
+5) نصائح من البحوثات والخبرة
+-----------------------------
+1. شغّل الموديل (warm-up) لحظة فتح شاشة الإدخال، مش لحظة الضغط. أول تشغيل دائماً أبطأ.
+2. لا تحفظ الصورة الكاملة في ملف ثم تقرأها. اشتغل على الصورة في الذاكرة: قص ثم قراءة ثم ضغط. والرفع للسيرفر يصير في الخلفية.
+3. القراءة تشتغل على نسخة صغيرة من الشاشة (ارتفاع الأرقام حوالي 32 إلى 48 بكسل)، مش على الصورة الكاملة.
+4. تحويل إحداثيات المستطيل من الشاشة للصورة هو أكثر مكان تصير فيه أخطاء: الدوران، وFILL_CENTER في PreviewView، والزوم. لازم اختبار خاص له.
+5. الأرقام العشرية الصغيرة (زي 42 الصغيرة بعد 003155 في بعض العدادات) تنكشف من ارتفاع الرقم: لو أصغر بكثير من باقي الأرقام نتجاهلها.
+6. المنطق بعد القراءة: القراءة لازم تكون أكبر من أو تساوي القراءة السابقة، والفرق ضمن حدود معقولة. لو المحرك أعطى أكثر من احتمال لرقم معيّن (مثلاً 5 أو 6)، نختار الاحتمال اللي يطلع منطقي. هذا يرفع الدقة بدون ما يأخّر.
+7. قِس كل شي بالأرقام: الدقة الكاملة للرقم، ودقة كل خانة، والوقت (p50 وp95) على هاتف متوسط وهاتف ضعيف.

@@ -1,0 +1,25 @@
+# Re-run from this repository on 2026-10-18 ~05:00 UTC (sandbox x86 CPU, 4 cores; NOT a phone).
+# Ground truth: benchmark/data/ground_truth.csv (v2). 46 readable photos.
+
+$ cd lab && python3 score.py ppocrv5_mobile ppocrv6_tiny ppocrv6_small      # uses results/raw/raw_*.json
+ppocrv5_mobile   mode A: exact 4/46 (9%) wrong 39 noread 3 | p50 1347ms p95 1911ms (sandbox CPU)
+ppocrv5_mobile   mode B: exact 5/46 (11%) wrong 39 noread 2 | p50 1322ms p95 1493ms (sandbox CPU)
+ppocrv6_tiny     mode A: exact 6/46 (13%) wrong 33 noread 7 | p50 552ms p95 794ms (sandbox CPU)
+ppocrv6_tiny     mode B: exact 4/46 (9%) wrong 37 noread 5 | p50 529ms p95 580ms (sandbox CPU)
+ppocrv6_small    mode A: exact 10/46 (22%) wrong 32 noread 4 | p50 3427ms p95 4756ms (sandbox CPU)
+ppocrv6_small    mode B: exact 7/46 (15%) wrong 33 noread 6 | p50 3492ms p95 4203ms (sandbox CPU)
+
+$ cd lab && python3 baseline2.py        # ERP lcd-detector-v1 + digit-reader-v3 (AGPL, lab only)
+A 17/46 p50 367ms        # mode A = meter rectangle
+B 12/46 p50 359ms        # mode B = full photo
+C 16/46 p50 158ms        # mode C = reference display crop (oracle)
+
+$ cd lab && python3 rec_only.py         # recognizer only on reference display crop (oracle)
+rec-only v5_en: 19/46 p50 21ms
+rec-only v6_tiny: 15/46 p50 6ms
+rec-only v6_small: 22/46 p50 16ms
+
+$ cd lab && python3 eval_rec.py weights/rec_w075.pt          # SegReader, reference LINE crop (oracle)
+{"checkpoint": "rec_w075.pt", "params": 178524, "exact": 15, "n": 46, "p50_ms": 4.85, "p95_ms": 6.08, "threads": 2}
+$ cd lab && python3 eval_rec.py weights/rec_w075_s1000.pt
+{"checkpoint": "rec_w075_s1000.pt", "params": 178524, "exact": 7, "n": 46, "p50_ms": 4.97, "p95_ms": 6.22, "threads": 2}

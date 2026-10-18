@@ -1,0 +1,6 @@
+data (96000, 48, 192)
+step 0 loss 0.625 real 6/46 2s
+step 1000 loss 0.405 real 9/46 948s
+step 2000 loss 0.357 real 8/46 1892s
+step 3000 loss 0.324 real 11/46 2839s
+step 4000 loss 0.300 real 15/46 3792s

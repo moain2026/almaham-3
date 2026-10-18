@@ -1,0 +1,383 @@
+{
+ "summary": {
+  "checkpoint": "rec_w075_s1000.pt",
+  "params": 178524,
+  "exact": 7,
+  "n": 46,
+  "p50_ms": 4.97,
+  "p95_ms": 6.22,
+  "threads": 2,
+  "hardware": "sandbox x86 CPU (NOT a phone)",
+  "input": "reference line crop (oracle)"
+ },
+ "rows": [
+  {
+   "file": "23065.jpg",
+   "truth": "2410",
+   "raw": "0200.4",
+   "value": "200",
+   "ok": false,
+   "min_conf": 0.179
+  },
+  {
+   "file": "23066.jpg",
+   "truth": "6719",
+   "raw": "001.9",
+   "value": "1",
+   "ok": false,
+   "min_conf": 0.12
+  },
+  {
+   "file": "23067.jpg",
+   "truth": "5337",
+   "raw": "0053371.2",
+   "value": "53371",
+   "ok": false,
+   "min_conf": 0.186
+  },
+  {
+   "file": "23068.jpg",
+   "truth": "86",
+   "raw": "0008.2",
+   "value": "8",
+   "ok": false,
+   "min_conf": 0.783
+  },
+  {
+   "file": "23069.jpg",
+   "truth": "2559",
+   "raw": "0025.9",
+   "value": "25",
+   "ok": false,
+   "min_conf": 0.119
+  },
+  {
+   "file": "23070.jpg",
+   "truth": "21",
+   "raw": "21.9",
+   "value": "21",
+   "ok": true,
+   "min_conf": 0.119
+  },
+  {
+   "file": "23071.jpg",
+   "truth": "6509",
+   "raw": "059.9",
+   "value": "59",
+   "ok": false,
+   "min_conf": 0.117
+  },
+  {
+   "file": "23073.jpg",
+   "truth": "7990",
+   "raw": "0080.4",
+   "value": "80",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23074.jpg",
+   "truth": "9550",
+   "raw": "0095506.0",
+   "value": "95506",
+   "ok": false,
+   "min_conf": 0.167
+  },
+  {
+   "file": "23075.jpg",
+   "truth": "7990",
+   "raw": "0100.9",
+   "value": "100",
+   "ok": false,
+   "min_conf": 0.119
+  },
+  {
+   "file": "23076.jpg",
+   "truth": "303",
+   "raw": "3031.4",
+   "value": "3031",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23077.jpg",
+   "truth": "7589",
+   "raw": "0.9",
+   "value": "0",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23078.jpg",
+   "truth": "1724",
+   "raw": "0000.9",
+   "value": "0",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23079.jpg",
+   "truth": "7990",
+   "raw": "09.9",
+   "value": "9",
+   "ok": false,
+   "min_conf": 0.12
+  },
+  {
+   "file": "23080.jpg",
+   "truth": "5078",
+   "raw": "005078.0",
+   "value": "5078",
+   "ok": true,
+   "min_conf": 0.183
+  },
+  {
+   "file": "23081.jpg",
+   "truth": "4998",
+   "raw": "00090.9",
+   "value": "90",
+   "ok": false,
+   "min_conf": 0.117
+  },
+  {
+   "file": "23082.jpg",
+   "truth": "782",
+   "raw": "000782.4",
+   "value": "782",
+   "ok": true,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23083.jpg",
+   "truth": "532",
+   "raw": "0005.9",
+   "value": "5",
+   "ok": false,
+   "min_conf": 0.12
+  },
+  {
+   "file": "23084.jpg",
+   "truth": "1259",
+   "raw": "005.4",
+   "value": "5",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23085.jpg",
+   "truth": "1989",
+   "raw": "0019991.9",
+   "value": "19991",
+   "ok": false,
+   "min_conf": 0.116
+  },
+  {
+   "file": "23086.jpg",
+   "truth": "2392",
+   "raw": "002325.3",
+   "value": "2325",
+   "ok": false,
+   "min_conf": 0.221
+  },
+  {
+   "file": "23088.jpg",
+   "truth": "31265",
+   "raw": "0312.3",
+   "value": "312",
+   "ok": false,
+   "min_conf": 0.226
+  },
+  {
+   "file": "23089.jpg",
+   "truth": "538",
+   "raw": "000538.9",
+   "value": "538",
+   "ok": true,
+   "min_conf": 0.12
+  },
+  {
+   "file": "23090.jpg",
+   "truth": "490",
+   "raw": "00049.9",
+   "value": "49",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23091.jpg",
+   "truth": "243",
+   "raw": "00024.75",
+   "value": "24",
+   "ok": false,
+   "min_conf": 0.29
+  },
+  {
+   "file": "23092.jpg",
+   "truth": "5619",
+   "raw": "0056190.4",
+   "value": "56190",
+   "ok": false,
+   "min_conf": 0.117
+  },
+  {
+   "file": "23094.jpg",
+   "truth": "21",
+   "raw": "21.9",
+   "value": "21",
+   "ok": true,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23095.jpg",
+   "truth": "26684",
+   "raw": "028.9",
+   "value": "28",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23096.jpg",
+   "truth": "3283",
+   "raw": "00328.9",
+   "value": "328",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23097.jpg",
+   "truth": "1020",
+   "raw": "0010.9",
+   "value": "10",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23098.jpg",
+   "truth": "52",
+   "raw": "352.0",
+   "value": "352",
+   "ok": false,
+   "min_conf": 0.217
+  },
+  {
+   "file": "23099.jpg",
+   "truth": "3394",
+   "raw": "0033.9",
+   "value": "33",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23100.jpg",
+   "truth": "32",
+   "raw": "32.9",
+   "value": "32",
+   "ok": true,
+   "min_conf": 0.119
+  },
+  {
+   "file": "23101.jpg",
+   "truth": "1671",
+   "raw": "008.9",
+   "value": "8",
+   "ok": false,
+   "min_conf": 0.12
+  },
+  {
+   "file": "23102.jpg",
+   "truth": "2260",
+   "raw": "002260.9",
+   "value": "2260",
+   "ok": true,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23103.jpg",
+   "truth": "2850",
+   "raw": "0005.9",
+   "value": "5",
+   "ok": false,
+   "min_conf": 0.12
+  },
+  {
+   "file": "23104.jpg",
+   "truth": "2231",
+   "raw": "0000.9",
+   "value": "0",
+   "ok": false,
+   "min_conf": 0.117
+  },
+  {
+   "file": "23105.jpg",
+   "truth": "2231",
+   "raw": "0023.9",
+   "value": "23",
+   "ok": false,
+   "min_conf": 0.117
+  },
+  {
+   "file": "23106.jpg",
+   "truth": "4305",
+   "raw": "0043.9",
+   "value": "43",
+   "ok": false,
+   "min_conf": 0.119
+  },
+  {
+   "file": "23107.jpg",
+   "truth": "2058",
+   "raw": "0020.9",
+   "value": "20",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23108.jpg",
+   "truth": "2921",
+   "raw": "00292.9",
+   "value": "292",
+   "ok": false,
+   "min_conf": 0.119
+  },
+  {
+   "file": "23109.jpg",
+   "truth": "2887",
+   "raw": "0288.9",
+   "value": "288",
+   "ok": false,
+   "min_conf": 0.119
+  },
+  {
+   "file": "23110.jpg",
+   "truth": "2526",
+   "raw": ".9",
+   "value": "",
+   "ok": false,
+   "min_conf": 0.118
+  },
+  {
+   "file": "23111.jpg",
+   "truth": "1593",
+   "raw": "0015.9",
+   "value": "15",
+   "ok": false,
+   "min_conf": 0.12
+  },
+  {
+   "file": "23112.jpg",
+   "truth": "2662",
+   "raw": "26.9",
+   "value": "26",
+   "ok": false,
+   "min_conf": 0.12
+  },
+  {
+   "file": "23113.jpg",
+   "truth": "3018",
+   "raw": "00301.9",
+   "value": "301",
+   "ok": false,
+   "min_conf": 0.12
+  }
+ ]
+}

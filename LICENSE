@@ -1,0 +1,6 @@
+All rights reserved. © 2026 moain2026.
+
+Third-party files keep their own licenses:
+- lab/assets/fonts/Tajawal-Bold.ttf, IBMPlexSansArabic-Bold.ttf: SIL Open Font License 1.1 (see LICENSE-IBMPlex.txt)
+- lab/assets/fonts/DejaVuSans-Bold.ttf: Bitstream Vera / DejaVu license (free)
+- PP-OCR models (downloaded, not committed): Apache-2.0
