@@ -38,3 +38,4 @@ local.properties
 /app/**/build/
 /app/.kotlin/
 dist/*.apk
+.toolchain/

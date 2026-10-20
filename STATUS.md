@@ -1,9 +1,10 @@
 ---
-updated: 2026-10-18
+updated: 2026-10-20
 ---
 # الحالة الآن
 
 ## قيد العمل
+- [2026-10-20 23:30Z وكيل S (الخليفة) — **بدء الجلسة في بيئة جديدة**] قرأتُ الملفات السبعة بالترتيب (`SUCCESSOR-AGENT.md` → PLAN → STATUS/LESSONS → runbook → GenCode-APK → contract+ADR → benchmark §8/MODEL_CARD → handoff). البيئة: Python 3.13 venv من `requirements-lab.txt` (torch 2.14.1+cpu، ORT 1.31.0)؛ JDK 17.0.20 (Temurin) + Android SDK (platform 35، build-tools 35.0.0/34.0.0) في `.toolchain/` (متجاهل في git؛ JDK النظام 21 لا يصلح). **تحقق بلا صور:** `test_assemble.py`+`test_plausibility.py` **24/24**؛ Kotlin `:meterocr:testDebugUnitTest` **45/45**؛ تصدير ONNX من `locator_t14500.pt`+`reader_ft4a.pt` يطابق ملفات assets **بالبت** (max|Δ|=0.0 على مدخل عشوائي؛ sha256 يختلف فقط لبيانات التصدير الوصفية). **معطّل:** الصور الـ49 غير موجودة (`data/photos/` فارغ، AI Drive فارغ) ⇒ لا أستطيع إعادة إنتاج 19/46 بعد — طلبتُها من المالك مع بيانات ERP. أثناء الانتظار: أنفّذ الأولوية 2 (اختيار السطر بعد القراءة) في Python+Kotlin مع اختبارات، وأقيس فور وصول الصور.
 - [2026-10-18 12:00Z وكيل A — **نهاية الجلسة / تسليم**] **للوكيل الخليفة: اقرأ `docs/prompts/SUCCESSOR-AGENT.md` أولاً** (ترتيب القراءة، الحالة، الأولويات، القواعد). ft4 انتهى (reader final = 19/46 كما ft4a؛ لا تدريب يعمل). اختبارات محدّثة لقاعدة 6 خانات: Python 11/11، Kotlin meterocr 45/45 (كان اختبار tooManyDigits فاشلاً — أُصلح). `train-digitnet.md` أُعيدت كتابته كدليل كامل. راجعتُ `GenCode-APK/` (وكيل B): دليل بناء سليم ومكتمل، `build.sh` يوقف تلقائياً إن تغيّرت عوامل النموذج — جيد. v0.2.1 (7,682,409 B، 19/46) هو ما يجرّبه المالك.
 - [2026-10-18 11:30Z وكيل A — **اقرأ `docs/PLAN.md` أولاً**] e2e **19/46 (41.3%)** بـ locator_t14500 + reader_ft4a (مشحونان في assets، MODEL_CARD محدّث)، غلط-وواثق 0. ft4 ما زال يتدرّب (reader@1000 148/194، locator@500 192/194). 9,224 تسمية (4,329 مقروءة). خطة كاملة + ما تبقى + ردود على اقتراحات T وB ووكلاء التسمية وفرع optical في `docs/PLAN.md`.
 - [2026-10-18 وكيل A → وكيل B] **موافقة على ORT المصغّر + برومت بناء 0.2.0** (ملف APK واحد arm64، هدف ≤10 MB، أحدث نماذج من assets، تطابق `.ort` على الـ49 إلزامي، تحقق R8 على محاكي): `docs/prompts/agentB-build-0.2.0-arm64.md`.

@@ -1,3 +1,6 @@
+## [Unreleased] — 2026-10-20 جلسة الوكيل S (الخليفة)
+- env: `.gitignore` يتجاهل `.toolchain/` (JDK17 + Android SDK محليان خارج git). تحقق البيئة الجديدة: Python 24/24، Kotlin 45/45، تصدير ONNX مطابق بالبت لـ assets.
+
 ## [Unreleased] — 2026-10-18 جلسة A الأخيرة
 - e2e 0→19/46 عبر ضبط دقيق على ERP (ft2–ft4) + إصلاح حدّ الكسر؛ غلط-وواثق 0.
 - docs: PLAN.md، SUCCESSOR-AGENT.md، train-digitnet.md كامل، ADR-0005، برومتات B.
