@@ -1,4 +1,5 @@
 ## [Unreleased] — 2026-10-20 جلسة الوكيل S (الخليفة)
+- **ADR-0006** مستودع خاص للبيانات `almaham-3-private-data` + `scripts/private_data.sh` (pull/push-49/push-erp/push-dir/status، تحقق sha256، دفعات ≤1.5 GB، فحص أسرار قبل كل push) + تحديث `setup-environment.md`.
 - env: `.gitignore` يتجاهل `.toolchain/` (JDK17 + Android SDK محليان خارج git). تحقق البيئة الجديدة: Python 24/24، Kotlin 45/45، تصدير ONNX مطابق بالبت لـ assets.
 
 ## [Unreleased] — 2026-10-18 جلسة A الأخيرة

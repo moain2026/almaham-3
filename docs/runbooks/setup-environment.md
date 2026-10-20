@@ -5,7 +5,7 @@
 1. `git clone https://github.com/moain2026/almaham-3.git && cd almaham-3`
 2. Python 3.13: `pip install -r requirements-lab.txt` (torch CPU من فهرس pytorch).
 3. النماذج الجاهزة: `bash scripts/download_models.sh` (تُتحقق بـ SHA256؛ تنزل في `data/models/`).
-4. **الصور الـ49 (خاصة، غير موجودة في git — ADR-0004):**
+4. **الصور الـ49 وصور ERP (خاصة — ADR-0004/0006): الطريقة الرسمية الآن** `bash scripts/private_data.sh pull` (يسحب المستودع الخاص `moain2026/almaham-3-private-data` ويربط `data/photos` و`data/erp/photos`؛ يحتاج توكن بصلاحية repo في `~/.git-credentials`). الطرق القديمة أدناه للمرجع فقط:
    - المصدر: قناة Telegram ‏@AlabbasiTech، الرسائل 23065–23113 بتاريخ 2026-10-18 (القائمة في `benchmark/data/photos_manifest.json`)،
      أو أرشيف `meters.zip` عند المالك (34MB، مجلد `correct_49_meter_photos/photos/`).
    - **نسخة احتياطية خاصة (رابط غير منشور في git لأن المستودع عام):** أُرسلت للمالك في المحادثة بتاريخ 2026-10-18
