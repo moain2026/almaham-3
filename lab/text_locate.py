@@ -11,7 +11,7 @@ label (exact) — with the lattice-window relaxation of erp_finetune for same-he
 windows take the one with the highest min digit score; its digit boxes mapped back to the photo give a tight
 LINE box. Output: JSON {filename: {"line": [x1,y1,x2,y2] photo px, "score":..., "digits": [[cls,x1,y1,x2,y2],...]}}
 
-Usage: python3 text_locate.py <reader.pt> <out.json> [--only-unaccepted <ft_prefix>] [--limit N]
+Usage: python3 text_locate.py <reader.pt> <out.json> [--verified-only] [--limit N]   (resumable: skips files already in out.json)
 Evaluation photos (49 + testset_human + siblings) are skipped (same exclusion as erp_finetune).
 """
 import csv, hashlib, json, sys, time
@@ -110,11 +110,12 @@ def main():
     torch.set_num_threads(int(__import__("os").environ.get("TORCH_THREADS", "3")))
     rd = DigitNet(READER_CLASSES); rd.load_state_dict(torch.load(rd_ckpt, map_location="cpu")); rd.eval()
     labels = ef.load_labels()
-    accepted = set()
-    if only_un:
-        # photos already accepted by build are listed nowhere; recompute quickly via the report keys is not stored ->
-        # we re-run the acceptance test cheaply: skip photos where locator top box + reader already match (done inside build).
-        pass
+    if "--verified-only" in sys.argv:   # human-verified labels first (labels_agentD.csv); machine labels later
+        import csv as _csv
+        ver = {r["filename"] for f in ef.glob.glob(str(ef.LABELS / "labels*.csv")) if any(h in f for h in ef.HUMAN_LABELLERS) and "rejected" not in f
+               for r in _csv.DictReader(open(f, encoding="utf-8"))}
+        labels = {k: v for k, v in labels.items() if k in ver}
+        print("verified-only:", len(labels), flush=True)
     done = json.load(open(out)) if __import__("os").path.exists(out) else {}
     t0 = time.time(); n = 0; found = 0
     for fn, text in sorted(labels.items()):
