@@ -77,7 +77,7 @@ case "$cmd" in
     ;;
   push-erp)
     SRC=${1:-$ROOT/data/erp/photos}; ensure
-    [ "$(readlink -f "$SRC")" = "$(readlink -f "$PRIV/erp/photos")" ] || rsync -a --ignore-existing "$SRC"/ "$PRIV/erp/photos"/
+    [ "$(readlink -f "$SRC")" = "$(readlink -f "$PRIV/erp/photos")" ] || cp -rn "$SRC"/. "$PRIV/erp/photos"/
     cd "$PRIV"
     ( cd erp/photos && find . -maxdepth 1 -type f -name '*.jpg' -printf '%f\n' | sort | xargs -r sha256sum ) > erp/manifests/erp_photos.sha256
     total=$(find erp/photos -type f -name '*.jpg' | wc -l)
@@ -98,7 +98,8 @@ case "$cmd" in
     ;;
   push-dir)
     SRC=${1:?src}; DST=${2:?dst (e.g. weights_archive/ft5)}; ensure
-    mkdir -p "$PRIV/$DST" && rsync -a "$SRC"/ "$PRIV/$DST"/
+    mkdir -p "$PRIV/$DST"
+    [ "$(readlink -f "$SRC")" = "$(readlink -f "$PRIV/$DST")" ] || cp -r "$SRC"/. "$PRIV/$DST"/
     manifest_row "$DST/" "$(basename "$SRC")" "$(find "$PRIV/$DST" -type f | wc -l) ملف، $(du -sh "$PRIV/$DST" | cut -f1)" "—"
     no_secrets
     (cd "$PRIV" && git add -A && git commit -q -m "data: $DST <- $(basename "$SRC")" && git push -q origin main) && echo "[private] pushed $DST"

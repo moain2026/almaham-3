@@ -12,7 +12,7 @@ mkdir -p "$PRIV/weights_archive/$TAG" "$PRIV/logs_archive/$TAG" "$PRIV/results_a
 # 1) weights + logs + review images -> private
 cp -f lab/weights/*"$TAG"*.pt "$PRIV/weights_archive/$TAG/" 2>/dev/null || true
 cp -f lab/logs/*"$TAG"*.log "$PRIV/logs_archive/$TAG/" 2>/dev/null || true
-[ -d "data/review/e2e_$TAG" ] && rsync -a "data/review/e2e_$TAG/" "$PRIV/results_archive/$TAG/review_e2e/" || true
+[ -d "data/review/e2e_$TAG" ] && mkdir -p "$PRIV/results_archive/$TAG/review_e2e" && cp -r "data/review/e2e_$TAG"/. "$PRIV/results_archive/$TAG/review_e2e/" || true
 ls data/erp/ft/"$TAG"_report.json >/dev/null 2>&1 && cp -f data/erp/ft/"$TAG"_report.json "$PRIV/results_archive/$TAG/" || true
 ( cd "$PRIV/weights_archive/$TAG" && sha256sum *.pt > SHA256SUMS 2>/dev/null ) || true
 bash scripts/private_data.sh push-dir "$PRIV/weights_archive/$TAG" "weights_archive/$TAG" >/dev/null
