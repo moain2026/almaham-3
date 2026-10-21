@@ -64,6 +64,7 @@ class Shards:
             self.train_idx += [(si, i) for i in range(len(X) - n_val)]
             self.val_idx += [(si, i) for i in range(len(X) - n_val, len(X))]
         self.kind = kind
+        self.ignore_row = False   # weak-label real shards: cells in the line's row band but outside the labelled span -> ignore
         self.H, self.W = self.X[0].shape[1:3]
         self.C = READER_CLASSES if kind == "reader" else LOCATOR_CLASSES
 
@@ -77,6 +78,17 @@ class Shards:
         size = np.zeros((2, h, w), np.float32)
         off = np.zeros((2, h, w), np.float32)
         mask = np.zeros((1, h, w), np.float32)
+        ign = np.zeros((1, h, w), np.float32)
+        if self.ignore_row and self.kind == "reader":
+            # Weak labels cover the integer part only; the fraction cells sit to the RIGHT of the labelled span in the
+            # same row. Those cells are unlabelled, not negative -> no negative loss there (up to 3.5 digit pitches).
+            nd = max(1, sum(1 for b in boxes if int(b[0]) < 10))
+            for c, x1, y1, x2, y2 in boxes:
+                if int(c) == CLS_LINE:
+                    bh, pitch = y2 - y1, (x2 - x1) / nd
+                    ya, yb = int(max(0, (y1 - 0.25 * bh) / STRIDE)), int(min(h, (y2 + 0.25 * bh) / STRIDE + 1))
+                    xa, xb = int(min(w, (x2 + 0.1 * pitch) / STRIDE)), int(min(w, (x2 + 3.5 * pitch) / STRIDE + 1))
+                    ign[0, ya:yb, xa:xb] = 1.0
         for c, x1, y1, x2, y2 in boxes:
             c = int(c)
             if self.kind == "reader":
@@ -99,11 +111,11 @@ class Shards:
             size[:, iy, ix] = (x2 - x1, y2 - y1)
             off[:, iy, ix] = (cx - ix, cy - iy)
             mask[0, iy, ix] = 1.0
-        return heat, size, off, mask
+        return heat, size, off, mask, ign
 
     def batch(self, n):
         picks = [self.train_idx[k] for k in np.random.randint(0, len(self.train_idx), n)]
-        xs, hs, ss, os_, ms = [], [], [], [], []
+        xs, hs, ss, os_, ms, igs = [], [], [], [], [], []
         for si, i in picks:
             im, bx = self.item(si, i)
             if AUG_MODE == "v2":  # recipe v2 (augment.py): geometric + photometric + degradation, boxes follow
@@ -116,14 +128,15 @@ class Shards:
                 bx[:, [1, 3]] += dx
             if AUG_MODE != "v2" and np.random.rand() < 0.15:  # legacy channel swap: LCD colour invariance
                 im = im[..., np.random.permutation(3)]
-            h, s, o, m = self.targets(bx)
+            h, s, o, m, ig = self.targets(bx)
             xs.append(im)
             hs.append(h)
             ss.append(s)
             os_.append(o)
             ms.append(m)
+            igs.append(ig)
         f = lambda a: torch.from_numpy(np.stack(a))
-        return f(xs).float(), f(hs), f(ss), f(os_), f(ms)
+        return f(xs).float(), f(hs), f(ss), f(os_), f(ms), f(igs)
 
 
 def validate(model, data, max_n=400):
@@ -172,9 +185,9 @@ def main():
     B = BATCH[kind]
     run, t0 = None, time.time()
     for step in range(steps):
-        x, heat, size, off, mask = data.batch(B)
+        x, heat, size, off, mask, ign = data.batch(B)
         hm, wh, of = model(x)
-        loss = focal_loss(hm, heat) + 0.1 * reg_loss(wh, size, mask) + reg_loss(of, off, mask)
+        loss = focal_loss(hm, heat, ign) + 0.1 * reg_loss(wh, size, mask) + reg_loss(of, off, mask)
         opt.zero_grad()
         loss.backward()
         nn.utils.clip_grad_norm_(model.parameters(), 10)

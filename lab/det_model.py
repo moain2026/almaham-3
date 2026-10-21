@@ -95,11 +95,16 @@ class ExportWrapper(nn.Module):
         return self.m.forward_export(x)
 
 
-def focal_loss(pred_logits, gt):
-    """CenterNet penalty-reduced focal loss. pred_logits/gt: [B,C,H,W], gt in [0,1] with 1 at centres."""
+def focal_loss(pred_logits, gt, ignore=None):
+    """CenterNet penalty-reduced focal loss. pred_logits/gt: [B,C,H,W], gt in [0,1] with 1 at centres.
+    ignore: optional [B,1,H,W] in {0,1}; cells with 1 contribute NO negative loss (unlabelled region of a
+    weak-label sample, e.g. the fraction cells to the right of the integer reading — see
+    docs/research/crystal-root-cause-2026-10-21.md, targets-conflict)."""
     p = torch.sigmoid(pred_logits).clamp(1e-4, 1 - 1e-4)
     pos = gt.eq(1).float()
     neg = 1 - pos
+    if ignore is not None:
+        neg = neg * (1 - ignore)
     neg_w = torch.pow(1 - gt, 4)
     pos_loss = torch.log(p) * torch.pow(1 - p, 2) * pos
     neg_loss = torch.log(1 - p) * torch.pow(p, 2) * neg_w * neg

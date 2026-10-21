@@ -245,9 +245,13 @@ def real_exact(model, data):
 def train(init, real_prefix, synth_prefixes, steps, out, kind="reader", lr=2e-4):
     """kind=reader: shards <prefix>_{train,val}; kind=locator: shards <prefix>_loc_{train,val}.
     lr 2e-4 (reader_v2 regressed 45->39/97 when resumed at 5e-4 — lab/logs/train_reader_v2_aborted.log)."""
-    print("argv", sys.argv, "threads", torch.get_num_threads(), flush=True)
+    seed = int(os.environ.get("SEED", "0"))
+    torch.manual_seed(seed); np.random.seed(seed)
+    print("argv", sys.argv, "threads", torch.get_num_threads(), "seed", seed, flush=True)
     pre = real_prefix + ("_loc" if kind == "locator" else "")
     real = Shards([pre + "_train"], kind)
+    real.ignore_row = os.environ.get("IGNORE_ROW", "0") == "1" and kind == "reader"   # loss masking (targets-conflict fix)
+    print("ignore_row", real.ignore_row, flush=True)
     real.val_idx = []
     realval = Shards([pre + "_val"], kind)
     realval.val_idx = realval.train_idx + realval.val_idx
@@ -259,11 +263,11 @@ def train(init, real_prefix, synth_prefixes, steps, out, kind="reader", lr=2e-4)
     B = BATCH[kind]
     run, t0 = None, time.time()
     for step in range(steps):
-        xr, hr, sr, orr, mr = real.batch(B // 2)
-        xs, hs, ss, os_, ms = synth.batch(B - B // 2)
-        x = torch.cat([xr, xs]); heat = torch.cat([hr, hs]); size = torch.cat([sr, ss]); off = torch.cat([orr, os_]); mask = torch.cat([mr, ms])
+        xr, hr, sr, orr, mr, ir = real.batch(B // 2)
+        xs, hs, ss, os_, ms, is_ = synth.batch(B - B // 2)
+        x = torch.cat([xr, xs]); heat = torch.cat([hr, hs]); size = torch.cat([sr, ss]); off = torch.cat([orr, os_]); mask = torch.cat([mr, ms]); ign = torch.cat([ir, is_])
         hm, wh, of = model(x)
-        loss = focal_loss(hm, heat) + 0.1 * reg_loss(wh, size, mask) + reg_loss(of, off, mask)
+        loss = focal_loss(hm, heat, ign) + 0.1 * reg_loss(wh, size, mask) + reg_loss(of, off, mask)
         opt.zero_grad(); loss.backward(); nn.utils.clip_grad_norm_(model.parameters(), 10); opt.step(); sch.step()
         run = loss.item() if run is None else 0.98 * run + 0.02 * loss.item()
         if step % 250 == 0 or step == steps - 1:
