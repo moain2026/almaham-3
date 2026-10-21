@@ -46,15 +46,16 @@
 <div class="bar" id="barLive">
   <button class="primary" id="btnShot">📷 صوّر</button>
   <button id="btnFile">📁 من الاستوديو</button>
-  <input type="file" id="file" accept="image/*" capture="environment" style="display:none">
+  <input type="file" id="file" accept="image/*" multiple style="display:none">
 </div>
 
 <div class="bar" id="barShot" style="display:none">
   <button class="primary" id="btnReadFrame">اقرأ (الإطار الأخضر)</button>
   <button id="btnReadFull">اقرأ الصورة كاملة</button>
   <button id="btnReadRect" disabled>اقرأ المستطيل الذي رسمته</button>
-  <button id="btnRetake">↩ أعد التصوير</button>
+  <button id="btnRetake">↩ رجوع</button><button id="btnNext">⏭ التالية من المعرض</button>
 </div>
+<div class="meta" id="qinfo"></div>
 <div class="meta" id="rectHint" style="display:none">يمكنك سحب مستطيل بإصبعك حول السطر، ثم «اقرأ المستطيل»</div>
 
 <div id="result"></div>
@@ -99,11 +100,13 @@ $('#btnShot').onclick = () => {
   shot.toBlob(b=>{ fullBlob=b; showShot(); }, 'image/jpeg', .92);
 };
 $('#btnFile').onclick = () => $('#file').click();
-$('#file').onchange = async e => {
-  const f=e.target.files[0]; if(!f) return;
+let queue=[];
+async function loadFile(f){
   const bmp = await createImageBitmap(f); shot.width=bmp.width; shot.height=bmp.height; ctx.drawImage(bmp,0,0);
-  shot.toBlob(b=>{ fullBlob=b; showShot(); }, 'image/jpeg', .92);
-};
+  shot.toBlob(b=>{ fullBlob=b; showShot(); $('#qinfo').textContent = queue.length ? `متبقٍ في القائمة: ${queue.length}` : ''; }, 'image/jpeg', .92);
+}
+$('#file').onchange = e => { queue=[...e.target.files]; e.target.value=''; if(queue.length) loadFile(queue.shift()); };
+function nextInQueue(){ if(queue.length){ loadFile(queue.shift()); return true; } return false; }
 $('#btnRetake').onclick = () => { cam.style.display='block'; shot.style.display='none'; $('#barLive').style.display='flex'; $('#barShot').style.display='none';
   $('#rectHint').style.display='none'; $('#rectLayer').style.display='none'; $('#result').innerHTML=''; $('#fb').style.display='none'; };
 
@@ -129,6 +132,7 @@ async function read(mode){
     + `<img id="crop" src="data:image/png;base64,${j.crop_png_b64}">`;
   $('#fb').style.display='flex'; $('#fbTruth').value='';
 }
+$('#btnNext').onclick=()=>{ if(!nextInQueue()) $('#file').click(); };
 $('#btnReadFrame').onclick=()=>read('frame'); $('#btnReadFull').onclick=()=>read('full'); $('#btnReadRect').onclick=()=>read('rect');
 
 async function feedback(correct){
@@ -136,7 +140,7 @@ async function feedback(correct){
   if(!correct && !truth){ $('#fbTruth').focus(); return; }
   await fetch('feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:lastId,correct,truth})});
   $('#fb').innerHTML = `<div class="meta ${correct?'ok':'bad'}">شكراً — سُجِّل ${correct?'كصحيح':'التصحيح '+truth}</div>`;
-  setTimeout(()=>{ $('#fb').innerHTML=`<button id="fbOk" class="primary">✔ صحيحة</button><input id="fbTruth" inputmode="numeric" placeholder="القراءة الصحيحة"><button id="fbBad">✘ غلط — أرسل الصحيحة</button>`; bind(); $('#fb').style.display='none'; }, 1500);
+  setTimeout(()=>{ $('#fb').innerHTML=`<button id="fbOk" class="primary">✔ صحيحة</button><input id="fbTruth" inputmode="numeric" placeholder="القراءة الصحيحة"><button id="fbBad">✘ غلط — أرسل الصحيحة</button>`; bind(); $('#fb').style.display='none'; nextInQueue(); }, 1200);
 }
 function bind(){ $('#fbOk').onclick=()=>feedback(true); $('#fbBad').onclick=()=>feedback(false); }
 bind();
