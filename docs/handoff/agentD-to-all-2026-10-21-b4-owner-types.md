@@ -73,3 +73,7 @@
 - By type: TOMAS_SMART 300, CRYSTAL 256, SMART_YELLOW 179, TAGADOD 137, OTHER 134, TOMAS_STATIC 64, KENWELL 46, MECHANICAL 36, GLORY 7, CHINT 3, HPL 1.
 - CRYSTAL integer-digit spread: 1-digit 8, 2-digit 68, 3-digit 169, 4-digit 11.
 - By confidence: owner_visual 466, 4models+visual 281, 4strong+visual 258, 4/4 158.
+
+## FIX 2 — final audit (2026-10-21)
+- Removed 36 old `4/4` rows that were in `testset_human.csv` (34) or `testset_human_siblings.csv`, together with their by_type crops. These were never trained on, because `erp_finetune.EXCLUDE_FILES` already dropped them.
+- **labels_agentD.csv = 1127.** See `agentD-FINAL-2026-10-21.md`.

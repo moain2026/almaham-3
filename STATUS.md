@@ -135,3 +135,4 @@ updated: 2026-10-21
 - **Next (in order):** merge text_locate → `build_meter_shards` m2 (expect ~500+ samples, Crystal ~128, SMART_YELLOW ~50) → train reader m2 (sandbox, 2 seeds) + locator m2 (Contabo after m1) → eval 49/34 + risk–coverage → deploy best to basirapp.site/meter.
 - Owner's ZBook: cancelled by owner; tunnel infra stays documented (`docs/runbooks/zbook-tunnel.md`).
 - agent D b8: owner page h8 done → +84 owner readings, +30 X, 4 conflicts held back. labels_agentD.csv 1163 (owner 466).
+- agent D FINAL: audit removed 36 testset_human/sibling overlaps → labels_agentD.csv 1127 (owner 466). Tooling in benchmark/data/erp/agentD_tooling/mm, summary docs/handoff/agentD-FINAL-2026-10-21.md.
