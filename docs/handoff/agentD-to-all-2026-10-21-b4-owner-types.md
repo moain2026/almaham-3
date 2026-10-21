@@ -54,3 +54,12 @@
 - **+258 rows** `confidence=4strong+visual`, `labeller=agentD`: CRYSTAL 77, SMART_YELLOW 70, TAGADOD 34, OTHER 30, KENWELL 22, MECHANICAL 22, GLORY 2, CHINT 1.
 - Crops: private `erp/by_type/<TYPE>/` (index.csv source=4strong+visual).
 - labels_agentD.csv total: 1021 rows.
+
+## b7 — owner page h7 (2026-10-21)
+- Owner read 202 of 320 unclear photos personally: 58 readings + 134 X + 10 P.
+- **+58 rows** `labeller=owner`, `confidence=owner_visual` (visually verified by the owner personally): CRYSTAL 40, KENWELL 9, MECHANICAL 4, CHINT 2, GLORY 2, OTHER 1.
+  - Agent D only fixed the drum format: owner typed the red decimal drum on 4 mechanical/CHINT meters (77226→07722, 71936→07193, 158536→15853), and leading zeros were added to match the display. Item #3 type fixed to CRYSTAL; #46 (ATOMAS) → OTHER.
+- **+144 X/P** in `labels_agentD_rejected.csv` (excluded from training).
+- by_type index.csv de-duplicated.
+- The remaining 118 (OTHER 54, SMART_YELLOW 43, TAGADOD 20, CRYSTAL 1) are on the new owner page h8.
+- Totals: labels_agentD.csv 1079 rows, rejected 204.
