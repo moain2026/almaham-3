@@ -23,6 +23,8 @@ from det_model import decode
 
 LOC_IN, RD_H, RD_W = 256, 64, 448
 LOC_PEAK_MIN, LINE_MIN_H, PAD_X, PAD_Y, RD_PEAK_MIN = 0.25, 6.0, 0.18, 0.45, 0.30  # == MeterOcrConfig
+import os as _os
+LINE_CLIP = float(_os.environ.get("LINE_CLIP", "0"))   # 0 = off (shipped behaviour); >0 = drop digits right of line box + k*pitch
 LATTICE_PEAK_MIN = 0.08  # re-read threshold for lattice-predicted cells (MeterOcrConfig.LATTICE_PEAK_MIN)
 
 
@@ -73,6 +75,16 @@ class Engine:
         peaks, size, offs = self.run(self.rd, ri)
         dets = decode(peaks, size, offs, RD_PEAK_MIN)
         t4 = time.perf_counter()
+        if best is not None and LINE_CLIP > 0:
+            # locator-as-boundary: the LINE box is trained as the union of the INTEGER digits (ADR-0005). Digits whose
+            # centre lies beyond its right edge by more than LINE_CLIP x pitch are fraction/ghost cells -> dropped.
+            # (Experiment 2026-10-21; measured on the 49 + testset_human before any Kotlin mirror.)
+            rs_ = min(RD_W / (sx2 - sx1), RD_H / (sy2 - sy1))
+            rx2 = (x2 - sx1) * rs_
+            dg = sorted([d for d in dets if d[0] < 10], key=lambda d: (d[2] + d[4]) / 2)
+            if len(dg) >= 2:
+                pitch = float(np.median(np.diff([(d[2] + d[4]) / 2 for d in dg])))
+                dets = [d for d in dets if d[0] >= 10 or (d[2] + d[4]) / 2 <= rx2 + LINE_CLIP * pitch]
         r = assemble.assemble(dets, RD_W, RD_H)
         if r.status == "MISSING_DIGIT":
             # lattice re-read: for every cell the pitch lattice predicts, take the strongest class at that cell
