@@ -190,7 +190,8 @@ class H(BaseHTTPRequestHandler):
                 fb = json.loads(body)
                 rid = str(fb["id"]); assert rid.replace("-", "").isalnum()
                 p = STORE / f"{rid}.json"; meta = json.loads(p.read_text())
-                meta["feedback"] = {"correct": bool(fb.get("correct")), "truth": str(fb.get("truth", ""))[:12], "ts": time.time()}
+                meta["feedback"] = {"correct": bool(fb.get("correct")), "truth": str(fb.get("truth", ""))[:12], "skip": bool(fb.get("skip")),
+                                    "note": str(fb.get("note", ""))[:300], "ts": time.time()}
                 p.write_text(json.dumps(meta, ensure_ascii=False))
                 return self._send(200, {"ok": True})
             except Exception as ex:  # noqa: BLE001

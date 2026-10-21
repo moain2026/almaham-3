@@ -10,12 +10,14 @@
   body { margin:0; background:var(--bg); color:var(--fg); font-family:system-ui,Segoe UI,Tahoma,sans-serif; }
   header { padding:10px 14px; font-size:15px; display:flex; justify-content:space-between; align-items:center; }
   header small { opacity:.6; }
-  #stage { position:relative; width:100vw; background:#000; overflow:hidden; }
-  video, canvas#shot { display:block; width:100%; height:auto; }
-  #guide { position:absolute; inset:0; pointer-events:none; }
-  #guide .frame { position:absolute; left:8%; width:84%; top:30%; height:18%; border:3px solid var(--acc); border-radius:6px; box-shadow:0 0 0 2000px rgba(0,0,0,.35); }
-  #guide .hint { position:absolute; left:0; right:0; top:50%; text-align:center; font-size:14px; color:#fff; text-shadow:0 1px 3px #000; }
-  #rectLayer { position:absolute; inset:0; touch-action:none; }
+  #stage { position:relative; width:100vw; max-height:55vh; background:#000; overflow:hidden; display:flex; justify-content:center; }
+  video, canvas#shot { display:block; max-width:100%; max-height:55vh; width:auto; height:auto; object-fit:contain; }
+  #stage.shot { display:block; }
+  #shotWrap { position:relative; margin:0 auto; width:fit-content; }
+  .g2 { position:absolute; inset:0; pointer-events:none; }
+  .g2 .frame { position:absolute; left:8%; width:84%; top:30%; height:18%; border:3px solid var(--acc); border-radius:6px; box-shadow:0 0 0 2000px rgba(0,0,0,.35); }
+  .g2 .hint { position:absolute; left:0; right:0; top:50%; text-align:center; font-size:14px; color:#fff; text-shadow:0 1px 3px #000; }
+  #rectLayer { position:absolute; inset:0; touch-action:none; display:none; }
   #rectLayer .sel { position:absolute; border:2px dashed var(--warn); background:rgba(255,176,32,.12); display:none; }
   .bar { display:flex; gap:8px; padding:10px; flex-wrap:wrap; }
   button { flex:1; min-width:120px; padding:14px 10px; font-size:17px; border:0; border-radius:10px; background:#2a2f3a; color:#fff; }
@@ -38,9 +40,12 @@
 
 <div id="stage">
   <video id="cam" autoplay playsinline muted></video>
-  <canvas id="shot" style="display:none"></canvas>
-  <div id="guide"><div class="frame"></div><div class="hint">املأ الإطار الأخضر بشاشة العداد ثم اضغط «صوّر»</div></div>
-  <div id="rectLayer" style="display:none"><div class="sel" id="sel"></div></div>
+  <div id="shotWrap" style="display:none">
+    <canvas id="shot"></canvas>
+    <div id="guide" class="g2"><div class="frame"></div></div>
+    <div id="rectLayer"><div class="sel" id="sel"></div></div>
+  </div>
+  <div id="guideLive" class="g2"><div class="frame"></div><div class="hint">املأ الإطار الأخضر بشاشة العداد ثم اضغط «صوّر»</div></div>
 </div>
 
 <div class="bar" id="barLive">
@@ -63,6 +68,9 @@
   <button id="fbOk" class="primary">✔ صحيحة</button>
   <input id="fbTruth" inputmode="numeric" placeholder="القراءة الصحيحة">
   <button id="fbBad">✘ غلط — أرسل الصحيحة</button>
+  <button id="fbSkip" title="لا تصلح / متعددة">✖ استبعد</button>
+  <button id="noteBtn" style="flex:0 0 auto">📝 ▾</button>
+  <textarea id="note" placeholder="ملاحظة (اختياري): مثلاً القصّ على الباركود، الصورة مائلة، وهج…" style="display:none;width:100%;min-height:60px;font-size:15px;border-radius:8px;background:#1a1d24;color:#fff;border:1px solid #444;padding:8px"></textarea>
 </div>
 
 <details>
@@ -90,7 +98,7 @@ async function startCam(){
 startCam();
 
 function showShot(){
-  cam.style.display='none'; shot.style.display='block'; $('#guide').style.display='block';
+  cam.style.display='none'; $('#guideLive').style.display='none'; $('#shotWrap').style.display='block'; $('#stage').classList.add('shot');
   $('#barLive').style.display='none'; $('#barShot').style.display='flex'; $('#rectHint').style.display='block';
   $('#rectLayer').style.display='block'; rect=null; $('#sel').style.display='none'; $('#btnReadRect').disabled=true;
   $('#result').innerHTML=''; $('#fb').style.display='none';
@@ -107,7 +115,7 @@ async function loadFile(f){
 }
 $('#file').onchange = e => { queue=[...e.target.files]; e.target.value=''; if(queue.length) loadFile(queue.shift()); };
 function nextInQueue(){ if(queue.length){ loadFile(queue.shift()); return true; } return false; }
-$('#btnRetake').onclick = () => { cam.style.display='block'; shot.style.display='none'; $('#barLive').style.display='flex'; $('#barShot').style.display='none';
+$('#btnRetake').onclick = () => { cam.style.display='block'; $('#guideLive').style.display='block'; $('#shotWrap').style.display='none'; $('#stage').classList.remove('shot'); $('#barLive').style.display='flex'; $('#barShot').style.display='none';
   $('#rectHint').style.display='none'; $('#rectLayer').style.display='none'; $('#result').innerHTML=''; $('#fb').style.display='none'; };
 
 // finger rectangle
@@ -135,14 +143,18 @@ async function read(mode){
 $('#btnNext').onclick=()=>{ if(!nextInQueue()) $('#file').click(); };
 $('#btnReadFrame').onclick=()=>read('frame'); $('#btnReadFull').onclick=()=>read('full'); $('#btnReadRect').onclick=()=>read('rect');
 
-async function feedback(correct){
-  const truth = correct ? '' : $('#fbTruth').value.replace(/\D/g,'');
-  if(!correct && !truth){ $('#fbTruth').focus(); return; }
-  await fetch('feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:lastId,correct,truth})});
-  $('#fb').innerHTML = `<div class="meta ${correct?'ok':'bad'}">شكراً — سُجِّل ${correct?'كصحيح':'التصحيح '+truth}</div>`;
-  setTimeout(()=>{ $('#fb').innerHTML=`<button id="fbOk" class="primary">✔ صحيحة</button><input id="fbTruth" inputmode="numeric" placeholder="القراءة الصحيحة"><button id="fbBad">✘ غلط — أرسل الصحيحة</button>`; bind(); $('#fb').style.display='none'; nextInQueue(); }, 1200);
+const FB_HTML = $('#fb').innerHTML;
+async function feedback(kind){
+  const truth = kind==='bad' ? $('#fbTruth').value.replace(/\D/g,'') : '';
+  if(kind==='bad' && !truth){ $('#fbTruth').focus(); return; }
+  const note = ($('#note').value||'').slice(0,300);
+  await fetch('feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:lastId,correct:kind==='ok',truth,skip:kind==='skip',note})});
+  const msg = kind==='ok' ? 'كصحيح' : kind==='bad' ? 'التصحيح '+truth : 'كمستبعدة';
+  $('#fb').innerHTML = `<div class="meta ${kind==='ok'?'ok':'bad'}">شكراً — سُجِّل ${msg}${note?' + ملاحظة':''}</div>`;
+  setTimeout(()=>{ $('#fb').innerHTML=FB_HTML; bind(); $('#fb').style.display='none'; nextInQueue(); }, 1000);
 }
-function bind(){ $('#fbOk').onclick=()=>feedback(true); $('#fbBad').onclick=()=>feedback(false); }
+function bind(){ $('#fbOk').onclick=()=>feedback('ok'); $('#fbBad').onclick=()=>feedback('bad'); $('#fbSkip').onclick=()=>feedback('skip');
+  $('#noteBtn').onclick=()=>{ const n=$('#note'); n.style.display = n.style.display==='none' ? 'block' : 'none'; if(n.style.display==='block') n.focus(); }; }
 bind();
 </script>
 </body>
