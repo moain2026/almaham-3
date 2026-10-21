@@ -2,3 +2,4 @@
 --- 2026-10-21T12:43:48Z START m3_s1 (locator) init=weights/locator_m1_augv2.pt real=../data/erp/ft/m3 synth=../data/synth/scene_s1 steps=4000 thr=3 env=[SEED=1 AUG_SEED=1]
 train rc=0 step 3500 loss 1.338 real_val_line_iou50 66/68 9324s
 RESULT m3_s1: 49 A=23 B=20 | 34: 22 {'CRYSTAL': '2/7', 'EMETER_GREEN': '3/6', 'OTHER': '1/4', 'SMART_MT10': '1/1', 'TAGADOD': '7/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG
+fatal: could not read Username for 'https://github.com': No such device or address
