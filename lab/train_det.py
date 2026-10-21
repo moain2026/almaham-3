@@ -11,6 +11,7 @@ import sys
 import time
 
 import numpy as np
+import augment
 import torch
 import torch.nn as nn
 
@@ -20,6 +21,8 @@ from synth2 import CLS_LINE
 
 torch.set_num_threads(int(os.environ.get("TORCH_THREADS", "2")))
 BATCH = {"reader": 32, "locator": 24}
+AUG_MODE = os.environ.get("AUG", "v1")          # v1 = legacy shift/channel-swap ; v2 = augment.py recipe (standards doc §3.2)
+AUG_RNG = np.random.default_rng(int(os.environ.get("AUG_SEED", "0")))
 HOLDOUT = 0.02
 
 
@@ -103,12 +106,15 @@ class Shards:
         xs, hs, ss, os_, ms = [], [], [], [], []
         for si, i in picks:
             im, bx = self.item(si, i)
-            if np.random.rand() < 0.5:  # cheap online aug: horizontal shift of a few pixels
+            if AUG_MODE == "v2":  # recipe v2 (augment.py): geometric + photometric + degradation, boxes follow
+                im, bx = augment.augment(im, bx, self.kind, AUG_RNG)
+                bx = bx.reshape(-1, 5)
+            elif np.random.rand() < 0.5:  # legacy (v1): horizontal shift of a few pixels
                 dx = np.random.randint(-6, 7)
                 im = np.roll(im, dx, axis=1)
                 bx = bx.copy()
                 bx[:, [1, 3]] += dx
-            if np.random.rand() < 0.15:  # channel swap: LCD colour invariance
+            if AUG_MODE != "v2" and np.random.rand() < 0.15:  # legacy channel swap: LCD colour invariance
                 im = im[..., np.random.permutation(3)]
             h, s, o, m = self.targets(bx)
             xs.append(im)
