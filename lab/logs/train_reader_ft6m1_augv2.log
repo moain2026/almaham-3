@@ -4,3 +4,13 @@ argv ['erp_finetune.py', 'train', 'weights/reader_ft6_augv2.pt', '../data/erp/ft
 step 0 loss 1.080 real_val_exact 101/132 2s
 step 250 loss 1.130 real_val_exact 99/132 125s
 step 500 loss 1.129 real_val_exact 106/132 250s
+step 750 loss 1.163 real_val_exact 102/132 372s
+step 1000 loss 1.088 real_val_exact 106/132 495s
+step 1250 loss 1.136 real_val_exact 105/132 617s
+step 1500 loss 1.083 real_val_exact 100/132 741s
+step 1750 loss 1.096 real_val_exact 105/132 864s
+step 2000 loss 1.121 real_val_exact 107/132 987s
+step 2250 loss 1.061 real_val_exact 107/132 1110s
+step 2500 loss 1.098 real_val_exact 108/132 1232s
+step 2750 loss 1.096 real_val_exact 108/132 1353s
+step 2999 loss 1.113 real_val_exact 108/132 1474s
