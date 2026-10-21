@@ -1,0 +1,81 @@
+--- a/lab/synth2.py
++++ b/lab/synth2.py
+@@ -9,7 +9,8 @@
+   * line_sample():  64x320 crop around the main line with localisation jitter (pass 2 of the engine).
+ 
+ Labels: list of (cls, x1, y1, x2, y2) in output-pixel coordinates.
+-  cls 0..9 = seven-segment digit, 10 = decimal dot, 11 = a whole main reading line (integer + decimals).
++  cls 0..9 = seven-segment digit, 10 = decimal dot, 11 = main reading line.
++  opt2 Crystal: LINE = integer union only; other styles preserve the pinned source contract.
+   In panels every visible meter's main line is labelled LINE; choosing the target line is post-processing.
+ Printed (non seven-segment) digits are deliberately NOT labelled: they are hard negatives.
+ Seven-segment digits of secondary lines (A/V/Hz/kW) ARE labelled as digits; the assembly step picks the main line.
+@@ -213,6 +214,59 @@
+     return bg, fg, ghost, ga > 0
+ 
+ 
++def opt2_crystal_display(lw, lh, ip, dec, audit=None):
++    """Crystal-only renderer; native-panel dot diameter is1–2px, absent with p=.5.
++
++    Integer and fractional glyphs share EXACTLY one SegStyle (no short-decimal cue).
++    CLS_LINE encloses integer glyphs only. Fraction digits retain classes0..9.
++    Printed unit/serial/frame are hard negatives. audit is optional diagnostic metadata;
++    it is not a training target and never enters the returned label list.
++    """
++    if lw < 16 or lh < 8 or not ip.isdigit() or len(dec) != 2 or not dec.isdigit():
++        raise ValueError("Crystal requires a usable panel, integer text and two decimals")
++    bg = random.choice([(175, 180, 174), (185, 184, 174), (166, 172, 169)])
++    fg = mix(bg, (20, 28, 25), random.uniform(.45, .95))
++    ghost = mix(bg, fg, random.uniform(.03, .18))
++    gradient = np.linspace(random.uniform(.94, 1.02), random.uniform(.94, 1.02), lh)[:, None, None]
++    panel = np.clip(np.full((lh, lw, 3), bg, np.float32) * gradient, 0, 255).astype(np.uint8)
++    frame = random.choice([(170, 112, 70), (145, 143, 138)])  # BGR blue / grey bezel
++    cv2.rectangle(panel, (0, 0), (lw - 1, lh - 1), frame, max(1, round(lh * .035)))
++    st = SegStyle(lh * random.uniform(.36, .46))
++    blanks = random.randint(0, max(0, 6 - len(ip)))
++    cells = blanks + len(ip) + len(dec)
++    width = st.pitch * (cells + .4) + st.slant * st.dh
++    if width > lw * .75:
++        st = st.scaled(lw * .75 / width)
++    x0, y0 = lw * .05, lh * random.uniform(.12, .2)
++    first, cx = st.draw_text(panel, ' ' * blanks + ip, x0, y0, fg, ghost, True)
++    dot_size = random.choice((1, 2))
++    dx = int(round(cx - st.pitch * .08))
++    glyph_h = st.gh if st.use_font else st.dh
++    dy = int(round(y0 + glyph_h - dot_size))
++    dot_box = (dx, dy, dx + dot_size, dy + dot_size)
++    present = random.random() < .5
++    boxes = [(int(ch), *b) for ch, b in first]
++    if present:
++        panel[dy:dy + dot_size, dx:dx + dot_size] = fg
++        boxes.append((CLS_DOT, *dot_box))
++    fractional, end = st.draw_text(panel, dec, cx + st.pitch * .16, y0, fg, ghost, True)
++    boxes.extend((int(ch), *b) for ch, b in fractional)
++    ib = np.asarray([b for _, b in first])
++    line = (float(ib[:, 0].min()), float(ib[:, 1].min()), float(ib[:, 2].max()), float(ib[:, 3].max()))
++    boxes.append((CLS_LINE, *line))
++    unit_size = max(6, min(lh * .16, (lw - end - lw * .02) / 3))
++    put_text(panel, 'kWh', end + lw * .015, y0 + glyph_h, unit_size, fg)
++    serial = 'S/N %08d' % random.randint(0, 99999999)
++    put_text(panel, serial, lw * .07, lh * .91, lh * .14, (45, 48, 45))
++    if audit is not None:
++        audit.update(integer_boxes=[list(b) for _, b in first],
++                     fraction_boxes=[list(b) for _, b in fractional],
++                     dot_present=present, dot_size_native_px=dot_size,
++                     dot_box=list(dot_box), line_box=list(line), unit='kWh',
++                     serial_is_synthetic=True, frame_bgr=list(frame))
++    return panel, boxes
++
++
+ def render_display(lw, lh):
+     """Render an LCD panel (lw x lh) with a main line + optional secondary lines/icons.
+     Returns panel BGR, boxes [(cls, x1,y1,x2,y2)] (digits, dots and the main line box)."""
+@@ -222,6 +276,8 @@
+     gy = np.linspace(random.uniform(0.9, 1.05), random.uniform(0.9, 1.05), lh)[:, None, None]
+     panel = np.clip(panel.astype(np.float32) * gy, 0, 255).astype(np.uint8)
+     style, ip, dec = random_reading()
++    if style == "crystal":
++        return opt2_crystal_display(lw, lh, ip, dec)
+     ncell = len(ip) + len(dec) + (1 if dec else 0)
+     dh = lh * random.uniform(0.38, 0.6)
+     st = SegStyle(dh)
