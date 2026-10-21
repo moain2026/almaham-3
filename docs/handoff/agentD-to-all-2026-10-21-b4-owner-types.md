@@ -34,3 +34,14 @@
 ## Rules unchanged
 - The 49 test photos (benchmark/data/photos.sha256) and testset_human are never labelled/trained.
 - Readings = integer part with displayed leading zeros (fixed-width types padded to 6; owner raw kept in `owner_raw`).
+
+## CORRECTION (later on 2026-10-21) — owner page b4 bug, labels removed
+- Bug found by agent D: the b4 phone page reused the browser storage of the b3 page (same URL/token). Photos #1–#43 of b4
+  were pre-filled with the owner's b3 readings (Tomas photos). 42/43 matched b3 exactly → those b4 labels were NOT the owner's
+  reading of those photos. **All 43 removed** (41 from labels_agentD.csv, 2 from rejected).
+- Cross-check: the two strongest models on a 41-photo owner benchmark (gpt-6.1-sol 36/41 correct, gpt-6-astra 31/41, 0 wrong when the
+  top-4 strong models agree) re-read every remaining owner label. **60 owner labels where neither model matched (±1 trailing decimal digit)
+  were also removed** (they go back to the owner for a second look). 324 owner labels confirmed.
+- labels_agentD.csv now = 763 (owner 324 confirmed, agentD 439). Page server fixed: saves only when filename matches, new token.
+- Model benchmark (48 owner photos, uncommon types): gpt-6.1-sol best, then gpt-6-astra, gemini (gsk understand_images), claude-opus-5-5.
+  Old set (gpt-5.6-sol, grok-4.7, gpt-6-sol, claude-opus-4-8) is weaker on uncommon types → not used alone any more.
