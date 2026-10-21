@@ -49,13 +49,24 @@ LABELS = paths.BENCH_DATA / "erp"
 TEST_HASHES = {ln.split()[0] for ln in open(paths.BENCH_DATA / "photos.sha256") if ln.strip()}
 
 
+HUMAN_LABELLERS = ("agentD",)  # 5-read consensus incl. a visual re-read (docs/prompts/AGENT-D-DATA-LABELLING.md)
+
+
 def load_labels():
+    """filename -> digit text. Machine labels (labels_slice_*, agentA_vision) first; human-verified labellers
+    (labels_agentD.csv) are applied LAST and win: their digits override, and their X removes the photo entirely
+    (a human said "unsure" -> never train on the machine guess for that photo)."""
+    files = sorted(glob.glob(str(LABELS / "labels*.csv")))
+    files.sort(key=lambda f: any(h in f for h in HUMAN_LABELLERS))  # human files last
     rows = {}
-    for f in sorted(glob.glob(str(LABELS / "labels*.csv"))):
+    for f in files:
+        human = any(h in f for h in HUMAN_LABELLERS)
         for r in csv.DictReader(open(f, encoding="utf-8")):
             t = r["text"].strip()
             if t.isdigit():
                 rows[r["filename"]] = t
+            elif human:
+                rows.pop(r["filename"], None)
     return rows
 
 
