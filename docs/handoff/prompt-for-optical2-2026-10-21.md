@@ -10,14 +10,14 @@
 
 **المسند إليك مهمتان فقط، بالترتيب، وفي مستودعك فقط `moain2026/almaham-optical2-private`:**
 
-## المهمة 1 — تجربة loss-masking المضبوطة (الأولوية)
-- النسخة المثبتة: `almaham-3@c7323fe` (مجلد `lab/`). التهيئة: `lab/weights/reader_ft6m1_augv2.pt`. الشرائح: ابنِها بنفسك بـ `python3 lab/build_meter_shards.py` (المدخلات في المستودع الخاص `almaham-3-private-data`: `erp/manifests/meter_bbox_agentD_2026-10-21.jsonl`, `erp/by_type/`) أو اطلب من S نسخة `ft6m1_*.npy`.
-- التغيير المسموح: نسختك من `train_det.py` (`Shards.targets`, `focal_loss`) و`erp_finetune.py`: في دفعات الحقيقي الضعيف، الخلايا خارج صناديق الخانات الصحيحة وداخل صندوق السطر الممتد يميناً = **ignore (وزن 0)** لفئات 0–9 والنقطة؛ خارج السطر تبقى سالبة. بديل يُقاس أيضاً: فئة «كسر» صريحة (12) حيث يعطيها text_locate.
-- ممنوع لمسه: `assemble.py`, `det_model.py` (المعمارية/ONNX ops), `benchmark/data/` (الـ49 وtestset_human لا تدخل التدريب ولا ضبط المعاملات), فرع `genspark_ai_developer`.
-- البروتوكول: نفس الوصفة (3000 خطوة، AUG=v2) مع/بدون القناع، بذرتان 0 و1 = 4 تشغيلات بأسماء `opt2_mask_s0`, `opt2_nomask_s0`, … بلّغ: val shard (132)، الـ49 v3 وضع A وB، testset_human حسب النوع، وعدد **غلط-وواثق**. النجاح = +≥2 على العيّنات القصيرة (≤4 خانات، كانت 0/9) دون خسارة على Tomas، في البذرتين.
-- التسليم: PR في مستودعك + صف لكل تشغيل بصيغة `docs/training-log/runs.md` + JSON بصيغة `benchmark/results/engines/` + الأوزان في `almaham-3-private-data/weights_archive/opt2_*`. S يعيد التقييم عنده ويدمج الـdiff يدوياً إن نجح.
+## المهمة 1 — واقعية الاصطناعي لعدادات Crystal (مولّد فقط، لا تدريب)
+- المشكلة المقاسة (`docs/research/crystal-root-cause-2026-10-21.md`): في Crystal الحقيقي خلايا الكسر **بنفس ارتفاع** خانات الصحيح (وسيط النسبة 0.99) والنقطة ضئيلة (ذروة 0.07–0.29)؛ بينما `lab/synth2.py` يرسم كسر Crystal **صغيراً** (`dec_k` 0.42–0.65 في 80%) بنقطة واضحة. تعارض مباشر.
+- المطلوب في نسختك من `lab/synth2.py` فقط: نمط `crystal` يرسم خانتي كسر بنفس الارتفاع، نقطة 1–2 بكسل أو غائبة (50%)، وحدة kWh، إطار شاشة Crystal (أزرق/رمادي)، ورقم تسلسلي أسفل السطر. المعلّم (boxes) لا يتغيّر عقده: `CLS_LINE` = اتحاد خانات **الصحيح فقط**؛ خانات الكسر تُعلَّم بفئتها الرقمية كما الآن (لا فئات جديدة).
+- التحقق: لوحة تدقيق `data/review/synth_crystal_opt2.jpg` (40 عيّنة) مقابل 10 قصاصات حقيقية من `erp/by_type/CRYSTAL` في المستودع الخاص؛ قِس نفس المقياسين (نسبة ارتفاع الكسر، ذروة النقطة) على الاصطناعي الجديد وأبلغ الأرقام.
+- ممنوع: `assemble.py`, `det_model.py`, `train_det.py`, `erp_finetune.py` (S يُجري تجربة loss-masking الآن — لا تكررها)، `benchmark/data/`.
+- التسليم: diff لـ`synth2.py` + لوحة التدقيق + الأرقام في `docs/handoff/optical2-to-agentS-<date>.md`. S يولّد الشريحة ويدرّب ويقيّم عنده.
 
-## المهمة 2 — تصليب مسار الالتقاط في Android (بعد المهمة 1 أو بالتوازي إن كان لديك وقت)
+## المهمة 2 — تصليب مسار الالتقاط في Android (بالتوازي)
 - النسخة: `almaham-3@c7323fe`، مجلد `app/demo/` فقط. الملفات: `CameraScreen.kt, CapturePipeline.kt, MainActivity.kt, RectGeometry.kt` + اختبارات وحدة.
 - المطلوب: (أ) `UseCaseGroup` + `ViewPort` مشترك وتحويل مستطيل المستخدم VIEW→IMAGE عبر `cropRect`/transform الحقيقي؛ (ب) حارس `captureId` يمنع نتيجة قديمة من استبدال خانة عدّلها المستخدم أو التقاط أحدث؛ (ج) `image.close()` في `finally` + إغلاق منفّذ الكاميرا في dispose؛ (د) `tapToVisibleMs` ينتهي بعد رسم الرقم.
 - ممنوع: `app/meterocr/` (المحرك، تكافؤ 49/49)، `assets/models`، `build.sh`، `lab/`.
