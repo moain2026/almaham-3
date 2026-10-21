@@ -119,10 +119,11 @@ def main():
         idx = [i for i, k in enumerate(keys) if pick(k)]; remap = {o: n for n, o in enumerate(idx)}
         Bi = np.array([(remap[int(b[0])], *b[1:]) for b in B if int(b[0]) in remap], np.float32).reshape(-1, 6)
         np.save(f"{out}_{name}_X.npy", X[idx]); np.save(f"{out}_{name}_B.npy", Bi)
+        np.save(f"{out}_{name}_W.npy", np.array([W[i] for i in idx], np.float32)); np.save(f"{out}_loc_{name}_W.npy", np.array([W[i] for i in idx], np.float32))
         LBi = np.array([(remap[int(b[0])], *b[1:]) for b in LB if int(b[0]) in remap], np.float32).reshape(-1, 6)
         np.save(f"{out}_loc_{name}_X.npy", LX[idx]); np.save(f"{out}_loc_{name}_B.npy", LBi)
         print(name, X[idx].shape, len(Bi), "boxes; locator", LX[idx].shape)
-    rep = {"reasons": reasons, "accepted": len(X), "by_type": by_type, "n_train_keys": len(uniq) - len(val_keys), "n_val_keys": len(val_keys), "min_score": MIN_SCORE}
+    rep = {"reasons": reasons, "accepted": len(X), "by_type": by_type, "owner_visual": int(sum(1 for w in W if w > 1)), "owner_w": OWNER_W, "n_train_keys": len(uniq) - len(val_keys), "n_val_keys": len(val_keys), "min_score": MIN_SCORE}
     json.dump(rep, open(f"{out}_report.json", "w"), indent=1); print(json.dumps(rep))
     rng = np.random.RandomState(1); sel = [review[i] for i in rng.choice(len(review), min(audit, len(review)), replace=False)]
     rows = [np.hstack(sel[i:i + 5] + [np.full((300, 300, 3), 128, np.uint8)] * (5 - len(sel[i:i + 5]))) for i in range(0, len(sel), 5)]

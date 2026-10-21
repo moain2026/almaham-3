@@ -1,0 +1,35 @@
+{
+ "tag": "ft5augv2loc_ft6m1",
+ "testset_human": {
+  "models": "../data/models_ft5augv2loc_ft6m1",
+  "n": 34,
+  "exact": 19,
+  "by_type": {
+   "CRYSTAL": "2/7",
+   "EMETER_GREEN": "1/6",
+   "OTHER": "2/4",
+   "SMART_MT10": "0/1",
+   "TAGADOD": "6/7",
+   "TOMAS_SMART": "7/7",
+   "TOMAS_STATIC": "1/2"
+  }
+ },
+ "val_by_digits": {
+  "6 digits": [
+   102,
+   116
+  ],
+  "2 digits": [
+   0,
+   3
+  ],
+  "5 digits": [
+   2,
+   3
+  ],
+  "3 digits": [
+   4,
+   10
+  ]
+ }
+}
