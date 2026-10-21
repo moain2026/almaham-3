@@ -32,3 +32,5 @@
 
 - **2026-10-21 — Another agent's audit is worth reading for one thing: findings that contradict our training contract (targets-conflict). Re-audits of our own numbers add trust but zero product gain; assign such agents controlled experiments with fixed inputs and `opt2_*` naming, never shared checkpoints.**
 - **Reverse SSH tunnel for a machine without public IP: give the tunnel key `restrict,permitlisten=` so a leaked key can only hold the tunnel.** Serve one-off secrets via a token route, not chat.
+
+- **2026-10-21 — A safety metric can be vacuous: `wrong_confident = 0` held because the `confident` gate accepted 0–1 of 73 readings (SegmentVerifier disagrees on 92% of digits, even synthetic). Always report the gate's acceptance count next to its error count; use a risk–coverage table (`lab/risk_coverage.py`).**
