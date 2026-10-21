@@ -134,3 +134,4 @@ updated: 2026-10-21
 - **Done this hour:** loss-masking controlled experiment (no significant effect; logged); failure analysis (ghost-segment confusions + fraction cells); risk–coverage tool; **finding: the shipped `confident` gate accepts ~0 readings, so `wrong_confident=0` was vacuous** — replaced by risk–coverage table. min_conf≥0.55 gives 13/14 correct on 73 photos.
 - **Next (in order):** merge text_locate → `build_meter_shards` m2 (expect ~500+ samples, Crystal ~128, SMART_YELLOW ~50) → train reader m2 (sandbox, 2 seeds) + locator m2 (Contabo after m1) → eval 49/34 + risk–coverage → deploy best to basirapp.site/meter.
 - Owner's ZBook: cancelled by owner; tunnel infra stays documented (`docs/runbooks/zbook-tunnel.md`).
+- agent D b8: owner page h8 done → +84 owner readings, +30 X, 4 conflicts held back. labels_agentD.csv 1163 (owner 466).

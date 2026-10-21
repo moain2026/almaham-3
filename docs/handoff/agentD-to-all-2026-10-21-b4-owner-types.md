@@ -63,3 +63,13 @@
 - by_type index.csv de-duplicated.
 - The remaining 118 (OTHER 54, SMART_YELLOW 43, TAGADOD 20, CRYSTAL 1) are on the new owner page h8.
 - Totals: labels_agentD.csv 1079 rows, rejected 204.
+
+## b8 — owner page h8 (2026-10-21)
+- Owner finished the last 118: 88 readings + 30 X.
+- **+84 owner rows** (`owner_visual`): OTHER 33, SMART_YELLOW 29, TAGADOD 20, CRYSTAL 1, KENWELL 1. Type fixes: #91 → KENWELL; #84 and #114 → TAGADOD.
+- **4 held back**: agent D's zoom disagrees with the owner on the decimal/last digit. The owner typed the tenths digit or a misread 8/1/7 (owner 23 / 474 / 661 / 3047 vs display 000028 / 000414 / 000667 / 030476). These are NOT in labels or rejected. Listed in private `manifests/owner_b8_conflict4.json`.
+- **+30 X** in rejected.
+- Totals: **labels_agentD.csv 1163 rows**, rejected 234.
+- By type: TOMAS_SMART 300, CRYSTAL 256, SMART_YELLOW 179, TAGADOD 137, OTHER 134, TOMAS_STATIC 64, KENWELL 46, MECHANICAL 36, GLORY 7, CHINT 3, HPL 1.
+- CRYSTAL integer-digit spread: 1-digit 8, 2-digit 68, 3-digit 169, 4-digit 11.
+- By confidence: owner_visual 466, 4models+visual 281, 4strong+visual 258, 4/4 158.
