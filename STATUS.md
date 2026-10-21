@@ -146,3 +146,7 @@ updated: 2026-10-21
 - **Best:** `locator_m1_augv2 + reader_ft6m2_s1` → 49-set A **22/39**, B 19/39; testset_human **21/34**; strict gate (OK & min_conf≥0.55 & alt<0.5) **17 accepted / 0 wrong** of 73. Deployed as `new` on basirapp.site/meter.
 - Cold-start: `docs/runbooks/resume-training.md` + private `training_shards/2026-10-21_m3/` (m3+ft6 shards, text_locate_all.json). All logs/weights committed.
 - Running: reader_ft6m3_s0/s1 (owner-weighted) ~1500/3000; Contabo locator_m3; crystal synth shard ready (3000).
+
+## 2026-10-21 14:50 مكة — optical2 PR7 verified
+- segverify_v2 (optical2 PR#7, 7c75788): tests 24/24 here; on frozen 73: AUC 0.543→0.706; synthetic 19%→74.8% (<85% target). Candidate only; not in gate, not in Kotlin. Copied to lab/segverify_v2.py for comparison. PR#6 Android pending APK build + parity (successor queue).
+- Training: ft6m3_s0/s1, ft6m2_cry_s1, ft6m3_cry_s1 ~2000/3000; Contabo locator_m3 ~1250/3000.
