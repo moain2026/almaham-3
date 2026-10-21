@@ -1,4 +1,5 @@
 ## [Unreleased] — 2026-10-20 جلسة الوكيل S (الخليفة)
+- research: `docs/research/screen-autofind-2026-10-21.md` — قصّ تلقائي للشاشة (CamScanner-style) مقاس على الـ49: `lab/screen_quad.py` (OpenCV رباعي) 12/46 IoU>0.5، `lab/exp_coarse2fine.py` (محدِّد خشن→دقيق على الصورة الكاملة) 13/46 مقابل A 22/46. مرفوض للشحن؛ الطريق = بيانات صناديق شاشة + تدريب على صور كاملة.
 - repro: 19/46 A, wrong-confident 0 أُعيد إنتاجه في البيئة الجديدة (`eval_repro_2026-10-20.log`). الصور الـ49 في المستودع الخاص (49/49).
 - **ADR-0006** مستودع خاص للبيانات `almaham-3-private-data` + `scripts/private_data.sh` (pull/push-49/push-erp/push-dir/status، تحقق sha256، دفعات ≤1.5 GB، فحص أسرار قبل كل push) + تحديث `setup-environment.md`.
 - env: `.gitignore` يتجاهل `.toolchain/` (JDK17 + Android SDK محليان خارج git). تحقق البيئة الجديدة: Python 24/24، Kotlin 45/45، تصدير ONNX مطابق بالبت لـ assets.
