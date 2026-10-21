@@ -136,3 +136,8 @@ updated: 2026-10-21
 - Owner's ZBook: cancelled by owner; tunnel infra stays documented (`docs/runbooks/zbook-tunnel.md`).
 - agent D b8: owner page h8 done → +84 owner readings, +30 X, 4 conflicts held back. labels_agentD.csv 1163 (owner 466).
 - agent D FINAL: audit removed 36 testset_human/sibling overlaps → labels_agentD.csv 1127 (owner 466). Tooling in benchmark/data/erp/agentD_tooling/mm, summary docs/handoff/agentD-FINAL-2026-10-21.md.
+
+## 2026-10-21 11:05Z
+- Agent D final: 1127 labels (36 testset overlaps removed by D; verified 0 leakage either way). m3 shards built (531; owner_visual x2; split-key bug fixed). Reader ft6m2 (s0/s1) finishing; reader ft6m3 (s0/s1) started; Contabo locator m1 at 3750/4000 then locator m3 auto-queued.
+- optical2: handoff branch `opt2_handoff_20261021` / commit 258810b NOT on GitHub (ls-remote verified); review pending push.
+- Reply to agent D with per-type numbers + collection priorities: `docs/handoff/agentS-to-agentD-2026-10-21.md`.
