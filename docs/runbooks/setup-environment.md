@@ -22,3 +22,8 @@
 
 ## التراجع (Rollback)
 لا شي يُكتب خارج `data/` (git-ignored). احذف `data/` للبدء من جديد.
+
+## التجربة الميدانية عبر الويب (Contabo)
+- الرابط: https://basirapp.site/meter/ — الخدمة `almaham-webdemo` (systemd) على المنفذ 8700، Caddy يوجّه `/meter/*` إليها (`lab/webdemo/caddy_snippet.txt`).
+- تحديث الكود/النماذج: `bash lab/webdemo/deploy_contabo.sh` (يسحب الفرع على الخادم، ينسخ ONNX من `data/models_*`، يعيد التشغيل). متغير `MODELS="name=dir ..."` لتغيير النماذج.
+- السجل: `ssh basira journalctl -u almaham-webdemo -f`. الصور المحفوظة: `/opt/almaham/almaham-3/data/webdemo/` → تُدفع للمستودع الخاص بـ `scripts/private_data.sh push-dir`.
