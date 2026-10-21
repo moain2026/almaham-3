@@ -64,7 +64,9 @@ def main():
     labels = ef.load_labels(); boxes = load_meter_boxes(); multi = multi_meter()
     types = {r["filename"]: r["meter_type"] for r in csv.DictReader(open(paths.BENCH_DATA / "erp" / "labels_agentD.csv", encoding="utf-8"))}
     reasons = {"no_tl": 0, "no_meterbox": 0, "excluded": 0, "multi": 0, "low_score": 0, "short_unsafe": 0, "irregular": 0, "outside_meter": 0, "ok": 0}
-    X, B, LX, LB, keys, by_type, review = [], [], [], [], [], {}, []
+    conf = {r["filename"]: r.get("confidence", "") for f in glob.glob(str(ef.LABELS / "labels_agentD.csv")) for r in csv.DictReader(open(f, encoding="utf-8"))}
+    OWNER_W = 2.0   # agent D request 2026-10-21: owner_visual readings get higher sampling weight
+    X, B, LX, LB, keys, by_type, review, SW = [], [], [], [], [], {}, [], []
     for fn, res in sorted(tl.items()):
         text = labels.get(fn)
         if not res or not text:
@@ -106,7 +108,8 @@ def main():
             x1 = (d[1] - mx1 - sx1) * rs + rox; y1 = (d[2] - my1 - sy1) * rs + roy; x2 = (d[3] - mx1 - sx1) * rs + rox; y2 = (d[4] - my1 - sy1) * rs + roy
             B.append((i, int(chr_), x1, y1, x2, y2))
         B.append((i, CLS_LINE, (lx1 - mx1 - sx1) * rs + rox, (ly1 - my1 - sy1) * rs + roy, (lx2 - mx1 - sx1) * rs + rox, (ly2 - my1 - sy1) * rs + roy))
-        keys.append(fn[:8]); by_type[t] = by_type.get(t, 0) + 1; reasons["ok"] += 1
+        keys.append(fn.replace("pending-", "")[:8]); by_type[t] = by_type.get(t, 0) + 1; reasons["ok"] += 1
+        SW.append(OWNER_W if conf.get(fn) == "owner_visual" else 1.0)
         if len(review) < audit * 3:
             vis = crop.copy(); cv2.rectangle(vis, (int(lx1 - mx1), int(ly1 - my1)), (int(lx2 - mx1), int(ly2 - my1)), (0, 0, 255), max(2, cw // 200))
             vis = cv2.resize(vis, (300, int(300 * ch / cw)))[:300]; vis = np.vstack([vis, np.full((300 - vis.shape[0], 300, 3), 128, np.uint8)]) if vis.shape[0] < 300 else vis
@@ -119,11 +122,11 @@ def main():
         idx = [i for i, k in enumerate(keys) if pick(k)]; remap = {o: n for n, o in enumerate(idx)}
         Bi = np.array([(remap[int(b[0])], *b[1:]) for b in B if int(b[0]) in remap], np.float32).reshape(-1, 6)
         np.save(f"{out}_{name}_X.npy", X[idx]); np.save(f"{out}_{name}_B.npy", Bi)
-        np.save(f"{out}_{name}_W.npy", np.array([W[i] for i in idx], np.float32)); np.save(f"{out}_loc_{name}_W.npy", np.array([W[i] for i in idx], np.float32))
+        np.save(f"{out}_{name}_W.npy", np.array([SW[i] for i in idx], np.float32)); np.save(f"{out}_loc_{name}_W.npy", np.array([SW[i] for i in idx], np.float32))
         LBi = np.array([(remap[int(b[0])], *b[1:]) for b in LB if int(b[0]) in remap], np.float32).reshape(-1, 6)
         np.save(f"{out}_loc_{name}_X.npy", LX[idx]); np.save(f"{out}_loc_{name}_B.npy", LBi)
         print(name, X[idx].shape, len(Bi), "boxes; locator", LX[idx].shape)
-    rep = {"reasons": reasons, "accepted": len(X), "by_type": by_type, "owner_visual": int(sum(1 for w in W if w > 1)), "owner_w": OWNER_W, "n_train_keys": len(uniq) - len(val_keys), "n_val_keys": len(val_keys), "min_score": MIN_SCORE}
+    rep = {"reasons": reasons, "accepted": len(X), "by_type": by_type, "owner_visual": int(sum(1 for w in SW if w > 1)), "owner_w": OWNER_W, "n_train_keys": len(uniq) - len(val_keys), "n_val_keys": len(val_keys), "min_score": MIN_SCORE}
     json.dump(rep, open(f"{out}_report.json", "w"), indent=1); print(json.dumps(rep))
     rng = np.random.RandomState(1); sel = [review[i] for i in rng.choice(len(review), min(audit, len(review)), replace=False)]
     rows = [np.hstack(sel[i:i + 5] + [np.full((300, 300, 3), 128, np.uint8)] * (5 - len(sel[i:i + 5]))) for i in range(0, len(sel), 5)]
