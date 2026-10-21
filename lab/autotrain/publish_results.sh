@@ -7,7 +7,9 @@ set -uo pipefail
 R=/opt/almaham/almaham-3; OUT=/opt/almaham/results_public; mkdir -p "$OUT"; cd "$R"
 git fetch -q origin auto-training genspark_ai_developer 2>/dev/null || true
 TMP=$(mktemp -d); mkdir -p "$TMP/snap"
-git archive origin/auto-training docs/training-log STATUS.md benchmark/results/engines lab/weights lab/logs 2>/dev/null | tar -x -C "$TMP/snap" || true
+SRC=origin/auto-training; git rev-parse -q --verify "$SRC" >/dev/null || SRC=origin/genspark_ai_developer
+git archive "$SRC" docs/training-log STATUS.md benchmark/results/engines lab/weights lab/logs 2>/dev/null | tar -x -C "$TMP/snap" 2>/dev/null || true
+mkdir -p "$TMP/snap/lab/logs" "$TMP/snap/lab/weights" "$TMP/snap/docs/training-log"
 cp -f lab/logs/autotrain_*.log lab/logs/train_*.log "$TMP/snap/lab/logs/" 2>/dev/null; cp -f lab/weights/*.pt "$TMP/snap/lab/weights/" 2>/dev/null
 (cd "$TMP/snap" && zip -qr "$OUT/snapshot.zip.tmp" . ) && mv -f "$OUT/snapshot.zip.tmp" "$OUT/snapshot.zip"
 cp -f "$TMP/snap/docs/training-log/runs.md" "$OUT/runs.md" 2>/dev/null; cp -f "$TMP/snap/STATUS.md" "$OUT/STATUS.md" 2>/dev/null
