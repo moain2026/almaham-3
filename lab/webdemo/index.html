@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>قارئ العداد — تجربة ميدانية</title>
+<style>
+  :root { --bg:#0f1115; --fg:#e8e8e8; --acc:#2bd36b; --warn:#ffb020; --bad:#ff5a5a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font-family:system-ui,Segoe UI,Tahoma,sans-serif; }
+  header { padding:10px 14px; font-size:15px; display:flex; justify-content:space-between; align-items:center; }
+  header small { opacity:.6; }
+  #stage { position:relative; width:100vw; background:#000; overflow:hidden; }
+  video, canvas#shot { display:block; width:100%; height:auto; }
+  #guide { position:absolute; inset:0; pointer-events:none; }
+  #guide .frame { position:absolute; left:8%; width:84%; top:30%; height:18%; border:3px solid var(--acc); border-radius:6px; box-shadow:0 0 0 2000px rgba(0,0,0,.35); }
+  #guide .hint { position:absolute; left:0; right:0; top:50%; text-align:center; font-size:14px; color:#fff; text-shadow:0 1px 3px #000; }
+  #rectLayer { position:absolute; inset:0; touch-action:none; }
+  #rectLayer .sel { position:absolute; border:2px dashed var(--warn); background:rgba(255,176,32,.12); display:none; }
+  .bar { display:flex; gap:8px; padding:10px; flex-wrap:wrap; }
+  button { flex:1; min-width:120px; padding:14px 10px; font-size:17px; border:0; border-radius:10px; background:#2a2f3a; color:#fff; }
+  button.primary { background:var(--acc); color:#000; font-weight:700; }
+  button:disabled { opacity:.4; }
+  #result { padding:10px 14px; }
+  .reading { font-size:56px; font-weight:800; letter-spacing:2px; direction:ltr; text-align:center; font-variant-numeric:tabular-nums; }
+  .reading.empty { color:var(--bad); font-size:28px; }
+  .meta { opacity:.7; font-size:13px; text-align:center; }
+  img#crop { display:block; width:100%; image-rendering:pixelated; border-radius:6px; background:#333; margin-top:8px; }
+  #fb { display:none; gap:8px; margin-top:10px; align-items:center; flex-wrap:wrap; }
+  #fb input { flex:1; min-width:120px; font-size:20px; padding:10px; border-radius:8px; border:1px solid #444; background:#1a1d24; color:#fff; direction:ltr; text-align:center; }
+  .ok { color:var(--acc); } .bad { color:var(--bad); }
+  details { padding:0 14px 14px; font-size:13px; opacity:.8; }
+  select { font-size:14px; padding:6px; border-radius:6px; background:#1a1d24; color:#fff; border:1px solid #444; }
+</style>
+</head>
+<body>
+<header><span>قارئ العداد — تجربة ميدانية</span><small id="ver">…</small></header>
+
+<div id="stage">
+  <video id="cam" autoplay playsinline muted></video>
+  <canvas id="shot" style="display:none"></canvas>
+  <div id="guide"><div class="frame"></div><div class="hint">املأ الإطار الأخضر بشاشة العداد ثم اضغط «صوّر»</div></div>
+  <div id="rectLayer" style="display:none"><div class="sel" id="sel"></div></div>
+</div>
+
+<div class="bar" id="barLive">
+  <button class="primary" id="btnShot">📷 صوّر</button>
+  <button id="btnFile">📁 من الاستوديو</button>
+  <input type="file" id="file" accept="image/*" capture="environment" style="display:none">
+</div>
+
+<div class="bar" id="barShot" style="display:none">
+  <button class="primary" id="btnReadFrame">اقرأ (الإطار الأخضر)</button>
+  <button id="btnReadFull">اقرأ الصورة كاملة</button>
+  <button id="btnReadRect" disabled>اقرأ المستطيل الذي رسمته</button>
+  <button id="btnRetake">↩ أعد التصوير</button>
+</div>
+<div class="meta" id="rectHint" style="display:none">يمكنك سحب مستطيل بإصبعك حول السطر، ثم «اقرأ المستطيل»</div>
+
+<div id="result"></div>
+<div id="fb" class="bar">
+  <button id="fbOk" class="primary">✔ صحيحة</button>
+  <input id="fbTruth" inputmode="numeric" placeholder="القراءة الصحيحة">
+  <button id="fbBad">✘ غلط — أرسل الصحيحة</button>
+</div>
+
+<details>
+  <summary>إعدادات</summary>
+  <p>النموذج: <select id="model"></select></p>
+  <p>«الإطار الأخضر» = قصّ ثابت بنسبة الشاشة (بديل الرسم باليد). «كاملة» = بلا أي قصّ (الوضع B في القياسات). «المستطيل» = مثل التطبيق الحالي (الوضع A).</p>
+  <p>كل صورة تُحفظ على الخادم مع النتيجة وتصحيحك لتحسين النموذج (بيانات خاصة، لا تُنشر).</p>
+</details>
+
+<script>
+const $ = s => document.querySelector(s);
+const cam = $('#cam'), shot = $('#shot'), ctx = shot.getContext('2d');
+let stream, lastId = null, rect = null, fullBlob = null;
+const FRAME = {x1:.08, y1:.30, x2:.92, y2:.48}; // == CSS .frame (left 8%, top 30%, w 84%, h 18%)
+
+fetch('/health').then(r=>r.json()).then(h=>{ $('#ver').textContent = h.engines.join(' | ') + ' · محفوظ ' + h.stored;
+  const sel=$('#model'); h.engines.forEach(e=>{const o=document.createElement('option');o.value=o.textContent=e;sel.appendChild(o);}); }).catch(()=>{});
+
+async function startCam(){
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}, width:{ideal:1920}, height:{ideal:1080}}, audio:false});
+    cam.srcObject = stream;
+  } catch(e){ $('#result').innerHTML = '<div class="reading empty">لا يمكن فتح الكاميرا: '+e.message+'<br>استخدم «من الاستوديو»</div>'; }
+}
+startCam();
+
+function showShot(){
+  cam.style.display='none'; shot.style.display='block'; $('#guide').style.display='block';
+  $('#barLive').style.display='none'; $('#barShot').style.display='flex'; $('#rectHint').style.display='block';
+  $('#rectLayer').style.display='block'; rect=null; $('#sel').style.display='none'; $('#btnReadRect').disabled=true;
+  $('#result').innerHTML=''; $('#fb').style.display='none';
+}
+$('#btnShot').onclick = () => {
+  shot.width = cam.videoWidth; shot.height = cam.videoHeight; ctx.drawImage(cam,0,0);
+  shot.toBlob(b=>{ fullBlob=b; showShot(); }, 'image/jpeg', .92);
+};
+$('#btnFile').onclick = () => $('#file').click();
+$('#file').onchange = async e => {
+  const f=e.target.files[0]; if(!f) return;
+  const bmp = await createImageBitmap(f); shot.width=bmp.width; shot.height=bmp.height; ctx.drawImage(bmp,0,0);
+  shot.toBlob(b=>{ fullBlob=b; showShot(); }, 'image/jpeg', .92);
+};
+$('#btnRetake').onclick = () => { cam.style.display='block'; shot.style.display='none'; $('#barLive').style.display='flex'; $('#barShot').style.display='none';
+  $('#rectHint').style.display='none'; $('#rectLayer').style.display='none'; $('#result').innerHTML=''; $('#fb').style.display='none'; };
+
+// finger rectangle
+const layer=$('#rectLayer'), sel=$('#sel'); let p0=null;
+const pos = ev => { const r=layer.getBoundingClientRect(); return {x:(ev.clientX-r.left)/r.width, y:(ev.clientY-r.top)/r.height}; };
+layer.onpointerdown = ev => { p0=pos(ev); layer.setPointerCapture(ev.pointerId); sel.style.display='block'; };
+layer.onpointermove = ev => { if(!p0) return; const p=pos(ev); const x1=Math.min(p0.x,p.x),y1=Math.min(p0.y,p.y),x2=Math.max(p0.x,p.x),y2=Math.max(p0.y,p.y);
+  rect=[x1,y1,x2,y2]; sel.style.left=x1*100+'%'; sel.style.top=y1*100+'%'; sel.style.width=(x2-x1)*100+'%'; sel.style.height=(y2-y1)*100+'%'; };
+layer.onpointerup = () => { p0=null; if(rect && (rect[2]-rect[0])>.05) $('#btnReadRect').disabled=false; };
+
+async function read(mode){
+  const fd=new FormData(); fd.append('photo', fullBlob, 'p.jpg'); fd.append('model', $('#model').value||'default');
+  if(mode==='frame') fd.append('rect', [FRAME.x1,FRAME.y1,FRAME.x2,FRAME.y2].join(','));
+  if(mode==='rect' && rect) fd.append('rect', rect.map(v=>v.toFixed(4)).join(','));
+  $('#result').innerHTML='<div class="meta">جاري القراءة…</div>';
+  const t0=performance.now();
+  let j; try { j = await (await fetch('/read',{method:'POST',body:fd})).json(); } catch(e){ $('#result').innerHTML='<div class="reading empty">خطأ اتصال</div>'; return; }
+  const dt=Math.round(performance.now()-t0);
+  lastId=j.id;
+  const val = j.reading ? `<div class="reading">${j.reading}</div>` : `<div class="reading empty">لم تُقرأ (${j.status})</div>`;
+  $('#result').innerHTML = val + `<div class="meta">الوضع: ${ {frame:'الإطار الأخضر',full:'كاملة',rect:'المستطيل'}[mode] } · خام: ${j.raw||'—'} · سطر ${j.line_found?'وُجد':'لم يوجد'} (${j.line_score}) · المحرك ${j.ms} ms · إجمالي ${dt} ms</div>`
+    + `<img id="crop" src="data:image/png;base64,${j.crop_png_b64}">`;
+  $('#fb').style.display='flex'; $('#fbTruth').value='';
+}
+$('#btnReadFrame').onclick=()=>read('frame'); $('#btnReadFull').onclick=()=>read('full'); $('#btnReadRect').onclick=()=>read('rect');
+
+async function feedback(correct){
+  const truth = correct ? '' : $('#fbTruth').value.replace(/\D/g,'');
+  if(!correct && !truth){ $('#fbTruth').focus(); return; }
+  await fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:lastId,correct,truth})});
+  $('#fb').innerHTML = `<div class="meta ${correct?'ok':'bad'}">شكراً — سُجِّل ${correct?'كصحيح':'التصحيح '+truth}</div>`;
+  setTimeout(()=>{ $('#fb').innerHTML=`<button id="fbOk" class="primary">✔ صحيحة</button><input id="fbTruth" inputmode="numeric" placeholder="القراءة الصحيحة"><button id="fbBad">✘ غلط — أرسل الصحيحة</button>`; bind(); $('#fb').style.display='none'; }, 1500);
+}
+function bind(){ $('#fbOk').onclick=()=>feedback(true); $('#fbBad').onclick=()=>feedback(false); }
+bind();
+</script>
+</body>
+</html>
