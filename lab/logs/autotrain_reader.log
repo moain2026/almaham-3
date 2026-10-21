@@ -2,3 +2,4 @@
 --- 2026-10-21T11:49:43Z START ft6m3_cry_s2 (reader) init=weights/reader_ft6m1_augv2.pt real=../data/erp/ft/ft6m3 synth=../data/synth/line_s1,../data/synth/line_crystal_opt2 steps=3000 thr=1 env=[SEED=2 AUG_SEED=2]
 train rc=0 step 2999 loss 1.151 real_val_exact 147/173 6193s
 RESULT ft6m3_cry_s2: 49 A=23 B=20 | 34: 20 {'CRYSTAL': '2/7', 'EMETER_GREEN': '2/6', 'OTHER': '2/4', 'SMART_MT10': '0/1', 'TAGADOD': '7/7', 'TOMAS_SMART': '6/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG
+fatal: could not read Username for 'https://github.com': No such device or address

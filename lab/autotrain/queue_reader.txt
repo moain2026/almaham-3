@@ -1,4 +1,3 @@
 # tag | kind | init | real_prefix | synth_prefixes | steps | threads | env   (one recipe per line; consumed top-down; empty -> auto seeds)
-ft6m3_s2 | reader | weights/reader_ft6m1_augv2.pt | ../data/erp/ft/ft6m3 | ../data/synth/line_s1 | 3000 | 1 | SEED=2 AUG_SEED=2
 ft6m3_cry_long_s1 | reader | weights/reader_ft6m2_s1.pt | ../data/erp/ft/ft6m3 | ../data/synth/line_s1,../data/synth/line_crystal_opt2 | 6000 | 1 | SEED=1 AUG_SEED=1
 ft6m3_mask_cry_s1 | reader | weights/reader_ft6m1_augv2.pt | ../data/erp/ft/ft6m3 | ../data/synth/line_s1,../data/synth/line_crystal_opt2 | 3000 | 1 | SEED=1 AUG_SEED=1 IGNORE_ROW=1
