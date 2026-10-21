@@ -1,0 +1,459 @@
+{
+ "summary": {
+  "ckpt": "weights/locator_ft5_augv2.pt",
+  "argv": [
+   "eval_locator_real.py",
+   "weights/locator_ft5_augv2.pt",
+   "ft5augv2"
+  ],
+  "n": 46,
+  "recall_iou50": 23,
+  "recall_pct": 50.0,
+  "recall_tight_iou50": 36,
+  "recall_tight_top3": 36,
+  "found": 46,
+  "iou_median": 0.508,
+  "ms_p50": 18.94,
+  "miss": [
+   "23065.jpg",
+   "23066.jpg",
+   "23069.jpg",
+   "23070.jpg",
+   "23071.jpg",
+   "23073.jpg",
+   "23076.jpg",
+   "23077.jpg",
+   "23078.jpg",
+   "23080.jpg",
+   "23081.jpg",
+   "23083.jpg",
+   "23086.jpg",
+   "23088.jpg",
+   "23094.jpg",
+   "23095.jpg",
+   "23097.jpg",
+   "23098.jpg",
+   "23100.jpg",
+   "23102.jpg",
+   "23104.jpg",
+   "23109.jpg",
+   "23112.jpg"
+  ]
+ },
+ "rows": [
+  {
+   "file": "23065.jpg",
+   "iou": 0.33,
+   "iou_tight": 0.212,
+   "iou_tight_top3": 0.212,
+   "score": 0.433,
+   "found": true,
+   "ms": 31.74
+  },
+  {
+   "file": "23066.jpg",
+   "iou": 0.385,
+   "iou_tight": 0.562,
+   "iou_tight_top3": 0.562,
+   "score": 0.563,
+   "found": true,
+   "ms": 19.12
+  },
+  {
+   "file": "23067.jpg",
+   "iou": 0.556,
+   "iou_tight": 0.606,
+   "iou_tight_top3": 0.808,
+   "score": 0.591,
+   "found": true,
+   "ms": 19.16
+  },
+  {
+   "file": "23068.jpg",
+   "iou": 0.56,
+   "iou_tight": 0.773,
+   "iou_tight_top3": 0.773,
+   "score": 0.456,
+   "found": true,
+   "ms": 18.65
+  },
+  {
+   "file": "23069.jpg",
+   "iou": 0.46,
+   "iou_tight": 0.656,
+   "iou_tight_top3": 0.656,
+   "score": 0.684,
+   "found": true,
+   "ms": 20.17
+  },
+  {
+   "file": "23070.jpg",
+   "iou": 0.337,
+   "iou_tight": 0.289,
+   "iou_tight_top3": 0.289,
+   "score": 0.359,
+   "found": true,
+   "ms": 18.39
+  },
+  {
+   "file": "23071.jpg",
+   "iou": 0.493,
+   "iou_tight": 0.565,
+   "iou_tight_top3": 0.565,
+   "score": 0.506,
+   "found": true,
+   "ms": 22.43
+  },
+  {
+   "file": "23073.jpg",
+   "iou": 0.376,
+   "iou_tight": 0.645,
+   "iou_tight_top3": 0.645,
+   "score": 0.546,
+   "found": true,
+   "ms": 20.49
+  },
+  {
+   "file": "23074.jpg",
+   "iou": 0.525,
+   "iou_tight": 0.501,
+   "iou_tight_top3": 0.501,
+   "score": 0.371,
+   "found": true,
+   "ms": 26.34
+  },
+  {
+   "file": "23075.jpg",
+   "iou": 0.549,
+   "iou_tight": 0.487,
+   "iou_tight_top3": 0.487,
+   "score": 0.532,
+   "found": true,
+   "ms": 18.28
+  },
+  {
+   "file": "23076.jpg",
+   "iou": 0.42,
+   "iou_tight": 0.365,
+   "iou_tight_top3": 0.365,
+   "score": 0.45,
+   "found": true,
+   "ms": 18.21
+  },
+  {
+   "file": "23077.jpg",
+   "iou": 0.371,
+   "iou_tight": 0.567,
+   "iou_tight_top3": 0.567,
+   "score": 0.485,
+   "found": true,
+   "ms": 20.49
+  },
+  {
+   "file": "23078.jpg",
+   "iou": 0.344,
+   "iou_tight": 0.762,
+   "iou_tight_top3": 0.762,
+   "score": 0.558,
+   "found": true,
+   "ms": 18.25
+  },
+  {
+   "file": "23079.jpg",
+   "iou": 0.545,
+   "iou_tight": 0.667,
+   "iou_tight_top3": 0.667,
+   "score": 0.601,
+   "found": true,
+   "ms": 18.74
+  },
+  {
+   "file": "23080.jpg",
+   "iou": 0.455,
+   "iou_tight": 0.836,
+   "iou_tight_top3": 0.836,
+   "score": 0.409,
+   "found": true,
+   "ms": 18.94
+  },
+  {
+   "file": "23081.jpg",
+   "iou": 0.493,
+   "iou_tight": 0.737,
+   "iou_tight_top3": 0.737,
+   "score": 0.485,
+   "found": true,
+   "ms": 18.72
+  },
+  {
+   "file": "23082.jpg",
+   "iou": 0.517,
+   "iou_tight": 0.784,
+   "iou_tight_top3": 0.784,
+   "score": 0.706,
+   "found": true,
+   "ms": 19.43
+  },
+  {
+   "file": "23083.jpg",
+   "iou": 0.498,
+   "iou_tight": 0.66,
+   "iou_tight_top3": 0.66,
+   "score": 0.635,
+   "found": true,
+   "ms": 18.73
+  },
+  {
+   "file": "23084.jpg",
+   "iou": 0.552,
+   "iou_tight": 0.785,
+   "iou_tight_top3": 0.785,
+   "score": 0.74,
+   "found": true,
+   "ms": 19.61
+  },
+  {
+   "file": "23085.jpg",
+   "iou": 0.598,
+   "iou_tight": 0.582,
+   "iou_tight_top3": 0.582,
+   "score": 0.648,
+   "found": true,
+   "ms": 19.52
+  },
+  {
+   "file": "23086.jpg",
+   "iou": 0.376,
+   "iou_tight": 0.341,
+   "iou_tight_top3": 0.371,
+   "score": 0.401,
+   "found": true,
+   "ms": 19.38
+  },
+  {
+   "file": "23088.jpg",
+   "iou": 0.47,
+   "iou_tight": 0.381,
+   "iou_tight_top3": 0.381,
+   "score": 0.358,
+   "found": true,
+   "ms": 18.74
+  },
+  {
+   "file": "23089.jpg",
+   "iou": 0.718,
+   "iou_tight": 0.626,
+   "iou_tight_top3": 0.626,
+   "score": 0.575,
+   "found": true,
+   "ms": 19.48
+  },
+  {
+   "file": "23090.jpg",
+   "iou": 0.548,
+   "iou_tight": 0.716,
+   "iou_tight_top3": 0.716,
+   "score": 0.772,
+   "found": true,
+   "ms": 18.48
+  },
+  {
+   "file": "23091.jpg",
+   "iou": 0.717,
+   "iou_tight": 0.842,
+   "iou_tight_top3": 0.842,
+   "score": 0.54,
+   "found": true,
+   "ms": 19.04
+  },
+  {
+   "file": "23092.jpg",
+   "iou": 0.571,
+   "iou_tight": 0.456,
+   "iou_tight_top3": 0.456,
+   "score": 0.396,
+   "found": true,
+   "ms": 18.27
+  },
+  {
+   "file": "23094.jpg",
+   "iou": 0.433,
+   "iou_tight": 0.422,
+   "iou_tight_top3": 0.422,
+   "score": 0.382,
+   "found": true,
+   "ms": 19.81
+  },
+  {
+   "file": "23095.jpg",
+   "iou": 0.193,
+   "iou_tight": 0.878,
+   "iou_tight_top3": 0.878,
+   "score": 0.529,
+   "found": true,
+   "ms": 18.65
+  },
+  {
+   "file": "23096.jpg",
+   "iou": 0.63,
+   "iou_tight": 0.86,
+   "iou_tight_top3": 0.86,
+   "score": 0.755,
+   "found": true,
+   "ms": 18.43
+  },
+  {
+   "file": "23097.jpg",
+   "iou": 0.466,
+   "iou_tight": 0.663,
+   "iou_tight_top3": 0.663,
+   "score": 0.505,
+   "found": true,
+   "ms": 18.16
+  },
+  {
+   "file": "23098.jpg",
+   "iou": 0.431,
+   "iou_tight": 0.229,
+   "iou_tight_top3": 0.229,
+   "score": 0.352,
+   "found": true,
+   "ms": 18.81
+  },
+  {
+   "file": "23099.jpg",
+   "iou": 0.613,
+   "iou_tight": 0.87,
+   "iou_tight_top3": 0.87,
+   "score": 0.723,
+   "found": true,
+   "ms": 19.99
+  },
+  {
+   "file": "23100.jpg",
+   "iou": 0.236,
+   "iou_tight": 0.302,
+   "iou_tight_top3": 0.302,
+   "score": 0.384,
+   "found": true,
+   "ms": 18.96
+  },
+  {
+   "file": "23101.jpg",
+   "iou": 0.582,
+   "iou_tight": 0.735,
+   "iou_tight_top3": 0.735,
+   "score": 0.628,
+   "found": true,
+   "ms": 19.43
+  },
+  {
+   "file": "23102.jpg",
+   "iou": 0.389,
+   "iou_tight": 0.512,
+   "iou_tight_top3": 0.512,
+   "score": 0.726,
+   "found": true,
+   "ms": 18.69
+  },
+  {
+   "file": "23103.jpg",
+   "iou": 0.617,
+   "iou_tight": 0.697,
+   "iou_tight_top3": 0.697,
+   "score": 0.461,
+   "found": true,
+   "ms": 19.79
+  },
+  {
+   "file": "23104.jpg",
+   "iou": 0.378,
+   "iou_tight": 0.6,
+   "iou_tight_top3": 0.6,
+   "score": 0.54,
+   "found": true,
+   "ms": 18.94
+  },
+  {
+   "file": "23105.jpg",
+   "iou": 0.604,
+   "iou_tight": 0.859,
+   "iou_tight_top3": 0.859,
+   "score": 0.612,
+   "found": true,
+   "ms": 18.92
+  },
+  {
+   "file": "23106.jpg",
+   "iou": 0.701,
+   "iou_tight": 0.841,
+   "iou_tight_top3": 0.841,
+   "score": 0.799,
+   "found": true,
+   "ms": 19.53
+  },
+  {
+   "file": "23107.jpg",
+   "iou": 0.593,
+   "iou_tight": 0.759,
+   "iou_tight_top3": 0.759,
+   "score": 0.735,
+   "found": true,
+   "ms": 18.38
+  },
+  {
+   "file": "23108.jpg",
+   "iou": 0.566,
+   "iou_tight": 0.791,
+   "iou_tight_top3": 0.791,
+   "score": 0.7,
+   "found": true,
+   "ms": 18.59
+  },
+  {
+   "file": "23109.jpg",
+   "iou": 0.321,
+   "iou_tight": 0.523,
+   "iou_tight_top3": 0.523,
+   "score": 0.614,
+   "found": true,
+   "ms": 18.63
+  },
+  {
+   "file": "23110.jpg",
+   "iou": 0.608,
+   "iou_tight": 0.604,
+   "iou_tight_top3": 0.604,
+   "score": 0.456,
+   "found": true,
+   "ms": 19.48
+  },
+  {
+   "file": "23111.jpg",
+   "iou": 0.791,
+   "iou_tight": 0.86,
+   "iou_tight_top3": 0.86,
+   "score": 0.717,
+   "found": true,
+   "ms": 18.41
+  },
+  {
+   "file": "23112.jpg",
+   "iou": 0.445,
+   "iou_tight": 0.566,
+   "iou_tight_top3": 0.566,
+   "score": 0.518,
+   "found": true,
+   "ms": 19.58
+  },
+  {
+   "file": "23113.jpg",
+   "iou": 0.577,
+   "iou_tight": 0.726,
+   "iou_tight_top3": 0.726,
+   "score": 0.699,
+   "found": true,
+   "ms": 18.25
+  }
+ ]
+}

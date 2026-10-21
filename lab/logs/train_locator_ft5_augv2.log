@@ -1,0 +1,28 @@
+argv ['erp_finetune.py', 'train', 'weights/locator_t14500.pt', '../data/erp/ft/ft5', '../data/synth/scene_s1', '6000', 'weights/locator_ft5_augv2.pt', 'locator'] threads 3
+/opt/almaham/almaham-3/lab/train_det.py:136: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+  peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
+step 0 loss 2.103 real_val_line_iou50 109/130 7s
+step 250 loss 1.617 real_val_line_iou50 124/130 494s
+step 500 loss 1.504 real_val_line_iou50 126/130 971s
+step 750 loss 1.475 real_val_line_iou50 125/130 1478s
+step 1000 loss 1.471 real_val_line_iou50 126/130 1935s
+step 1250 loss 1.431 real_val_line_iou50 125/130 2388s
+step 1500 loss 1.405 real_val_line_iou50 125/130 2857s
+step 1750 loss 1.389 real_val_line_iou50 125/130 3320s
+step 2000 loss 1.377 real_val_line_iou50 126/130 3782s
+step 2250 loss 1.379 real_val_line_iou50 127/130 4219s
+step 2500 loss 1.375 real_val_line_iou50 126/130 4698s
+step 2750 loss 1.338 real_val_line_iou50 126/130 5177s
+step 3000 loss 1.337 real_val_line_iou50 126/130 5742s
+step 3250 loss 1.345 real_val_line_iou50 126/130 6241s
+step 3500 loss 1.382 real_val_line_iou50 126/130 6657s
+step 3750 loss 1.305 real_val_line_iou50 126/130 7102s
+step 4000 loss 1.313 real_val_line_iou50 126/130 7554s
+step 4250 loss 1.336 real_val_line_iou50 126/130 8015s
+step 4500 loss 1.323 real_val_line_iou50 126/130 8457s
+step 4750 loss 1.360 real_val_line_iou50 126/130 8954s
+step 5000 loss 1.310 real_val_line_iou50 127/130 9408s
+step 5250 loss 1.297 real_val_line_iou50 126/130 9903s
+step 5500 loss 1.276 real_val_line_iou50 126/130 10414s
+step 5750 loss 1.310 real_val_line_iou50 126/130 10898s
+step 5999 loss 1.262 real_val_line_iou50 126/130 11395s
