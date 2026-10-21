@@ -27,6 +27,69 @@ LOCK = threading.Lock()   # ORT sessions are per-engine; keep one request at a t
 STORE = Path(os.environ.get("WEBDEMO_STORE", HERE.parent.parent / "data" / "webdemo"))
 MAX_UPLOAD = 12 * 1024 * 1024
 
+# ---- owner labelling page for the 49 evaluation photos (label.html) ----
+# Photos come from lab/paths.photo (private data dir); labels are written to LABEL_CSV (private store), never to
+# benchmark/data/ground_truth.csv automatically — a human diff + commit does that (contract §3: eval set is sacred).
+import paths  # noqa: E402
+LABEL_CSV = Path(os.environ.get("WEBDEMO_LABELS", "")) if os.environ.get("WEBDEMO_LABELS") else None
+LABEL_TOKEN = os.environ.get("WEBDEMO_LABEL_TOKEN", "")   # optional ?t=... gate for the label page
+_IMG_CACHE = {}
+
+
+def _label_items():
+    import csv
+    gt = list(csv.DictReader(open(paths.GROUND_TRUTH, encoding="utf-8")))
+    return [{"idx": i, "filename": g["filename"], "hint": f'{g["meter_type"]} · {g["difficulty"]}'} for i, g in enumerate(gt)]
+
+
+def _load_labels():
+    import csv
+    p = LABEL_CSV or (STORE / "labels_owner_49.csv")
+    if not p.exists():
+        return {}
+    out = {}
+    for r in csv.DictReader(open(p, encoding="utf-8")):
+        out[r["filename"]] = {"reading": r["reading"], "flag": r["flag"]}  # last write wins (append-only log)
+    return out
+
+
+def _save_label(filename, reading, flag):
+    import csv
+    p = LABEL_CSV or (STORE / "labels_owner_49.csv")
+    p.parent.mkdir(parents=True, exist_ok=True)
+    new = not p.exists()
+    with open(p, "a", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if new:
+            w.writerow(["filename", "reading", "flag", "ts"])
+        w.writerow([filename, reading, flag, time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())])
+
+
+def _photo_bytes(fn, w=None, zoom=False):
+    key = (fn, w, zoom)
+    if key in _IMG_CACHE:
+        return _IMG_CACHE[key]
+    if not fn.replace(".", "").replace("_", "").isalnum():
+        return None
+    im = cv2.imread(paths.photo(fn), cv2.IMREAD_COLOR)
+    if im is None:
+        return None
+    if zoom:
+        # upper 72% (where the screen is in the upright photos), upscaled + CLAHE — same as erp_label.enhanced_view
+        H, W = im.shape[:2]
+        crop = im[: int(H * 0.72)]
+        s = 1100 / crop.shape[1]
+        crop = cv2.resize(crop, None, fx=s, fy=s, interpolation=cv2.INTER_CUBIC)
+        lab = cv2.cvtColor(crop, cv2.COLOR_BGR2LAB)
+        lab[..., 0] = cv2.createCLAHE(3.0, (8, 8)).apply(lab[..., 0])
+        im = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+    elif w:
+        s = w / im.shape[1]
+        im = cv2.resize(im, None, fx=s, fy=s, interpolation=cv2.INTER_AREA)
+    b = cv2.imencode(".jpg", im, [cv2.IMWRITE_JPEG_QUALITY, 82])[1].tobytes()
+    _IMG_CACHE[key] = b
+    return b
+
 
 def load_engines(spec):
     """spec: 'name=dir,name=dir' or a single dir (name 'default')."""
@@ -86,6 +149,20 @@ class H(BaseHTTPRequestHandler):
             return self._send(200, {"ok": True, "engines": list(MODELS), "stored": len(list(STORE.glob("*.jpg")))})
         if self.path == "/" or self.path.startswith("/?"):
             return self._send(200, (HERE / "index.html").read_bytes(), "text/html; charset=utf-8")
+        from urllib.parse import urlparse, parse_qs
+        u = urlparse(self.path); q = parse_qs(u.query); route = u.path.rstrip("/").split("/")[-1]
+        if route == "label":
+            if LABEL_TOKEN and q.get("t", [""])[0] != LABEL_TOKEN:
+                return self._send(403, {"error": "token"})
+            return self._send(200, (HERE / "label.html").read_bytes(), "text/html; charset=utf-8")
+        if route == "label_data":
+            return self._send(200, {"items": _label_items(), "labels": _load_labels()})
+        if route == "photo":
+            b = _photo_bytes(q.get("f", [""])[0], int(q.get("w", [0])[0]) or None, q.get("zoom", ["0"])[0] == "1")
+            if b is None:
+                return self._send(404, {"error": "no photo"})
+            self.send_response(200); self.send_header("Content-Type", "image/jpeg"); self.send_header("Content-Length", str(len(b)))
+            self.send_header("Cache-Control", "private, max-age=86400"); self.end_headers(); return self.wfile.write(b)
         return self._send(404, {"error": "not found"})
 
     def do_POST(self):
@@ -115,6 +192,18 @@ class H(BaseHTTPRequestHandler):
                 p = STORE / f"{rid}.json"; meta = json.loads(p.read_text())
                 meta["feedback"] = {"correct": bool(fb.get("correct")), "truth": str(fb.get("truth", ""))[:12], "ts": time.time()}
                 p.write_text(json.dumps(meta, ensure_ascii=False))
+                return self._send(200, {"ok": True})
+            except Exception as ex:  # noqa: BLE001
+                return self._send(400, {"error": str(ex)})
+        if self.path.rstrip("/").endswith("/label_save"):
+            try:
+                d = json.loads(body)
+                fn = str(d["filename"]); flag = str(d.get("flag", ""))[:1].upper()
+                reading = "".join(ch for ch in str(d.get("reading", "")) if ch.isdigit())[:9]
+                assert fn in {it["filename"] for it in _label_items()}, "unknown file"
+                assert flag in ("", "X", "B"), "bad flag"
+                assert flag or reading, "empty"
+                _save_label(fn, reading, flag)
                 return self._send(200, {"ok": True})
             except Exception as ex:  # noqa: BLE001
                 return self._send(400, {"error": str(ex)})

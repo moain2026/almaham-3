@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تصحيح القراءات — الصور الـ49</title>
+<style>
+  :root { --bg:#0f1115; --fg:#e8e8e8; --acc:#2bd36b; --warn:#ffb020; --bad:#ff5a5a; --mut:#8a90a0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font-family:system-ui,Segoe UI,Tahoma,sans-serif; }
+  header { padding:10px 14px; display:flex; justify-content:space-between; align-items:center; font-size:15px; position:sticky; top:0; background:var(--bg); z-index:5; border-bottom:1px solid #222; }
+  #prog { color:var(--mut); }
+  .card { padding:8px 10px 14px; border-bottom:1px solid #222; }
+  .top { display:flex; justify-content:space-between; align-items:center; font-size:14px; margin-bottom:6px; }
+  .top .fn { font-weight:700; direction:ltr; }
+  .top .st { font-size:13px; }
+  .st.ok { color:var(--acc); } .st.x { color:var(--bad); } .st.b { color:var(--warn); } .st.todo { color:var(--mut); }
+  .imgs { display:flex; gap:6px; }
+  .imgs img { background:#000; border-radius:6px; }
+  .imgs .full { width:34%; object-fit:contain; max-height:260px; }
+  .imgs .zoom { width:66%; object-fit:contain; max-height:260px; cursor:zoom-in; }
+  .row { display:flex; gap:8px; margin-top:8px; align-items:center; }
+  input.val { flex:1; min-width:0; font-size:26px; padding:10px; border-radius:10px; border:1px solid #444; background:#1a1d24; color:#fff; direction:ltr; text-align:center; font-variant-numeric:tabular-nums; letter-spacing:2px; }
+  button { padding:12px 10px; font-size:16px; border:0; border-radius:10px; background:#2a2f3a; color:#fff; min-width:56px; }
+  button.save { background:var(--acc); color:#000; font-weight:700; min-width:90px; }
+  button.x { background:#5a1f1f; } button.b { background:#5a4214; }
+  button.active { outline:3px solid #fff; }
+  .hint { color:var(--mut); font-size:12px; margin-top:4px; }
+  #lightbox { display:none; position:fixed; inset:0; background:#000; z-index:20; overflow:auto; touch-action:pan-x pan-y pinch-zoom; }
+  #lightbox img { display:block; width:100%; height:auto; }
+  #lightbox .close { position:fixed; top:10px; left:10px; z-index:21; }
+  .legend { padding:8px 14px; font-size:13px; color:var(--mut); }
+</style>
+</head>
+<body>
+<header><span>تصحيح القراءات — الـ49</span><span id="prog">…</span></header>
+<div class="legend">اكتب <b>الجزء الصحيح فقط كما يظهر على الشاشة</b> (بالأصفار البادئة إن وُجدت، بلا كسر). <b>X</b> = الصورة غير صالحة/غير مقروءة — أزلها. <b>B</b> = الصورة فيها أكثر من عداد/قراءة — أزلها. اضغط على الصورة المكبّرة لتكبير كامل.</div>
+<div id="list"></div>
+<div id="lightbox"><button class="close" onclick="document.getElementById('lightbox').style.display='none'">✕ إغلاق</button><img id="lbimg"></div>
+<script>
+const $=s=>document.querySelector(s);
+let items=[], labels={};
+async function load(){
+  const r=await (await fetch('label_data')).json(); items=r.items; labels=r.labels||{};
+  const L=$('#list'); L.innerHTML='';
+  items.forEach(it=>{
+    const lb=labels[it.filename]||{};
+    const card=document.createElement('div'); card.className='card'; card.id='c-'+it.filename.replace('.','_');
+    card.innerHTML=`
+      <div class="top"><span class="fn">${it.filename}</span><span class="st todo" id="st-${it.idx}">—</span></div>
+      <div class="imgs">
+        <img class="full" src="photo?f=${it.filename}&w=400" loading="lazy">
+        <img class="zoom" src="photo?f=${it.filename}&zoom=1" loading="lazy" onclick="lb('photo?f=${it.filename}&zoom=1')">
+      </div>
+      <div class="row">
+        <input class="val" id="v-${it.idx}" inputmode="numeric" placeholder="القراءة" value="${lb.flag?'' :(lb.reading||'')}">
+        <button class="save" onclick="save(${it.idx},'')">حفظ</button>
+        <button class="x" id="x-${it.idx}" onclick="save(${it.idx},'X')">X</button>
+        <button class="b" id="b-${it.idx}" onclick="save(${it.idx},'B')">B</button>
+      </div>
+      <div class="hint">${it.hint||''}</div>`;
+    L.appendChild(card);
+    const inp=card.querySelector('input'); inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ save(it.idx,''); const n=document.getElementById('v-'+(it.idx+1)); if(n){n.focus(); n.scrollIntoView({block:'center'});} } });
+    paint(it, lb);
+  });
+  prog();
+}
+function paint(it, lb){
+  const st=$('#st-'+it.idx), x=$('#x-'+it.idx), b=$('#b-'+it.idx);
+  x.classList.toggle('active', lb.flag==='X'); b.classList.toggle('active', lb.flag==='B');
+  if(lb.flag==='X'){ st.textContent='أُزيلت (X)'; st.className='st x'; }
+  else if(lb.flag==='B'){ st.textContent='أُزيلت (B متعدد)'; st.className='st b'; }
+  else if(lb.reading){ st.textContent='✔ '+lb.reading; st.className='st ok'; }
+  else { st.textContent='لم تُكتب بعد'; st.className='st todo'; }
+}
+function prog(){ const done=items.filter(it=>labels[it.filename]&&(labels[it.filename].reading||labels[it.filename].flag)).length; $('#prog').textContent=`${done} / ${items.length}`; }
+async function save(idx, flag){
+  const it=items[idx]; const v=$('#v-'+idx).value.replace(/\D/g,'');
+  if(!flag && !v){ $('#v-'+idx).focus(); return; }
+  const body={filename:it.filename, reading: flag?'':v, flag};
+  const r=await (await fetch('label_save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})).json();
+  if(r.ok){ labels[it.filename]=body; if(flag) $('#v-'+idx).value=''; paint(it, body); prog(); }
+  else alert('لم يُحفظ: '+(r.error||''));
+}
+function lb(src){ $('#lbimg').src=src; $('#lightbox').style.display='block'; }
+load();
+</script>
+</body>
+</html>
