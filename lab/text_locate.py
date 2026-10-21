@@ -116,10 +116,26 @@ def main():
                for r in _csv.DictReader(open(f, encoding="utf-8"))}
         labels = {k: v for k, v in labels.items() if k in ver}
         print("verified-only:", len(labels), flush=True)
+    if "--types" in sys.argv:   # restrict to meter types (comma list), e.g. CRYSTAL,SMART_YELLOW — priority order for owner's request
+        import csv as _csv
+        want = set(sys.argv[sys.argv.index("--types") + 1].split(","))
+        ty = {r["filename"]: r.get("meter_type", "") for f in ef.glob.glob(str(ef.LABELS / "labels*.csv")) if "rejected" not in f
+              for r in _csv.DictReader(open(f, encoding="utf-8"))}
+        labels = {k: v for k, v in labels.items() if ty.get(k, "") in want}
+        print("types", sorted(want), len(labels), flush=True)
+    if "--shard" in sys.argv:   # i/n : process every n-th photo (parallel workers write to separate --out files; merge later)
+        i, n = map(int, sys.argv[sys.argv.index("--shard") + 1].split("/"))
+        labels = {k: v for j, (k, v) in enumerate(sorted(labels.items())) if j % n == i}
     done = json.load(open(out)) if __import__("os").path.exists(out) else {}
+    skip = set()
+    if "--skip" in sys.argv:   # entries already present in another result file (the main one) are not recomputed
+        for f in sys.argv[sys.argv.index("--skip") + 1].split(","):
+            if __import__("os").path.exists(f):
+                skip |= set(json.load(open(f)))
+        print("skip", len(skip), flush=True)
     t0 = time.time(); n = 0; found = 0
     for fn, text in sorted(labels.items()):
-        if fn in done or n >= limit:
+        if fn in done or fn in skip or n >= limit:
             continue
         p = ef.ERP / "photos" / fn
         if not p.exists() or fn in ef.EXCLUDE_FILES or hashlib.sha256(open(p, "rb").read()).hexdigest() in ef.TEST_HASHES:
