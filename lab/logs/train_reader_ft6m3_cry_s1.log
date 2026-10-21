@@ -4,3 +4,10 @@ ignore_row False
   peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
 step 0 loss 1.457 real_val_exact 140/173 4s
 step 250 loss 1.211 real_val_exact 137/173 262s
+step 500 loss 1.152 real_val_exact 144/173 523s
+step 750 loss 1.142 real_val_exact 142/173 787s
+step 1000 loss 1.135 real_val_exact 143/173 1045s
+step 1250 loss 1.140 real_val_exact 144/173 1296s
+step 1500 loss 1.135 real_val_exact 143/173 1551s
+step 1750 loss 1.169 real_val_exact 143/173 1801s
+step 2000 loss 1.131 real_val_exact 142/173 2128s
