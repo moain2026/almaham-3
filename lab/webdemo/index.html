@@ -65,6 +65,9 @@
 
 <div id="result"></div>
 <div id="fb" class="bar">
+  <div style="width:100%;font-size:13px;color:#8a90a0">نوع العداد (اضغط واحداً):</div>
+  <div id="types" style="display:flex;flex-wrap:wrap;gap:6px;width:100%"></div>
+  <div style="width:100%;font-size:13px;color:#8a90a0" id="scrHint">ثم ارسم مستطيلاً حول <b>شاشة العداد</b> (الزجاج كله) بإصبعك على الصورة — الخط الأزرق</div>
   <button id="fbOk" class="primary">✔ صحيحة</button>
   <input id="fbTruth" inputmode="numeric" placeholder="القراءة الصحيحة">
   <button id="fbBad">✘ غلط — أرسل الصحيحة</button>
@@ -97,13 +100,15 @@ async function startCam(){
 }
 startCam();
 
+let fromGallery=false;
 function showShot(){
+  $('#guide').style.display = fromGallery ? 'none' : 'block'; $('#btnReadFrame').style.display = fromGallery ? 'none' : '';
   cam.style.display='none'; $('#guideLive').style.display='none'; $('#shotWrap').style.display='block'; $('#stage').classList.add('shot');
   $('#barLive').style.display='none'; $('#barShot').style.display='flex'; $('#rectHint').style.display='block';
   $('#rectLayer').style.display='block'; rect=null; $('#sel').style.display='none'; $('#btnReadRect').disabled=true;
   $('#result').innerHTML=''; $('#fb').style.display='none';
 }
-$('#btnShot').onclick = () => {
+$('#btnShot').onclick = () => { fromGallery=false;
   shot.width = cam.videoWidth; shot.height = cam.videoHeight; ctx.drawImage(cam,0,0);
   shot.toBlob(b=>{ fullBlob=b; showShot(); }, 'image/jpeg', .92);
 };
@@ -113,7 +118,7 @@ async function loadFile(f){
   const bmp = await createImageBitmap(f); shot.width=bmp.width; shot.height=bmp.height; ctx.drawImage(bmp,0,0);
   shot.toBlob(b=>{ fullBlob=b; showShot(); $('#qinfo').textContent = queue.length ? `متبقٍ في القائمة: ${queue.length}` : ''; }, 'image/jpeg', .92);
 }
-$('#file').onchange = e => { queue=[...e.target.files]; e.target.value=''; if(queue.length) loadFile(queue.shift()); };
+$('#file').onchange = e => { fromGallery=true; queue=[...e.target.files]; e.target.value=''; if(queue.length) loadFile(queue.shift()); };
 function nextInQueue(){ if(queue.length){ loadFile(queue.shift()); return true; } return false; }
 $('#btnRetake').onclick = () => { cam.style.display='block'; $('#guideLive').style.display='block'; $('#shotWrap').style.display='none'; $('#stage').classList.remove('shot'); $('#barLive').style.display='flex'; $('#barShot').style.display='none';
   $('#rectHint').style.display='none'; $('#rectLayer').style.display='none'; $('#result').innerHTML=''; $('#fb').style.display='none'; };
@@ -124,7 +129,7 @@ const pos = ev => { const r=layer.getBoundingClientRect(); return {x:(ev.clientX
 layer.onpointerdown = ev => { p0=pos(ev); layer.setPointerCapture(ev.pointerId); sel.style.display='block'; };
 layer.onpointermove = ev => { if(!p0) return; const p=pos(ev); const x1=Math.min(p0.x,p.x),y1=Math.min(p0.y,p.y),x2=Math.max(p0.x,p.x),y2=Math.max(p0.y,p.y);
   rect=[x1,y1,x2,y2]; sel.style.left=x1*100+'%'; sel.style.top=y1*100+'%'; sel.style.width=(x2-x1)*100+'%'; sel.style.height=(y2-y1)*100+'%'; };
-layer.onpointerup = () => { p0=null; if(rect && (rect[2]-rect[0])>.05) $('#btnReadRect').disabled=false; };
+layer.onpointerup = () => { p0=null; if(scrMode){ screenRect=rect; rect=null; return; } if(rect && (rect[2]-rect[0])>.05) $('#btnReadRect').disabled=false; };
 
 async function read(mode){
   const fd=new FormData(); fd.append('photo', fullBlob, 'p.jpg'); fd.append('model', $('#model').value||'default');
@@ -138,24 +143,27 @@ async function read(mode){
   const val = j.reading ? `<div class="reading">${j.reading}</div>` : `<div class="reading empty">لم تُقرأ (${j.status})</div>`;
   $('#result').innerHTML = val + `<div class="meta">الوضع: ${ {frame:'الإطار الأخضر',full:'كاملة',rect:'المستطيل'}[mode] } · خام: ${j.raw||'—'} · سطر ${j.line_found?'وُجد':'لم يوجد'} (${j.line_score}) · المحرك ${j.ms} ms · إجمالي ${dt} ms</div>`
     + `<img id="crop" src="data:image/png;base64,${j.crop_png_b64}">`;
-  $('#fb').style.display='flex'; $('#fbTruth').value='';
+  $('#fb').style.display='flex'; $('#fbTruth').value=''; $('#rectLayer').style.display='block'; $('#sel').style.display='none'; rect=null;
 }
 $('#btnNext').onclick=()=>{ if(!nextInQueue()) $('#file').click(); };
 $('#btnReadFrame').onclick=()=>read('frame'); $('#btnReadFull').onclick=()=>read('full'); $('#btnReadRect').onclick=()=>read('rect');
 
+const TYPES=['TOMAS_SMART','TOMAS_STATIC','TAGADOD','EMETER_GREEN','CRYSTAL','SMART_MT10','CHINT','HPL','OTHER','UNKNOWN'];
+let meterType=null, screenRect=null, scrMode=false;
+function buildTypes(){ const t=$('#types'); t.innerHTML=''; TYPES.forEach(n=>{ const b=document.createElement('button'); b.textContent=n; b.style.cssText='flex:0 0 auto;min-width:0;padding:8px 10px;font-size:13px'; b.onclick=()=>{ meterType=n; [...t.children].forEach(c=>c.classList.toggle('active',c.textContent===n)); scrMode=true; $('#rectLayer').style.display='block'; $('#sel').style.borderColor='#4aa3ff'; $('#sel').style.background='rgba(74,163,255,.12)'; $('#scrHint').style.color='#4aa3ff'; }; t.appendChild(b); }); }
 const FB_HTML = $('#fb').innerHTML;
 async function feedback(kind){
   const truth = kind==='bad' ? $('#fbTruth').value.replace(/\D/g,'') : '';
   if(kind==='bad' && !truth){ $('#fbTruth').focus(); return; }
   const note = ($('#note').value||'').slice(0,300);
-  await fetch('feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:lastId,correct:kind==='ok',truth,skip:kind==='skip',note})});
+  await fetch('feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:lastId,correct:kind==='ok',truth,skip:kind==='skip',note,meter_type:meterType,screen_rect:screenRect?screenRect.map(v=>+v.toFixed(4)):null})});
   const msg = kind==='ok' ? 'كصحيح' : kind==='bad' ? 'التصحيح '+truth : 'كمستبعدة';
   $('#fb').innerHTML = `<div class="meta ${kind==='ok'?'ok':'bad'}">شكراً — سُجِّل ${msg}${note?' + ملاحظة':''}</div>`;
-  setTimeout(()=>{ $('#fb').innerHTML=FB_HTML; bind(); $('#fb').style.display='none'; nextInQueue(); }, 1000);
+  setTimeout(()=>{ $('#fb').innerHTML=FB_HTML; bind(); buildTypes(); meterType=null; screenRect=null; scrMode=false; $('#sel').style.display='none'; $('#fb').style.display='none'; nextInQueue(); }, 1000);
 }
 function bind(){ $('#fbOk').onclick=()=>feedback('ok'); $('#fbBad').onclick=()=>feedback('bad'); $('#fbSkip').onclick=()=>feedback('skip');
   $('#noteBtn').onclick=()=>{ const n=$('#note'); n.style.display = n.style.display==='none' ? 'block' : 'none'; if(n.style.display==='block') n.focus(); }; }
-bind();
+bind(); buildTypes();
 </script>
 </body>
 </html>

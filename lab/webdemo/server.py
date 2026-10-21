@@ -191,7 +191,9 @@ class H(BaseHTTPRequestHandler):
                 rid = str(fb["id"]); assert rid.replace("-", "").isalnum()
                 p = STORE / f"{rid}.json"; meta = json.loads(p.read_text())
                 meta["feedback"] = {"correct": bool(fb.get("correct")), "truth": str(fb.get("truth", ""))[:12], "skip": bool(fb.get("skip")),
-                                    "note": str(fb.get("note", ""))[:300], "ts": time.time()}
+                                    "note": str(fb.get("note", ""))[:300], "ts": time.time(),
+                                    "meter_type": (str(fb.get("meter_type") or "")[:20] or None),
+                                    "screen_rect": fb.get("screen_rect") if isinstance(fb.get("screen_rect"), list) and len(fb.get("screen_rect")) == 4 else None}
                 p.write_text(json.dumps(meta, ensure_ascii=False))
                 return self._send(200, {"ok": True})
             except Exception as ex:  # noqa: BLE001
