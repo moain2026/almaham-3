@@ -141,3 +141,8 @@ updated: 2026-10-21
 - Agent D final: 1127 labels (36 testset overlaps removed by D; verified 0 leakage either way). m3 shards built (531; owner_visual x2; split-key bug fixed). Reader ft6m2 (s0/s1) finishing; reader ft6m3 (s0/s1) started; Contabo locator m1 at 3750/4000 then locator m3 auto-queued.
 - optical2: handoff branch `opt2_handoff_20261021` / commit 258810b NOT on GitHub (ls-remote verified); review pending push.
 - Reply to agent D with per-type numbers + collection priorities: `docs/handoff/agentS-to-agentD-2026-10-21.md`.
+
+## 2026-10-21 12:10Z — new best + cold-start safety
+- **Best:** `locator_m1_augv2 + reader_ft6m2_s1` → 49-set A **22/39**, B 19/39; testset_human **21/34**; strict gate (OK & min_conf≥0.55 & alt<0.5) **17 accepted / 0 wrong** of 73. Deployed as `new` on basirapp.site/meter.
+- Cold-start: `docs/runbooks/resume-training.md` + private `training_shards/2026-10-21_m3/` (m3+ft6 shards, text_locate_all.json). All logs/weights committed.
+- Running: reader_ft6m3_s0/s1 (owner-weighted) ~1500/3000; Contabo locator_m3; crystal synth shard ready (3000).
