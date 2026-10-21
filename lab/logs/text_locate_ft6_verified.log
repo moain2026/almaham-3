@@ -11,3 +11,9 @@ verified-only: 570
 200 photos, 106 located, 7.3s/photo
 220 photos, 119 located, 7.3s/photo
 240 photos, 133 located, 7.3s/photo
+Traceback (most recent call last):
+  File "/home/user/webapp/lab/text_locate.py", line 20, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+verified-only: 864
+20 photos, 12 located, 7.3s/photo
