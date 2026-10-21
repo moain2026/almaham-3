@@ -51,6 +51,7 @@ case "$cmd" in
     ensure
     link "$PRIV/photos_49" "$ROOT/data/photos"
     link "$PRIV/erp/photos" "$ROOT/data/erp/photos"
+    link "$PRIV/erp/manifests" "$ROOT/data/erp/manifests"    # server indexes (agent D, 2026-10-21)
     echo "[private] 49 photos: $(ls "$PRIV/photos_49" | grep -c '\.jpg$' || true) | erp photos: $(ls "$PRIV/erp/photos" | grep -c '\.jpg$' || true)"
     bash "$ROOT/scripts/verify_photos.sh" || echo "[private] 49 photos not (fully) present yet"
     ;;
