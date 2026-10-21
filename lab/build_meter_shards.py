@@ -33,6 +33,13 @@ def load_meter_boxes():
     for f in sorted(glob.glob(str(paths.DATA / "erp" / "manifests" / "meter_bbox_agentD_*.jsonl"))) or sorted(glob.glob(str(PRIV / "erp" / "manifests" / "meter_bbox_agentD_*.jsonl"))):
         for ln in open(f):
             d = json.loads(ln); bb[d["f"]] = d["b"]
+    # agent D b6/b7: photos that are already a whole-meter close-up carry crop=none in erp/by_type/<T>/index.csv
+    # (the by_type file has the photo's own size) -> meter box = whole photo.
+    if PRIV:
+        for f in glob.glob(str(PRIV / "erp" / "by_type" / "*" / "index.csv")):
+            for r in csv.DictReader(open(f, encoding="utf-8")):
+                if r.get("crop") == "none" and r["filename"] not in bb:
+                    bb[r["filename"]] = [0.0, 0.0, 1.0, 1.0]
     return bb
 
 
@@ -47,7 +54,12 @@ def multi_meter():
 
 
 def main():
-    tl = json.load(open(sys.argv[1])); out = sys.argv[2]
+    tl = {}
+    for f in sys.argv[1].split(","):   # several text_locate result files (parallel workers); a located entry wins
+        for k, v in json.load(open(f)).items():
+            if k not in tl or (v and not tl.get(k)):
+                tl[k] = v
+    out = sys.argv[2]
     audit = int(sys.argv[sys.argv.index("--audit") + 1]) if "--audit" in sys.argv else 40
     labels = ef.load_labels(); boxes = load_meter_boxes(); multi = multi_meter()
     types = {r["filename"]: r["meter_type"] for r in csv.DictReader(open(paths.BENCH_DATA / "erp" / "labels_agentD.csv", encoding="utf-8"))}
