@@ -157,6 +157,12 @@ class H(BaseHTTPRequestHandler):
             return self._send(200, (HERE / "label.html").read_bytes(), "text/html; charset=utf-8")
         if route == "label_data":
             return self._send(200, {"items": _label_items(), "labels": _load_labels()})
+        if route == "dl":  # one-off private downloads (e.g. ZBook bootstrap); token + fixed dir, basename only
+            dl_dir = os.environ.get("DL_DIR"); tok = os.environ.get("DL_TOKEN")
+            fn = Path(q.get("f", [""])[0]).name
+            if not (dl_dir and tok and fn) or q.get("t", [""])[0] != tok or not (Path(dl_dir) / fn).is_file():
+                return self._send(404, {"error": "not found"})
+            return self._send(200, (Path(dl_dir) / fn).read_bytes(), "text/plain; charset=utf-8")
         if route == "photo":
             b = _photo_bytes(q.get("f", [""])[0], int(q.get("w", [0])[0]) or None, q.get("zoom", ["0"])[0] == "1")
             if b is None:

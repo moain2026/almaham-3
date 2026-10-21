@@ -29,3 +29,6 @@
 - **ما حدث:** `git stash -u` (الذي أستعمله قبل الـ rebase) يزيل الملفات غير المتتبّعة من مجلد العمل مؤقتاً، ومنها `lab/logs/train_*.log` المفتوحة للكتابة من عمليات التدريب. العملية تستمر بالكتابة إلى inode محذوف، و`stash pop` يعيد نسخة قديمة ⇒ السجل يبدو «متوقفاً» بينما التدريب يعمل (reader_ft2 كان عند 1000 خطوة والسجل يظهر 0). تجربة ft1 «الميتة بصمت» كانت على الأرجح الشيء نفسه.
 - **الاسترداد:** `cp /proc/<pid>/fd/1 logs/x.log` (الـ fd يبقى صالحاً).
 - **القاعدة:** أثناء أي عملية خلفية تكتب ملفاً غير متتبّع: `git stash` بلا `-u`، أو أضف السجل أولاً بـ `git add` ثم stash. (مُطبَّق من الآن.)
+
+- **2026-10-21 — Another agent's audit is worth reading for one thing: findings that contradict our training contract (targets-conflict). Re-audits of our own numbers add trust but zero product gain; assign such agents controlled experiments with fixed inputs and `opt2_*` naming, never shared checkpoints.**
+- **Reverse SSH tunnel for a machine without public IP: give the tunnel key `restrict,permitlisten=` so a leaked key can only hold the tunnel.** Serve one-off secrets via a token route, not chat.

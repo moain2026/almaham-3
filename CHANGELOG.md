@@ -62,3 +62,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - 2026-10-18 agent B: lab/multi_algo.py 792 deterministic exams (colours×polarity×binarizers×movements)+vote: line crop 20/46 (holdout 13/36; was 11/46), full meter rect 0/46. Not in app. docs/research/multi-algo-2026-10-18.md
 - 2026-10-18 agent B: v0.2.0 pre-release — ONE APK arm64, 7,682,029 B, sha256 c6586916…906e7d, ORT 1.23.2 minimal + .ort (latest models 0735b8a/72d5c26), parity 49/49, CAMERA only, debug-signed, NOT run on a device after R8. docs/release-0.2.0.md
 - 2026-10-18 agent B (GenCode-APK): v0.2.1 pre-release — model ft4a (8347475) converted .ort, parity 49/49, exact 19/46; ONE APK arm64 7,682,409 B sha256 8940f737…be3b3f, cert SHA-256 04f129a9…74a3 (debug). Not run on a device. Full build guide: GenCode-APK/README.md
+
+### 2026-10-21 — ZBook tunnel + optical2 handoff
+- `lab/zbook/{setup_tunnel_vps,bootstrap_zbook,check_zbook}.sh`: third training machine via reverse SSH tunnel (forward-only VPS user, limited ZBook user). Keys never in git; filled bootstrap only on the VPS behind a one-off token.
+- `lab/webdemo/server.py`: `/dl?f=&t=` token-gated private download route (env `DL_DIR`, `DL_TOKEN`); 404 otherwise. Deployed.
+- `docs/handoff/prompt-for-optical2-2026-10-21.md`: paste-ready tasks for the second agent (loss-masking experiment; Android capture hardening).

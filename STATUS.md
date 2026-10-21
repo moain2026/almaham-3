@@ -119,3 +119,9 @@ updated: 2026-10-21
 - 2026-10-18 agent B: lab/multi_algo.py 792 deterministic exams (colours×polarity×binarizers×movements)+vote: line crop 20/46 (holdout 13/36; was 11/46), full meter rect 0/46. Not in app. docs/research/multi-algo-2026-10-18.md
 - 2026-10-18 agent B: v0.2.0 pre-release — ONE APK arm64, 7,682,029 B, sha256 c6586916…906e7d, ORT 1.23.2 minimal + .ort (latest models 0735b8a/72d5c26), parity 49/49, CAMERA only, debug-signed, NOT run on a device after R8. docs/release-0.2.0.md
 - 2026-10-18 agent B (GenCode-APK): v0.2.1 pre-release — model ft4a (8347475) converted .ort, parity 49/49, exact 19/46; ONE APK arm64 7,682,409 B sha256 8940f737…be3b3f, cert SHA-256 04f129a9…74a3 (debug). Not run on a device. Full build guide: GenCode-APK/README.md
+
+## 2026-10-21 (late) — ZBook tunnel prepared; optical2 review delivered
+- VPS: forward-only user `zbtunnel` + keys (`/root/zbook/`); webdemo `/meter/dl` token route; sandbox `ssh zbook` via ProxyJump. Waiting for the owner to run the bootstrap (OS unknown: Linux or WSL2). Runbook: `docs/runbooks/zbook-tunnel.md`.
+- optical2 verdict + ready-to-paste prompt: `docs/handoff/{agentS-to-optical2,prompt-for-optical2}-2026-10-21.md`.
+- Contabo `locator_m1_augv2`: still training (step 750/4000 at 11:06 local, val IoU50 26/27).
+- Best so far unchanged: `locator_ft5_augv2` + `reader_ft6m1_augv2` → testset_human 19/34, 49-set A 14/39 B 15/39, wrong_confident 0.
