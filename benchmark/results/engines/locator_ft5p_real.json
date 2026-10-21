@@ -1,0 +1,466 @@
+{
+ "summary": {
+  "ckpt": "weights/locator_ft5p.pt",
+  "argv": [
+   "eval_locator_real.py",
+   "weights/locator_ft5p.pt",
+   "ft5p"
+  ],
+  "n": 46,
+  "recall_iou50": 16,
+  "recall_pct": 34.8,
+  "recall_tight_iou50": 31,
+  "recall_tight_top3": 32,
+  "found": 45,
+  "iou_median": 0.4,
+  "ms_p50": 18.23,
+  "miss": [
+   "23065.jpg",
+   "23066.jpg",
+   "23067.jpg",
+   "23068.jpg",
+   "23069.jpg",
+   "23070.jpg",
+   "23071.jpg",
+   "23073.jpg",
+   "23074.jpg",
+   "23075.jpg",
+   "23076.jpg",
+   "23077.jpg",
+   "23078.jpg",
+   "23079.jpg",
+   "23080.jpg",
+   "23081.jpg",
+   "23082.jpg",
+   "23085.jpg",
+   "23086.jpg",
+   "23092.jpg",
+   "23094.jpg",
+   "23095.jpg",
+   "23097.jpg",
+   "23098.jpg",
+   "23100.jpg",
+   "23102.jpg",
+   "23103.jpg",
+   "23104.jpg",
+   "23109.jpg",
+   "23112.jpg"
+  ]
+ },
+ "rows": [
+  {
+   "file": "23065.jpg",
+   "iou": 0.32,
+   "iou_tight": 0.194,
+   "iou_tight_top3": 0.194,
+   "score": 0.444,
+   "found": true,
+   "ms": 35.7
+  },
+  {
+   "file": "23066.jpg",
+   "iou": 0.358,
+   "iou_tight": 0.605,
+   "iou_tight_top3": 0.605,
+   "score": 0.534,
+   "found": true,
+   "ms": 19.55
+  },
+  {
+   "file": "23067.jpg",
+   "iou": 0.456,
+   "iou_tight": 0.539,
+   "iou_tight_top3": 0.539,
+   "score": 0.459,
+   "found": true,
+   "ms": 19.46
+  },
+  {
+   "file": "23068.jpg",
+   "iou": 0.302,
+   "iou_tight": 0.665,
+   "iou_tight_top3": 0.665,
+   "score": 0.355,
+   "found": true,
+   "ms": 19.19
+  },
+  {
+   "file": "23069.jpg",
+   "iou": 0.383,
+   "iou_tight": 0.557,
+   "iou_tight_top3": 0.557,
+   "score": 0.746,
+   "found": true,
+   "ms": 24.01
+  },
+  {
+   "file": "23070.jpg",
+   "iou": 0.246,
+   "iou_tight": 0.259,
+   "iou_tight_top3": 0.259,
+   "score": 0.433,
+   "found": true,
+   "ms": 19.42
+  },
+  {
+   "file": "23071.jpg",
+   "iou": 0.438,
+   "iou_tight": 0.55,
+   "iou_tight_top3": 0.55,
+   "score": 0.507,
+   "found": true,
+   "ms": 19.42
+  },
+  {
+   "file": "23073.jpg",
+   "iou": 0.271,
+   "iou_tight": 0.482,
+   "iou_tight_top3": 0.482,
+   "score": 0.403,
+   "found": true,
+   "ms": 19.1
+  },
+  {
+   "file": "23074.jpg",
+   "iou": 0.0,
+   "iou_tight": 0.0,
+   "iou_tight_top3": 0.0,
+   "score": 0.287,
+   "found": true,
+   "ms": 22.3
+  },
+  {
+   "file": "23075.jpg",
+   "iou": 0.498,
+   "iou_tight": 0.501,
+   "iou_tight_top3": 0.501,
+   "score": 0.533,
+   "found": true,
+   "ms": 18.37
+  },
+  {
+   "file": "23076.jpg",
+   "iou": 0.311,
+   "iou_tight": 0.225,
+   "iou_tight_top3": 0.405,
+   "score": 0.359,
+   "found": true,
+   "ms": 18.34
+  },
+  {
+   "file": "23077.jpg",
+   "iou": 0.369,
+   "iou_tight": 0.562,
+   "iou_tight_top3": 0.562,
+   "score": 0.392,
+   "found": true,
+   "ms": 18.15
+  },
+  {
+   "file": "23078.jpg",
+   "iou": 0.386,
+   "iou_tight": 0.687,
+   "iou_tight_top3": 0.687,
+   "score": 0.509,
+   "found": true,
+   "ms": 18.28
+  },
+  {
+   "file": "23079.jpg",
+   "iou": 0.49,
+   "iou_tight": 0.649,
+   "iou_tight_top3": 0.649,
+   "score": 0.559,
+   "found": true,
+   "ms": 21.95
+  },
+  {
+   "file": "23080.jpg",
+   "iou": 0.331,
+   "iou_tight": 0.565,
+   "iou_tight_top3": 0.565,
+   "score": 0.379,
+   "found": true,
+   "ms": 18.34
+  },
+  {
+   "file": "23081.jpg",
+   "iou": 0.347,
+   "iou_tight": 0.631,
+   "iou_tight_top3": 0.631,
+   "score": 0.402,
+   "found": true,
+   "ms": 18.3
+  },
+  {
+   "file": "23082.jpg",
+   "iou": 0.291,
+   "iou_tight": 0.467,
+   "iou_tight_top3": 0.72,
+   "score": 0.648,
+   "found": true,
+   "ms": 18.23
+  },
+  {
+   "file": "23083.jpg",
+   "iou": 0.518,
+   "iou_tight": 0.714,
+   "iou_tight_top3": 0.714,
+   "score": 0.629,
+   "found": true,
+   "ms": 18.27
+  },
+  {
+   "file": "23084.jpg",
+   "iou": 0.553,
+   "iou_tight": 0.777,
+   "iou_tight_top3": 0.777,
+   "score": 0.709,
+   "found": true,
+   "ms": 18.32
+  },
+  {
+   "file": "23085.jpg",
+   "iou": 0.445,
+   "iou_tight": 0.627,
+   "iou_tight_top3": 0.627,
+   "score": 0.498,
+   "found": true,
+   "ms": 18.39
+  },
+  {
+   "file": "23086.jpg",
+   "iou": 0.376,
+   "iou_tight": 0.328,
+   "iou_tight_top3": 0.328,
+   "score": 0.376,
+   "found": true,
+   "ms": 18.23
+  },
+  {
+   "file": "23088.jpg",
+   "iou": 0.516,
+   "iou_tight": 0.336,
+   "iou_tight_top3": 0.336,
+   "score": 0.272,
+   "found": true,
+   "ms": 17.98
+  },
+  {
+   "file": "23089.jpg",
+   "iou": 0.622,
+   "iou_tight": 0.751,
+   "iou_tight_top3": 0.751,
+   "score": 0.55,
+   "found": true,
+   "ms": 18.15
+  },
+  {
+   "file": "23090.jpg",
+   "iou": 0.522,
+   "iou_tight": 0.659,
+   "iou_tight_top3": 0.659,
+   "score": 0.729,
+   "found": true,
+   "ms": 18.21
+  },
+  {
+   "file": "23091.jpg",
+   "iou": 0.601,
+   "iou_tight": 0.81,
+   "iou_tight_top3": 0.81,
+   "score": 0.597,
+   "found": true,
+   "ms": 18.15
+  },
+  {
+   "file": "23092.jpg",
+   "iou": 0.0,
+   "iou_tight": 0.0,
+   "iou_tight_top3": 0.0,
+   "score": 0.0,
+   "found": false,
+   "ms": 18.04
+  },
+  {
+   "file": "23094.jpg",
+   "iou": 0.304,
+   "iou_tight": 0.293,
+   "iou_tight_top3": 0.293,
+   "score": 0.357,
+   "found": true,
+   "ms": 18.04
+  },
+  {
+   "file": "23095.jpg",
+   "iou": 0.156,
+   "iou_tight": 0.725,
+   "iou_tight_top3": 0.725,
+   "score": 0.451,
+   "found": true,
+   "ms": 18.0
+  },
+  {
+   "file": "23096.jpg",
+   "iou": 0.64,
+   "iou_tight": 0.888,
+   "iou_tight_top3": 0.888,
+   "score": 0.645,
+   "found": true,
+   "ms": 17.98
+  },
+  {
+   "file": "23097.jpg",
+   "iou": 0.398,
+   "iou_tight": 0.671,
+   "iou_tight_top3": 0.671,
+   "score": 0.642,
+   "found": true,
+   "ms": 17.99
+  },
+  {
+   "file": "23098.jpg",
+   "iou": 0.382,
+   "iou_tight": 0.219,
+   "iou_tight_top3": 0.219,
+   "score": 0.255,
+   "found": true,
+   "ms": 18.04
+  },
+  {
+   "file": "23099.jpg",
+   "iou": 0.565,
+   "iou_tight": 0.822,
+   "iou_tight_top3": 0.822,
+   "score": 0.669,
+   "found": true,
+   "ms": 18.25
+  },
+  {
+   "file": "23100.jpg",
+   "iou": 0.291,
+   "iou_tight": 0.253,
+   "iou_tight_top3": 0.253,
+   "score": 0.44,
+   "found": true,
+   "ms": 18.04
+  },
+  {
+   "file": "23101.jpg",
+   "iou": 0.564,
+   "iou_tight": 0.683,
+   "iou_tight_top3": 0.683,
+   "score": 0.487,
+   "found": true,
+   "ms": 18.2
+  },
+  {
+   "file": "23102.jpg",
+   "iou": 0.355,
+   "iou_tight": 0.484,
+   "iou_tight_top3": 0.484,
+   "score": 0.651,
+   "found": true,
+   "ms": 18.19
+  },
+  {
+   "file": "23103.jpg",
+   "iou": 0.495,
+   "iou_tight": 0.504,
+   "iou_tight_top3": 0.504,
+   "score": 0.35,
+   "found": true,
+   "ms": 18.29
+  },
+  {
+   "file": "23104.jpg",
+   "iou": 0.296,
+   "iou_tight": 0.45,
+   "iou_tight_top3": 0.45,
+   "score": 0.529,
+   "found": true,
+   "ms": 18.11
+  },
+  {
+   "file": "23105.jpg",
+   "iou": 0.548,
+   "iou_tight": 0.815,
+   "iou_tight_top3": 0.815,
+   "score": 0.611,
+   "found": true,
+   "ms": 18.18
+  },
+  {
+   "file": "23106.jpg",
+   "iou": 0.618,
+   "iou_tight": 0.865,
+   "iou_tight_top3": 0.865,
+   "score": 0.803,
+   "found": true,
+   "ms": 18.22
+  },
+  {
+   "file": "23107.jpg",
+   "iou": 0.651,
+   "iou_tight": 0.839,
+   "iou_tight_top3": 0.839,
+   "score": 0.691,
+   "found": true,
+   "ms": 18.13
+  },
+  {
+   "file": "23108.jpg",
+   "iou": 0.535,
+   "iou_tight": 0.758,
+   "iou_tight_top3": 0.758,
+   "score": 0.648,
+   "found": true,
+   "ms": 18.11
+  },
+  {
+   "file": "23109.jpg",
+   "iou": 0.401,
+   "iou_tight": 0.629,
+   "iou_tight_top3": 0.629,
+   "score": 0.514,
+   "found": true,
+   "ms": 18.17
+  },
+  {
+   "file": "23110.jpg",
+   "iou": 0.598,
+   "iou_tight": 0.642,
+   "iou_tight_top3": 0.853,
+   "score": 0.53,
+   "found": true,
+   "ms": 18.96
+  },
+  {
+   "file": "23111.jpg",
+   "iou": 0.751,
+   "iou_tight": 0.888,
+   "iou_tight_top3": 0.888,
+   "score": 0.628,
+   "found": true,
+   "ms": 18.21
+  },
+  {
+   "file": "23112.jpg",
+   "iou": 0.373,
+   "iou_tight": 0.493,
+   "iou_tight_top3": 0.493,
+   "score": 0.492,
+   "found": true,
+   "ms": 18.39
+  },
+  {
+   "file": "23113.jpg",
+   "iou": 0.541,
+   "iou_tight": 0.691,
+   "iou_tight_top3": 0.691,
+   "score": 0.665,
+   "found": true,
+   "ms": 18.11
+  }
+ ]
+}
