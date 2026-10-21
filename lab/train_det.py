@@ -51,11 +51,11 @@ def draw_gaussian(hm, cx, cy, r):
 
 class Shards:
     def __init__(self, prefixes, kind):
-        self.X, self.B, self.train_idx, self.val_idx, self.W = [], [], [], [], []
+        self.X, self.B, self.train_idx, self.val_idx, self.SW = [], [], [], [], []
         for si, p in enumerate(prefixes):
             X = np.load(p + "_X.npy", mmap_mode="r")
             B = np.load(p + "_B.npy")
-            self.W.append(np.load(p + "_W.npy") if os.path.exists(p + "_W.npy") else np.ones(len(X), np.float32))  # sampling weights (owner_visual x2)
+            self.SW.append(np.load(p + "_W.npy") if os.path.exists(p + "_W.npy") else np.ones(len(X), np.float32))  # sampling weights (owner_visual x2)
             by = [[] for _ in range(len(X))]
             for row in B:
                 by[int(row[0])].append(row[1:])
@@ -116,7 +116,7 @@ class Shards:
 
     def batch(self, n):
         if not hasattr(self, "_p"):
-            w = np.array([self.W[si][i] for si, i in self.train_idx], np.float64); self._p = w / w.sum()
+            w = np.array([self.SW[si][i] for si, i in self.train_idx], np.float64); self._p = w / w.sum()
         picks = [self.train_idx[k] for k in np.random.choice(len(self.train_idx), n, p=self._p)]
         xs, hs, ss, os_, ms, igs = [], [], [], [], [], []
         for si, i in picks:
