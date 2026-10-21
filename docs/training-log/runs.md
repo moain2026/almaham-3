@@ -14,3 +14,6 @@
 ## قيد التشغيل / التالي
 - `text_locate.py` على الـ368 المتحقَّقة (توطين بإشراف النص) ⇒ شرائح محدِّد على صور كاملة.
 - بعد الاستشارة (`docs/consult/decision-2026-10-21.md`): رأس شاشة + مصنّف نوع + ثقة معايَرة.
+| m1 (shards) | — | — | **265 عيّنة من قصّ العداد الكامل** (صناديق D للعداد + text_locate للسطر + قراءة المالك؛ فلتر تسميم؛ تدقيق 40/40 صحيح) | — | `build_meter_shards.py` | sandbox | — | — | CRYSTAL 32، TAGADOD 52، TOMAS_ST 50، TOMAS_SM 94، OTHER 22، SMART_YELLOW 9، KENWELL 6 |
+| locator_m1_augv2 | **loc** | locator_ft5_augv2 | m1 loc (238 تدريب / 27 تحقق) | scene_s1 | 4000، AUG v2 | **Contabo** (جارٍ) | — | — | أول محدِّد يتدرّب على قصّ العداد الكامل |
+| reader_ft6m1_augv2 | rd | reader_ft6_augv2 | ft6+m1 (631 تدريب / 132 تحقق) | line_s1 | 3000، AUG v2 | sandbox (جارٍ) | — | — | step0 val 101/132 |
