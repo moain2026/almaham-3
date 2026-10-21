@@ -128,3 +128,9 @@ updated: 2026-10-21
 - Best so far unchanged: `locator_ft5_augv2` + `reader_ft6m1_augv2` → testset_human 19/34, 49-set A 14/39 B 15/39, wrong_confident 0.
 - agent D b6: +258 readings (4 strong models agree + visual check each, 17 rejected, 13 type fixes) → labels_agentD.csv 1021. CRYSTAL 77, SMART_YELLOW 70, TAGADOD 34, OTHER 30, KENWELL 22, MECHANICAL 22.
 - agent D b7: owner page h7 → +58 owner readings (owner_visual), +144 X/P rejected; 118 left on page h8. labels_agentD.csv 1079.
+
+## 2026-10-21 ~10:00Z — all cores busy; honest status
+- **Running:** text_locate 5 workers (sandbox 3 + Contabo 2) over agent D's 1079 labels (priority non-Tomas); Contabo `locator_m1_augv2` step 2750/4000.
+- **Done this hour:** loss-masking controlled experiment (no significant effect; logged); failure analysis (ghost-segment confusions + fraction cells); risk–coverage tool; **finding: the shipped `confident` gate accepts ~0 readings, so `wrong_confident=0` was vacuous** — replaced by risk–coverage table. min_conf≥0.55 gives 13/14 correct on 73 photos.
+- **Next (in order):** merge text_locate → `build_meter_shards` m2 (expect ~500+ samples, Crystal ~128, SMART_YELLOW ~50) → train reader m2 (sandbox, 2 seeds) + locator m2 (Contabo after m1) → eval 49/34 + risk–coverage → deploy best to basirapp.site/meter.
+- Owner's ZBook: cancelled by owner; tunnel infra stays documented (`docs/runbooks/zbook-tunnel.md`).
