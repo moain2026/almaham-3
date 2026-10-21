@@ -10,6 +10,8 @@ ROOT=$(cd "$(dirname "$0")/../.." && pwd); cd "$ROOT/lab"; source ../.venv/bin/a
 ROLE=${ROLE:-reader}; Q=autotrain/queue_$ROLE.txt; DONE=autotrain/done_$ROLE.txt; touch "$Q" "$DONE"
 LOG=logs/autotrain_$ROLE.log; exec >>"$LOG" 2>&1
 echo "=== train_loop $ROLE start $(date -u +%FT%TZ) host=$(hostname)"
+# do not compete with a manually started training of the same kind (e.g. Contabo locator_m3 via queue_loc_m2.sh)
+while pgrep -f "erp_finetune.py train .* $ROLE\$" >/dev/null; do sleep 60; done
 next_seed() { n=$(grep -c . "$DONE"); echo $((100 + n)); }
 while true; do
   line=$(grep -v '^#' "$Q" | grep -v '^$' | head -1)
