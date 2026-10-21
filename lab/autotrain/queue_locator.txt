@@ -1,3 +1,2 @@
 # tag | kind | init | real_prefix | synth_prefixes | steps | threads | env
-m3_s1 | locator | weights/locator_m1_augv2.pt | ../data/erp/ft/m3 | ../data/synth/scene_s1 | 4000 | 3 | SEED=1 AUG_SEED=1
 m3_long_s0 | locator | weights/locator_m3_augv2.pt | ../data/erp/ft/m3 | ../data/synth/scene_s1 | 6000 | 3 | SEED=0 AUG_SEED=0

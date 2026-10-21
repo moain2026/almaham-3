@@ -1,0 +1,5 @@
+train (263, 64, 448, 3) 1834 boxes
+val (130, 64, 448, 3) 904 boxes
+locator train (263, 256, 256, 3) 263 boxes
+locator val (130, 256, 256, 3) 130 boxes
+{"reasons": {"ok_exact": 312, "ok_relabel": 81, "ok_lattice": 14, "no_photo": 3766, "test_photo": 0, "no_line": 47, "count_mismatch": 122, "irregular": 36, "unreadable": 0}, "accepted": 393, "class_hist": [1070, 161, 199, 165, 127, 144, 145, 90, 112, 132], "n_train_keys": 226, "n_val_keys": 39}

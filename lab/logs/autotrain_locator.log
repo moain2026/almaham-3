@@ -1,0 +1,2 @@
+=== train_loop locator start 2026-10-21T11:49:43Z host=vmi3635229
+--- 2026-10-21T12:43:48Z START m3_s1 (locator) init=weights/locator_m1_augv2.pt real=../data/erp/ft/m3 synth=../data/synth/scene_s1 steps=4000 thr=3 env=[SEED=1 AUG_SEED=1]
