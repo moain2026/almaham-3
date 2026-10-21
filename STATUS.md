@@ -126,3 +126,4 @@ updated: 2026-10-21
 - optical2 verdict + ready-to-paste prompt: `docs/handoff/{agentS-to-optical2,prompt-for-optical2}-2026-10-21.md`.
 - Contabo `locator_m1_augv2`: still training (step 750/4000 at 11:06 local, val IoU50 26/27).
 - Best so far unchanged: `locator_ft5_augv2` + `reader_ft6m1_augv2` → testset_human 19/34, 49-set A 14/39 B 15/39, wrong_confident 0.
+- agent D b6: +258 readings (4 strong models agree + visual check each, 17 rejected, 13 type fixes) → labels_agentD.csv 1021. CRYSTAL 77, SMART_YELLOW 70, TAGADOD 34, OTHER 30, KENWELL 22, MECHANICAL 22.

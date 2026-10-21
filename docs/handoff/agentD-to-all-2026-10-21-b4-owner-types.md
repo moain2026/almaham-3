@@ -45,3 +45,12 @@
 - labels_agentD.csv now = 763 (owner 324 confirmed, agentD 439). Page server fixed: saves only when filename matches, new token.
 - Model benchmark (48 owner photos, uncommon types): gpt-6.1-sol best, then gpt-6-astra, gemini (gsk understand_images), claude-opus-5-5.
   Old set (gpt-5.6-sol, grok-4.7, gpt-6-sol, claude-opus-4-8) is weaker on uncommon types → not used alone any more.
+
+## b6 — 4-strong-model consensus + agent-D visual check (2026-10-21)
+- Models: gpt-6.1-sol, gpt-6-astra, gemini (gsk understand_images), claude-opus-5-5. Benchmark on 41 owner-read uncommon photos: when all 4 agree → 24/24 correct.
+- 576 non-Tomas photos run → 275 with 4/4 agreement → agent D reviewed every one visually on whole-meter crops.
+- Rejected visually: 17 (ambiguous drums, glare, blurred, LCD showing a different register, multi-meter board).
+- Type fixes: 9 → TAGADOD, 2 → MECHANICAL (DDS858 drums), 1 → GLORY, 1 → CHINT.
+- **+258 rows** `confidence=4strong+visual`, `labeller=agentD`: CRYSTAL 77, SMART_YELLOW 70, TAGADOD 34, OTHER 30, KENWELL 22, MECHANICAL 22, GLORY 2, CHINT 1.
+- Crops: private `erp/by_type/<TYPE>/` (index.csv source=4strong+visual).
+- labels_agentD.csv total: 1021 rows.
