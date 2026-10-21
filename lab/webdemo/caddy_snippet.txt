@@ -1,0 +1,7 @@
+# Added inside the `basirapp.site { ... }` block of /opt/basira/Caddyfile (before `reverse_proxy basira:8000`).
+# Caddy runs in docker (basira-caddy-1); 172.18.0.1 is the docker bridge gateway = the VPS host, where the
+# almaham-webdemo systemd service listens on 8700. ufw must allow 172.18.0.0/16 -> 8700/tcp.
+	redir /meter /meter/ permanent
+	handle_path /meter/* {
+		reverse_proxy 172.18.0.1:8700
+	}

@@ -82,7 +82,7 @@ class H(BaseHTTPRequestHandler):
         sys.stdout.write("%s %s\n" % (time.strftime("%H:%M:%S"), fmt % a)); sys.stdout.flush()
 
     def do_GET(self):
-        if self.path.startswith("/health"):
+        if self.path.rstrip("/").endswith("/health") or self.path.startswith("/health"):
             return self._send(200, {"ok": True, "engines": list(MODELS), "stored": len(list(STORE.glob("*.jpg")))})
         if self.path == "/" or self.path.startswith("/?"):
             return self._send(200, (HERE / "index.html").read_bytes(), "text/html; charset=utf-8")
@@ -93,7 +93,7 @@ class H(BaseHTTPRequestHandler):
         if n > MAX_UPLOAD:
             return self._send(413, {"error": "too large"})
         body = self.rfile.read(n)
-        if self.path == "/read":
+        if self.path.rstrip("/").endswith("/read"):
             f = parse_multipart(body, self.headers.get("Content-Type", ""))
             eng = MODELS.get(f.get("model", b"default").decode(), next(iter(MODELS.values())))
             rect = f.get("rect", b"").decode() or None
@@ -108,7 +108,7 @@ class H(BaseHTTPRequestHandler):
             (STORE / f"{rid}.json").write_text(json.dumps(meta, ensure_ascii=False))
             res["id"] = rid
             return self._send(200, res)
-        if self.path == "/feedback":
+        if self.path.rstrip("/").endswith("/feedback"):
             try:
                 fb = json.loads(body)
                 rid = str(fb["id"]); assert rid.replace("-", "").isalnum()
