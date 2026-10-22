@@ -13,3 +13,5 @@ step 1750 loss 1.359 real_val_line_iou50 66/68 4157s
 step 2000 loss 1.345 real_val_line_iou50 66/68 4734s
 step 2250 loss 1.378 real_val_line_iou50 66/68 5297s
 step 2500 loss 1.375 real_val_line_iou50 66/68 5907s
+step 2750 loss 1.327 real_val_line_iou50 66/68 6475s
+step 2999 loss 1.323 real_val_line_iou50 66/68 7052s
