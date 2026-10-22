@@ -7,3 +7,11 @@ step 250 loss 1.161 real_val_exact 140/173 522s
 step 500 loss 1.136 real_val_exact 145/173 1045s
 step 750 loss 1.104 real_val_exact 143/173 1581s
 step 1000 loss 1.111 real_val_exact 143/173 2128s
+step 1250 loss 1.150 real_val_exact 144/173 2676s
+step 1500 loss 1.130 real_val_exact 143/173 3189s
+step 1750 loss 1.105 real_val_exact 145/173 3718s
+step 2000 loss 1.133 real_val_exact 145/173 4227s
+step 2250 loss 1.114 real_val_exact 144/173 4755s
+step 2500 loss 1.093 real_val_exact 144/173 5282s
+step 2750 loss 1.132 real_val_exact 144/173 5826s
+step 2999 loss 1.096 real_val_exact 144/173 6350s
