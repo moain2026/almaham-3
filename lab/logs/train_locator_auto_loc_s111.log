@@ -1,0 +1,13 @@
+argv ['erp_finetune.py', 'train', 'weights/locator_m1_augv2.pt', '../data/erp/ft/m3', '../data/synth/scene_s1', '3000', 'weights/locator_auto_loc_s111.pt', 'locator'] threads 3 seed 111
+ignore_row False
+/opt/almaham/almaham-3/lab/train_det.py:152: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+  peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
+step 0 loss 1.189 real_val_line_iou50 66/68 9s
+step 250 loss 1.481 real_val_line_iou50 66/68 761s
+step 500 loss 1.437 real_val_line_iou50 66/68 1679s
+step 750 loss 1.437 real_val_line_iou50 66/68 2554s
+step 1000 loss 1.444 real_val_line_iou50 66/68 3312s
+step 1250 loss 1.454 real_val_line_iou50 66/68 4036s
+step 1500 loss 1.320 real_val_line_iou50 66/68 4699s
+step 1750 loss 1.359 real_val_line_iou50 66/68 5432s
+step 2000 loss 1.381 real_val_line_iou50 66/68 6103s
