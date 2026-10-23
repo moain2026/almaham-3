@@ -3,3 +3,7 @@
 train rc=0 step 2999 loss 1.151 real_val_exact 147/173 6193s
 RESULT ft6m3_cry_s2: 49 A=23 B=20 | 34: 20 {'CRYSTAL': '2/7', 'EMETER_GREEN': '2/6', 'OTHER': '2/4', 'SMART_MT10': '0/1', 'TAGADOD': '7/7', 'TOMAS_SMART': '6/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG
 fatal: could not read Username for 'https://github.com': No such device or address
+=== train_loop reader start 2026-10-23T04:00:22Z host=vmi3635229
+--- 2026-10-23T04:00:22Z START auto_rd_s122 (reader) init=weights/reader_ft6m2_s1.pt real=../data/erp/ft/ft6m3 synth=../data/synth/line_s1,../data/synth/line_crystal_opt2 steps=3000 thr=1 env=[SEED=122 AUG_SEED=122]
+train rc=0 step 2999 loss 1.125 real_val_exact 144/173 6300s
+RESULT auto_rd_s122: 49 A=20 B=19 | 34: 20 {'CRYSTAL': '2/7', 'EMETER_GREEN': '1/6', 'OTHER': '2/4', 'SMART_MT10': '0/1', 'TAGADOD': '7/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG
