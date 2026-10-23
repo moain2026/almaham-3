@@ -7,3 +7,4 @@ fatal: could not read Username for 'https://github.com': No such device or addre
 --- 2026-10-23T04:00:22Z START auto_loc_s117 (locator) init=weights/locator_m1_augv2.pt real=../data/erp/ft/m3 synth=../data/synth/scene_s1 steps=3000 thr=3 env=[SEED=117 AUG_SEED=117]
 train rc=0 step 2999 loss 1.340 real_val_line_iou50 66/68 7741s
 RESULT auto_loc_s117: 49 A=22 B=21 | 34: 25 {'CRYSTAL': '3/7', 'EMETER_GREEN': '2/6', 'OTHER': '3/4', 'SMART_MT10': '1/1', 'TAGADOD': '7/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '2/2'} | accepted accepted correct correct wrong WRONG
+fatal: could not read Username for 'https://github.com': No such device or address
