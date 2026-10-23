@@ -3,3 +3,13 @@ ignore_row False
 /opt/almaham/almaham-3/lab/train_det.py:152: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
   peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
 step 0 loss 1.868 real_val_line_iou50 66/68 13s
+step 250 loss 1.467 real_val_line_iou50 66/68 585s
+step 500 loss 1.428 real_val_line_iou50 66/68 1149s
+step 750 loss 1.419 real_val_line_iou50 66/68 1737s
+step 1000 loss 1.388 real_val_line_iou50 66/68 2370s
+step 1250 loss 1.373 real_val_line_iou50 66/68 2975s
+step 1500 loss 1.368 real_val_line_iou50 66/68 3523s
+step 1750 loss 1.370 real_val_line_iou50 66/68 4055s
+step 2000 loss 1.369 real_val_line_iou50 66/68 4642s
+step 2250 loss 1.443 real_val_line_iou50 66/68 5179s
+step 2500 loss 1.371 real_val_line_iou50 66/68 5775s
