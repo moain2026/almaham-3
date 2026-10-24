@@ -80,3 +80,12 @@ python3 build_meter_shards.py ../data/erp/ft/text_locate_all.json ../data/erp/ft
 
 ## 7) المعايير غير القابلة للتفاوض
 الـ49 وtestset_human **للتقييم فقط**؛ لا صور عملاء في العام؛ لا AGPL؛ الجزء الصحيح فقط؛ أرقام حرفية بلا تقريب؛ توثيق بعد كل خطوة؛ commit+push بعد كل تغيير؛ Python/Kotlin متطابقان (أي تغيير في `assemble.py` يُعكس في `ReadingAssembler.kt` مع اختبار تكافؤ 49/49 قبل الشحن).
+
+## ملحق 2026-10-24 (وكيل S) — ما يجري الآن وكيف تُكمله
+**تشغيلات لم تنتهِ عند كتابة هذا (أعِد تقييمها عند اكتمالها):**
+- sandbox: `lab/logs/train_locator_m4_s{0,1}.log` → `weights/locator_m4_s{0,1}.pt` (3000 خطوة؛ عند 2000). قيّم: `bash lab/tools/eval_one.sh weights/locator_m4_s0.pt weights/reader_ft6m2_s1.pt loc_m4_s0_ft6m2_s1`.
+- sandbox: تجربة السعة `train_reader_m4_w2.0_scratch_s0.log` و`train_reader_m4_w1.0_scratch_s0.log` (من الصفر، `init=none WIDTH=`). قيّم بـ `python3 eval_valm4.py reader weights/reader_m4_w2.0_scratch_s0.pt w2` ثم `compare` مع `valm4_reader_m4_s0.json`؛ وانظر الفجوة train/val بـ `fit_diag.py`.
+- Contabo: `lab/logs/train_reader_m4_s2.log` → `weights/reader_m4_s2.pt` (عند 1750). بعده: `python3 eval_valm4.py reader ens:weights/reader_m4_s0.pt,weights/reader_m4_s1.pt,weights/reader_m4_s2.pt ens_m4_s012` ثم **قياس واحد** على 49/34/73 عبر `ENS_READER=a,b,c bash lab/tools/eval_one.sh weights/locator_m1_augv2.pt weights/reader_m4_s0.pt ens_m4_s012` (الـONNX للقارئ يُتجاهل حين يُضبط ENS_READER).
+- Contabo: `data/synth/line_dr1_{X,B}.npy` جاهزة (4000 سطر، `SYNTH_LINE=int SYNTH_DR=1`). التجربة المقترحة (D4): قارئ على m4 بخليط `../data/synth/line_s1,../data/synth/line_dr1` ثم val-m4/clean65 و(مرة) MT10 الـ9.
+**المقارنة العادلة** دائمًا على clean65 (`data/erp/ft/m4_val_clean_idx.json`) لأن 97/177 من val-m4 كانت في تدريب المرجع.
+**لا تنشر** إلا بعد: clean65 ≥ المرجع، بوابة 0 خطأ، 49/34 لا أسوأ، ومرآة Kotlin للـensemble إن اعتُمد (Astra r4+).
