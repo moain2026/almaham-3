@@ -66,7 +66,7 @@ def main():
     reasons = {"no_tl": 0, "no_meterbox": 0, "excluded": 0, "multi": 0, "low_score": 0, "short_unsafe": 0, "irregular": 0, "outside_meter": 0, "ok": 0}
     conf = {r["filename"]: r.get("confidence", "") for f in glob.glob(str(ef.LABELS / "labels_agentD.csv")) for r in csv.DictReader(open(f, encoding="utf-8"))}
     OWNER_W = 2.0   # agent D request 2026-10-21: owner_visual readings get higher sampling weight
-    X, B, LX, LB, keys, by_type, review, SW = [], [], [], [], [], {}, [], []
+    X, B, LX, LB, keys, by_type, review, SW, files_ok = [], [], [], [], [], {}, [], [], []
     for fn, res in sorted(tl.items()):
         text = labels.get(fn)
         if not res or not text:
@@ -108,7 +108,7 @@ def main():
             x1 = (d[1] - mx1 - sx1) * rs + rox; y1 = (d[2] - my1 - sy1) * rs + roy; x2 = (d[3] - mx1 - sx1) * rs + rox; y2 = (d[4] - my1 - sy1) * rs + roy
             B.append((i, int(chr_), x1, y1, x2, y2))
         B.append((i, CLS_LINE, (lx1 - mx1 - sx1) * rs + rox, (ly1 - my1 - sy1) * rs + roy, (lx2 - mx1 - sx1) * rs + rox, (ly2 - my1 - sy1) * rs + roy))
-        keys.append(fn.replace("pending-", "")[:8]); by_type[t] = by_type.get(t, 0) + 1; reasons["ok"] += 1
+        keys.append(fn.replace("pending-", "")[:8]); files_ok.append(fn); by_type[t] = by_type.get(t, 0) + 1; reasons["ok"] += 1
         SW.append(OWNER_W if conf.get(fn) == "owner_visual" else 1.0)
         if len(review) < audit * 3:
             vis = crop.copy(); cv2.rectangle(vis, (int(lx1 - mx1), int(ly1 - my1)), (int(lx2 - mx1), int(ly2 - my1)), (0, 0, 255), max(2, cw // 200))
@@ -126,6 +126,9 @@ def main():
         LBi = np.array([(remap[int(b[0])], *b[1:]) for b in LB if int(b[0]) in remap], np.float32).reshape(-1, 6)
         np.save(f"{out}_loc_{name}_X.npy", LX[idx]); np.save(f"{out}_loc_{name}_B.npy", LBi)
         print(name, X[idx].shape, len(Bi), "boxes; locator", LX[idx].shape)
+    # photo-level split record (dev-set construction / leakage checks): which files landed in train vs val
+    json.dump({"train_keys": sorted(k for k in uniq if k not in val_keys), "val_keys": sorted(val_keys),
+               "files": {fn: ("val" if k in val_keys else "train") for fn, k in zip(files_ok, keys)}}, open(f"{out}_keys.json", "w"), indent=0)
     rep = {"reasons": reasons, "accepted": len(X), "by_type": by_type, "owner_visual": int(sum(1 for w in SW if w > 1)), "owner_w": OWNER_W, "n_train_keys": len(uniq) - len(val_keys), "n_val_keys": len(val_keys), "min_score": MIN_SCORE}
     json.dump(rep, open(f"{out}_report.json", "w"), indent=1); print(json.dumps(rep))
     rng = np.random.RandomState(1); sel = [review[i] for i in rng.choice(len(review), min(audit, len(review)), replace=False)]
