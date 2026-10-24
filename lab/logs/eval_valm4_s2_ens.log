@@ -1,0 +1,3 @@
+m4_s2: val-m4 exact 156/177 = 0.881 | strict gate accepted 73 wrong 1
+ens_m4_s012: val-m4 exact 157/177 = 0.887 | strict gate accepted 76 wrong 1
+DONE
