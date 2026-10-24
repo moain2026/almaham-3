@@ -195,7 +195,9 @@ def random_reading():
 
 
 LINE_INT_ONLY = os.environ.get("SYNTH_LINE", "all") == "int"   # SYNTH_LINE=int -> LINE box = integer part only (ADR-0005 amendment 2026-10-24)
-SYNTH_DR = os.environ.get("SYNTH_DR", "0") == "1"               # domain randomisation v2 (consult #2 Q3): more dark panels, lower contrast
+SYNTH_DR = os.environ.get("SYNTH_DR", "0") in ("1", "2")        # domain randomisation v2 (consult #2 Q3): more dark panels, lower contrast
+SYNTH_DR2 = os.environ.get("SYNTH_DR", "0") == "2"              # dr2 (2026-10-24, after dr1 gave clean65 49->53): inverted polarity panels
+                                                                 # (light segments on dark glass, MT10/EMETER backlit), stronger glare/blur/low light
 
 
 def lcd_palette():
@@ -207,11 +209,14 @@ def lcd_palette():
     base = float(np.mean(bg))
     dark = base > 95
     fg_l = random.uniform(5, 55) if dark else random.uniform(170, 255)
+    if SYNTH_DR2 and random.random() < 0.35:   # inverted polarity: dark glass, light (backlit) segments
+        bg = tuple(int(np.clip(c * random.uniform(0.15, 0.45), 5, 90)) for c in bg); base = float(np.mean(bg)); dark = False
+        fg_l = random.uniform(170, 255)
     fg = tuple(int(np.clip(fg_l + random.randint(-15, 15), 0, 255)) for _ in range(3))
     if kind == "blue" and random.random() < 0.5:  # bluish dark segments
         fg = (int(min(255, fg[0] + 60)), fg[1], fg[2])
     contrast = random.choices([random.uniform(0.1, 0.3), random.uniform(0.3, 0.65), random.uniform(0.65, 1.0)],
-                              [0.45, 0.35, 0.2] if SYNTH_DR else [0.3, 0.35, 0.35])[0]
+                              [0.3, 0.4, 0.3] if SYNTH_DR2 else [0.45, 0.35, 0.2] if SYNTH_DR else [0.3, 0.35, 0.35])[0]
     fg = mix(bg, fg, contrast)
     ga = random.choices([0.0, random.uniform(0.05, 0.2), random.uniform(0.2, 0.5)], [0.3, 0.4, 0.3])[0]
     ghost = mix(bg, fg, ga)
@@ -580,13 +585,14 @@ def photometric(img, strength=1.0):
     f = img.astype(np.float32)
     h, w = f.shape[:2]
     # exposure / colour cast / low light
-    gain = random.choices([random.uniform(0.25, 0.6), random.uniform(0.6, 1.3)], [0.2, 0.8])[0]
+    gain = random.choices([random.uniform(0.35, 0.6), random.uniform(0.6, 1.3)], [0.25, 0.75] if SYNTH_DR2 else [0.2, 0.8])[0] if SYNTH_DR2 else \
+        random.choices([random.uniform(0.25, 0.6), random.uniform(0.6, 1.3)], [0.2, 0.8])[0]
     cast = np.array([random.uniform(0.85, 1.15) for _ in range(3)], np.float32)
     f = f * gain * cast
     gx = np.linspace(random.uniform(0.5, 1.2), random.uniform(0.5, 1.2), w)[None, :, None]
     gy = np.linspace(random.uniform(0.6, 1.2), random.uniform(0.6, 1.2), h)[:, None, None]
     f = f * gx * gy
-    for _ in range(random.choices([0, 1, 2, 3], [0.4, 0.35, 0.18, 0.07])[0]):  # flash glare blobs
+    for _ in range(random.choices([0, 1, 2, 3], [0.25, 0.35, 0.25, 0.15] if SYNTH_DR2 else [0.4, 0.35, 0.18, 0.07])[0]):  # flash glare blobs
         cx, cy, r = random.uniform(0, w), random.uniform(0, h), random.uniform(0.04, 0.35) * h
         yy, xx = np.mgrid[0:h, 0:w]
         m = np.exp(-(((xx - cx) / (r * random.uniform(1, 2.5))) ** 2 + ((yy - cy) / r) ** 2))
