@@ -5,3 +5,5 @@ ignore_row False
 step 0 loss 1.833 real_val_exact 149/177 3s
 step 250 loss 1.497 real_val_exact 142/177 261s
 step 500 loss 1.482 real_val_exact 142/177 515s
+step 750 loss 1.492 real_val_exact 143/177 768s
+step 1000 loss 1.430 real_val_exact 142/177 1028s
