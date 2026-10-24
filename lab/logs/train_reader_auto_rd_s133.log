@@ -5,3 +5,13 @@ ignore_row False
 step 0 loss 1.107 real_val_exact 142/173 7s
 step 250 loss 1.156 real_val_exact 143/173 491s
 step 500 loss 1.131 real_val_exact 144/173 975s
+step 750 loss 1.130 real_val_exact 141/173 1481s
+step 1000 loss 1.136 real_val_exact 145/173 1979s
+step 1250 loss 1.129 real_val_exact 141/173 2482s
+step 1500 loss 1.106 real_val_exact 144/173 2976s
+step 1750 loss 1.134 real_val_exact 144/173 3460s
+step 2000 loss 1.095 real_val_exact 142/173 3957s
+step 2250 loss 1.141 real_val_exact 144/173 4443s
+step 2500 loss 1.129 real_val_exact 144/173 4937s
+step 2750 loss 1.075 real_val_exact 143/173 5421s
+step 2999 loss 1.115 real_val_exact 143/173 5904s
