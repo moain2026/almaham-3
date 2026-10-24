@@ -42,3 +42,4 @@ dist/*.apk
 core
 core.*
 data/webdemo/
+lab/autotrain/state/
