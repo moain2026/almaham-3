@@ -6,7 +6,7 @@
 set -euo pipefail
 HOST=${HOST:-basira}; REMOTE=/opt/almaham/almaham-3; PORT=8700
 # 2026-10-24: live spec = m4 (release candidate loc_m4_s0+rd_m4_s0, first = default in the UI), new (reference), prev, shipped
-MODELS=${MODELS:-"m4=data/models_loc_m4_s0_rd_m4_s0 dr1=data/models_loc_m4_s0_rd_dr1 m5=data/models_loc_m4_s0_rd_m5_s0 new=data/models_m1loc_ft6m2_s1 prev=data/models_m1loc_ft6m1 shipped=data/models_repro"}
+MODELS=${MODELS:-"dr1=data/models_loc_m4_s0_rd_dr1 m4=data/models_loc_m4_s0_rd_m4_s0 m5=data/models_loc_m4_s0_rd_m5_s0 new=data/models_m1loc_ft6m2_s1 prev=data/models_m1loc_ft6m1 shipped=data/models_repro"}
 cd "$(dirname "$0")/../.."
 ssh $HOST "cd $REMOTE && git fetch -q origin genspark_ai_developer && git checkout -q genspark_ai_developer && git pull -q --rebase origin genspark_ai_developer && mkdir -p data/webdemo"
 SPEC=""
