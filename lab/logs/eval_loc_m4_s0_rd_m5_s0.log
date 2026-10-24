@@ -1,0 +1,2 @@
+locator: ../data/models_loc_m4_s0_rd_m5_s0/line_locator.onnx 842 KB, max|torch-ort| = 4.65e-04, ORT CPU 5.4 ms (sandbox x86, CPU)
+reader: ../data/models_loc_m4_s0_rd_m5_s0/digit_reader.onnx 845 KB, max|torch-ort| = 2.48e-05, ORT CPU 2.4 ms (sandbox x86, CPU)

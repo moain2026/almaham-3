@@ -1,0 +1,14 @@
+argv ['erp_finetune.py', 'train', 'weights/reader_m4_s0.pt', '../data/erp/ft/m5b', '../data/synth/line_s1,../data/synth/line_dr1', '3000', 'weights/reader_m5b_from_m4_s0.pt', 'reader'] threads 1 seed 0
+ignore_row False
+Traceback (most recent call last):
+  File "/home/user/webapp/lab/erp_finetune.py", line 316, in <module>
+    train(sys.argv[2], sys.argv[3], sys.argv[4], int(sys.argv[5]), sys.argv[6], sys.argv[7] if len(sys.argv) > 7 else "reader")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/webapp/lab/erp_finetune.py", line 261, in train
+    synth = Shards(synth_prefixes.split(","), kind)
+  File "/home/user/webapp/lab/train_det.py", line 56, in __init__
+    X = np.load(p + "_X.npy", mmap_mode="r")
+  File "/home/user/webapp/.venv/lib/python3.13/site-packages/numpy/lib/_npyio_impl.py", line 454, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../data/synth/line_dr1_X.npy'
