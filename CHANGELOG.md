@@ -1,5 +1,12 @@
 ## [Unreleased] — 2026-10-20 جلسة الوكيل S (الخليفة)
 
+## 2026-10-24 د (وكيل S، 17:00–19:40 مكة)
+- data: `lab/pseudo_label.py` (186/759 تسمية زائفة باتفاق زوجين + TTA)، `lab/label_locate_fast.py` (349/365 صندوق موثّق بالتسمية، 1 ث/صورة)؛ شرائح m5 (884) وm5b (1048) مع `FIXED_VAL` (val مطابق لـ m4 بايتًا) + تركيب صندوق عداد للصور بلا صندوق.
+- synth2: `SYNTH_DR=2` (قطبية معكوسة، وهج/إضاءة منخفضة أكثر).
+- results: reader_m4_dr1_s0 clean65 **53/65** (أفضل)؛ m5/m5b قارئ ومحدِّد: لا مكسب؛ العرض ×2 بعد 6000 خطوة 143 (مُغلق).
+- webdemo: محركات m4 (افتراضي) / dr1 / m5 / new / prev / shipped؛ بوابة v2 حية.
+- ops: `lab/tools/sandbox_autosync.sh` (رفع كل 10 دقائق)؛ autotrain المحدِّد → m4؛ postmortem #11 + قاعدة #12 (نسخ S موازية).
+
 ## 2026-10-24 ج (وكيل S، 13:00–14:30 مكة)
 - lab: `eval_valm4_e2e.py` (e2e على val-m4 مع clean65/seen112 + McNemar)، `gate_v2_study.py` (G0/TTA/prev-window مكوّنًا مكوّنًا).
 - research: `docs/research/gate-v2-2026-10-24.md` — clean65 e2e 49 vs 47، TTA يُسقط 9/11 خطأ، نافذة prev تقتل أخطاء الطول، المحقق السباعي يُفرغ `confident`، LINE_CLIP مغلق.
