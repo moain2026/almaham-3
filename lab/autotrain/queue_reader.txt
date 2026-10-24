@@ -1,3 +1,2 @@
 # tag | kind | init | real_prefix | synth_prefixes | steps | threads | env   (one recipe per line; consumed top-down; empty -> auto seeds)
-rd_m4_dr12_s0 | reader | weights/reader_ft6m1_augv2.pt | ../data/erp/ft/m4 | ../data/synth/line_s1,../data/synth/line_dr1,../data/synth/line_dr2 | 3000 | 1 | SEED=0 AUG_SEED=0 EMA=0
 rd_m4_dr12_s1 | reader | weights/reader_ft6m1_augv2.pt | ../data/erp/ft/m4 | ../data/synth/line_s1,../data/synth/line_dr1,../data/synth/line_dr2 | 3000 | 1 | SEED=1 AUG_SEED=1 EMA=0
