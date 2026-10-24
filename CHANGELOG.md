@@ -1,5 +1,13 @@
 ## [Unreleased] — 2026-10-20 جلسة الوكيل S (الخليفة)
 
+## 2026-10-24 ب (وكيل S، 05:45–09:30 مكة)
+- data: owner field uploads (97) mirrored to private `webdemo/field/` + cron `lab/autotrain/mirror_field.sh` (5 min).
+- fix(autotrain): `export HOME` inside `auto_push.sh`/`train_loop.sh`; PUSH_FAILED alarm on results page; Contabo push verified.
+- consult: `lab/consult.py` streaming + strongest models by default; brief + 6 answers + `decision-2026-10-24.md`.
+- research: `environment-and-plan-2026-10-24.md`, `crystal-dot-audit-2026-10-24.md` (+5 figures), `autotrain-seed-analysis-2026-10-24.md` (soups).
+- lab: `text_locate.py` v2 `--meter-box --only-unlocated`; `build_meter_shards.py` writes `<out>_keys.json`.
+- data: `benchmark/data/erp/poisoned_m3_short_2026-10-24.json` (9 poisoned m3 samples, to exclude in m4).
+
 ## 2026-10-24 (وكيل S الخليفة)
 - fix(lab): `eval_vote.py` يتخطى الصور المقروءة بلا صندوق سطر مرجعي (23072) — كان يُسقط `eval_ckpt.sh` منذ GT v3.
 - fix(autotrain/Contabo): `HOME=/root` في خدمتي systemd + credential helper على مستوى النظام؛ استرداد 64 دورة غير مدفوعة (10-21→10-24) إلى `auto-training` ودمجها هنا؛ أرشيف الخاص `92ce3a2`.
