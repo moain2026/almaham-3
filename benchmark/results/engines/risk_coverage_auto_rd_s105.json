@@ -5,18 +5,18 @@
    "all": {
     "n": 73,
     "accepted": 72,
-    "correct": 39,
-    "wrong": 33,
+    "correct": 40,
+    "wrong": 32,
     "coverage": 0.986,
-    "precision": 0.542
+    "precision": 0.556
    },
    "49B": {
     "n": 39,
     "accepted": 39,
-    "correct": 19,
-    "wrong": 20,
+    "correct": 20,
+    "wrong": 19,
     "coverage": 1.0,
-    "precision": 0.487
+    "precision": 0.513
    },
    "TH34": {
     "n": 34,
@@ -31,18 +31,18 @@
    "all": {
     "n": 73,
     "accepted": 70,
-    "correct": 39,
-    "wrong": 31,
+    "correct": 40,
+    "wrong": 30,
     "coverage": 0.959,
-    "precision": 0.557
+    "precision": 0.571
    },
    "49B": {
     "n": 39,
     "accepted": 38,
-    "correct": 19,
-    "wrong": 19,
+    "correct": 20,
+    "wrong": 18,
     "coverage": 0.974,
-    "precision": 0.5
+    "precision": 0.526
    },
    "TH34": {
     "n": 34,
@@ -90,63 +90,63 @@
    },
    "49B": {
     "n": 39,
-    "accepted": 20,
+    "accepted": 19,
     "correct": 16,
-    "wrong": 4,
-    "coverage": 0.513,
-    "precision": 0.8
+    "wrong": 3,
+    "coverage": 0.487,
+    "precision": 0.842
    },
    "TH34": {
     "n": 34,
-    "accepted": 19,
+    "accepted": 20,
     "correct": 19,
-    "wrong": 0,
-    "coverage": 0.559,
-    "precision": 1.0
+    "wrong": 1,
+    "coverage": 0.588,
+    "precision": 0.95
    }
   },
   "OK & min_conf>=0.55": {
    "all": {
     "n": 73,
-    "accepted": 23,
-    "correct": 22,
+    "accepted": 21,
+    "correct": 20,
     "wrong": 1,
-    "coverage": 0.315,
-    "precision": 0.957
+    "coverage": 0.288,
+    "precision": 0.952
    },
    "49B": {
     "n": 39,
-    "accepted": 12,
-    "correct": 11,
+    "accepted": 11,
+    "correct": 10,
     "wrong": 1,
-    "coverage": 0.308,
-    "precision": 0.917
+    "coverage": 0.282,
+    "precision": 0.909
    },
    "TH34": {
     "n": 34,
-    "accepted": 11,
-    "correct": 11,
+    "accepted": 10,
+    "correct": 10,
     "wrong": 0,
-    "coverage": 0.324,
+    "coverage": 0.294,
     "precision": 1.0
    }
   },
   "OK & min_conf>=0.65": {
    "all": {
     "n": 73,
-    "accepted": 2,
-    "correct": 2,
+    "accepted": 1,
+    "correct": 1,
     "wrong": 0,
-    "coverage": 0.027,
+    "coverage": 0.014,
     "precision": 1.0
    },
    "49B": {
     "n": 39,
-    "accepted": 1,
-    "correct": 1,
+    "accepted": 0,
+    "correct": 0,
     "wrong": 0,
-    "coverage": 0.026,
-    "precision": 1.0
+    "coverage": 0.0,
+    "precision": null
    },
    "TH34": {
     "n": 34,
@@ -160,26 +160,26 @@
   "OK & min_conf>=0.55 & alt<0.5": {
    "all": {
     "n": 73,
-    "accepted": 21,
-    "correct": 20,
+    "accepted": 19,
+    "correct": 18,
     "wrong": 1,
-    "coverage": 0.288,
-    "precision": 0.952
+    "coverage": 0.26,
+    "precision": 0.947
    },
    "49B": {
     "n": 39,
-    "accepted": 10,
-    "correct": 9,
+    "accepted": 9,
+    "correct": 8,
     "wrong": 1,
-    "coverage": 0.256,
-    "precision": 0.9
+    "coverage": 0.231,
+    "precision": 0.889
    },
    "TH34": {
     "n": 34,
-    "accepted": 11,
-    "correct": 11,
+    "accepted": 10,
+    "correct": 10,
     "wrong": 0,
-    "coverage": 0.324,
+    "coverage": 0.294,
     "precision": 1.0
    }
   }

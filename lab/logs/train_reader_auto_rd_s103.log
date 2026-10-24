@@ -3,3 +3,15 @@ ignore_row False
 /home/user/webapp/lab/erp_finetune.py:233: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
   peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
 step 0 loss 1.004 real_val_exact 144/173 4s
+step 250 loss 1.170 real_val_exact 143/173 253s
+step 500 loss 1.127 real_val_exact 146/173 501s
+step 750 loss 1.120 real_val_exact 141/173 746s
+step 1000 loss 1.129 real_val_exact 138/173 997s
+step 1250 loss 1.136 real_val_exact 141/173 1241s
+step 1500 loss 1.094 real_val_exact 141/173 5459s
+step 1750 loss 1.139 real_val_exact 146/173 5708s
+step 2000 loss 1.120 real_val_exact 143/173 5953s
+step 2250 loss 1.130 real_val_exact 146/173 6199s
+step 2500 loss 1.111 real_val_exact 143/173 6446s
+step 2750 loss 1.137 real_val_exact 144/173 6694s
+step 2999 loss 1.094 real_val_exact 144/173 6940s
