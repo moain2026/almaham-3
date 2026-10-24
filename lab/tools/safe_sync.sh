@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 git add -A lab/logs lab/weights benchmark/results docs STATUS.md CHANGELOG.md LESSONS.md 2>/dev/null || true
 git add -A lab/*.py lab/tools lab/autotrain scripts app 2>/dev/null || true
-git diff --cached --quiet || git commit -qm "$1"
+git diff --cached --quiet || git commit -qm "${1:-sync: live logs/weights}"
 git pull -q --rebase origin genspark_ai_developer
 git push -q origin genspark_ai_developer
 # any trainer whose stdout now points at a deleted inode: refresh the on-disk file from /proc
