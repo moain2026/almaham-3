@@ -1,7 +1,7 @@
-locator: ../data/models_auto_rd_s106/line_locator.onnx 842 KB, max|torch-ort| = 1.18e-04, ORT CPU 23.8 ms (sandbox x86, CPU)
-reader: ../data/models_auto_rd_s106/digit_reader.onnx 845 KB, max|torch-ort| = 3.05e-05, ORT CPU 23.3 ms (sandbox x86, CPU)
-A {"n_readable": 39, "exact": 21, "exact_clear": 18, "n_clear": 26, "empty": 0, "wrong": 18, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.7077, "unreadable_rejected": 0, "unreadable_n": 10, "p50_ms": 52.7, "p95_ms": 84.8, "max_ms": 273.5, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 14.88, "stage_locate_p50_ms": 19.06, "stage_line_prep_p50_ms": 2.72, "stage_read_p50_ms": 10.14, "stage_assemble_p50_ms": 2.42}
-B {"n_readable": 39, "exact": 19, "exact_clear": 18, "n_clear": 26, "empty": 0, "wrong": 20, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.635, "unreadable_rejected": 2, "unreadable_n": 10, "p50_ms": 45.8, "p95_ms": 82.9, "max_ms": 302.1, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 8.81, "stage_locate_p50_ms": 20.1, "stage_line_prep_p50_ms": 2.97, "stage_read_p50_ms": 8.47, "stage_assemble_p50_ms": 2.23}
+locator: ../data/models_auto_rd_s106/line_locator.onnx 842 KB, max|torch-ort| = 1.07e-04, ORT CPU 6.5 ms (sandbox x86, CPU)
+reader: ../data/models_auto_rd_s106/digit_reader.onnx 845 KB, max|torch-ort| = 3.62e-05, ORT CPU 3.2 ms (sandbox x86, CPU)
+A {"n_readable": 39, "exact": 21, "exact_clear": 18, "n_clear": 26, "empty": 0, "wrong": 18, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.7077, "unreadable_rejected": 0, "unreadable_n": 10, "p50_ms": 25.4, "p95_ms": 33.3, "max_ms": 40.1, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 10.2, "stage_locate_p50_ms": 8.69, "stage_line_prep_p50_ms": 1.57, "stage_read_p50_ms": 4.21, "stage_assemble_p50_ms": 1.46}
+B {"n_readable": 39, "exact": 19, "exact_clear": 18, "n_clear": 26, "empty": 0, "wrong": 20, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.635, "unreadable_rejected": 2, "unreadable_n": 10, "p50_ms": 21.8, "p95_ms": 26.2, "max_ms": 29.1, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 5.73, "stage_locate_p50_ms": 8.03, "stage_line_prep_p50_ms": 1.98, "stage_read_p50_ms": 4.11, "stage_assemble_p50_ms": 1.45}
     lx1, ly1, lx2, ly2 = lines[fn]
                          ~~~~~^^^^
 KeyError: '23072.jpg'
@@ -35,7 +35,7 @@ pending- TOMAS_STATIC  truth= 007022 got=     22 --
 pending- OTHER         truth= 006285 got=   6285 OK
 pending- TOMAS_STATIC  truth= 020983 got=  20983 OK
 pending- TAGADOD       truth= 000242 got=    242 OK
-pending- CRYSTAL       truth=    603 got=1160323 --
+pending- CRYSTAL       truth=    603 got= 116032 --
 pending- CRYSTAL       truth=    152 got=    152 OK
 pending- EMETER_GREEN  truth= 004207 got= 428596 --
 pending- TAGADOD       truth= 000309 got=    309 OK
@@ -44,6 +44,6 @@ none (any value)                 accepted  72/73  correct  40  WRONG  32  covera
 status OK                        accepted  70/73  correct  40  WRONG  30  coverage 0.96 precision 0.571
 shipped confident                accepted   0/73  correct   0  WRONG   0  coverage 0.00 precision None
 OK & min_conf>=0.45              accepted  37/73  correct  33  WRONG   4  coverage 0.51 precision 0.892
-OK & min_conf>=0.55              accepted  22/73  correct  21  WRONG   1  coverage 0.30 precision 0.955
+OK & min_conf>=0.55              accepted  22/73  correct  20  WRONG   2  coverage 0.30 precision 0.909
 OK & min_conf>=0.65              accepted   3/73  correct   3  WRONG   0  coverage 0.04 precision 1.0
-OK & min_conf>=0.55 & alt<0.5    accepted  19/73  correct  19  WRONG   0  coverage 0.26 precision 1.0
+OK & min_conf>=0.55 & alt<0.5    accepted  19/73  correct  18  WRONG   1  coverage 0.26 precision 0.947

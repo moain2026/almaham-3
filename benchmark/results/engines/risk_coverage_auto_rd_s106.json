@@ -109,18 +109,18 @@
    "all": {
     "n": 73,
     "accepted": 22,
-    "correct": 21,
-    "wrong": 1,
+    "correct": 20,
+    "wrong": 2,
     "coverage": 0.301,
-    "precision": 0.955
+    "precision": 0.909
    },
    "49B": {
     "n": 39,
     "accepted": 12,
-    "correct": 11,
-    "wrong": 1,
+    "correct": 10,
+    "wrong": 2,
     "coverage": 0.308,
-    "precision": 0.917
+    "precision": 0.833
    },
    "TH34": {
     "n": 34,
@@ -161,18 +161,18 @@
    "all": {
     "n": 73,
     "accepted": 19,
-    "correct": 19,
-    "wrong": 0,
+    "correct": 18,
+    "wrong": 1,
     "coverage": 0.26,
-    "precision": 1.0
+    "precision": 0.947
    },
    "49B": {
     "n": 39,
     "accepted": 9,
-    "correct": 9,
-    "wrong": 0,
+    "correct": 8,
+    "wrong": 1,
     "coverage": 0.231,
-    "precision": 1.0
+    "precision": 0.889
    },
    "TH34": {
     "n": 34,
