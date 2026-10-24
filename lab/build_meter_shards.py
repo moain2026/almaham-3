@@ -73,6 +73,17 @@ def main():
         text = labels.get(fn) or (res.get("text") if res and res.get("pseudo") else None)   # pseudo_label.py entries carry their own text
         if not res or not text:
             reasons["no_tl"] += 1; continue
+        if fn not in boxes and res and res.get("fast"):
+            # label_locate_fast.py result on a photo without an agent-D meter box: synthesise the "user rectangle" as a
+            # randomised generous region around the located line (line width x 1.6..3.0, height x 4..9, clipped to photo)
+            # -> the locator still sees a realistic meter-like framing. Deterministic per filename.
+            _im = cv2.imread(str(ef.ERP / "photos" / fn)); _H, _W = _im.shape[:2]
+            _r = np.random.RandomState(int(hashlib.md5(fn.encode()).hexdigest()[:8], 16))
+            lx1, ly1, lx2, ly2 = res["line"]; lw, lh = lx2 - lx1, ly2 - ly1; cx, cy = (lx1 + lx2) / 2, (ly1 + ly2) / 2
+            bw, bh = lw * _r.uniform(1.6, 3.0), lh * _r.uniform(4.0, 9.0)
+            bx1 = np.clip(cx - bw * _r.uniform(0.35, 0.65), 0, _W); bx2 = np.clip(bx1 + bw, 0, _W)
+            by1 = np.clip(cy - bh * _r.uniform(0.3, 0.7), 0, _H); by2 = np.clip(by1 + bh, 0, _H)
+            boxes[fn] = [bx1 / _W, by1 / _H, bx2 / _W, by2 / _H]
         if fn not in boxes:
             reasons["no_meterbox"] += 1; continue
         p = ef.ERP / "photos" / fn
