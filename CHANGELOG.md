@@ -1,5 +1,11 @@
 ## [Unreleased] — 2026-10-20 جلسة الوكيل S (الخليفة)
 
+## 2026-10-24 ج (وكيل S، 13:00–14:30 مكة)
+- lab: `eval_valm4_e2e.py` (e2e على val-m4 مع clean65/seen112 + McNemar)، `gate_v2_study.py` (G0/TTA/prev-window مكوّنًا مكوّنًا).
+- research: `docs/research/gate-v2-2026-10-24.md` — clean65 e2e 49 vs 47، TTA يُسقط 9/11 خطأ، نافذة prev تقتل أخطاء الطول، المحقق السباعي يُفرغ `confident`، LINE_CLIP مغلق.
+- results: `valm4_e2e_{ref_m1loc_ft6m2_s1,loc_m4_s0_rd_m4_s0}.json`، `gate_v2_*.json`، `valm4_reader_w1.0_scratch_s0.json`.
+- train: `locator_m4_s0_full` (3000)، `reader_m4_w1.0_scratch_s0_c6k` (استكمال 6000) أُطلقا في السندبوكس.
+
 ## 2026-10-24 ب (وكيل S، 05:45–09:30 مكة)
 - data: owner field uploads (97) mirrored to private `webdemo/field/` + cron `lab/autotrain/mirror_field.sh` (5 min).
 - fix(autotrain): `export HOME` inside `auto_push.sh`/`train_loop.sh`; PUSH_FAILED alarm on results page; Contabo push verified.
