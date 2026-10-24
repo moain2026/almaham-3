@@ -135,3 +135,4 @@
 | reader_m5b_s1 | rd | reader_ft6m1_augv2 | **m5b** (1048/177) | line_s1 | 3000، بذرة 1، **PSEUDO_W=1.0** | sandbox (جارٍ) | — | — | — |
 | reader_m5b_6k_s0 | rd | reader_ft6m1_augv2 | m5b | line_s1 | **6000** خطوة، بذرة 0 | sandbox (جارٍ) | — | — | هل تكفي 3000 خطوة لـ1048 صورة؟ |
 | reader_m5_w2.0_c2_s0 | rd | reader_m4_w2.0_scratch_s0 | m5 | line_s1 | +3000 (6000 إجمالًا)، عرض ×2 | sandbox (جارٍ، 1000/3000، val 125) | — | — | — |
+| ens(rd_m4_s0, rd_m5_s0) + loc_m4_s0 | rd | — | — | — | متوسط خرائط | sandbox 2026-10-24 18:20 | — | — | قارئ val 157/177؛ e2e clean65 51، 177: **146** (أعلى حتى الآن)؛ ثقة بين الاثنين (≥0.55: 61/5). لا يُشحن (لا مرآة Kotlin للـensemble) |

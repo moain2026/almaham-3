@@ -1,0 +1,1603 @@
+{
+"spec": "ens:weights/reader_m4_s0.pt,weights/reader_m5_s0.pt",
+"tag": "ens_m4s0_m5s0",
+"n": 177,
+"exact": 157,
+"strict_accepted": 59,
+"strict_wrong": 1,
+"rows": [
+{
+"i": 0,
+"truth": "3410",
+"value": "3410",
+"ok": true,
+"status": "OK",
+"min_conf": 0.462,
+"strict": false
+},
+{
+"i": 1,
+"truth": "198",
+"value": "198",
+"ok": true,
+"status": "OK",
+"min_conf": 0.443,
+"strict": false
+},
+{
+"i": 2,
+"truth": "5242",
+"value": "5242",
+"ok": true,
+"status": "OK",
+"min_conf": 0.447,
+"strict": false
+},
+{
+"i": 3,
+"truth": "1402",
+"value": "1402",
+"ok": true,
+"status": "OK",
+"min_conf": 0.524,
+"strict": false
+},
+{
+"i": 4,
+"truth": "274",
+"value": "274",
+"ok": true,
+"status": "OK",
+"min_conf": 0.422,
+"strict": false
+},
+{
+"i": 5,
+"truth": "13020",
+"value": "13020",
+"ok": true,
+"status": "OK",
+"min_conf": 0.521,
+"strict": false
+},
+{
+"i": 6,
+"truth": "1747",
+"value": "1747",
+"ok": true,
+"status": "OK",
+"min_conf": 0.386,
+"strict": false
+},
+{
+"i": 7,
+"truth": "1226",
+"value": "1226",
+"ok": true,
+"status": "OK",
+"min_conf": 0.613,
+"strict": true
+},
+{
+"i": 8,
+"truth": "131889",
+"value": "1318899",
+"ok": false,
+"status": "TOO_MANY_DIGITS",
+"min_conf": 0.318,
+"strict": false
+},
+{
+"i": 9,
+"truth": "25936",
+"value": "25936",
+"ok": true,
+"status": "OK",
+"min_conf": 0.489,
+"strict": false
+},
+{
+"i": 10,
+"truth": "3773",
+"value": "3773",
+"ok": true,
+"status": "OK",
+"min_conf": 0.581,
+"strict": true
+},
+{
+"i": 11,
+"truth": "351",
+"value": "351",
+"ok": true,
+"status": "OK",
+"min_conf": 0.382,
+"strict": false
+},
+{
+"i": 12,
+"truth": "1073",
+"value": "1073",
+"ok": true,
+"status": "OK",
+"min_conf": 0.528,
+"strict": false
+},
+{
+"i": 13,
+"truth": "5110",
+"value": "5110",
+"ok": true,
+"status": "OK",
+"min_conf": 0.591,
+"strict": true
+},
+{
+"i": 14,
+"truth": "319",
+"value": "319",
+"ok": true,
+"status": "OK",
+"min_conf": 0.449,
+"strict": false
+},
+{
+"i": 15,
+"truth": "569",
+"value": "569",
+"ok": true,
+"status": "OK",
+"min_conf": 0.581,
+"strict": true
+},
+{
+"i": 16,
+"truth": "1263",
+"value": "1263",
+"ok": true,
+"status": "OK",
+"min_conf": 0.395,
+"strict": false
+},
+{
+"i": 17,
+"truth": "5714",
+"value": "1005714",
+"ok": false,
+"status": "OK",
+"min_conf": 0.345,
+"strict": false
+},
+{
+"i": 18,
+"truth": "2238",
+"value": "2238",
+"ok": true,
+"status": "OK",
+"min_conf": 0.468,
+"strict": false
+},
+{
+"i": 19,
+"truth": "16108",
+"value": "16108",
+"ok": true,
+"status": "OK",
+"min_conf": 0.504,
+"strict": false
+},
+{
+"i": 20,
+"truth": "6171",
+"value": "6171",
+"ok": true,
+"status": "OK",
+"min_conf": 0.567,
+"strict": true
+},
+{
+"i": 21,
+"truth": "4372",
+"value": "43721",
+"ok": false,
+"status": "OK",
+"min_conf": 0.512,
+"strict": false
+},
+{
+"i": 22,
+"truth": "7495",
+"value": "7495",
+"ok": true,
+"status": "OK",
+"min_conf": 0.542,
+"strict": false
+},
+{
+"i": 23,
+"truth": "342",
+"value": "342",
+"ok": true,
+"status": "OK",
+"min_conf": 0.572,
+"strict": true
+},
+{
+"i": 24,
+"truth": "12927",
+"value": "12927",
+"ok": true,
+"status": "OK",
+"min_conf": 0.531,
+"strict": false
+},
+{
+"i": 25,
+"truth": "12789",
+"value": "12789",
+"ok": true,
+"status": "OK",
+"min_conf": 0.494,
+"strict": false
+},
+{
+"i": 26,
+"truth": "5394",
+"value": "5394",
+"ok": true,
+"status": "OK",
+"min_conf": 0.394,
+"strict": false
+},
+{
+"i": 27,
+"truth": "983",
+"value": "983",
+"ok": true,
+"status": "OK",
+"min_conf": 0.611,
+"strict": true
+},
+{
+"i": 28,
+"truth": "416",
+"value": "4",
+"ok": false,
+"status": "OK",
+"min_conf": 0.804,
+"strict": true
+},
+{
+"i": 29,
+"truth": "79",
+"value": "79",
+"ok": true,
+"status": "OK",
+"min_conf": 0.485,
+"strict": false
+},
+{
+"i": 30,
+"truth": "6268",
+"value": "6268",
+"ok": true,
+"status": "OK",
+"min_conf": 0.645,
+"strict": true
+},
+{
+"i": 31,
+"truth": "316",
+"value": "316",
+"ok": true,
+"status": "OK",
+"min_conf": 0.5,
+"strict": false
+},
+{
+"i": 32,
+"truth": "59293",
+"value": "59293",
+"ok": true,
+"status": "OK",
+"min_conf": 0.543,
+"strict": false
+},
+{
+"i": 33,
+"truth": "4559",
+"value": "4559",
+"ok": true,
+"status": "OK",
+"min_conf": 0.574,
+"strict": true
+},
+{
+"i": 34,
+"truth": "564",
+"value": "564",
+"ok": true,
+"status": "OK",
+"min_conf": 0.536,
+"strict": false
+},
+{
+"i": 35,
+"truth": "13122",
+"value": "13122",
+"ok": true,
+"status": "OK",
+"min_conf": 0.518,
+"strict": false
+},
+{
+"i": 36,
+"truth": "13183",
+"value": "13183",
+"ok": true,
+"status": "OK",
+"min_conf": 0.568,
+"strict": true
+},
+{
+"i": 37,
+"truth": "5943",
+"value": "5943",
+"ok": true,
+"status": "OK",
+"min_conf": 0.542,
+"strict": false
+},
+{
+"i": 38,
+"truth": "3911",
+"value": "391",
+"ok": false,
+"status": "OK",
+"min_conf": 0.524,
+"strict": false
+},
+{
+"i": 39,
+"truth": "2692",
+"value": "2692",
+"ok": true,
+"status": "OK",
+"min_conf": 0.559,
+"strict": true
+},
+{
+"i": 40,
+"truth": "222",
+"value": "222",
+"ok": true,
+"status": "OK",
+"min_conf": 0.588,
+"strict": true
+},
+{
+"i": 41,
+"truth": "457",
+"value": "457",
+"ok": true,
+"status": "OK",
+"min_conf": 0.562,
+"strict": true
+},
+{
+"i": 42,
+"truth": "1359",
+"value": "1359",
+"ok": true,
+"status": "OK",
+"min_conf": 0.563,
+"strict": true
+},
+{
+"i": 43,
+"truth": "102",
+"value": "102",
+"ok": true,
+"status": "OK",
+"min_conf": 0.472,
+"strict": false
+},
+{
+"i": 44,
+"truth": "8207",
+"value": "8207",
+"ok": true,
+"status": "OK",
+"min_conf": 0.557,
+"strict": true
+},
+{
+"i": 45,
+"truth": "168",
+"value": "168",
+"ok": true,
+"status": "OK",
+"min_conf": 0.569,
+"strict": true
+},
+{
+"i": 46,
+"truth": "555",
+"value": "555",
+"ok": true,
+"status": "OK",
+"min_conf": 0.469,
+"strict": false
+},
+{
+"i": 47,
+"truth": "569",
+"value": "569",
+"ok": true,
+"status": "OK",
+"min_conf": 0.544,
+"strict": false
+},
+{
+"i": 48,
+"truth": "618",
+"value": "618",
+"ok": true,
+"status": "OK",
+"min_conf": 0.471,
+"strict": false
+},
+{
+"i": 49,
+"truth": "5442",
+"value": "5442",
+"ok": true,
+"status": "OK",
+"min_conf": 0.561,
+"strict": true
+},
+{
+"i": 50,
+"truth": "3294",
+"value": "3294",
+"ok": true,
+"status": "OK",
+"min_conf": 0.56,
+"strict": true
+},
+{
+"i": 51,
+"truth": "2508",
+"value": "2508",
+"ok": true,
+"status": "OK",
+"min_conf": 0.568,
+"strict": true
+},
+{
+"i": 52,
+"truth": "5606",
+"value": "5606",
+"ok": true,
+"status": "OK",
+"min_conf": 0.43,
+"strict": false
+},
+{
+"i": 53,
+"truth": "314",
+"value": "274",
+"ok": false,
+"status": "OK",
+"min_conf": 0.392,
+"strict": false
+},
+{
+"i": 54,
+"truth": "225",
+"value": "225",
+"ok": true,
+"status": "OK",
+"min_conf": 0.537,
+"strict": false
+},
+{
+"i": 55,
+"truth": "12409",
+"value": "12409",
+"ok": true,
+"status": "OK",
+"min_conf": 0.488,
+"strict": false
+},
+{
+"i": 56,
+"truth": "811",
+"value": "811",
+"ok": true,
+"status": "OK",
+"min_conf": 0.559,
+"strict": true
+},
+{
+"i": 57,
+"truth": "13291",
+"value": "43241",
+"ok": false,
+"status": "OK",
+"min_conf": 0.327,
+"strict": false
+},
+{
+"i": 58,
+"truth": "7934",
+"value": "1079340",
+"ok": false,
+"status": "OK",
+"min_conf": 0.338,
+"strict": false
+},
+{
+"i": 59,
+"truth": "1456",
+"value": "1456",
+"ok": true,
+"status": "OK",
+"min_conf": 0.591,
+"strict": true
+},
+{
+"i": 60,
+"truth": "2338",
+"value": "2338",
+"ok": true,
+"status": "OK",
+"min_conf": 0.645,
+"strict": true
+},
+{
+"i": 61,
+"truth": "19",
+"value": "19",
+"ok": true,
+"status": "OK",
+"min_conf": 0.549,
+"strict": false
+},
+{
+"i": 62,
+"truth": "326",
+"value": "326",
+"ok": true,
+"status": "OK",
+"min_conf": 0.381,
+"strict": false
+},
+{
+"i": 63,
+"truth": "773",
+"value": "773",
+"ok": true,
+"status": "OK",
+"min_conf": 0.589,
+"strict": true
+},
+{
+"i": 64,
+"truth": "1132",
+"value": "1132",
+"ok": true,
+"status": "OK",
+"min_conf": 0.529,
+"strict": false
+},
+{
+"i": 65,
+"truth": "213",
+"value": "213",
+"ok": true,
+"status": "OK",
+"min_conf": 0.61,
+"strict": true
+},
+{
+"i": 66,
+"truth": "28260",
+"value": "282160",
+"ok": false,
+"status": "OK",
+"min_conf": 0.305,
+"strict": false
+},
+{
+"i": 67,
+"truth": "11347",
+"value": "11347",
+"ok": true,
+"status": "OK",
+"min_conf": 0.543,
+"strict": false
+},
+{
+"i": 68,
+"truth": "5365",
+"value": "5365",
+"ok": true,
+"status": "OK",
+"min_conf": 0.613,
+"strict": true
+},
+{
+"i": 69,
+"truth": "1247",
+"value": "1247",
+"ok": true,
+"status": "OK",
+"min_conf": 0.431,
+"strict": false
+},
+{
+"i": 70,
+"truth": "393",
+"value": "393",
+"ok": true,
+"status": "OK",
+"min_conf": 0.517,
+"strict": false
+},
+{
+"i": 71,
+"truth": "632",
+"value": "642",
+"ok": false,
+"status": "OK",
+"min_conf": 0.372,
+"strict": false
+},
+{
+"i": 72,
+"truth": "395",
+"value": "395",
+"ok": true,
+"status": "OK",
+"min_conf": 0.585,
+"strict": true
+},
+{
+"i": 73,
+"truth": "4692",
+"value": "4692",
+"ok": true,
+"status": "OK",
+"min_conf": 0.582,
+"strict": true
+},
+{
+"i": 74,
+"truth": "328",
+"value": "328",
+"ok": true,
+"status": "OK",
+"min_conf": 0.405,
+"strict": false
+},
+{
+"i": 75,
+"truth": "289",
+"value": "284",
+"ok": false,
+"status": "OK",
+"min_conf": 0.576,
+"strict": false
+},
+{
+"i": 76,
+"truth": "0",
+"value": "0",
+"ok": true,
+"status": "OK",
+"min_conf": 0.554,
+"strict": true
+},
+{
+"i": 77,
+"truth": "2736",
+"value": "2736",
+"ok": true,
+"status": "OK",
+"min_conf": 0.586,
+"strict": false
+},
+{
+"i": 78,
+"truth": "1749",
+"value": "1149",
+"ok": false,
+"status": "OK",
+"min_conf": 0.484,
+"strict": false
+},
+{
+"i": 79,
+"truth": "1925",
+"value": "1925",
+"ok": true,
+"status": "OK",
+"min_conf": 0.424,
+"strict": false
+},
+{
+"i": 80,
+"truth": "1701",
+"value": "1701",
+"ok": true,
+"status": "OK",
+"min_conf": 0.456,
+"strict": false
+},
+{
+"i": 81,
+"truth": "310",
+"value": "310",
+"ok": true,
+"status": "OK",
+"min_conf": 0.556,
+"strict": true
+},
+{
+"i": 82,
+"truth": "286",
+"value": "286",
+"ok": true,
+"status": "OK",
+"min_conf": 0.669,
+"strict": true
+},
+{
+"i": 83,
+"truth": "4611",
+"value": "4611",
+"ok": true,
+"status": "OK",
+"min_conf": 0.606,
+"strict": true
+},
+{
+"i": 84,
+"truth": "6891",
+"value": "6891",
+"ok": true,
+"status": "OK",
+"min_conf": 0.623,
+"strict": true
+},
+{
+"i": 85,
+"truth": "868",
+"value": "868",
+"ok": true,
+"status": "OK",
+"min_conf": 0.508,
+"strict": false
+},
+{
+"i": 86,
+"truth": "518",
+"value": "518",
+"ok": true,
+"status": "OK",
+"min_conf": 0.568,
+"strict": true
+},
+{
+"i": 87,
+"truth": "214",
+"value": "214",
+"ok": true,
+"status": "OK",
+"min_conf": 0.637,
+"strict": true
+},
+{
+"i": 88,
+"truth": "6583",
+"value": "6583",
+"ok": true,
+"status": "OK",
+"min_conf": 0.494,
+"strict": false
+},
+{
+"i": 89,
+"truth": "154",
+"value": "154",
+"ok": true,
+"status": "OK",
+"min_conf": 0.505,
+"strict": false
+},
+{
+"i": 90,
+"truth": "513",
+"value": "513",
+"ok": true,
+"status": "OK",
+"min_conf": 0.476,
+"strict": false
+},
+{
+"i": 91,
+"truth": "4071",
+"value": "4071",
+"ok": true,
+"status": "OK",
+"min_conf": 0.414,
+"strict": false
+},
+{
+"i": 92,
+"truth": "368",
+"value": "368",
+"ok": true,
+"status": "OK",
+"min_conf": 0.494,
+"strict": false
+},
+{
+"i": 93,
+"truth": "1970",
+"value": "1970",
+"ok": true,
+"status": "OK",
+"min_conf": 0.43,
+"strict": false
+},
+{
+"i": 94,
+"truth": "152",
+"value": "152",
+"ok": true,
+"status": "OK",
+"min_conf": 0.565,
+"strict": true
+},
+{
+"i": 95,
+"truth": "324",
+"value": "324",
+"ok": true,
+"status": "OK",
+"min_conf": 0.601,
+"strict": true
+},
+{
+"i": 96,
+"truth": "2116",
+"value": "2716",
+"ok": false,
+"status": "OK",
+"min_conf": 0.361,
+"strict": false
+},
+{
+"i": 97,
+"truth": "4974",
+"value": "4974",
+"ok": true,
+"status": "OK",
+"min_conf": 0.451,
+"strict": false
+},
+{
+"i": 98,
+"truth": "6673",
+"value": "6673",
+"ok": true,
+"status": "OK",
+"min_conf": 0.421,
+"strict": false
+},
+{
+"i": 99,
+"truth": "1759",
+"value": "1759",
+"ok": true,
+"status": "OK",
+"min_conf": 0.585,
+"strict": true
+},
+{
+"i": 100,
+"truth": "2187",
+"value": "2187",
+"ok": true,
+"status": "OK",
+"min_conf": 0.488,
+"strict": false
+},
+{
+"i": 101,
+"truth": "5109",
+"value": "5109",
+"ok": true,
+"status": "OK",
+"min_conf": 0.52,
+"strict": false
+},
+{
+"i": 102,
+"truth": "2349",
+"value": "2349",
+"ok": true,
+"status": "OK",
+"min_conf": 0.653,
+"strict": true
+},
+{
+"i": 103,
+"truth": "1199",
+"value": "1199",
+"ok": true,
+"status": "OK",
+"min_conf": 0.56,
+"strict": true
+},
+{
+"i": 104,
+"truth": "53",
+"value": "53",
+"ok": true,
+"status": "OK",
+"min_conf": 0.358,
+"strict": false
+},
+{
+"i": 105,
+"truth": "556",
+"value": "556",
+"ok": true,
+"status": "OK",
+"min_conf": 0.691,
+"strict": true
+},
+{
+"i": 106,
+"truth": "6099",
+"value": "6099",
+"ok": true,
+"status": "OK",
+"min_conf": 0.525,
+"strict": false
+},
+{
+"i": 107,
+"truth": "366",
+"value": "366",
+"ok": true,
+"status": "OK",
+"min_conf": 0.406,
+"strict": false
+},
+{
+"i": 108,
+"truth": "4005",
+"value": "4005",
+"ok": true,
+"status": "OK",
+"min_conf": 0.549,
+"strict": false
+},
+{
+"i": 109,
+"truth": "1072",
+"value": "1072",
+"ok": true,
+"status": "OK",
+"min_conf": 0.549,
+"strict": false
+},
+{
+"i": 110,
+"truth": "1572",
+"value": "1572",
+"ok": true,
+"status": "OK",
+"min_conf": 0.46,
+"strict": false
+},
+{
+"i": 111,
+"truth": "10500",
+"value": "10500",
+"ok": true,
+"status": "OK",
+"min_conf": 0.509,
+"strict": false
+},
+{
+"i": 112,
+"truth": "3612",
+"value": "3612",
+"ok": true,
+"status": "OK",
+"min_conf": 0.545,
+"strict": false
+},
+{
+"i": 113,
+"truth": "657",
+"value": "657",
+"ok": true,
+"status": "OK",
+"min_conf": 0.421,
+"strict": false
+},
+{
+"i": 114,
+"truth": "11366",
+"value": "11366",
+"ok": true,
+"status": "OK",
+"min_conf": 0.593,
+"strict": true
+},
+{
+"i": 115,
+"truth": "2940",
+"value": "2940",
+"ok": true,
+"status": "OK",
+"min_conf": 0.499,
+"strict": false
+},
+{
+"i": 116,
+"truth": "982",
+"value": "982",
+"ok": true,
+"status": "OK",
+"min_conf": 0.605,
+"strict": true
+},
+{
+"i": 117,
+"truth": "1202",
+"value": "1202",
+"ok": true,
+"status": "OK",
+"min_conf": 0.508,
+"strict": false
+},
+{
+"i": 118,
+"truth": "1908",
+"value": "1908",
+"ok": true,
+"status": "OK",
+"min_conf": 0.621,
+"strict": true
+},
+{
+"i": 119,
+"truth": "1093",
+"value": "1093",
+"ok": true,
+"status": "OK",
+"min_conf": 0.545,
+"strict": false
+},
+{
+"i": 120,
+"truth": "1198",
+"value": "1198",
+"ok": true,
+"status": "OK",
+"min_conf": 0.401,
+"strict": false
+},
+{
+"i": 121,
+"truth": "152",
+"value": "152",
+"ok": true,
+"status": "OK",
+"min_conf": 0.508,
+"strict": false
+},
+{
+"i": 122,
+"truth": "198",
+"value": "198",
+"ok": true,
+"status": "OK",
+"min_conf": 0.539,
+"strict": false
+},
+{
+"i": 123,
+"truth": "29",
+"value": "20",
+"ok": false,
+"status": "OK",
+"min_conf": 0.488,
+"strict": false
+},
+{
+"i": 124,
+"truth": "2432",
+"value": "2432",
+"ok": true,
+"status": "OK",
+"min_conf": 0.55,
+"strict": true
+},
+{
+"i": 125,
+"truth": "1270",
+"value": "1270",
+"ok": true,
+"status": "OK",
+"min_conf": 0.406,
+"strict": false
+},
+{
+"i": 126,
+"truth": "123",
+"value": "123",
+"ok": true,
+"status": "OK",
+"min_conf": 0.525,
+"strict": false
+},
+{
+"i": 127,
+"truth": "1347",
+"value": "1247",
+"ok": false,
+"status": "OK",
+"min_conf": 0.302,
+"strict": false
+},
+{
+"i": 128,
+"truth": "250",
+"value": "250",
+"ok": true,
+"status": "OK",
+"min_conf": 0.563,
+"strict": false
+},
+{
+"i": 129,
+"truth": "22",
+"value": "22",
+"ok": true,
+"status": "OK",
+"min_conf": 0.534,
+"strict": false
+},
+{
+"i": 130,
+"truth": "233",
+"value": "233",
+"ok": true,
+"status": "OK",
+"min_conf": 0.417,
+"strict": false
+},
+{
+"i": 131,
+"truth": "468",
+"value": "468",
+"ok": true,
+"status": "OK",
+"min_conf": 0.561,
+"strict": true
+},
+{
+"i": 132,
+"truth": "83",
+"value": "83",
+"ok": true,
+"status": "OK",
+"min_conf": 0.507,
+"strict": false
+},
+{
+"i": 133,
+"truth": "2744",
+"value": "2744",
+"ok": true,
+"status": "OK",
+"min_conf": 0.559,
+"strict": false
+},
+{
+"i": 134,
+"truth": "280",
+"value": "280",
+"ok": true,
+"status": "OK",
+"min_conf": 0.633,
+"strict": true
+},
+{
+"i": 135,
+"truth": "105",
+"value": "105",
+"ok": true,
+"status": "OK",
+"min_conf": 0.444,
+"strict": false
+},
+{
+"i": 136,
+"truth": "2523",
+"value": "2623",
+"ok": false,
+"status": "OK",
+"min_conf": 0.368,
+"strict": false
+},
+{
+"i": 137,
+"truth": "129484",
+"value": "129484",
+"ok": true,
+"status": "OK",
+"min_conf": 0.477,
+"strict": false
+},
+{
+"i": 138,
+"truth": "1397",
+"value": "1397",
+"ok": true,
+"status": "OK",
+"min_conf": 0.523,
+"strict": false
+},
+{
+"i": 139,
+"truth": "26106",
+"value": "26106",
+"ok": true,
+"status": "OK",
+"min_conf": 0.518,
+"strict": false
+},
+{
+"i": 140,
+"truth": "716",
+"value": "716",
+"ok": true,
+"status": "OK",
+"min_conf": 0.504,
+"strict": false
+},
+{
+"i": 141,
+"truth": "2263",
+"value": "2263",
+"ok": true,
+"status": "OK",
+"min_conf": 0.556,
+"strict": true
+},
+{
+"i": 142,
+"truth": "9288",
+"value": "9218",
+"ok": false,
+"status": "OK",
+"min_conf": 0.352,
+"strict": false
+},
+{
+"i": 143,
+"truth": "1416",
+"value": "1416",
+"ok": true,
+"status": "OK",
+"min_conf": 0.485,
+"strict": false
+},
+{
+"i": 144,
+"truth": "5619",
+"value": "100561",
+"ok": false,
+"status": "OK",
+"min_conf": 0.366,
+"strict": false
+},
+{
+"i": 145,
+"truth": "12264",
+"value": "12264",
+"ok": true,
+"status": "OK",
+"min_conf": 0.525,
+"strict": false
+},
+{
+"i": 146,
+"truth": "1352",
+"value": "1352",
+"ok": true,
+"status": "OK",
+"min_conf": 0.379,
+"strict": false
+},
+{
+"i": 147,
+"truth": "573",
+"value": "573",
+"ok": true,
+"status": "OK",
+"min_conf": 0.534,
+"strict": false
+},
+{
+"i": 148,
+"truth": "26",
+"value": "26",
+"ok": true,
+"status": "OK",
+"min_conf": 0.593,
+"strict": true
+},
+{
+"i": 149,
+"truth": "625",
+"value": "625",
+"ok": true,
+"status": "OK",
+"min_conf": 0.661,
+"strict": true
+},
+{
+"i": 150,
+"truth": "2400",
+"value": "2400",
+"ok": true,
+"status": "OK",
+"min_conf": 0.505,
+"strict": false
+},
+{
+"i": 151,
+"truth": "2250",
+"value": "2250",
+"ok": true,
+"status": "OK",
+"min_conf": 0.71,
+"strict": true
+},
+{
+"i": 152,
+"truth": "2296",
+"value": "2296",
+"ok": true,
+"status": "OK",
+"min_conf": 0.528,
+"strict": false
+},
+{
+"i": 153,
+"truth": "2578",
+"value": "2578",
+"ok": true,
+"status": "OK",
+"min_conf": 0.408,
+"strict": false
+},
+{
+"i": 154,
+"truth": "2645",
+"value": "2645",
+"ok": true,
+"status": "OK",
+"min_conf": 0.459,
+"strict": false
+},
+{
+"i": 155,
+"truth": "297",
+"value": "247",
+"ok": false,
+"status": "OK",
+"min_conf": 0.369,
+"strict": false
+},
+{
+"i": 156,
+"truth": "5474",
+"value": "5474",
+"ok": true,
+"status": "OK",
+"min_conf": 0.341,
+"strict": false
+},
+{
+"i": 157,
+"truth": "3232",
+"value": "3232",
+"ok": true,
+"status": "OK",
+"min_conf": 0.598,
+"strict": true
+},
+{
+"i": 158,
+"truth": "9288",
+"value": "9288",
+"ok": true,
+"status": "OK",
+"min_conf": 0.485,
+"strict": false
+},
+{
+"i": 159,
+"truth": "2553",
+"value": "2553",
+"ok": true,
+"status": "OK",
+"min_conf": 0.523,
+"strict": false
+},
+{
+"i": 160,
+"truth": "4293",
+"value": "4293",
+"ok": true,
+"status": "OK",
+"min_conf": 0.601,
+"strict": true
+},
+{
+"i": 161,
+"truth": "313",
+"value": "313",
+"ok": true,
+"status": "OK",
+"min_conf": 0.574,
+"strict": true
+},
+{
+"i": 162,
+"truth": "5406",
+"value": "5406",
+"ok": true,
+"status": "OK",
+"min_conf": 0.484,
+"strict": false
+},
+{
+"i": 163,
+"truth": "2922",
+"value": "2922",
+"ok": true,
+"status": "OK",
+"min_conf": 0.524,
+"strict": false
+},
+{
+"i": 164,
+"truth": "5474",
+"value": "547",
+"ok": false,
+"status": "OK",
+"min_conf": 0.366,
+"strict": false
+},
+{
+"i": 165,
+"truth": "373",
+"value": "373",
+"ok": true,
+"status": "OK",
+"min_conf": 0.486,
+"strict": false
+},
+{
+"i": 166,
+"truth": "2946",
+"value": "2946",
+"ok": true,
+"status": "OK",
+"min_conf": 0.528,
+"strict": false
+},
+{
+"i": 167,
+"truth": "12774",
+"value": "12774",
+"ok": true,
+"status": "OK",
+"min_conf": 0.443,
+"strict": false
+},
+{
+"i": 168,
+"truth": "2489",
+"value": "2489",
+"ok": true,
+"status": "OK",
+"min_conf": 0.496,
+"strict": false
+},
+{
+"i": 169,
+"truth": "1321",
+"value": "1321",
+"ok": true,
+"status": "OK",
+"min_conf": 0.571,
+"strict": true
+},
+{
+"i": 170,
+"truth": "0",
+"value": "0",
+"ok": true,
+"status": "OK",
+"min_conf": 0.611,
+"strict": true
+},
+{
+"i": 171,
+"truth": "2550",
+"value": "2550",
+"ok": true,
+"status": "OK",
+"min_conf": 0.687,
+"strict": true
+},
+{
+"i": 172,
+"truth": "4774",
+"value": "4774",
+"ok": true,
+"status": "OK",
+"min_conf": 0.535,
+"strict": false
+},
+{
+"i": 173,
+"truth": "220",
+"value": "220",
+"ok": true,
+"status": "OK",
+"min_conf": 0.594,
+"strict": true
+},
+{
+"i": 174,
+"truth": "5433",
+"value": "5433",
+"ok": true,
+"status": "OK",
+"min_conf": 0.429,
+"strict": false
+},
+{
+"i": 175,
+"truth": "3039",
+"value": "3039",
+"ok": true,
+"status": "OK",
+"min_conf": 0.57,
+"strict": true
+},
+{
+"i": 176,
+"truth": "6345",
+"value": "6345",
+"ok": true,
+"status": "OK",
+"min_conf": 0.428,
+"strict": false
+}
+]
+}
