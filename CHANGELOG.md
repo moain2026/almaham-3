@@ -83,3 +83,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - `lab/zbook/{setup_tunnel_vps,bootstrap_zbook,check_zbook}.sh`: third training machine via reverse SSH tunnel (forward-only VPS user, limited ZBook user). Keys never in git; filled bootstrap only on the VPS behind a one-off token.
 - `lab/webdemo/server.py`: `/dl?f=&t=` token-gated private download route (env `DL_DIR`, `DL_TOKEN`); 404 otherwise. Deployed.
 - `docs/handoff/prompt-for-optical2-2026-10-21.md`: paste-ready tasks for the second agent (loss-masking experiment; Android capture hardening).
+
+### 2026-10-24 — Astra r2 review
+- `docs/handoff/review-of-optical2-r2-2026-10-24.md`: independent recount of optical2 @aca3e59 parity JSON (A 49/49, B 49/49 from original JPEG; pixels 196/196 ≤1; timing +10.86/+2.14 ms median, +20.29/+9.22 worst). Parity fix accepted; no ship, no gate merge.
+- `docs/handoff/prompt-for-optical2-2026-10-24-r3.md`: next task for Astra — close the timing gap (≤+5 ms locator, ≤+2 ms reader) without breaking 49/49.
