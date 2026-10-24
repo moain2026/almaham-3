@@ -1,4 +1,12 @@
 ## [Unreleased] — 2026-10-20 جلسة الوكيل S (الخليفة)
+
+## 2026-10-24 (وكيل S الخليفة)
+- fix(lab): `eval_vote.py` يتخطى الصور المقروءة بلا صندوق سطر مرجعي (23072) — كان يُسقط `eval_ckpt.sh` منذ GT v3.
+- fix(autotrain/Contabo): `HOME=/root` في خدمتي systemd + credential helper على مستوى النظام؛ استرداد 64 دورة غير مدفوعة (10-21→10-24) إلى `auto-training` ودمجها هنا؛ أرشيف الخاص `92ce3a2`.
+- eval: 4 قرّاء مستأنفون من S السابق (ft6m2_cry_s1، ft6m3_cry_s1، ft6m3_s0/s1) — صفوف في runs.md.
+- docs: `docs/research/autotrain-seed-analysis-2026-10-24.md` (n=27 محدِّد، n=31 قارئ).
+- ops: `almaham-autotrain-reader` متوقفة/معطّلة على Contabo (الوصفة عقيمة بقياس 35 تشغيلاً).
+
 - feat: `lab/webdemo/` تجربة ميدانية عبر المتصفح على https://basirapp.site/meter/ (كاميرا الهاتف → نفس المحرك → قراءة صحيحة فقط؛ حفظ الصور والتصحيحات بشكل خاص؛ `deploy_contabo.sh`، `caddy_snippet.txt`).
 - research: `docs/research/screen-autofind-2026-10-21.md` — قصّ تلقائي للشاشة (CamScanner-style) مقاس على الـ49: `lab/screen_quad.py` (OpenCV رباعي) 12/46 IoU>0.5، `lab/exp_coarse2fine.py` (محدِّد خشن→دقيق على الصورة الكاملة) 13/46 مقابل A 22/46. مرفوض للشحن؛ الطريق = بيانات صناديق شاشة + تدريب على صور كاملة.
 - repro: 19/46 A, wrong-confident 0 أُعيد إنتاجه في البيئة الجديدة (`eval_repro_2026-10-20.log`). الصور الـ49 في المستودع الخاص (49/49).

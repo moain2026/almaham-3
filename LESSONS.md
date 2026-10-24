@@ -38,3 +38,6 @@
 - **2026-10-21 — The credit-limit interruption at ~13:15 مكة killed 2 of 4 training processes silently (ft6m3_s0 at 1500, s1 at 1250; the two started later survived). Always check `pgrep -c` + log mtime after any interruption; resume from the 250-step checkpoints (done: *_resume.log, remaining steps only, cosine restarts — note in runs.md).**
 
 - **2026-10-21 — Two silent kills of manual runs (no `setsid`). Always `setsid nohup … </dev/null &` or use lab/autotrain (systemd on Contabo).**
+
+- **2026-10-24 — خدمة systemd بلا `HOME` = git بلا credentials: حلقتا Contabo درّبتا 3 أيام و«دفعتا» 64 مرة إلى لا شيء (`fatal: could not read Username`)، وصفحة النتائج ظلّت تعرض تشغيلين. الدرس: (1) أي خدمة تدفع إلى git تحتاج `Environment=HOME=/root` أو `git config --system credential.helper`؛ (2) `auto_push.sh` يجب أن يرفع إنذاراً مرئياً (ملف `PUSH_FAILED` في النتائج المنشورة) لا سطراً في سجل لا يقرؤه أحد؛ (3) اختبر الدفع من داخل الخدمة نفسها (`systemd-run`) لا من صدفة SSH.**
+- **2026-10-24 — بذرة واحدة تكذب: 27 بذرة لنفس وصفة المحدِّد تعطي A 18–25 وB 17–23 و34: 21–25. فرق «+2» بين تشغيلين ببذرة واحدة = ضوضاء. وأعلى بذرة على الميزان هي ذيل التوزيع لا «الأفضل» — اختيارها = ضبط على مجموعة الاختبار. القاعدة: ادّعاء تحسّن يحتاج ≥3 بذور ومتوسطاً ومدى؛ واختيار النموذج يكون بمتوسط الأوزان أو على val محجوز، لا بالذروة على الـ49/34.**

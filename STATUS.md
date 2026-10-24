@@ -158,3 +158,9 @@ updated: 2026-10-21
 - Agents: D → `docs/handoff/agentS-to-agentD-2026-10-21.md`; optical2/GPT-Astra (`moain2026/almaham-optical2-private`, PR5/6/7) → `agentS-to-optical2-2026-10-21{,-r2,-r3,-r4}.md` (Crystal synth merged 722d1cc; segverify_v2 candidate AUC 0.71; Android PR6 awaits APK+parity).
 - Successor: `docs/prompts/SUCCESSOR-AGENT-S-2026-10-21.md`, `docs/runbooks/resume-training.md`, private `training_shards/2026-10-21_m3/`. Secrets with owner only.
 - Lesson: runs launched without `setsid` died twice with the tool shell; autotrain loop/systemd is the only safe way.
+
+## 2026-10-24 06:50 مكة — وكيل S الخليفة: المطابقة ✔، 64 دورة Contabo مستردّة، Crystal الاصطناعي مغلق
+- **المطابقة:** locator_m1_augv2 + reader_ft6m2_s1 ⇒ A 22/39، B 19/39، 34: 21/34 — مطابق للمرجع (`benchmark/results/engines/*_check*`). إصلاح `eval_vote.py` (كان ينهار على 23072 المقروءة في GT v3 بلا صندوق سطر).
+- **اكتشاف:** حلقتا Contabo عملتا 3 أيام (27 محدِّداً + 31 قارئاً) لكن الدفع فشل كل مرة (systemd بلا HOME ⇒ بلا credentials). أُصلح؛ كل شيء الآن في `genspark_ai_developer` (دمج auto-training) والخاص (`92ce3a2`).
+- **توزيع البذور (`docs/research/autotrain-seed-analysis-2026-10-24.md`):** محدِّد m3: 34 = 23.0±1.3 (المرجع 21؛ كل البذور ≥21)، B 20.3±1.7، A 21.3±1.7؛ لكن بوابة ≥0.55&alt تقبل 1.37 خطأ متوسطاً (المرجع 0). قارئ ft6m3+Crystal اصطناعي: 34 = 19.8±0.6، Crystal 2/7 في 31/31 ⇒ **Crystal الاصطناعي v2 مغلق سلبياً**. حلقة القارئ أُوقفت؛ المحدِّد يواصل.
+- **المنشور لم يتغيّر** (new = m1loc_ft6m2_s1): لا أنشر «أفضل بذرة» مختارة على الميزان. التالي: weight averaging للمحدِّد + بوابة بإشارة توطين ⇒ ثم نشر وشحن.
