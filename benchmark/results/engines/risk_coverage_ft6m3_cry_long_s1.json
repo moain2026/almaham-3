@@ -82,19 +82,19 @@
   "OK & min_conf>=0.45": {
    "all": {
     "n": 73,
-    "accepted": 40,
+    "accepted": 41,
     "correct": 34,
-    "wrong": 6,
-    "coverage": 0.548,
-    "precision": 0.85
+    "wrong": 7,
+    "coverage": 0.562,
+    "precision": 0.829
    },
    "49B": {
     "n": 39,
-    "accepted": 19,
+    "accepted": 20,
     "correct": 15,
-    "wrong": 4,
-    "coverage": 0.487,
-    "precision": 0.789
+    "wrong": 5,
+    "coverage": 0.513,
+    "precision": 0.75
    },
    "TH34": {
     "n": 34,
@@ -108,19 +108,19 @@
   "OK & min_conf>=0.55": {
    "all": {
     "n": 73,
-    "accepted": 23,
-    "correct": 20,
-    "wrong": 3,
-    "coverage": 0.315,
-    "precision": 0.87
+    "accepted": 21,
+    "correct": 19,
+    "wrong": 2,
+    "coverage": 0.288,
+    "precision": 0.905
    },
    "49B": {
     "n": 39,
-    "accepted": 11,
-    "correct": 9,
-    "wrong": 2,
-    "coverage": 0.282,
-    "precision": 0.818
+    "accepted": 9,
+    "correct": 8,
+    "wrong": 1,
+    "coverage": 0.231,
+    "precision": 0.889
    },
    "TH34": {
     "n": 34,
@@ -134,18 +134,18 @@
   "OK & min_conf>=0.65": {
    "all": {
     "n": 73,
-    "accepted": 6,
-    "correct": 5,
+    "accepted": 5,
+    "correct": 4,
     "wrong": 1,
-    "coverage": 0.082,
-    "precision": 0.833
+    "coverage": 0.068,
+    "precision": 0.8
    },
    "49B": {
     "n": 39,
-    "accepted": 2,
-    "correct": 2,
+    "accepted": 1,
+    "correct": 1,
     "wrong": 0,
-    "coverage": 0.051,
+    "coverage": 0.026,
     "precision": 1.0
    },
    "TH34": {
@@ -160,19 +160,19 @@
   "OK & min_conf>=0.55 & alt<0.5": {
    "all": {
     "n": 73,
-    "accepted": 20,
+    "accepted": 19,
     "correct": 18,
-    "wrong": 2,
-    "coverage": 0.274,
-    "precision": 0.9
+    "wrong": 1,
+    "coverage": 0.26,
+    "precision": 0.947
    },
    "49B": {
     "n": 39,
-    "accepted": 8,
+    "accepted": 7,
     "correct": 7,
-    "wrong": 1,
-    "coverage": 0.205,
-    "precision": 0.875
+    "wrong": 0,
+    "coverage": 0.179,
+    "precision": 1.0
    },
    "TH34": {
     "n": 34,

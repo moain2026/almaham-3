@@ -1,7 +1,7 @@
-locator: ../data/models_ft6m3_mask_cry_s1/line_locator.onnx 842 KB, max|torch-ort| = 7.71e-04, ORT CPU 29.4 ms (sandbox x86, CPU)
-reader: ../data/models_ft6m3_mask_cry_s1/digit_reader.onnx 845 KB, max|torch-ort| = 1.91e-05, ORT CPU 12.5 ms (sandbox x86, CPU)
-A {"n_readable": 39, "exact": 19, "exact_clear": 17, "n_clear": 26, "empty": 0, "wrong": 20, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.691, "unreadable_rejected": 0, "unreadable_n": 10, "p50_ms": 59.9, "p95_ms": 108.7, "max_ms": 236.3, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 15.74, "stage_locate_p50_ms": 23.58, "stage_line_prep_p50_ms": 2.84, "stage_read_p50_ms": 9.43, "stage_assemble_p50_ms": 2.92}
-B {"n_readable": 39, "exact": 17, "exact_clear": 17, "n_clear": 26, "empty": 0, "wrong": 22, "wrong_confident": 1, "confident_total": 1, "confident_correct": 0, "digit_acc": 0.612, "unreadable_rejected": 1, "unreadable_n": 10, "p50_ms": 46.3, "p95_ms": 98.3, "max_ms": 210.4, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 8.02, "stage_locate_p50_ms": 19.95, "stage_line_prep_p50_ms": 3.26, "stage_read_p50_ms": 11.4, "stage_assemble_p50_ms": 2.03}
+locator: ../data/models_ft6m3_mask_cry_s1/line_locator.onnx 842 KB, max|torch-ort| = 2.75e-04, ORT CPU 6.2 ms (sandbox x86, CPU)
+reader: ../data/models_ft6m3_mask_cry_s1/digit_reader.onnx 845 KB, max|torch-ort| = 1.91e-05, ORT CPU 3.5 ms (sandbox x86, CPU)
+A {"n_readable": 39, "exact": 18, "exact_clear": 16, "n_clear": 26, "empty": 0, "wrong": 21, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.6513, "unreadable_rejected": 0, "unreadable_n": 10, "p50_ms": 24.9, "p95_ms": 37.1, "max_ms": 37.9, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 10.39, "stage_locate_p50_ms": 7.99, "stage_line_prep_p50_ms": 1.47, "stage_read_p50_ms": 4.03, "stage_assemble_p50_ms": 1.46}
+B {"n_readable": 39, "exact": 19, "exact_clear": 18, "n_clear": 26, "empty": 0, "wrong": 20, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.6107, "unreadable_rejected": 1, "unreadable_n": 10, "p50_ms": 20.3, "p95_ms": 25.1, "max_ms": 28.0, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 5.79, "stage_locate_p50_ms": 6.9, "stage_line_prep_p50_ms": 1.98, "stage_read_p50_ms": 3.74, "stage_assemble_p50_ms": 1.47}
     lx1, ly1, lx2, ly2 = lines[fn]
                          ~~~~~^^^^
 KeyError: '23072.jpg'
@@ -24,13 +24,13 @@ a0e012a8 CRYSTAL       truth=    319 got=    319 OK
 b11e317a EMETER_GREEN  truth= 002861 got=  28617 --
 b1553ac5 EMETER_GREEN  truth= 016459 got=  60551 --
 document TAGADOD       truth= 000825 got=    825 OK
-document SMART_MT10    truth= 009096 got=     96 --
+document SMART_MT10    truth= 009096 got=   9096 OK
 document OTHER         truth= 001285 got=   1285 OK
 document CRYSTAL       truth=    507 got=   5078 --
 e7be34e6 TOMAS_SMART   truth= 001029 got=   1029 OK
 eed38102 TAGADOD       truth= 000088 got=     88 OK
 pending- OTHER         truth=  16976 got= 169767 --
-pending- EMETER_GREEN  truth= 016121 got=    279 --
+pending- EMETER_GREEN  truth= 016121 got=     27 --
 pending- TOMAS_STATIC  truth= 007022 got=     22 --
 pending- OTHER         truth= 006285 got=   6285 OK
 pending- TOMAS_STATIC  truth= 020983 got=  20983 OK
@@ -39,11 +39,11 @@ pending- CRYSTAL       truth=    603 got= 160323 --
 pending- CRYSTAL       truth=    152 got=    152 OK
 pending- EMETER_GREEN  truth= 004207 got= 420796 --
 pending- TAGADOD       truth= 000309 got=    309 OK
-{"models": "../data/models_ft6m3_mask_cry_s1", "n": 34, "exact": 20, "by_type": {"CRYSTAL": "2/7", "EMETER_GREEN": "1/6", "OTHER": "2/4", "SMART_MT10": "0/1", "TAGADOD": "7/7", "TOMAS_SMART": "7/7", "TOMAS_STATIC": "1/2"}}
-none (any value)                 accepted  72/73  correct  37  WRONG  35  coverage 0.99 precision 0.514
-status OK                        accepted  70/73  correct  37  WRONG  33  coverage 0.96 precision 0.529
-shipped confident                accepted   1/73  correct   0  WRONG   1  coverage 0.01 precision 0.0
-OK & min_conf>=0.45              accepted  41/73  correct  35  WRONG   6  coverage 0.56 precision 0.854
-OK & min_conf>=0.55              accepted  23/73  correct  22  WRONG   1  coverage 0.32 precision 0.957
+{"models": "../data/models_ft6m3_mask_cry_s1", "n": 34, "exact": 21, "by_type": {"CRYSTAL": "2/7", "EMETER_GREEN": "1/6", "OTHER": "2/4", "SMART_MT10": "1/1", "TAGADOD": "7/7", "TOMAS_SMART": "7/7", "TOMAS_STATIC": "1/2"}}
+none (any value)                 accepted  72/73  correct  40  WRONG  32  coverage 0.99 precision 0.556
+status OK                        accepted  70/73  correct  40  WRONG  30  coverage 0.96 precision 0.571
+shipped confident                accepted   0/73  correct   0  WRONG   0  coverage 0.00 precision None
+OK & min_conf>=0.45              accepted  40/73  correct  36  WRONG   4  coverage 0.55 precision 0.9
+OK & min_conf>=0.55              accepted  24/73  correct  23  WRONG   1  coverage 0.33 precision 0.958
 OK & min_conf>=0.65              accepted   2/73  correct   2  WRONG   0  coverage 0.03 precision 1.0
-OK & min_conf>=0.55 & alt<0.5    accepted  21/73  correct  21  WRONG   0  coverage 0.29 precision 1.0
+OK & min_conf>=0.55 & alt<0.5    accepted  22/73  correct  22  WRONG   0  coverage 0.30 precision 1.0

@@ -306,8 +306,8 @@
    "file": "pending-e5624453-8262-5259-bc30-8b1a2a7810d4-ea5a7be184fc0032a8ebcfb3d19383f103f994bf037a10c44ba08cff7b78b6ed.jpg",
    "type": "EMETER_GREEN",
    "truth": "004207",
-   "value": "4028596",
-   "raw": "004028596",
+   "value": "428596",
+   "raw": "00428596",
    "status": "TOO_MANY_DIGITS",
    "ok": false
   },
