@@ -70,7 +70,7 @@ def main():
     OWNER_W = 2.0   # agent D request 2026-10-21: owner_visual readings get higher sampling weight
     X, B, LX, LB, keys, by_type, review, SW, files_ok = [], [], [], [], [], {}, [], [], []
     for fn, res in sorted(tl.items()):
-        text = labels.get(fn)
+        text = labels.get(fn) or (res.get("text") if res and res.get("pseudo") else None)   # pseudo_label.py entries carry their own text
         if not res or not text:
             reasons["no_tl"] += 1; continue
         if fn not in boxes:
@@ -82,7 +82,7 @@ def main():
             reasons["excluded"] += 1; continue
         if fn in multi:
             reasons["multi"] += 1; continue
-        human = bool(res.get("R"))   # box verified by agent R (2026-10-24): anti-poisoning filters are for UNREVIEWED weak labels
+        human = bool(res.get("R")) or bool(res.get("pseudo"))   # R-verified box, or pseudo-label (already passed the dual-pair+TTA gate)
         t = types.get(fn, "?")
         if not human and res["score"] < MIN_SCORE:
             reasons["low_score"] += 1; continue
@@ -114,7 +114,7 @@ def main():
             B.append((i, int(chr_), x1, y1, x2, y2))
         B.append((i, CLS_LINE, (lx1 - mx1 - sx1) * rs + rox, (ly1 - my1 - sy1) * rs + roy, (lx2 - mx1 - sx1) * rs + rox, (ly2 - my1 - sy1) * rs + roy))
         keys.append(fn.replace("pending-", "")[:8]); files_ok.append(fn); by_type[t] = by_type.get(t, 0) + 1; reasons["ok"] += 1
-        SW.append(OWNER_W if conf.get(fn) == "owner_visual" else 1.0)
+        SW.append(OWNER_W if conf.get(fn) == "owner_visual" else (float(os.environ.get("PSEUDO_W", "0.5")) if res.get("pseudo") else 1.0))
         if len(review) < audit * 3:
             vis = crop.copy(); cv2.rectangle(vis, (int(lx1 - mx1), int(ly1 - my1)), (int(lx2 - mx1), int(ly2 - my1)), (0, 0, 255), max(2, cw // 200))
             vis = cv2.resize(vis, (300, int(300 * ch / cw)))[:300]; vis = np.vstack([vis, np.full((300 - vis.shape[0], 300, 3), 128, np.uint8)]) if vis.shape[0] < 300 else vis
@@ -139,6 +139,19 @@ def main():
         keys = [f"c{find(i)}" for i in range(len(hs))]
         print("phash clusters:", len(set(keys)), "of", len(keys), "photos (T=%d)" % T)
     uniq = sorted(set(keys)); rng = np.random.RandomState(0); rng.shuffle(uniq); val_keys = set(uniq[: max(1, int(0.15 * len(uniq)))])
+    if os.environ.get("FIXED_VAL"):
+        # m5+ (2026-10-24): keep the val set IDENTICAL to a previous build (its <out>_keys.json "files" map) so clean65 /
+        # val-m4 numbers stay comparable; every new photo (incl. pseudo-labels) goes to train. A new photo that falls in
+        # the pHash cluster of a fixed-val photo is DROPPED from train (leak guard).
+        fv = json.load(open(os.environ["FIXED_VAL"]))["files"]; val_files = {f for f, s_ in fv.items() if s_ == "val"}
+        val_keys = {k for fn, k in zip(files_ok, keys) if fn in val_files}
+        drop = [i for i, (fn, k) in enumerate(zip(files_ok, keys)) if k in val_keys and fn not in val_files]
+        print(f"FIXED_VAL: {len(val_files)} val files kept, {len(drop)} new photos dropped (cluster of a val photo), pseudo in val = 0")
+        keep = [i for i in range(len(keys)) if i not in set(drop)]
+        X, LX = X[keep], LX[keep]; remap_k = {o: n for n, o in enumerate(keep)}
+        B = np.array([(remap_k[int(b[0])], *b[1:]) for b in B if int(b[0]) in remap_k], np.float32).reshape(-1, 6)
+        LB = np.array([(remap_k[int(b[0])], *b[1:]) for b in LB if int(b[0]) in remap_k], np.float32).reshape(-1, 6)
+        keys = [keys[i] for i in keep]; files_ok = [files_ok[i] for i in keep]; SW = [SW[i] for i in keep]; uniq = sorted(set(keys))
     for name, pick in (("train", lambda k: k not in val_keys), ("val", lambda k: k in val_keys)):
         idx = [i for i, k in enumerate(keys) if pick(k)]; remap = {o: n for n, o in enumerate(idx)}
         Bi = np.array([(remap[int(b[0])], *b[1:]) for b in B if int(b[0]) in remap], np.float32).reshape(-1, 6)
