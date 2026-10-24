@@ -21,7 +21,8 @@ while true; do
     if [ "$ROLE" = reader ]; then
       line="auto_rd_s$s | reader | weights/reader_ft6m2_s1.pt | ../data/erp/ft/ft6m3 | ../data/synth/line_s1,../data/synth/line_crystal_opt2 | 3000 | 1 | SEED=$s AUG_SEED=$s"
     else
-      line="auto_loc_s$s | locator | weights/locator_m1_augv2.pt | ../data/erp/ft/m3 | ../data/synth/scene_s1 | 3000 | 3 | SEED=$s AUG_SEED=$s"
+      # 2026-10-24: m4 (903 photos, pHash split) replaces m3 — locator_m4_s0 beat the m3 reference on all axes (runs.md)
+      line="auto_loc_s$s | locator | weights/locator_m1_augv2.pt | ../data/erp/ft/m4 | ../data/synth/scene_s1 | 3000 | 3 | SEED=$s AUG_SEED=$s EMA=0"
     fi
   else
     python3 - "$Q" <<'PY'
@@ -35,7 +36,9 @@ PY
   env $extra AUG=v2 TORCH_THREADS=$thr python3 erp_finetune.py train "$init" "$real" "$synth" "$steps" "weights/${kind}_$tag.pt" "$kind" > "logs/train_${kind}_$tag.log" 2>&1
   rc=$?; echo "train rc=$rc $(grep '^step' logs/train_${kind}_$tag.log | tail -1)"
   if [ $rc -eq 0 ]; then
-    if [ "$kind" = reader ]; then LOC=${BEST_LOC:-weights/locator_m1_augv2.pt}; RD=weights/reader_$tag.pt; else LOC=weights/locator_$tag.pt; RD=${BEST_RD:-weights/reader_ft6m2_s1.pt}; fi
+    # partner weights for the pair evaluation = current release candidate (2026-10-24: locator_m4_s0 + reader_m4_s0)
+    if [ "$kind" = reader ]; then LOC=${BEST_LOC:-weights/locator_m4_s0.pt}; RD=weights/reader_$tag.pt; else LOC=weights/locator_$tag.pt; RD=${BEST_RD:-weights/reader_m4_s0.pt}; fi
+    [ -f "$LOC" ] || LOC=weights/locator_m1_augv2.pt; [ -f "$RD" ] || RD=weights/reader_ft6m2_s1.pt
     TORCH_THREADS=$thr bash eval_ckpt.sh "$LOC" "$RD" "$tag" > "logs/eval_$tag.log" 2>&1
     TORCH_THREADS=$thr python3 eval_testset_human.py "../data/models_$tag" "$tag" >> "logs/eval_$tag.log" 2>&1
     TORCH_THREADS=$thr python3 risk_coverage.py "../data/models_$tag" "$tag" >> "logs/eval_$tag.log" 2>&1
