@@ -39,7 +39,9 @@ def main(models_dir, tag):
             line_a = crop_a
         f = forensic_reader.read_line(line_a) if line_a.size else {"text": "", "digits": []}
         out["A"].append((fn, truth, r, f, vote.vote(r, f)))
-        # mode L: oracle line crop for both
+        # mode L: oracle line crop for both (skip photos readable in GT v3 but without an oracle line box, e.g. 23072)
+        if fn not in lines:
+            continue
         lx1, ly1, lx2, ly2 = lines[fn]
         lw, lh = (lx2 - lx1) * W, (ly2 - ly1) * H
         line_l = im[int(max(0, ly1 * H - PAD_Y * lh)):int(min(H, ly2 * H + PAD_Y * lh)), int(max(0, lx1 * W - PAD_X * lw)):int(min(W, lx2 * W + PAD_X * lw))]
