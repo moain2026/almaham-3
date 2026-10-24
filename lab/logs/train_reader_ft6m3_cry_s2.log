@@ -1,17 +1,17 @@
 argv ['erp_finetune.py', 'train', 'weights/reader_ft6m1_augv2.pt', '../data/erp/ft/ft6m3', '../data/synth/line_s1,../data/synth/line_crystal_opt2', '3000', 'weights/reader_ft6m3_cry_s2.pt', 'reader'] threads 1 seed 2
 ignore_row False
-/home/user/webapp/lab/erp_finetune.py:233: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+/opt/almaham/almaham-3/lab/erp_finetune.py:233: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
   peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
-step 0 loss 1.512 real_val_exact 144/173 3s
-step 250 loss 1.204 real_val_exact 138/173 241s
-step 500 loss 1.163 real_val_exact 138/173 482s
-step 750 loss 1.158 real_val_exact 139/173 710s
-step 1000 loss 1.146 real_val_exact 138/173 939s
-step 1250 loss 1.144 real_val_exact 143/173 1176s
-step 1500 loss 1.124 real_val_exact 144/173 1409s
-step 1750 loss 1.142 real_val_exact 142/173 1642s
-step 2000 loss 1.107 real_val_exact 144/173 1882s
-step 2250 loss 1.132 real_val_exact 143/173 2111s
-step 2500 loss 1.095 real_val_exact 146/173 2343s
-step 2750 loss 1.164 real_val_exact 148/173 2576s
-step 2999 loss 1.152 real_val_exact 147/173 2812s
+step 0 loss 1.512 real_val_exact 144/173 8s
+step 250 loss 1.205 real_val_exact 137/173 573s
+step 500 loss 1.163 real_val_exact 139/173 1125s
+step 750 loss 1.158 real_val_exact 137/173 1637s
+step 1000 loss 1.146 real_val_exact 139/173 2174s
+step 1250 loss 1.144 real_val_exact 142/173 2690s
+step 1500 loss 1.124 real_val_exact 143/173 3197s
+step 1750 loss 1.142 real_val_exact 144/173 3687s
+step 2000 loss 1.107 real_val_exact 144/173 4196s
+step 2250 loss 1.132 real_val_exact 145/173 4698s
+step 2500 loss 1.096 real_val_exact 146/173 5189s
+step 2750 loss 1.164 real_val_exact 148/173 5698s
+step 2999 loss 1.151 real_val_exact 147/173 6193s

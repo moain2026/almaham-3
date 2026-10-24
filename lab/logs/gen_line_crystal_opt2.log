@@ -1,0 +1,2 @@
+argv ['gen_det_data.py', 'line', '3000', '../data/synth/line_crystal_opt2', '77']
+(3000, 64, 448, 3) 18914 boxes

@@ -2,10 +2,10 @@
  "summary": {
   "models": "../data/models_ft6m3_cry_s2",
   "n": 34,
-  "exact": 19,
+  "exact": 20,
   "by_type": {
    "CRYSTAL": "2/7",
-   "EMETER_GREEN": "1/6",
+   "EMETER_GREEN": "2/6",
    "OTHER": "2/4",
    "SMART_MT10": "0/1",
    "TAGADOD": "7/7",
@@ -36,8 +36,8 @@
    "file": "1f161d14-f05e-46b5-a525-4ca443cc75b0.jpg",
    "type": "CRYSTAL",
    "truth": "93",
-   "value": "88193",
-   "raw": "88193",
+   "value": "881938",
+   "raw": "881938",
    "status": "OK",
    "ok": false
   },
@@ -162,10 +162,10 @@
    "file": "b11e317a-43d5-4dc0-8248-ed008652b0c2.jpg",
    "type": "EMETER_GREEN",
    "truth": "002861",
-   "value": "28617",
-   "raw": "0028617",
+   "value": "2861",
+   "raw": "002861",
    "status": "OK",
-   "ok": false
+   "ok": true
   },
   {
    "file": "b1553ac5-205b-4ddd-b4b3-9ae98dec26dc.jpg",
@@ -288,8 +288,8 @@
    "file": "pending-e2d9f4b5-7b56-4d53-b525-ce20901808ed-038250179f410435d8e0ddfa93500eb489d9f60c973f088fbc481c566e75b035.jpg",
    "type": "CRYSTAL",
    "truth": "603",
-   "value": "1160323",
-   "raw": "1160323",
+   "value": "160323",
+   "raw": "160323",
    "status": "OK",
    "ok": false
   },

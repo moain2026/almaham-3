@@ -5,52 +5,52 @@
    "all": {
     "n": 73,
     "accepted": 72,
-    "correct": 38,
-    "wrong": 34,
+    "correct": 40,
+    "wrong": 32,
     "coverage": 0.986,
-    "precision": 0.528
+    "precision": 0.556
    },
    "49B": {
     "n": 39,
     "accepted": 39,
-    "correct": 19,
-    "wrong": 20,
+    "correct": 20,
+    "wrong": 19,
     "coverage": 1.0,
-    "precision": 0.487
+    "precision": 0.513
    },
    "TH34": {
     "n": 34,
     "accepted": 33,
-    "correct": 19,
-    "wrong": 14,
+    "correct": 20,
+    "wrong": 13,
     "coverage": 0.971,
-    "precision": 0.576
+    "precision": 0.606
    }
   },
   "status OK": {
    "all": {
     "n": 73,
-    "accepted": 70,
-    "correct": 38,
-    "wrong": 32,
-    "coverage": 0.959,
-    "precision": 0.543
+    "accepted": 71,
+    "correct": 40,
+    "wrong": 31,
+    "coverage": 0.973,
+    "precision": 0.563
    },
    "49B": {
     "n": 39,
-    "accepted": 38,
-    "correct": 19,
+    "accepted": 39,
+    "correct": 20,
     "wrong": 19,
-    "coverage": 0.974,
-    "precision": 0.5
+    "coverage": 1.0,
+    "precision": 0.513
    },
    "TH34": {
     "n": 34,
     "accepted": 32,
-    "correct": 19,
-    "wrong": 13,
+    "correct": 20,
+    "wrong": 12,
     "coverage": 0.941,
-    "precision": 0.594
+    "precision": 0.625
    }
   },
   "shipped confident": {
@@ -82,45 +82,45 @@
   "OK & min_conf>=0.45": {
    "all": {
     "n": 73,
-    "accepted": 37,
-    "correct": 33,
-    "wrong": 4,
-    "coverage": 0.507,
-    "precision": 0.892
+    "accepted": 39,
+    "correct": 34,
+    "wrong": 5,
+    "coverage": 0.534,
+    "precision": 0.872
    },
    "49B": {
     "n": 39,
-    "accepted": 19,
+    "accepted": 20,
     "correct": 16,
-    "wrong": 3,
-    "coverage": 0.487,
-    "precision": 0.842
+    "wrong": 4,
+    "coverage": 0.513,
+    "precision": 0.8
    },
    "TH34": {
     "n": 34,
-    "accepted": 18,
-    "correct": 17,
+    "accepted": 19,
+    "correct": 18,
     "wrong": 1,
-    "coverage": 0.529,
-    "precision": 0.944
+    "coverage": 0.559,
+    "precision": 0.947
    }
   },
   "OK & min_conf>=0.55": {
    "all": {
     "n": 73,
-    "accepted": 21,
+    "accepted": 22,
     "correct": 21,
-    "wrong": 0,
-    "coverage": 0.288,
-    "precision": 1.0
+    "wrong": 1,
+    "coverage": 0.301,
+    "precision": 0.955
    },
    "49B": {
     "n": 39,
-    "accepted": 10,
+    "accepted": 11,
     "correct": 10,
-    "wrong": 0,
-    "coverage": 0.256,
-    "precision": 1.0
+    "wrong": 1,
+    "coverage": 0.282,
+    "precision": 0.909
    },
    "TH34": {
     "n": 34,
