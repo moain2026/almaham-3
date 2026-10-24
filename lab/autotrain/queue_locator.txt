@@ -1,2 +1,1 @@
 # tag | kind | init | real_prefix | synth_prefixes | steps | threads | env
-loc_m5b_s0 | locator | weights/locator_m1_augv2.pt | ../data/erp/ft/m5b | ../data/synth/scene_s1 | 3000 | 3 | SEED=0 AUG_SEED=0 EMA=0

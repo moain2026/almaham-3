@@ -25,3 +25,7 @@ RESULT auto_loc_s132: 49 A=22 B=21 | 34: 23 {'CRYSTAL': '3/7', 'EMETER_GREEN': '
 --- 2026-10-24T09:48:53Z START auto_loc_s133 (locator) init=weights/locator_m1_augv2.pt real=../data/erp/ft/m3 synth=../data/synth/scene_s1 steps=3000 thr=3 env=[SEED=133 AUG_SEED=133]
 train rc=0 step 2999 loss 1.320 real_val_line_iou50 66/68 6094s (EMA)
 RESULT auto_loc_s133: 49 A=21 B=18 | 34: 25 {'CRYSTAL': '3/7', 'EMETER_GREEN': '3/6', 'OTHER': '3/4', 'SMART_MT10': '1/1', 'TAGADOD': '6/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '2/2'} | accepted accepted correct correct wrong WRONG
+[auto_push] pushed auto-training 95ceceb
+--- 2026-10-24T11:32:40Z START loc_m5b_s0 (locator) init=weights/locator_m1_augv2.pt real=../data/erp/ft/m5b synth=../data/synth/scene_s1 steps=3000 thr=3 env=[SEED=0 AUG_SEED=0 EMA=0]
+train rc=0 step 2999 loss 1.359 real_val_line_iou50 170/177 5438s
+RESULT loc_m5b_s0: 49 A=22 B=20 | 34: 21 {'CRYSTAL': '3/7', 'EMETER_GREEN': '1/6', 'OTHER': '2/4', 'SMART_MT10': '0/1', 'TAGADOD': '7/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG
