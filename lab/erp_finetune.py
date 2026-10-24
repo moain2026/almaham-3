@@ -242,6 +242,9 @@ def real_exact(model, data):
     return ok, n
 
 
+REAL_FRAC = float(os.environ.get("REAL_FRAC", "0.5"))
+
+
 def train(init, real_prefix, synth_prefixes, steps, out, kind="reader", lr=2e-4):
     """kind=reader: shards <prefix>_{train,val}; kind=locator: shards <prefix>_loc_{train,val}.
     lr 2e-4 (reader_v2 regressed 45->39/97 when resumed at 5e-4 — lab/logs/train_reader_v2_aborted.log)."""
@@ -270,8 +273,9 @@ def train(init, real_prefix, synth_prefixes, steps, out, kind="reader", lr=2e-4)
     ema = {k: v.detach().clone() for k, v in model.state_dict().items()} if ema_decay > 0 else None
     run, t0 = None, time.time()
     for step in range(steps):
-        xr, hr, sr, orr, mr, ir = real.batch(B // 2)
-        xs, hs, ss, os_, ms, is_ = synth.batch(B - B // 2)
+        nr = int(round(B * REAL_FRAC))   # REAL_FRAC env (default 0.5 = historical 50/50); consult #2 Q5 (Fable): 70/30 untested
+        xr, hr, sr, orr, mr, ir = real.batch(nr)
+        xs, hs, ss, os_, ms, is_ = synth.batch(B - nr)
         x = torch.cat([xr, xs]); heat = torch.cat([hr, hs]); size = torch.cat([sr, ss]); off = torch.cat([orr, os_]); mask = torch.cat([mr, ms]); ign = torch.cat([ir, is_])
         hm, wh, of = model(x)
         loss = focal_loss(hm, heat, ign) + 0.1 * reg_loss(wh, size, mask) + reg_loss(of, off, mask)
