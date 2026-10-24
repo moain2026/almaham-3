@@ -1,0 +1,5 @@
+phash clusters: 773 of 850 photos (T=24)
+train (678, 64, 448, 3) 4349 boxes; locator (678, 256, 256, 3)
+val (172, 64, 448, 3) 1099 boxes; locator (172, 256, 256, 3)
+{"reasons": {"no_tl": 231, "no_meterbox": 132, "excluded": 9, "multi": 0, "low_score": 48, "short_unsafe": 95, "irregular": 44, "outside_meter": 0, "ok": 850}, "accepted": 850, "by_type": {"CRYSTAL": 138, "TOMAS_SMART": 278, "SMART_YELLOW": 117, "KENWELL": 43, "TOMAS_STATIC": 60, "TAGADOD": 120, "OTHER": 87, "GLORY": 6, "HPL": 1}, "owner_visual": 303, "owner_w": 2.0, "n_train_keys": 658, "n_val_keys": 115, "min_score": 0.35}
+audit sheet /home/user/webapp/data/review/meter_shards_m4.jpg
