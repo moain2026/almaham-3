@@ -1,0 +1,187 @@
+{
+ "models": "../data/models_auto_rd_s123",
+ "gates": {
+  "none (any value)": {
+   "all": {
+    "n": 73,
+    "accepted": 72,
+    "correct": 39,
+    "wrong": 33,
+    "coverage": 0.986,
+    "precision": 0.542
+   },
+   "49B": {
+    "n": 39,
+    "accepted": 39,
+    "correct": 20,
+    "wrong": 19,
+    "coverage": 1.0,
+    "precision": 0.513
+   },
+   "TH34": {
+    "n": 34,
+    "accepted": 33,
+    "correct": 19,
+    "wrong": 14,
+    "coverage": 0.971,
+    "precision": 0.576
+   }
+  },
+  "status OK": {
+   "all": {
+    "n": 73,
+    "accepted": 71,
+    "correct": 39,
+    "wrong": 32,
+    "coverage": 0.973,
+    "precision": 0.549
+   },
+   "49B": {
+    "n": 39,
+    "accepted": 39,
+    "correct": 20,
+    "wrong": 19,
+    "coverage": 1.0,
+    "precision": 0.513
+   },
+   "TH34": {
+    "n": 34,
+    "accepted": 32,
+    "correct": 19,
+    "wrong": 13,
+    "coverage": 0.941,
+    "precision": 0.594
+   }
+  },
+  "shipped confident": {
+   "all": {
+    "n": 73,
+    "accepted": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0.0,
+    "precision": null
+   },
+   "49B": {
+    "n": 39,
+    "accepted": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0.0,
+    "precision": null
+   },
+   "TH34": {
+    "n": 34,
+    "accepted": 0,
+    "correct": 0,
+    "wrong": 0,
+    "coverage": 0.0,
+    "precision": null
+   }
+  },
+  "OK & min_conf>=0.45": {
+   "all": {
+    "n": 73,
+    "accepted": 38,
+    "correct": 33,
+    "wrong": 5,
+    "coverage": 0.521,
+    "precision": 0.868
+   },
+   "49B": {
+    "n": 39,
+    "accepted": 19,
+    "correct": 16,
+    "wrong": 3,
+    "coverage": 0.487,
+    "precision": 0.842
+   },
+   "TH34": {
+    "n": 34,
+    "accepted": 19,
+    "correct": 17,
+    "wrong": 2,
+    "coverage": 0.559,
+    "precision": 0.895
+   }
+  },
+  "OK & min_conf>=0.55": {
+   "all": {
+    "n": 73,
+    "accepted": 21,
+    "correct": 19,
+    "wrong": 2,
+    "coverage": 0.288,
+    "precision": 0.905
+   },
+   "49B": {
+    "n": 39,
+    "accepted": 11,
+    "correct": 9,
+    "wrong": 2,
+    "coverage": 0.282,
+    "precision": 0.818
+   },
+   "TH34": {
+    "n": 34,
+    "accepted": 10,
+    "correct": 10,
+    "wrong": 0,
+    "coverage": 0.294,
+    "precision": 1.0
+   }
+  },
+  "OK & min_conf>=0.65": {
+   "all": {
+    "n": 73,
+    "accepted": 3,
+    "correct": 3,
+    "wrong": 0,
+    "coverage": 0.041,
+    "precision": 1.0
+   },
+   "49B": {
+    "n": 39,
+    "accepted": 2,
+    "correct": 2,
+    "wrong": 0,
+    "coverage": 0.051,
+    "precision": 1.0
+   },
+   "TH34": {
+    "n": 34,
+    "accepted": 1,
+    "correct": 1,
+    "wrong": 0,
+    "coverage": 0.029,
+    "precision": 1.0
+   }
+  },
+  "OK & min_conf>=0.55 & alt<0.5": {
+   "all": {
+    "n": 73,
+    "accepted": 19,
+    "correct": 17,
+    "wrong": 2,
+    "coverage": 0.26,
+    "precision": 0.895
+   },
+   "49B": {
+    "n": 39,
+    "accepted": 9,
+    "correct": 7,
+    "wrong": 2,
+    "coverage": 0.231,
+    "precision": 0.778
+   },
+   "TH34": {
+    "n": 34,
+    "accepted": 10,
+    "correct": 10,
+    "wrong": 0,
+    "coverage": 0.294,
+    "precision": 1.0
+   }
+  }
+ }
+}

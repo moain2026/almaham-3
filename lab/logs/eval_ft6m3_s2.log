@@ -1,11 +1,11 @@
-locator: ../data/models_ft6m3_s2/line_locator.onnx 842 KB, max|torch-ort| = 3.36e-04, ORT CPU 4.9 ms (sandbox x86, CPU)
-reader: ../data/models_ft6m3_s2/digit_reader.onnx 845 KB, max|torch-ort| = 3.05e-05, ORT CPU 2.7 ms (sandbox x86, CPU)
-A {"n_readable": 39, "exact": 20, "exact_clear": 19, "n_clear": 26, "empty": 0, "wrong": 19, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.7128, "unreadable_rejected": 0, "unreadable_n": 10, "p50_ms": 24.3, "p95_ms": 35.8, "max_ms": 38.0, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 10.4, "stage_locate_p50_ms": 8.14, "stage_line_prep_p50_ms": 1.54, "stage_read_p50_ms": 3.97, "stage_assemble_p50_ms": 1.48}
-B {"n_readable": 39, "exact": 19, "exact_clear": 18, "n_clear": 26, "empty": 0, "wrong": 20, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.6013, "unreadable_rejected": 3, "unreadable_n": 10, "p50_ms": 21.3, "p95_ms": 26.4, "max_ms": 31.8, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 5.76, "stage_locate_p50_ms": 7.18, "stage_line_prep_p50_ms": 1.97, "stage_read_p50_ms": 3.92, "stage_assemble_p50_ms": 1.45}
+locator: ../data/models_ft6m3_s2/line_locator.onnx 842 KB, max|torch-ort| = 1.14e-04, ORT CPU 29.1 ms (sandbox x86, CPU)
+reader: ../data/models_ft6m3_s2/digit_reader.onnx 845 KB, max|torch-ort| = 3.15e-05, ORT CPU 14.3 ms (sandbox x86, CPU)
+A {"n_readable": 39, "exact": 20, "exact_clear": 19, "n_clear": 26, "empty": 0, "wrong": 19, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.7128, "unreadable_rejected": 0, "unreadable_n": 10, "p50_ms": 58.6, "p95_ms": 105.7, "max_ms": 121.6, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 15.98, "stage_locate_p50_ms": 21.09, "stage_line_prep_p50_ms": 2.53, "stage_read_p50_ms": 10.71, "stage_assemble_p50_ms": 2.53}
+B {"n_readable": 39, "exact": 19, "exact_clear": 18, "n_clear": 26, "empty": 0, "wrong": 20, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.6077, "unreadable_rejected": 3, "unreadable_n": 10, "p50_ms": 42.6, "p95_ms": 65.6, "max_ms": 121.5, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 8.28, "stage_locate_p50_ms": 17.89, "stage_line_prep_p50_ms": 3.08, "stage_read_p50_ms": 7.51, "stage_assemble_p50_ms": 2.09}
     lx1, ly1, lx2, ly2 = lines[fn]
                          ~~~~~^^^^
 KeyError: '23072.jpg'
-0d882605 TOMAS_SMART   truth= 007919 got= 100791 --
+0d882605 TOMAS_SMART   truth= 007919 got=   7919 OK
 1677a215 EMETER_GREEN  truth= 003671 got=   3671 OK
 1f161d14 CRYSTAL       truth=     93 got= 884938 --
 1f60397e TAGADOD       truth= 000283 got=    283 OK
@@ -21,7 +21,7 @@ KeyError: '23072.jpg'
 83877b43 TOMAS_SMART   truth= 005069 got=   5069 OK
 84c310c2 TOMAS_SMART   truth= 000162 got=    162 OK
 a0e012a8 CRYSTAL       truth=    319 got=    319 OK
-b11e317a EMETER_GREEN  truth= 002861 got=   2861 OK
+b11e317a EMETER_GREEN  truth= 002861 got=  28617 --
 b1553ac5 EMETER_GREEN  truth= 016459 got=  60551 --
 document TAGADOD       truth= 000825 got=    825 OK
 document SMART_MT10    truth= 009096 got=     96 --
@@ -39,9 +39,9 @@ pending- CRYSTAL       truth=    603 got=1160323 --
 pending- CRYSTAL       truth=    152 got=    152 OK
 pending- EMETER_GREEN  truth= 004207 got= 428096 --
 pending- TAGADOD       truth= 000309 got=    309 OK
-{"models": "../data/models_ft6m3_s2", "n": 34, "exact": 19, "by_type": {"CRYSTAL": "2/7", "EMETER_GREEN": "2/6", "OTHER": "2/4", "SMART_MT10": "0/1", "TAGADOD": "7/7", "TOMAS_SMART": "5/7", "TOMAS_STATIC": "1/2"}}
+{"models": "../data/models_ft6m3_s2", "n": 34, "exact": 19, "by_type": {"CRYSTAL": "2/7", "EMETER_GREEN": "1/6", "OTHER": "2/4", "SMART_MT10": "0/1", "TAGADOD": "7/7", "TOMAS_SMART": "6/7", "TOMAS_STATIC": "1/2"}}
 none (any value)                 accepted  72/73  correct  38  WRONG  34  coverage 0.99 precision 0.528
-status OK                        accepted  70/73  correct  38  WRONG  32  coverage 0.96 precision 0.543
+status OK                        accepted  71/73  correct  38  WRONG  33  coverage 0.97 precision 0.535
 shipped confident                accepted   0/73  correct   0  WRONG   0  coverage 0.00 precision None
 OK & min_conf>=0.45              accepted  38/73  correct  33  WRONG   5  coverage 0.52 precision 0.868
 OK & min_conf>=0.55              accepted  19/73  correct  18  WRONG   1  coverage 0.26 precision 0.947

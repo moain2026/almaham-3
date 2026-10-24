@@ -1,0 +1,49 @@
+locator: ../data/models_auto_loc_s107/line_locator.onnx 842 KB, max|torch-ort| = 4.20e-04, ORT CPU 28.6 ms (sandbox x86, CPU)
+reader: ../data/models_auto_loc_s107/digit_reader.onnx 845 KB, max|torch-ort| = 2.86e-05, ORT CPU 16.4 ms (sandbox x86, CPU)
+A {"n_readable": 39, "exact": 21, "exact_clear": 19, "n_clear": 26, "empty": 0, "wrong": 18, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.6915, "unreadable_rejected": 0, "unreadable_n": 10, "p50_ms": 44.9, "p95_ms": 131.4, "max_ms": 212.3, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 15.16, "stage_locate_p50_ms": 14.57, "stage_line_prep_p50_ms": 2.22, "stage_read_p50_ms": 7.7, "stage_assemble_p50_ms": 2.21}
+B {"n_readable": 39, "exact": 22, "exact_clear": 19, "n_clear": 26, "empty": 0, "wrong": 17, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.7466, "unreadable_rejected": 3, "unreadable_n": 10, "p50_ms": 36.3, "p95_ms": 66.4, "max_ms": 529.3, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 7.97, "stage_locate_p50_ms": 14.83, "stage_line_prep_p50_ms": 2.5, "stage_read_p50_ms": 6.93, "stage_assemble_p50_ms": 2.2}
+    lx1, ly1, lx2, ly2 = lines[fn]
+                         ~~~~~^^^^
+KeyError: '23072.jpg'
+0d882605 TOMAS_SMART   truth= 007919 got=   7919 OK
+1677a215 EMETER_GREEN  truth= 003671 got=   3671 OK
+1f161d14 CRYSTAL       truth=     93 got=    193 --
+1f60397e TAGADOD       truth= 000283 got=    283 OK
+22307807 OTHER         truth=  00034 got=      0 --
+2687438a TAGADOD       truth= 000430 got=    430 OK
+26996dca TAGADOD       truth= 000080 got=     80 OK
+31a02c7c CRYSTAL       truth=   1359 got=        --
+35833d3b CRYSTAL       truth=    575 got=  81575 --
+4f35d254 EMETER_GREEN  truth= 018375 got=  18315 --
+5319477a TOMAS_SMART   truth= 000299 got=    299 OK
+724839fc TOMAS_SMART   truth= 002208 got=   2208 OK
+726c42d5 TOMAS_SMART   truth= 000760 got=    760 OK
+83877b43 TOMAS_SMART   truth= 005069 got=   5069 OK
+84c310c2 TOMAS_SMART   truth= 000162 got=    162 OK
+a0e012a8 CRYSTAL       truth=    319 got=    319 OK
+b11e317a EMETER_GREEN  truth= 002861 got=   2861 OK
+b1553ac5 EMETER_GREEN  truth= 016459 got=  16459 OK
+document TAGADOD       truth= 000825 got=    825 OK
+document SMART_MT10    truth= 009096 got=   9096 OK
+document OTHER         truth= 001285 got= 101285 --
+document CRYSTAL       truth=    507 got=   5078 --
+e7be34e6 TOMAS_SMART   truth= 001029 got=   1029 OK
+eed38102 TAGADOD       truth= 000088 got=      8 --
+pending- OTHER         truth=  16976 got= 169767 --
+pending- EMETER_GREEN  truth= 016121 got=    219 --
+pending- TOMAS_STATIC  truth= 007022 got=     22 --
+pending- OTHER         truth= 006285 got=   6285 OK
+pending- TOMAS_STATIC  truth= 020983 got=  20983 OK
+pending- TAGADOD       truth= 000242 got=    242 OK
+pending- CRYSTAL       truth=    603 got=  11603 --
+pending- CRYSTAL       truth=    152 got=    152 OK
+pending- EMETER_GREEN  truth= 004207 got=   4207 OK
+pending- TAGADOD       truth= 000309 got=    309 OK
+{"models": "../data/models_auto_loc_s107", "n": 34, "exact": 22, "by_type": {"CRYSTAL": "2/7", "EMETER_GREEN": "4/6", "OTHER": "1/4", "SMART_MT10": "1/1", "TAGADOD": "6/7", "TOMAS_SMART": "7/7", "TOMAS_STATIC": "1/2"}}
+none (any value)                 accepted  72/73  correct  44  WRONG  28  coverage 0.99 precision 0.611
+status OK                        accepted  71/73  correct  44  WRONG  27  coverage 0.97 precision 0.62
+shipped confident                accepted   0/73  correct   0  WRONG   0  coverage 0.00 precision None
+OK & min_conf>=0.45              accepted  42/73  correct  35  WRONG   7  coverage 0.57 precision 0.833
+OK & min_conf>=0.55              accepted  18/73  correct  15  WRONG   3  coverage 0.25 precision 0.833
+OK & min_conf>=0.65              accepted   5/73  correct   4  WRONG   1  coverage 0.07 precision 0.8
+OK & min_conf>=0.55 & alt<0.5    accepted  18/73  correct  15  WRONG   3  coverage 0.25 precision 0.833

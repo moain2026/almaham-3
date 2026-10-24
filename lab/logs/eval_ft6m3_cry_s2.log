@@ -1,13 +1,13 @@
-locator: ../data/models_ft6m3_cry_s2/line_locator.onnx 842 KB, max|torch-ort| = 1.37e-04, ORT CPU 5.0 ms (sandbox x86, CPU)
-reader: ../data/models_ft6m3_cry_s2/digit_reader.onnx 845 KB, max|torch-ort| = 2.67e-05, ORT CPU 2.8 ms (sandbox x86, CPU)
-A {"n_readable": 39, "exact": 22, "exact_clear": 20, "n_clear": 26, "empty": 0, "wrong": 17, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.7034, "unreadable_rejected": 0, "unreadable_n": 10, "p50_ms": 23.7, "p95_ms": 31.6, "max_ms": 39.0, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 10.04, "stage_locate_p50_ms": 7.2, "stage_line_prep_p50_ms": 1.56, "stage_read_p50_ms": 3.45, "stage_assemble_p50_ms": 1.47}
-B {"n_readable": 39, "exact": 19, "exact_clear": 17, "n_clear": 26, "empty": 0, "wrong": 20, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.644, "unreadable_rejected": 0, "unreadable_n": 10, "p50_ms": 20.6, "p95_ms": 27.4, "max_ms": 35.0, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 5.74, "stage_locate_p50_ms": 7.41, "stage_line_prep_p50_ms": 2.0, "stage_read_p50_ms": 3.97, "stage_assemble_p50_ms": 1.45}
+locator: ../data/models_ft6m3_cry_s2/line_locator.onnx 842 KB, max|torch-ort| = 1.68e-04, ORT CPU 30.8 ms (sandbox x86, CPU)
+reader: ../data/models_ft6m3_cry_s2/digit_reader.onnx 845 KB, max|torch-ort| = 1.91e-05, ORT CPU 12.5 ms (sandbox x86, CPU)
+A {"n_readable": 39, "exact": 23, "exact_clear": 20, "n_clear": 26, "empty": 0, "wrong": 16, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.7239, "unreadable_rejected": 0, "unreadable_n": 10, "p50_ms": 48.5, "p95_ms": 78.0, "max_ms": 118.2, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 13.87, "stage_locate_p50_ms": 17.05, "stage_line_prep_p50_ms": 2.43, "stage_read_p50_ms": 8.15, "stage_assemble_p50_ms": 2.53}
+B {"n_readable": 39, "exact": 20, "exact_clear": 18, "n_clear": 26, "empty": 0, "wrong": 19, "wrong_confident": 0, "confident_total": 0, "confident_correct": 0, "digit_acc": 0.6504, "unreadable_rejected": 1, "unreadable_n": 10, "p50_ms": 44.0, "p95_ms": 68.6, "max_ms": 93.6, "hardware": "sandbox x86 CPU, 2 ORT threads (NOT a phone)", "stage_loc_prep_p50_ms": 8.34, "stage_locate_p50_ms": 18.22, "stage_line_prep_p50_ms": 2.55, "stage_read_p50_ms": 8.68, "stage_assemble_p50_ms": 2.14}
     lx1, ly1, lx2, ly2 = lines[fn]
                          ~~~~~^^^^
 KeyError: '23072.jpg'
 0d882605 TOMAS_SMART   truth= 007919 got=   7919 OK
 1677a215 EMETER_GREEN  truth= 003671 got=   3671 OK
-1f161d14 CRYSTAL       truth=     93 got=  88193 --
+1f161d14 CRYSTAL       truth=     93 got= 881938 --
 1f60397e TAGADOD       truth= 000283 got=    283 OK
 22307807 OTHER         truth=  00034 got=    262 --
 2687438a TAGADOD       truth= 000430 got=    430 OK
@@ -21,7 +21,7 @@ KeyError: '23072.jpg'
 83877b43 TOMAS_SMART   truth= 005069 got=   5069 OK
 84c310c2 TOMAS_SMART   truth= 000162 got=    162 OK
 a0e012a8 CRYSTAL       truth=    319 got=    319 OK
-b11e317a EMETER_GREEN  truth= 002861 got=  28617 --
+b11e317a EMETER_GREEN  truth= 002861 got=   2861 OK
 b1553ac5 EMETER_GREEN  truth= 016459 got=  60561 --
 document TAGADOD       truth= 000825 got=    825 OK
 document SMART_MT10    truth= 009096 got=     96 --
@@ -35,15 +35,15 @@ pending- TOMAS_STATIC  truth= 007022 got=     22 --
 pending- OTHER         truth= 006285 got=   6285 OK
 pending- TOMAS_STATIC  truth= 020983 got=  20983 OK
 pending- TAGADOD       truth= 000242 got=    242 OK
-pending- CRYSTAL       truth=    603 got=1160323 --
+pending- CRYSTAL       truth=    603 got= 160323 --
 pending- CRYSTAL       truth=    152 got=    152 OK
 pending- EMETER_GREEN  truth= 004207 got= 428596 --
 pending- TAGADOD       truth= 000309 got=    309 OK
-{"models": "../data/models_ft6m3_cry_s2", "n": 34, "exact": 19, "by_type": {"CRYSTAL": "2/7", "EMETER_GREEN": "1/6", "OTHER": "2/4", "SMART_MT10": "0/1", "TAGADOD": "7/7", "TOMAS_SMART": "6/7", "TOMAS_STATIC": "1/2"}}
-none (any value)                 accepted  72/73  correct  38  WRONG  34  coverage 0.99 precision 0.528
-status OK                        accepted  70/73  correct  38  WRONG  32  coverage 0.96 precision 0.543
+{"models": "../data/models_ft6m3_cry_s2", "n": 34, "exact": 20, "by_type": {"CRYSTAL": "2/7", "EMETER_GREEN": "2/6", "OTHER": "2/4", "SMART_MT10": "0/1", "TAGADOD": "7/7", "TOMAS_SMART": "6/7", "TOMAS_STATIC": "1/2"}}
+none (any value)                 accepted  72/73  correct  40  WRONG  32  coverage 0.99 precision 0.556
+status OK                        accepted  71/73  correct  40  WRONG  31  coverage 0.97 precision 0.563
 shipped confident                accepted   0/73  correct   0  WRONG   0  coverage 0.00 precision None
-OK & min_conf>=0.45              accepted  37/73  correct  33  WRONG   4  coverage 0.51 precision 0.892
-OK & min_conf>=0.55              accepted  21/73  correct  21  WRONG   0  coverage 0.29 precision 1.0
+OK & min_conf>=0.45              accepted  39/73  correct  34  WRONG   5  coverage 0.53 precision 0.872
+OK & min_conf>=0.55              accepted  22/73  correct  21  WRONG   1  coverage 0.30 precision 0.955
 OK & min_conf>=0.65              accepted   1/73  correct   1  WRONG   0  coverage 0.01 precision 1.0
 OK & min_conf>=0.55 & alt<0.5    accepted  17/73  correct  17  WRONG   0  coverage 0.23 precision 1.0

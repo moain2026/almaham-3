@@ -5,11 +5,11 @@
   "exact": 19,
   "by_type": {
    "CRYSTAL": "2/7",
-   "EMETER_GREEN": "2/6",
+   "EMETER_GREEN": "1/6",
    "OTHER": "2/4",
    "SMART_MT10": "0/1",
    "TAGADOD": "7/7",
-   "TOMAS_SMART": "5/7",
+   "TOMAS_SMART": "6/7",
    "TOMAS_STATIC": "1/2"
   }
  },
@@ -18,10 +18,10 @@
    "file": "0d882605-c262-4305-a3b4-10e3bbf8b732.jpg",
    "type": "TOMAS_SMART",
    "truth": "007919",
-   "value": "100791",
-   "raw": "100791",
+   "value": "7919",
+   "raw": "007919",
    "status": "OK",
-   "ok": false
+   "ok": true
   },
   {
    "file": "1677a215-0e1a-465b-ad7e-af43f6790a0a.jpg",
@@ -162,10 +162,10 @@
    "file": "b11e317a-43d5-4dc0-8248-ed008652b0c2.jpg",
    "type": "EMETER_GREEN",
    "truth": "002861",
-   "value": "2861",
-   "raw": "002861",
+   "value": "28617",
+   "raw": "0028617",
    "status": "OK",
-   "ok": true
+   "ok": false
   },
   {
    "file": "b1553ac5-205b-4ddd-b4b3-9ae98dec26dc.jpg",

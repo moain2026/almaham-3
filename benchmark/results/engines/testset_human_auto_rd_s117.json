@@ -1,0 +1,324 @@
+{
+ "summary": {
+  "models": "../data/models_auto_rd_s117",
+  "n": 34,
+  "exact": 20,
+  "by_type": {
+   "CRYSTAL": "2/7",
+   "EMETER_GREEN": "2/6",
+   "OTHER": "2/4",
+   "SMART_MT10": "0/1",
+   "TAGADOD": "7/7",
+   "TOMAS_SMART": "6/7",
+   "TOMAS_STATIC": "1/2"
+  }
+ },
+ "rows": [
+  {
+   "file": "0d882605-c262-4305-a3b4-10e3bbf8b732.jpg",
+   "type": "TOMAS_SMART",
+   "truth": "007919",
+   "value": "7919",
+   "raw": "007919",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "1677a215-0e1a-465b-ad7e-af43f6790a0a.jpg",
+   "type": "EMETER_GREEN",
+   "truth": "003671",
+   "value": "3671",
+   "raw": "003671",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "1f161d14-f05e-46b5-a525-4ca443cc75b0.jpg",
+   "type": "CRYSTAL",
+   "truth": "93",
+   "value": "884938",
+   "raw": "884938",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "1f60397e-47fc-4bb7-b445-aa57b2a76ad0.jpg",
+   "type": "TAGADOD",
+   "truth": "000283",
+   "value": "283",
+   "raw": "000283",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "22307807-80b9-4152-afcc-025b47c1ff5d.jpg",
+   "type": "OTHER",
+   "truth": "00034",
+   "value": "0",
+   "raw": "00",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "2687438a-4d25-407b-a0ce-3b56df6339c5.jpg",
+   "type": "TAGADOD",
+   "truth": "000430",
+   "value": "430",
+   "raw": "000430",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "26996dca-8907-4c34-8b28-e69da61695cf.jpg",
+   "type": "TAGADOD",
+   "truth": "000080",
+   "value": "80",
+   "raw": "000080",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "31a02c7c-41c8-486a-b91f-d30e13b20fa9.jpg",
+   "type": "CRYSTAL",
+   "truth": "1359",
+   "value": "",
+   "raw": "",
+   "status": "EMPTY",
+   "ok": false
+  },
+  {
+   "file": "35833d3b-12d4-4f13-9cc5-66a1cba61c9f.jpg",
+   "type": "CRYSTAL",
+   "truth": "575",
+   "value": "81575",
+   "raw": "081575",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "4f35d254-eb8a-4ffc-9336-7d874a7c3f65.jpg",
+   "type": "EMETER_GREEN",
+   "truth": "018375",
+   "value": "18315",
+   "raw": "018315",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "5319477a-fce8-450f-8d99-d783200d5888.jpg",
+   "type": "TOMAS_SMART",
+   "truth": "000299",
+   "value": "299",
+   "raw": "000299",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "724839fc-67ad-42de-a0b6-df70e8734c00.jpg",
+   "type": "TOMAS_SMART",
+   "truth": "002208",
+   "value": "2208",
+   "raw": "002208",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "726c42d5-6b88-4b02-819f-69abb45284d7.jpg",
+   "type": "TOMAS_SMART",
+   "truth": "000760",
+   "value": "160",
+   "raw": "000160",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "83877b43-e1c3-4ab1-8125-5e575509a550.jpg",
+   "type": "TOMAS_SMART",
+   "truth": "005069",
+   "value": "5069",
+   "raw": "005069",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "84c310c2-aa11-4a3a-8348-c8d9ee717bc6.jpg",
+   "type": "TOMAS_SMART",
+   "truth": "000162",
+   "value": "162",
+   "raw": "000162",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "a0e012a8-11c4-4cb3-bfd2-e022dde25a88.jpg",
+   "type": "CRYSTAL",
+   "truth": "319",
+   "value": "319",
+   "raw": "319",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "b11e317a-43d5-4dc0-8248-ed008652b0c2.jpg",
+   "type": "EMETER_GREEN",
+   "truth": "002861",
+   "value": "2861",
+   "raw": "002861",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "b1553ac5-205b-4ddd-b4b3-9ae98dec26dc.jpg",
+   "type": "EMETER_GREEN",
+   "truth": "016459",
+   "value": "60551",
+   "raw": "060551",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "document-3f372544-804c-400a-9ff1-1493622c3397.jpg",
+   "type": "TAGADOD",
+   "truth": "000825",
+   "value": "825",
+   "raw": "000825",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "document-4396ed10-d247-5e60-8477-895ca3a7e6c2.jpg",
+   "type": "SMART_MT10",
+   "truth": "009096",
+   "value": "96",
+   "raw": "000096",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "document-5ec8e27c-8622-5d05-829f-e918d1fee23c.jpg",
+   "type": "OTHER",
+   "truth": "001285",
+   "value": "1285",
+   "raw": "001285",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "document-a2b3e096-9509-473b-9dbb-e41f1f8e0d94.jpg",
+   "type": "CRYSTAL",
+   "truth": "507",
+   "value": "5078",
+   "raw": "005078",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "e7be34e6-1f4c-46a9-a216-2e036be6efee.jpg",
+   "type": "TOMAS_SMART",
+   "truth": "001029",
+   "value": "1029",
+   "raw": "001029",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "eed38102-b9f3-4f17-b078-863e1b15604d.jpg",
+   "type": "TAGADOD",
+   "truth": "000088",
+   "value": "88",
+   "raw": "000088",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "pending-05332bee-f69e-4374-8397-30145a4c2af6-7e3995dff26ae809328ab22dbac9eb814d1d9aecfb29253978a85a8bad733b46.jpg",
+   "type": "OTHER",
+   "truth": "16976",
+   "value": "169767",
+   "raw": "169767",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "pending-521c4f46-4c82-57ba-93c4-ae339b394cbe-2e291c7c73bf5298f472cf3b6320d828ce9a2c0e034f1dab89a3a28d4c862803.jpg",
+   "type": "EMETER_GREEN",
+   "truth": "016121",
+   "value": "29",
+   "raw": "0029",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "pending-55d8dc4a-90e5-43fe-81cf-1afcfbf7c9d4-64d798f7378c7f8196145e704566838c0d935122f518a396c3eb7d3599d7257b.jpg",
+   "type": "TOMAS_STATIC",
+   "truth": "007022",
+   "value": "22",
+   "raw": "000022",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "pending-7b6582ee-804f-4f6a-9c42-38d9aed84e4d-754c3aa5bbe6b9583780fd4849de9d044a94221cd29d931ee8c0c1327928b501.jpg",
+   "type": "OTHER",
+   "truth": "006285",
+   "value": "6285",
+   "raw": "006285",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "pending-9934019c-b075-4bec-8c12-2dc7383d74ca-da79e7750c7d3b869af92cf552567e17f844fdaf5fba10392c8555bf6e033f77.jpg",
+   "type": "TOMAS_STATIC",
+   "truth": "020983",
+   "value": "20983",
+   "raw": "020983",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "pending-a5927c6b-4bfe-4ecb-a3dd-1b40bdb703ac-217d633a17ae43f77eb19fa23d6a29f51f01eec6ed061042ed8606c0bfdd2fd7.jpg",
+   "type": "TAGADOD",
+   "truth": "000242",
+   "value": "242",
+   "raw": "000242",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "pending-e2d9f4b5-7b56-4d53-b525-ce20901808ed-038250179f410435d8e0ddfa93500eb489d9f60c973f088fbc481c566e75b035.jpg",
+   "type": "CRYSTAL",
+   "truth": "603",
+   "value": "1160323",
+   "raw": "1160323",
+   "status": "OK",
+   "ok": false
+  },
+  {
+   "file": "pending-e4504e17-98e0-4187-aa38-e1469aa001d1-608c7df2cf9d0dde76e46cfd2f71376d57a846c835277abe13a35fed2dda038d.jpg",
+   "type": "CRYSTAL",
+   "truth": "152",
+   "value": "152",
+   "raw": "152",
+   "status": "OK",
+   "ok": true
+  },
+  {
+   "file": "pending-e5624453-8262-5259-bc30-8b1a2a7810d4-ea5a7be184fc0032a8ebcfb3d19383f103f994bf037a10c44ba08cff7b78b6ed.jpg",
+   "type": "EMETER_GREEN",
+   "truth": "004207",
+   "value": "428596",
+   "raw": "00428596",
+   "status": "TOO_MANY_DIGITS",
+   "ok": false
+  },
+  {
+   "file": "pending-e862b685-7ac6-5a73-af6e-b8427312c5b0-b2473a60e0abd829d92d303c7eabb070346058a4cd271b2f883163e0359ac6e8.jpg",
+   "type": "TAGADOD",
+   "truth": "000309",
+   "value": "309",
+   "raw": "000309",
+   "status": "OK",
+   "ok": true
+  }
+ ]
+}
