@@ -79,3 +79,16 @@ Honest reading: every axis moves the same way, but no single difference is stati
 3. This card updated — done (this section).
 4. Owner phone run — pending.
 Not published to the web demo until 2 and 4 are done.
+
+### Update 2026-10-24 21:00 — candidate reader replaced: `reader_m4_dr1_s0.pt` (locator unchanged: `locator_m4_s0.pt`)
+Recipe = m4 reader recipe + 4000 synthetic lines from `synth2.py SYNTH_DR=1 SYNTH_LINE=int` (dark / low-contrast panels, faint or absent dot, integer-only LINE box). Trained on Contabo, seed 0; seeds 1 and 2 reproduce the gain.
+| metric | reference | m4_s0 (previous candidate) | **dr1_s0** | dr1_s1 | dr1_s2 |
+|---|---|---|---|---|---|
+| val-m4 e2e clean65 (never trained on) | 47/65 | 49/65 | **53/65** | 52 | 52 |
+| val-m4 e2e all 177 | 140 | 145 | **146** | 145 | 145 |
+| strict gate on 177 (accepted / wrong) | 72/4 | 79/5 | 73/4 | 65/3 | 67/3 |
+| 49 A / B / testset_human 34 | 22/19/21 | 23/22/23 | 23/22/22 | — | — |
+| strict gate on 73 | 17/0 | 20/0 | **21/0** | — | — |
+| gate v2 (G0+TTA) on 177 | — | 106/2 | **110/2** | — | — |
+Honest reading: +4 clean65 photos fixed, 0 broken vs the previous candidate (McNemar p=0.125, n too small for significance), consistent across three seeds; 49/34 within seed spread. What it fixed: TAGADOD ×2, SMART_YELLOW ×2 (dark/low-contrast panels — exactly the hypothesis). What did not help (measured): +172 pseudo-labels, +349 label-verified photos, ×2 width, longer training, 3-seed ensembles.
+Live on the web demo as engine `dr1` (default). APK ships only after Kotlin parity 49/49 on this pair.
