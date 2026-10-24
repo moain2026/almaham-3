@@ -5,7 +5,8 @@
 # Public URL: https://meter.basirapp.site (Caddy on the VPS proxies to 127.0.0.1:8700, see caddy_snippet.txt)
 set -euo pipefail
 HOST=${HOST:-basira}; REMOTE=/opt/almaham/almaham-3; PORT=8700
-MODELS=${MODELS:-"augv2=data/models_t14500_ft5augv2 shipped=data/models_repro"}
+# 2026-10-24: live spec = m4 (release candidate loc_m4_s0+rd_m4_s0, first = default in the UI), new (reference), prev, shipped
+MODELS=${MODELS:-"m4=data/models_loc_m4_s0_rd_m4_s0 new=data/models_m1loc_ft6m2_s1 prev=data/models_m1loc_ft6m1 shipped=data/models_repro"}
 cd "$(dirname "$0")/../.."
 ssh $HOST "cd $REMOTE && git fetch -q origin genspark_ai_developer && git checkout -q genspark_ai_developer && git pull -q --rebase origin genspark_ai_developer && mkdir -p data/webdemo"
 SPEC=""
