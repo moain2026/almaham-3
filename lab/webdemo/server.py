@@ -157,6 +157,18 @@ class H(BaseHTTPRequestHandler):
             return self._send(200, (HERE / "label.html").read_bytes(), "text/html; charset=utf-8")
         if route == "label_data":
             return self._send(200, {"items": _label_items(), "labels": _load_labels()})
+        if "/results" in u.path:   # public static results snapshot (lab/autotrain/publish_results.sh); no customer photos inside
+            rd = Path(os.environ.get("RESULTS_DIR", "/opt/almaham/results_public"))
+            fn = Path(u.path.split("/results", 1)[1].strip("/") or "index.html").name
+            f = rd / fn
+            if not f.is_file():
+                return self._send(404, {"error": "not found"})
+            ct = "text/html; charset=utf-8" if fn.endswith(".html") else "application/zip" if fn.endswith(".zip") else "text/plain; charset=utf-8"
+            self.send_response(200); self.send_header("Content-Type", ct); self.send_header("Content-Length", str(f.stat().st_size))
+            self.send_header("Cache-Control", "no-store"); self.end_headers()
+            with open(f, "rb") as fh:
+                import shutil; shutil.copyfileobj(fh, self.wfile)
+            return
         if route == "dl":  # one-off private downloads (e.g. ZBook bootstrap); token + fixed dir, basename only
             dl_dir = os.environ.get("DL_DIR"); tok = os.environ.get("DL_TOKEN")
             fn = Path(q.get("f", [""])[0]).name

@@ -1,0 +1,9 @@
+argv ['erp_finetune.py', 'train', 'weights/reader_ft6m2_cry_s1_step2000.pt', '../data/erp/ft/ft6m2', '../data/synth/line_s1,../data/synth/line_crystal_opt2', '1000', 'weights/reader_ft6m2_cry_s1.pt', 'reader'] threads 1 seed 21
+ignore_row False
+/home/user/webapp/lab/erp_finetune.py:233: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+  peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
+step 0 loss 1.144 real_val_exact 125/153 3s
+step 250 loss 1.130 real_val_exact 124/153 256s
+step 500 loss 1.106 real_val_exact 128/153 513s
+step 750 loss 1.101 real_val_exact 128/153 768s
+step 999 loss 1.128 real_val_exact 128/153 1013s
