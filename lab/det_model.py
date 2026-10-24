@@ -35,6 +35,14 @@ class DW(nn.Module):
         return x + y if self.res else y
 
 
+def width_of(state_dict):
+    """Channel-width multiplier of a saved DigitNet (first conv has round(16*width) out channels)."""
+    for k, v in state_dict.items():
+        if k.endswith("s2.0.0.weight") or (k.startswith("s2.") and k.endswith(".weight") and v.dim() == 4):
+            return v.shape[0] / 16.0
+    return 1.0
+
+
 class DigitNet(nn.Module):
     def __init__(self, n_classes, width=1.0):
         super().__init__()

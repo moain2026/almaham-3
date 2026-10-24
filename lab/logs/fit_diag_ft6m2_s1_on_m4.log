@@ -1,0 +1,2 @@
+train: exact 632/726 = 0.871   median min-score of correct readings 0.54  (n=632)
+val: exact 152/177 = 0.859   median min-score of correct readings 0.54  (n=152)

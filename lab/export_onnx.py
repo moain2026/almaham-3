@@ -12,15 +12,16 @@ import onnx
 import onnxruntime as ort
 import torch
 
-from det_model import DigitNet, ExportWrapper, LOCATOR_CLASSES, READER_CLASSES
+from det_model import DigitNet, ExportWrapper, LOCATOR_CLASSES, READER_CLASSES, width_of
 
 SHAPES = {"locator": (1, 256, 256, 3), "reader": (1, 64, 448, 3)}
 
 
 def export(ckpt, kind, out_dir):
     n = LOCATOR_CLASSES if kind == "locator" else READER_CLASSES
-    m = DigitNet(n)
-    m.load_state_dict(torch.load(ckpt, map_location="cpu"))
+    sd = torch.load(ckpt, map_location="cpu")
+    m = DigitNet(n, width=width_of(sd))
+    m.load_state_dict(sd)
     m.eval()
     w = ExportWrapper(m).eval()
     x = torch.rand(*SHAPES[kind]) * 255

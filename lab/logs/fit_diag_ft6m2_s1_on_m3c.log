@@ -1,0 +1,2 @@
+train: exact 762/849 = 0.898   median min-score of correct readings 0.56  (n=762)
+val: exact 143/171 = 0.836   median min-score of correct readings 0.54  (n=143)

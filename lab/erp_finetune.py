@@ -36,7 +36,7 @@ import torch.nn as nn
 
 import assemble
 import paths
-from det_model import DigitNet, READER_CLASSES, LOCATOR_CLASSES, decode, focal_loss, reg_loss
+from det_model import DigitNet, READER_CLASSES, LOCATOR_CLASSES, decode, focal_loss, reg_loss, width_of
 from eval_e2e import LOC_IN, RD_H, RD_W, LOC_PEAK_MIN, LINE_MIN_H, PAD_X, PAD_Y, RD_PEAK_MIN, letterbox
 from synth2 import CLS_LINE
 
@@ -86,7 +86,7 @@ def run_net(m, img):
 
 
 def build(loc_ckpt, rd_ckpt, out_prefix):
-    loc = DigitNet(LOCATOR_CLASSES)
+    loc = DigitNet(LOCATOR_CLASSES)  # width inferred below if needed
     loc.load_state_dict(torch.load(loc_ckpt, map_location="cpu"))
     loc.eval()
     rd = DigitNet(READER_CLASSES)
@@ -256,8 +256,11 @@ def train(init, real_prefix, synth_prefixes, steps, out, kind="reader", lr=2e-4)
     realval = Shards([pre + "_val"], kind)
     realval.val_idx = realval.train_idx + realval.val_idx
     synth = Shards(synth_prefixes.split(","), kind)
-    model = DigitNet(READER_CLASSES if kind == "reader" else LOCATOR_CLASSES)
-    model.load_state_dict(torch.load(init, map_location="cpu"))
+    n_cls = READER_CLASSES if kind == "reader" else LOCATOR_CLASSES
+    if init in ("none", "scratch"):   # capacity experiment (consult #2 Q5): from scratch at WIDTH x channels
+        width = float(os.environ.get("WIDTH", "1.0")); model = DigitNet(n_cls, width=width); print("init scratch width", width, flush=True)
+    else:
+        sd = torch.load(init, map_location="cpu"); model = DigitNet(n_cls, width=width_of(sd)); model.load_state_dict(sd)
     opt = torch.optim.AdamW(model.parameters(), lr, weight_decay=1e-4)
     sch = torch.optim.lr_scheduler.CosineAnnealingLR(opt, steps)
     B = BATCH[kind]
