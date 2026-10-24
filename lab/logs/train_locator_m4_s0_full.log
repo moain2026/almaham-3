@@ -5,3 +5,5 @@ ignore_row False
 step 0 loss 1.550 real_val_line_iou50 170/177 6s
 step 250 loss 1.479 real_val_line_iou50 172/177 419s
 step 500 loss 1.439 real_val_line_iou50 170/177 831s
+step 750 loss 1.457 real_val_line_iou50 171/177 1259s
+step 1000 loss 1.407 real_val_line_iou50 171/177 1673s
