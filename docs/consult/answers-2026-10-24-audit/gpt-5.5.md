@@ -1,359 +1,537 @@
-# gpt-5.5 — 2026-10-24 08:47 UTC (246s)
+# gpt-5.5 — 2026-10-24 08:49 UTC (226s)
 
-## Q1. Ghost detections
+## 1. Ghost detections
 
-**Rank for immediate 0-wrong selective reading: `a` > `c` > `b` > `e` > `d`, with one caveat: implement `a` as class-agnostic lattice/same-cell suppression, not just pairwise IoU NMS.** The current failure is not “too many low-confidence random detections”; it is “more than one detection per physical digit cell.” IoU NMS is the wrong geometry because two boxes can sit side-by-side in one LCD cell with low IoU. A class-agnostic 1-D same-cell NMS/clustering along x is the lowest-risk decode fix. Keep suppressed detections as ambiguity evidence: if a suppressed different-class candidate has score ratio `suppressed / kept > 0.65–0.8`, return `EMPTY`, not a confident reading.
+**Rank for the next release: (a) lattice/slot-aware 1-D NMS → (c) anisotropic heatmap NMS → (b) higher peak thresholds. For retraining: (d) tuned/elliptical Gaussian + hard-negative diagnostics before (e) CTC.** The immediate fix is not “keep the higher score” blindly; it is “cluster detections into physical digit slots, keep one candidate per slot, and abstain if the slot is ambiguous.” This directly targets the failure `005337.88 → 00563307018`, where the error is mostly insertions/duplicates, not missing detections. Raising `RD_PEAK_MIN` will remove ghosts but will also remove the true low-score MT10/EMETER_GREEN digits; it is a coverage killer and should only be used as a final candidate-pruning knob.
 
-**Implement 1-D same-cell suppression before `assemble.py`, excluding the dot class.** Do not estimate pitch from nearest-neighbor distances, because ghosts will bias the pitch downward. Estimate pitch from a robust lattice fit or from the mode of plausible pairwise x-distances. Then suppress/cluster detections whose centers are closer than about `0.50–0.65 * pitch`.
+**Implement a slot decoder, not just pairwise NMS.** Estimate pitch from detections, assign detections to a 1-D lattice, and decide one digit per slot. If two detections fall in the same slot and the loser score is not clearly lower, return `MISSING_DIGIT`/`AMBIGUOUS`, not a reading. This is safer than “keep higher score” for the 0-wrong product rule.
 
 ```python
-DIGIT_CLASSES = set(range(10))
-DOT_CLASS = 10
+from dataclasses import dataclass
+import numpy as np
 
-def estimate_pitch(dets, min_score=0.25):
-    xs = np.array(sorted([
-        d.cx for d in dets
-        if d.cls in DIGIT_CLASSES and d.score >= min_score
-    ]), dtype=np.float32)
-    if len(xs) < 3:
+@dataclass
+class Det:
+    x: float
+    y: float
+    w: float
+    h: float
+    cls: int
+    score: float
+    alt_score: float = 0.0
+
+def robust_pitch(dets, min_dets=4):
+    xs = np.array(sorted([d.x for d in dets]))
+    if len(xs) < min_dets:
         return None
-
-    ws = np.array([
-        d.w for d in dets
-        if d.cls in DIGIT_CLASSES and d.score >= min_score
-    ], dtype=np.float32)
-    med_w = np.median(ws) if len(ws) else None
-
-    # Pairwise spacings; avoid nearest-neighbor-only because ghosts dominate NN.
-    dxs = []
+    diffs = []
     for i in range(len(xs)):
-        for j in range(i + 1, min(i + 8, len(xs))):
+        for j in range(i + 1, len(xs)):
             dx = xs[j] - xs[i]
-            if dx > 2:
-                dxs.append(dx)
-    dxs = np.array(dxs, dtype=np.float32)
-    if len(dxs) == 0:
+            if dx > 1.5:  # heatmap/input pixels depending on representation
+                for k in range(1, 9):
+                    diffs.append(dx / k)
+    diffs = np.array(diffs)
+    widths = np.array([d.w for d in dets if d.w > 0])
+    if len(widths):
+        med_w = np.median(widths)
+        diffs = diffs[(diffs > 0.7 * med_w) & (diffs < 2.5 * med_w)]
+    if len(diffs) == 0:
         return None
+    q1, q3 = np.percentile(diffs, [25, 75])
+    keep = diffs[(diffs >= q1 - 1.5 * (q3 - q1)) & (diffs <= q3 + 1.5 * (q3 - q1))]
+    return float(np.median(keep)) if len(keep) else float(np.median(diffs))
 
-    if med_w is not None and med_w > 0:
-        # For 7-seg digits, bbox width is usually ~0.45-0.75 pitch.
-        lo, hi = 0.9 * med_w, 2.8 * med_w
-        dxs = dxs[(dxs >= lo) & (dxs <= hi)]
-    if len(dxs) == 0:
-        return None
+def slot_nms(
+    dets,
+    pitch=None,
+    slot_radius=0.38,
+    duplicate_ratio_abort=0.55,
+    min_keep_score=0.25,
+):
+    """
+    Returns (kept_dets, ambiguous_flag).
+    Use before assemble.py integer/fraction cutting.
+    """
+    dets = [d for d in dets if d.score >= min_keep_score and d.cls <= 9]  # digits only here
+    if len(dets) <= 1:
+        return dets, False
 
-    # Histogram mode, 2 px bins in reader input coordinates.
-    bin_w = 2.0
-    bins = np.arange(dxs.min(), dxs.max() + bin_w, bin_w)
-    hist, edges = np.histogram(dxs, bins=bins)
-    p0 = 0.5 * (edges[np.argmax(hist)] + edges[np.argmax(hist) + 1])
+    dets = sorted(dets, key=lambda d: d.x)
+    if pitch is None:
+        pitch = robust_pitch(dets)
+    if pitch is None or pitch <= 0:
+        return dets, False
 
-    # Refine with a small RANSAC-like lattice score.
-    best_p, best_score = p0, -1e9
-    for p in np.linspace(0.8 * p0, 1.2 * p0, 41):
-        if p <= 1:
-            continue
-        # Score how well points fall near some phase modulo p.
-        phases = np.mod(xs, p)
-        for phase in phases:
-            dist = np.minimum(np.mod(xs - phase, p), p - np.mod(xs - phase, p))
-            score = np.sum(np.exp(-(dist / (0.12 * p + 1e-6)) ** 2))
-            if score > best_score:
-                best_score, best_p = score, p
-    return float(best_p)
+    # Greedy slot assignment anchored at strongest detection.
+    anchor = max(dets, key=lambda d: d.score)
+    x0 = anchor.x
 
-
-def same_cell_nms_1d(dets, alpha=0.58, ambig_ratio=0.70):
-    p = estimate_pitch(dets)
-    if p is None:
-        return dets, {"pitch": None, "ambiguous": False}
-
-    digits = [d for d in dets if d.cls in DIGIT_CLASSES]
-    others = [d for d in dets if d.cls not in DIGIT_CLASSES]
-
-    keep = []
-    suppressed = []
-    for d in sorted(digits, key=lambda z: z.score, reverse=True):
-        hit = None
-        for k in keep:
-            if abs(d.cx - k.cx) < alpha * p:
-                hit = k
-                break
-        if hit is None:
-            keep.append(d)
+    slots = {}
+    for d in dets:
+        k = int(round((d.x - x0) / pitch))
+        residual = abs(d.x - (x0 + k * pitch))
+        if residual <= slot_radius * pitch:
+            slots.setdefault(k, []).append(d)
         else:
-            suppressed.append((d, hit))
+            # off-lattice candidate: keep as separate only if very strong
+            slots.setdefault(("off", len(slots)), []).append(d)
 
+    kept = []
     ambiguous = False
-    for d, k in suppressed:
-        if d.cls != k.cls and d.score >= ambig_ratio * k.score:
-            ambiguous = True
+    for _, group in slots.items():
+        group = sorted(group, key=lambda d: d.score, reverse=True)
+        best = group[0]
+        if len(group) > 1:
+            second = group[1]
+            # Same physical cell, competing predictions.
+            if second.score >= duplicate_ratio_abort * best.score:
+                ambiguous = True
+            # If same class duplicate and clearly weaker, suppress silently.
+        kept.append(best)
 
-    out = sorted(keep + others, key=lambda z: z.cx)
-    return out, {"pitch": p, "ambiguous": ambiguous}
+    kept = sorted(kept, key=lambda d: d.x)
+    return kept, ambiguous
 ```
 
-**Use the same-cell NMS as a precision-preserving filter: if it changes the returned integer and the suppressed alternatives are not clearly lower-score, veto the reading.** For product behavior, the safe rule is: “NMS may remove duplicate physical-cell hypotheses, but if the removed hypothesis is plausible, confidence becomes false.” This avoids converting ghost cleanup into silent wrong readings.
+**Use the slot decoder before all boundary logic.** Today, ghosts break the “regular lattice → cut at 6” rule. Therefore the pipeline order should be: raw heatmap decode → class-agnostic slot clustering/NMS → ambiguous-slot veto → boundary/integer cut → confidence gate. Do not estimate the boundary from the unfiltered raw sequence.
 
-**Option `c`, CenterNet heatmap max-pool NMS `3→5` along x, is useful only if made class-agnostic over digit classes.** Standard CenterNet-style local max pooling, as in CenterNet / “Objects as Points” by Zhou et al. 2019, is usually classwise. Classwise NMS will not remove a `5` and `6` peak in the same physical cell if they are in different heatmap channels. Use a digit-class max heatmap, apply `1×5` or `1×7` NMS along x, then keep only the winning class at each kept center. Keep the dot separate.
+**Add explicit ghost metrics to `eval_reader.py`.** For the 38 photos with raw detections and display text, compute Levenshtein alignment against the full display string before and after slot NMS. Report substitutions, deletions, insertions separately; ghost detections are mostly insertions. Also report: `duplicate_slots_per_line`, `ambiguous_slots_per_line`, `raw_full_string_exact`, `slot_full_string_exact`, `integer_exact`, `accepted`, `accepted_wrong`.
 
 ```python
-# hm: torch.Tensor [B, 11, H, W], sigmoid probabilities or logits after sigmoid.
-# Apply to digit classes 0..9 only.
-def class_agnostic_x_nms(hm, kx=5):
-    assert kx % 2 == 1
-    digits = hm[:, :10]                     # [B,10,H,W]
-    dot = hm[:, 10:11]
-
-    max_digit, win_cls = digits.max(dim=1, keepdim=True)  # [B,1,H,W]
-    pooled = torch.nn.functional.max_pool2d(
-        max_digit, kernel_size=(1, kx), stride=1, padding=(0, kx // 2)
-    )
-    keep_center = (max_digit == pooled)
-
-    onehot = torch.zeros_like(digits, dtype=torch.bool)
-    onehot.scatter_(1, win_cls, True)
-
-    filtered_digits = digits * (keep_center & onehot).float()
-
-    # Leave dot on normal 3x3 or its existing decode path.
-    return torch.cat([filtered_digits, dot], dim=1)
+def levenshtein_ops(pred, gt):
+    # Return counts: ins, del, sub.
+    m, n = len(pred), len(gt)
+    dp = [[(0,0,0,0) for _ in range(n+1)] for __ in range(m+1)]
+    # tuple: cost, ins, del, sub
+    for i in range(1, m+1):
+        c, ins, dele, sub = dp[i-1][0]
+        dp[i][0] = (c+1, ins, dele+1, sub)
+    for j in range(1, n+1):
+        c, ins, dele, sub = dp[0][j-1]
+        dp[0][j] = (c+1, ins+1, dele, sub)
+    for i in range(1, m+1):
+        cand = []
+        c, ins, dele, sub = dp[i-1][j] if False else (0,0,0,0)
+        for i in range(1, m+1):
+            pass
 ```
 
-**Option `b`, raising `RD_PEAK_MIN`, is a safety knob, not a ghost fix.** It will remove some ghosts but will also remove true MT10/EMETER_GREEN digits whose correct-cell scores are only `0.3–0.4`. Use per-class or global `RD_PEAK_MIN` only inside a calibrated selective gate. Do not expect exact-read accuracy to improve much; expect coverage to drop.
+Use an existing implementation if available; the important thing is to track insertion errors separately from digit confusions and misses.
 
-**Option `d`, “train with Gaussian radius tuned to cell width so neighbouring peaks are suppressed,” is weak as stated and can be harmful.** CenterNet/CornerNet Gaussian radius, following CornerNet by Law and Deng 2018 and CenterNet by Zhou et al. 2019, shapes the positive target around each object center; it does not explicitly suppress duplicate local maxima. If the Gaussian radius is too large relative to digit pitch, neighboring true digit centers start to overlap and classification gets worse. If the current radius is extremely small, modestly increasing it may improve score smoothness, but do not use radius as the primary anti-ghost mechanism. Keep output-space radius roughly `<= 0.25–0.35 * pitch_out`; avoid radii that make adjacent digit Gaussians overlap strongly.
+**Do not tune the slot-NMS constants on the frozen 49/34 if you want them to remain tests.** Use m4 validation/calibration for the thresholds. The 38 display-text cases are still useful as a diagnostic dashboard, but if you grid-search `slot_radius`, `duplicate_ratio_abort`, or `min_keep_score` on them, they become development data.
 
-**Option `e`, a CTC/sequence head, is the best long-term architectural fix but the highest short-term risk.** CRNN+CTC, following Graves et al. 2006 and Shi et al. 2016, naturally avoids “two detections in one cell” by predicting a sequence rather than object boxes. But it needs a separate training/evaluation path, string labels, and careful rejection calibration. It is not a 3-day fix for 0-wrong behavior. It becomes attractive after the boundary/type problem is under control.
+**Try anisotropic heatmap NMS as a cheap secondary change, but do not rely on it.** CenterNet-style decoders use local max-pool NMS as in Zhou et al., “Objects as Points”, 2019. Changing from `3x3` to `1x5` or `3x5` on the output heatmap may suppress nearby same-cell peaks, but with stride 4 a `5`-wide heatmap kernel suppresses only ±8 input pixels. If the ghosts are side-by-side within a digit cell but farther than that, it will not remove them. Test `kernel=(1,5)` and `kernel=(3,5)` on m4, but keep the slot decoder because it operates in physical pitch units.
 
-**At training level, first audit whether every visible digit inside the reader crop is either labeled or masked.** If fraction digits are visible in the crop but sometimes unlabeled, focal loss treats them as background, which creates inconsistent gradients and low/unstable peaks. For CenterNet-style dense losses, unlabeled positives are poisonous. Action: dump 100 reader crops with labels overlaid; verify all visible integer, fraction, and dot cells are consistently labeled or explicitly ignored.
+**Do not fix this primarily by raising `RD_PEAK_MIN`.** Correct cells on MT10/EMETER_GREEN are often `0.30–0.40`; raising the global threshold to `0.45` or `0.50` will convert wrong readings into empty readings, but it will also delete many correct low-contrast digits. For 0-wrong operation, thresholding is acceptable only inside a calibrated selective gate, not as the main duplicate-removal mechanism.
 
-**For training, prefer “one physical cell → one hypothesis” supervision over more detector seeds.** If you keep the detector, add hard examples with same-height fraction digits, low contrast, and faint dots; add class-agnostic center suppression in decode; and optionally add a small 1-D cell/lattice auxiliary head. If you move architectures, use a line OCR model with CTC or a cell-classifier after lattice fitting; both directly remove the duplicate-detection degree of freedom.
+**For retraining, tune the CenterNet Gaussian to suppress multiple local maxima inside one glyph, but cap it below neighbor pitch.** If your current heatmap target is too sharp, the model can learn separate peaks on seven-segment strokes. Use an elliptical Gaussian with something like:
 
-**Measure ghost fixes with four numbers, not just final exact reads.** On the 38 human-line crops with display text, compute:  
-1. full-display raw sequence exact rate;  
-2. duplicate detections per physical cell after alignment;  
-3. integer exact rate before confidence;  
-4. accepted count and wrong accepted count after the gate.  
-Grid `alpha ∈ {0.45,0.50,0.55,0.60,0.65,0.70}`, `ambig_ratio ∈ {0.6,0.7,0.8}`, and heatmap `kx ∈ {3,5,7}`. Select parameters on m4 calibration, not on the 49/34 final sets.
+```python
+sigma_x = min(0.20 * pitch_out, 0.35 * box_w_out)
+sigma_y = 0.25 * box_h_out
+radius_x = int(np.ceil(3 * sigma_x))
+radius_y = int(np.ceil(3 * sigma_y))
+```
+
+Then validate local-maxima-per-GT-cell, not just exact string accuracy. Do not make `radius_x` approach `0.5 * pitch`; overlapping neighboring digit targets will merge true adjacent digits.
+
+**Add a hard-negative diagnostic loop if retraining.** After each candidate model, run it on m4 train without augmentation, collect false local maxima within each GT digit cell, and report `FP_peaks_per_digit_cell`. If this does not fall, the Gaussian change is not solving the ghost mechanism. Online hard example mining ideas from Shrivastava et al., 2016 are relevant, but for this codebase a simpler “collect bad crops → oversample them” loop is probably enough.
+
+**CTC/sequence recognition is a longer-term architecture change, not a 3-day fix.** CTC, Graves et al., 2006, and CRNN, Shi/Bai/Yao, 2016, are natural for line strings and would remove object-detection-style duplicate boxes. But CTC can still confidently hallucinate or collapse repeated characters incorrectly, and calibration for 0-wrong selective prediction remains necessary. I would not replace the detector with CTC until you have a clean pHash split, more full-string labels, and a frozen calibration protocol.
 
 ---
 
-## Q2. Integer/fraction boundary
+## 2. Integer/fraction boundary
 
-**Do not trust one cue alone; combine boundary cues as agreement/veto signals.** The locator right edge, the dot, equal-height lattice structure, and `kWh` glyph are all imperfect. For 0-wrong behavior, return confidently only when the boundary cues agree within a fraction of pitch. If they disagree, return `EMPTY`.
+**Train an explicit boundary cue; use the locator only as a veto or auxiliary candidate.** The learned locator box carrying boundary information is real, but the audit already shows it is not reliable enough to “trust harder”: 9/17 wrong cases had locator IoU `<0.5`, and mode L being worse than end-to-end proves that box convention is entangled with reader behavior. A boundary signal should be predicted in the reader coordinate frame after slot decoding.
 
-**Immediate no-retraining fix: use the LOCATOR right edge as a conservative boundary prior, not as an unconditional clip.** Transform the predicted LINE box right edge into reader-crop coordinates and cut digit detections whose centers are clearly to the right of `line_x2 + k * pitch`. Reject if there is a high-score detection near the boundary, because that means the cut could remove the last integer or keep the first fraction.
+**Add a `SEP`/`BOUNDARY` head or class before adding only `kWh`.** The actual quantity needed by `assemble.py` is the separator x-coordinate between integer and fractional cells. A `kWh` glyph is an indirect cue and may have type-dependent offset. The better target is a separator point/vertical keypoint:
 
-```python
-def apply_locator_boundary_veto(dets, locator_line_x2_reader, pitch,
-                                k=0.30, guard=0.25, min_score=0.25):
-    # Boundary for digit centers, not bbox edges.
-    x_cut = locator_line_x2_reader + k * pitch
+- Heatmap class: `BOUNDARY`.
+- Target position: `(x_sep, y_digit_center)`.
+- `x_sep`: midpoint between last integer cell and first fraction cell, or dot center if the dot is reliable and centered at the boundary.
+- Loss: same focal heatmap loss as CenterNet; no `wh` needed, only offset.
+- Decode: choose highest `BOUNDARY` peak near the digit row; cut digit slots with `x_center < x_sep`.
 
-    # If any plausible digit lies near the cut plane, boundary is unsafe.
-    near = [
-        d for d in dets
-        if d.cls in DIGIT_CLASSES
-        and d.score >= min_score
-        and abs(d.cx - x_cut) <= guard * pitch
-    ]
-    if near:
-        return None, {"reject": True, "reason": "boundary_ambiguous", "x_cut": x_cut}
+This is a small code change and keeps the CenterNet-style decoder.
 
-    kept = [
-        d for d in dets
-        if not (d.cls in DIGIT_CLASSES and d.cx > x_cut)
-    ]
-    return kept, {"reject": False, "x_cut": x_cut}
-```
-
-**Grid the locator clip on validation, separately for predicted locator and oracle human line.** Try `k ∈ {-0.1, 0.0, 0.15, 0.30, 0.45, 0.60}` and `guard ∈ {0.15,0.25,0.35}`. Report: exact integer rate, accepted coverage, wrong accepted count, and “last integer clipped” count. If predicted-locator clipping helps oracle but hurts predicted mode, the locator boundary is too noisy and must only be a veto.
-
-**A tiny boundary head is the best general retraining fix for SMART_MT10/EMETER_GREEN-style equal-height fractions.** Add a 1-D boundary heatmap head to the reader that predicts the integer/fraction cut x-coordinate. This directly supervises the missing variable instead of hoping the detector/assembler infers it.
-
-```python
-# Example reader head on feature map feat: [B,C,H,W], W=112 at stride 4.
-class BoundaryHead(nn.Module):
-    def __init__(self, c):
-        super().__init__()
-        self.conv = nn.Sequential(
-            nn.Conv2d(c, c, 3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(c, 1, 1)
-        )
-
-    def forward(self, feat):
-        z = self.conv(feat)          # [B,1,H,W]
-        z = z.mean(dim=2)            # [B,1,W], collapse y
-        return z
-```
-
-**Train the boundary head with a Gaussian target over x and low loss weight.** Use target `x_cut` as the midpoint between the last integer center and first fraction center when fraction boxes exist. If only integer boxes exist, use `integer_line_x2 + k_gt * pitch`, with `k_gt` estimated from annotated examples; start around `0.25–0.40`. Use BCE/focal on the 1-D heatmap with loss weight `0.03–0.10`, not a large weight that disrupts digit detection.
-
-**Use the boundary head as a veto/agreement signal, not just a hard cut.** At inference, compute `x_cut_reader`, `x_cut_locator`, and `x_cut_dot_or_glyph` when available. Accept only if the active cuts agree within `0.35–0.45 * pitch`. If only one boundary cue exists and the display has same-height 8-cell structure with no dot, require stricter TTA agreement.
-
-**Add a `kWh/unit` class, but treat it as an auxiliary cue, not the universal boundary solution.** For CRYSTAL, the printed `kWh` glyph is likely the strongest visible cue. Label `kWh` boxes on CRYSTAL and similar types and add a 12th class or a separate small glyph detector. For SMART_MT10/EMETER_GREEN, it will only help if the glyph is consistently visible and geometrically tied to the fraction cells. Do not cut directly at the glyph x without measuring the offset distribution by type.
-
-**Measurement protocol: define a “safe cut interval” per image.** For each annotated line, compute pitch and define a boundary prediction as correct if it falls between the last integer center and first fraction center with margin, e.g.
+**Also annotate `kWh/unit` as an auxiliary class where visible, especially for CRYSTAL.** For CRYSTAL, the physical cue is the printed `kWh` glyph above the two fraction digits. Add a `UNIT_KWH` box class if the glyph is inside the padded reader crop. Do not hard-code “cut at glyph x” until measured; instead measure the offset:
 
 ```text
-safe if: x_last_int + 0.25*pitch < x_cut < x_first_frac - 0.25*pitch
+delta = (x_kwh_reference - x_sep) / pitch
 ```
 
-Report boundary-safe rate overall and by type. Then report OCR exact rate using oracle detections plus predicted cut, and finally full end-to-end exact/selective results. This separates “boundary cue works” from “detector missed digits.”
+per meter type. If the standard deviation of `delta` is below about `0.20 pitch` on calibration, then the glyph can be used as a deterministic boundary candidate. Otherwise use it as an auxiliary detection feature or as training signal for the boundary head.
 
----
-
-## Q3. SMART_MT10 with zero training data
-
-**Do not optimize to the 9 SMART_MT10 test photos.** Report them as an out-of-distribution type: `2/9` on SMART_MT10, `20/30` on trained readable types. If you tune synthesis, thresholds, or assembly to those 9 and then report them as test, the number is no longer an honest test result.
-
-**Until real SMART_MT10 data exists, the safest product behavior is to return `EMPTY` more often for that appearance.** Add a conservative OOD/type condition if the model sees an 8-cell, same-height, dark-LCD pattern with faint/no dot and low digit scores. Do not force a confident read on a type with zero labeled training examples.
-
-**Procedural MT10 synthesis is worth doing; style transfer is lower priority.** For 7-segment LCDs, procedural synthesis can work because the glyph manifold is low-dimensional: segment topology, segment thickness, slant, blur, contrast, LCD background, glare, and dot visibility. This is closer to domain randomization, e.g. Tobin et al. 2017 and Tremblay et al. 2018, and synthetic text generation such as Jaderberg et al. 2014 / Gupta et al. 2016. Neural style transfer or CycleGAN-style transfer, e.g. Zhu et al. 2017, is risky for OCR because it can alter strokes, dots, and faint segments while preserving neither labels nor geometry.
-
-**For `synth2`, explicitly model the structural property that is missing: 6 integer cells + 2 fraction cells of the same height.** Generate 8 same-height seven-seg cells, a faint dot between cells 6 and 7 with random visibility `p(dot_visible) ≈ 0.2–0.6`, dark green/black LCD backgrounds, low contrast, yellow case edges, mild perspective/tilt, JPEG, glare, and underexposure. Make sure the training labels include the full display and the integer/fraction boundary.
-
-**Use synthesis as a hypothesis test, not proof.** Train one m4+synth2 model and compare on m4 validation by trained types to ensure no regression. Use the 9 MT10 images only as a diagnostic table clearly labeled “OOD diagnostic, used for analysis.” Do not claim general MT10 performance until there are at least 30–50 real SMART_MT10 photos, ideally from different meters and lighting conditions.
-
-**Real data beats both synthesis and style transfer here.** Ask the owner immediately for 30–50 SMART_MT10 photos with verified readings: straight, tilted, dark, glare, flash/no flash, close/far. If owner has 97 unlabeled tilted photos, triage them: if the display text is human-readable in the photo, double-transcribe them even if the owner did not separately record the reading. Use double entry or reviewer adjudication to avoid adding label noise.
-
----
-
-## Q4. Honest validation
-
-**Do not use the 49/34 sets for model choice.** The proposal “promote only if val-m4 ≥ reference AND 49/34 not worse” still uses 49/34 as a selection filter if repeated. Use m4 pHash-cluster validation/calibration for model and threshold choice. Run 49/34 once as a final release audit. If it fails, either revert to the previous frozen model or create a new frozen acceptance set before iterating again.
-
-**Split m4 validation into model-selection and calibration partitions at the pHash-cluster level.** For example, from the 177 m4-val images, make `val_select ≈ 90` and `val_cal ≈ 87`, stratified by meter type/readability. Use `val_select` for seed/model choice. Use `val_cal` only for confidence threshold calibration. Keep all near-duplicates and same meter/session clusters in the same side.
-
-**Treat small exact-count differences on 177 images as noise.** Reader `148/177 = 83.6%` has binomial standard error about `2.8 pp`; a `+2` or `+3` image improvement is not meaningful. Use paired wins/losses versus the reference: count images where new is correct and ref wrong, and vice versa. Require a practical margin, e.g. at least `+5` exact images or a meaningful zero-error coverage increase, before promoting.
-
-**For the selective gate, report coverage and a one-sided Clopper–Pearson upper bound on error.** If a gate accepts `n` images with `0` wrong, the 95% upper bound on error is:
+**Use locator right edge as a conservative agreement check.** For every readable validation image, compute:
 
 ```text
-upper_error_95 = 1 - 0.05 ** (1 / n)
+e_locator = (x_locator_right_in_reader_coords - x_sep_gt) / pitch
 ```
 
-Useful anchors:  
-`n=17 → 16.2%`, `n=50 → 5.8%`, `n=100 → 3.0%`, `n=200 → 1.5%`, `n=300 → 1.0%`. So “0 wrong on 17 accepted” is not strong statistical evidence; it is only a useful safety check.
+Then grid-search only on calibration:
 
-**Use final 49/34 as an audit table, not an optimizer.** Report exact accuracy, accepted count, wrong accepted count, and CP bounds overall and by type. If SMART_MT10 is OOD, report it separately. If any confident wrong occurs on final audit, do not tune the threshold on that set; revert or collect a new final set.
+```text
+x_sep_from_locator = x_locator_right + k * pitch,  k ∈ {-0.5, -0.25, 0, 0.25, 0.5}
+```
 
-**pHash clustering is better than filename-prefix splitting, but still add type/session stratification.** pHash can miss semantic near-duplicates under crop/lighting changes. If metadata exists, group by meter ID, owner, collection session, and meter type before randomization. If CPU allows, add a cheap embedding duplicate check using MobileNet/DINO features, but do not block the current m4 split on that.
+Promote locator clipping only if there are zero wrong integer cuts on calibration and it improves coverage. Otherwise use:
+
+```text
+if abs(x_sep_reader - x_sep_locator) > 0.50 * pitch:
+    abstain
+```
+
+not “clip harder.”
+
+**Measure boundary separately from digit recognition.** Create a boundary-eval CSV with one row per readable photo:
+
+```text
+photo_id
+meter_type
+gt_integer
+gt_full_display
+pitch
+x_sep_gt
+x_sep_dot
+x_sep_height_drop
+x_sep_lattice6
+x_sep_locator_k
+x_sep_boundary_head
+x_sep_kwh
+boundary_abs_err_pitch
+oracle_cut_correct
+detected_cut_correct
+final_integer_correct
+```
+
+The key metric is `oracle_cut_correct`: use the GT/full-display string or manually verified digit slots, then apply only the boundary method. This isolates boundary errors from digit classification and ghost detections.
+
+**Define success in pitch units.** A boundary predictor is safe if the separator falls between the last integer slot and the first fraction slot. In practice require margin:
+
+```text
+-0.35 <= (x_pred_sep - x_gt_sep) / pitch <= +0.35
+```
+
+for “safe,” and treat anything outside that as a boundary failure. For a 0-wrong product, the calibrated gate should abstain when boundary candidates disagree by more than `0.4–0.5 pitch`.
+
+**Concrete plan.**
+
+1. Add `BOUNDARY` labels to m4 by derivation wherever possible. If full digit/fraction boxes exist, derive automatically. If only integer boxes exist, use the right edge of the verified integer-line box as a weak boundary label and mark it `weak=1`.
+2. Manually label `BOUNDARY` and `UNIT_KWH` on the 38 display-text diagnostic images and the unused CRYSTAL/MT10-like images.
+3. Train reader with digits + dot + boundary, and optionally `UNIT_KWH`.
+4. Evaluate four boundary methods on m4 calibration and validation: current heuristic, locator clip, `UNIT_KWH` offset, boundary head.
+5. In production decode, accept only when slot-NMS is non-ambiguous and boundary evidence is consistent.
 
 ---
 
-## Q5. Model capacity
+## 3. SMART_MT10 with zero training data
 
-**A 2× reader width is plausible but not the first suspected ceiling.** A 0.21M-param detector at `64×448` with 11 classes and varied LCD backgrounds is very small; doubling to about `0.8M` could improve feature quality and heatmap scores. But it will not solve zero SMART_MT10 training data, wrong boundary rules, poisoned labels, or duplicate-cell decode. Expect possible gains on trained types, not on unseen structural types.
+**Do not tune on the 9 SMART_MT10 test photos.** Report them separately as an out-of-distribution meter type: `2/9` currently, with zero examples in the labeled pool. If you use those 9 to design thresholds or synth parameters and then report improvement on them, the number is no longer an honest test result.
 
-**Run one controlled capacity experiment, not a broad sweep.** Train baseline-width and 2×-width reader on the same m4 train split, same augmentations, same synthetic ratio, same number of seen samples, same seed if possible, and same decode/assemble code. If batch size must shrink for 2×, use gradient accumulation to keep effective batch size the same. Evaluate both on the same `val_select`; calibrate gates separately on `val_cal`.
+**For product behavior, prefer abstention on MT10-like low-confidence same-height-fraction displays until real data exists.** A simple safe rule is:
 
-**Measure matched-cell score distributions, not only exact string accuracy.** For each validation digit matched to GT, log best heat score, runner-up ratio, center error, and duplicate detections per cell. Keep the wider model only if it improves at least one of these without increasing confident wrongs:  
-- median correct-cell score rises by `≥0.05–0.10`;  
-- duplicate/cell rate decreases or stays flat;  
-- exact integer improves by `≥5` images on 177 or selective zero-error coverage improves materially.
+```text
+if same-height 8-slot lattice
+and no reliable dot/boundary
+and median digit score < calibrated threshold:
+    EMPTY / not confident
+```
 
-**Use train-vs-val behavior to decide capacity vs data.** If 2× lowers train loss and improves validation, capacity was limiting. If 2× lowers train loss but validation exact/coverage is flat or worse, data/labels/domain are limiting. If neither model fits train cleanly, inspect labels/loss/optimization before changing architecture again.
+This avoids confidently returning the wrong integer on the exact OOD type that has no training support.
 
-**Recalibrate confidence after widening.** Larger models often produce sharper heatmaps and more overconfident errors; calibration literature such as Guo et al. 2017 shows that accuracy and calibration do not move together. Do not reuse the `0.45/0.55` thresholds from the narrow model.
+**Procedural MT10-style synthesis is worth doing; neural style transfer is not where I would spend time.** Seven-segment LCDs are low-dimensional: segment geometry, contrast, blur, glare, cell background, and viewing angle matter more than high-level texture. Procedural rendering with domain randomization, in the spirit of SynthText, Gupta et al., 2016, and domain randomization, Tobin et al., 2017, often works for this kind of constrained OCR. CycleGAN-like style transfer is risky because it can change or hallucinate segment strokes and decimal dots while preserving the label incorrectly.
+
+**Build `synth2_mt10` procedurally.** Generate lines with:
+
+- 6 integer cells + 2 fractional cells.
+- All 8 cells same height.
+- Faint or absent dot.
+- Dark LCD background, low contrast digits.
+- Yellow/dark case context only for locator synth, not necessarily reader synth.
+- Segment dropout, partial activation, motion blur, JPEG artifacts, gamma shifts.
+- Random leading zeros.
+- Fraction digits present and labeled, even if the product returns only integer.
+
+Use synthetic full-display labels such as:
+
+```text
+003214.57
+120045.03
+999999.99
+```
+
+and make sure the annotation includes all 8 digit boxes plus dot when visible.
+
+**Use real unlabeled MT10-like photos as style/background sources, not as labels.** The owner’s 97 unlabeled tilted photos can still provide LCD background crops, glare, blur, and geometry. If possible, inpaint or heavily blur the existing digits and render random synthetic digits on top. Do not pseudo-label their readings unless the owner can verify them.
+
+**Style augmentation of existing TOMAS lines is weaker than procedural MT10 synthesis.** Photometric transforms that make TOMAS look darker/lower-contrast are label-preserving and useful, but they do not create the critical MT10 structure: 8 same-height cells, faint dot, different boundary cue. So option ranking is:
+
+1. Collect 30–50 real SMART_MT10 photos with owner readings.
+2. Procedural MT10 synthesis.
+3. Label-preserving photometric/style augmentation of existing lines.
+4. Neural style transfer: avoid unless you manually inspect label preservation.
+
+**When the owner collects data, ask for readings, not just photos.** Minimum useful collection: 30–50 SMART_MT10 photos, at least 10 distinct meters if possible, with owner-verified integer reading and one close crop/one normal user photo per meter. If fractional display is visible, record the full display string for a subset; it is valuable for boundary evaluation.
 
 ---
 
-## Q6. Confidence
+## 4. Honest validation
 
-**Expected utility for zero-wrong coverage: TTA agreement > segment verifier veto > temperature scaling.** Global temperature scaling changes probability calibration but not the ranking of predictions; if you recalibrate thresholds anyway, it rarely increases zero-error coverage. TTA adds new invariance evidence. The DSEG verifier adds a partially independent shape cue, but AUC `0.76` is only moderate, so use it as a veto/margin feature, not as a primary acceptor.
+**Do not use the 49/34 sets for seed selection or threshold selection.** The proposal says “without touching 49/34,” but then says “promote only if 49/34 not worse.” That is test-set selection. Use 49/34 once after the model and gate are locked. If it fails, do not tweak and rerun; collect a new holdout or explicitly mark 49/34 as development data.
 
-**Implement 5-run reader TTA because speed is not binding.** Use deterministic, mild transforms that should not change the true string: identity, gamma darker, gamma brighter, slight crop-pad expansion, slight crop-pad contraction or scale. Avoid large affine TTA that changes the line geometry. Decode each run independently with the same ghost NMS and boundary logic.
+**Split m4 by pHash clusters into at least train / model-select / calibration.** Since m4 has 903 photos, make a frozen group split such as:
 
-```python
-TTAS = [
-    {"gamma": 1.00, "pad_scale": 1.00},
-    {"gamma": 0.85, "pad_scale": 1.00},
-    {"gamma": 1.20, "pad_scale": 1.00},
-    {"gamma": 1.00, "pad_scale": 0.96},
-    {"gamma": 1.00, "pad_scale": 1.04},
-]
+```text
+train:       ~70%
+select-val:  ~15%   model/seed choice, exact accuracy
+calib-val:   ~15%   confidence gate thresholds only
 ```
 
-**Start with a unanimity gate, then relax only on calibration.** Initial safe rule: all 5 TTA runs must return `OK`, all must return the same integer string, max aligned center std must be `<0.08*pitch`, and boundary cuts must agree within `<0.35*pitch`. This will reduce coverage but should reduce systematic ghost acceptances.
+Stratify by meter type and readability. Keep clusters intact. If owner/meter ID is known, group by that before pHash; pHash can miss tilted near-duplicates.
 
-```python
-def tta_accept(runs, pitch):
-    ok = [r for r in runs if r.status == "OK"]
-    if len(ok) != len(runs):
-        return None, "not_all_ok"
+**Select the model on exact validation before calibrating the gate.** For each seed/model:
 
-    strings = [r.integer for r in ok]
-    if len(set(strings)) != 1:
-        return None, "string_disagreement"
-
-    # Align same-position digit boxes across runs.
-    max_std = aligned_center_std(ok) / max(pitch, 1e-6)
-    if max_std > 0.08:
-        return None, "unstable_centers"
-
-    if boundary_spread(ok) / max(pitch, 1e-6) > 0.35:
-        return None, "unstable_boundary"
-
-    return strings[0], "accepted"
+```text
+metric_1: reader exact from standard crop / human line, if available
+metric_2: end-to-end exact
+metric_3: locator IoU / line exact proxy
+metric_4: ghost insertions per line
+metric_5: boundary-cut correctness
 ```
 
-**Use DSEG as a per-digit veto with a fixed margin feature.** For each accepted detector digit crop, compute DSEG best-vs-second-best template margin or distance margin. Reject if any digit has low verifier margin or if detector class and DSEG best class disagree with high DSEG confidence. Since AUC is only `0.76`, do not allow DSEG to override the detector; only let it veto suspicious digits.
+Pick one model using `select-val`. Then freeze weights. Then tune confidence thresholds on `calib-val`.
 
-**Avoid overfitting the 73 final photos by predefining features and calibrating only on m4 calibration.** Use a small fixed feature set:  
-- detector min score;  
-- detector max runner-up/best ratio;  
-- ghost suppressed/kept score ratio;  
-- TTA vote fraction;  
-- TTA center std / pitch;  
-- boundary disagreement / pitch;  
-- DSEG min margin.  
+**Use paired comparisons against the reference, not only raw percentages.** On the same validation photos, compute:
 
-Then either use a lexicographic rule or a single scalar badness score. Do not train a flexible classifier on 73 photos.
-
-```python
-badness = max(
-    1.0 - min_digit_score,          # lower score worse
-    max_runner_ratio,               # higher ambiguity worse
-    max_suppressed_ratio,           # higher ghost ambiguity worse
-    1.0 - vote_fraction,            # TTA disagreement worse
-    center_std_over_pitch / 0.08,    # >1 bad
-    boundary_spread_over_pitch / 0.35,
-    dseg_badness
-)
-# Choose threshold on m4 calibration only.
+```text
+new_wins = count(new correct, ref wrong)
+new_losses = count(new wrong, ref correct)
+net_delta = (new_wins - new_losses) / n
 ```
 
-**Temperature scaling is still useful for reporting, not for discovering safer reads.** Fit temperature on digit-level calibration NLL if you want calibrated probabilities, following Guo et al. 2017. Do not expect it to turn low-score but correct MT10 digits into safe acceptances, because it adds no new visual evidence.
+With `n=177`, differences of 1–3 photos are noise. Require either a meaningful positive delta, e.g. `>= +3–5 pp`, or choose the simpler/safer model when tied.
 
-**Use selective-prediction reporting, not only thresholds.** Frame this as selective classification in the sense of Chow 1970 and Geifman & El-Yaniv 2017: report risk among accepted samples and coverage. For every gate version, report accepted count, wrong accepted count, and CP upper bound.
+**For the selective gate, report coverage and selective risk with Clopper–Pearson bounds.** If accepted readings have zero errors, the upper 95% error bound is still large at small `n`:
+
+```text
+two-sided CP upper for 0 errors = 1 - 0.025 ** (1/n)
+one-sided 95% upper             = 1 - 0.05  ** (1/n)
+```
+
+Examples:
+
+```text
+n=17 accepted, 0 wrong  -> two-sided upper ≈ 19.5%, one-sided ≈ 16.2%
+n=73 accepted, 0 wrong  -> two-sided upper ≈ 4.9%,  one-sided ≈ 4.0%
+n=300 accepted, 0 wrong -> two-sided upper ≈ 1.2%,  one-sided ≈ 1.0%
+```
+
+So “0 wrong” on 17 or 73 accepted samples is necessary but not strong statistical evidence of near-zero field risk.
+
+**Promotion rule should be rewritten.** Use:
+
+1. Candidate selected only on m4 `select-val`.
+2. Gate calibrated only on m4 `calib-val`.
+3. Freeze code, weights, thresholds, and Kotlin parity tests.
+4. Run 49/34 once.
+5. Report overall and per-type results, including SMART_MT10 as OOD.
+6. If 49/34 is worse, do not iterate on it; collect more data and create a new frozen test.
+
+**Keep the old 49/34 as “legacy frozen audit,” not the only final truth.** You have already inspected them extensively. That is unavoidable, but it means future improvements can overfit them indirectly. Start building a new post-m4 field holdout now, especially for SMART_MT10 and EMETER_GREEN.
 
 ---
 
-## Q7. Next 3 days: stop/start priorities
+## 5. Model capacity
 
-**Stop tuning recipes against the frozen 49/34 sets.** Do not run more seed soups, AUG v3 variants, or threshold tweaks judged by those sets. Use them only once as final audit after the m4-selected model/gate is frozen.
+**A 2× reader is plausible but will not fix OOD type absence or boundary ambiguity by itself.** Going from `0.21M` to roughly `0.8M` parameters may raise heatmap quality and reduce low scores on known types. It will not teach SMART_MT10 with zero real examples, and it will not solve same-height fraction cutting unless the training target includes that cue.
 
-**Stop treating raw detector score thresholds as the main lever.** The current dominant issues are same-cell duplicates, boundary ambiguity, OOD type, and validation leakage. Raising `RD_PEAK_MIN` alone will mostly reduce coverage.
+**Low digit scores are not automatically a capacity diagnosis.** CenterNet heatmap scores trained with focal loss, Lin et al., 2017, are not calibrated probabilities. A correct digit score of `0.35–0.50` can result from low contrast, label noise, center ambiguity, too-sharp Gaussians, or focal-loss calibration. Use recall/precision and exact string accuracy, not raw score alone.
 
-**Stop style-transfer work unless all procedural/data fixes are blocked.** CycleGAN-like style transfer is not the right first response for seven-seg OCR because preserving faint dots and segment topology is exactly the hard part.
+**Run one controlled width experiment.** Train exactly two reader models on the same m4 split:
 
-**Day 1 priority: implement and evaluate class-agnostic same-cell NMS plus ambiguity veto.** Cache reader heatmaps/top-K detections for m4-val, the 38 human-line crops, and final sets. Grid `alpha`, `ambig_ratio`, and heatmap `kx`, but choose parameters on m4 calibration only. Produce a table: exact integer, full-display raw exact on 38, accepted count, wrong accepted count, duplicate/cell rate.
+```text
+A: current width, same recipe, one seed
+B: 2× channels, same recipe, same seed where possible
+```
 
-**Day 1 priority: implement locator-boundary conservative clipping as a veto.** Transform locator LINE right edge to reader coordinates, grid `k` and `guard`, and report oracle-locator versus predicted-locator behavior. Keep the rule only if it reduces fraction leakage without clipping last integers; otherwise use it only as an uncertainty feature.
+Keep augmentation, synthetic/real ratio, steps, and validation scripts identical. If larger training is slower on CPU, allow both models to train until the no-augmentation train metric plateaus, but do not give the 2× model more data or a different recipe.
 
-**Day 1 priority: split m4-val into `val_select` and `val_cal` by pHash cluster and type.** Use `val_select` to choose among the currently running m4 seeds. Use `val_cal` for the confidence gate. Write the split IDs to disk and do not reshuffle during this cycle.
+**Evaluate these diagnostics.**
 
-**Day 2 priority: add TTA consensus gate.** Run 5 deterministic reader TTAs on cached crops. Start with unanimity, stable centers, stable boundary, and ghost ambiguity veto. Calibrate only on `val_cal`. Report coverage and CP upper error.
+```text
+1. reader exact on select-val
+2. reader exact from human/verified line boxes
+3. raw full-display string exact, before assemble
+4. insertions per line after slot-NMS
+5. mean/max local maxima per GT cell
+6. min digit score on correct accepted lines
+7. selective coverage at 0 wrong on calib-val
+8. train-set exact on a held-out no-aug train subset
+```
 
-**Day 2 priority: consume the unused real data after label audit.** Add the 134 labeled photos only after checking the 41 two-digit CRYSTAL cases and removing/repairing V/A/PF poisoned labels. Box the 19 remaining photos if they are readable. Real cleaned data is higher value than another augmentation sweep.
+Interpretation:
 
-**Day 2 priority: ask the owner for SMART_MT10 data immediately.** Request 30–50 verified SMART_MT10 photos with varied tilt/exposure and full-meter context. Also ask for the 97 unlabeled tilted photos; double-transcribe visible displays if possible. This is the only credible way to close the zero-example gap.
+```text
+2× improves train and val materially       -> capacity was limiting.
+2× improves train only                     -> data/domain/label ceiling.
+2× improves scores but not exact           -> decode/boundary problem.
+2× improves known types, not MT10          -> OOD data problem.
+2× increases confident wrongs              -> reject for product.
+```
 
-**Day 2/3 optional: build procedural MT10 synthesis, not neural style transfer.** Generate 2k–5k MT10-style reader lines and some scene-level examples with yellow case/dark LCD. Train one ablation `m4 + synth2`; require no regression on m4 trained types before considering it useful. Treat the 9 MT10 final images as diagnostic only.
+**Adopt 2× only if the gain is bigger than seed noise.** Your seed spread is already several photos/points. Require something like `>= +5 pp` on reader exact or a clear increase in calibrated 0-wrong coverage, with no increase in accepted-wrong cases. If the gain is `+1–2 pp`, spend the effort on data and decoding.
 
-**Day 3 optional: run one 2× reader-width experiment.** Only do this after the decode/boundary/TTA harness is fixed, because otherwise the wider model will be evaluated through broken assembly. Compare against same-seed baseline using the same split, same training budget, and separately calibrated gates.
+---
 
-**End of Day 3 deliverable: one release table and one error table.** Release table: exact accuracy, accepted coverage, wrong accepted count, CP upper bound, by type and overall, for m4-select, m4-cal, and final audit. Error table: locator IoU failure, reader-from-human-box failure, boundary failure, ghost duplicate failure, OOD type. Use that table to decide whether the next week is data collection, boundary-head training, or model capacity.
+## 6. Confidence
+
+**Temperature scaling is useful for reporting/calibration, not for creating new safe predictions.** Temperature scaling, Guo et al., 2017, is monotonic for logits; it changes probability calibration but not the ranking or the decoded string. It may help set a cleaner threshold, but alone it will not recover many extra zero-wrong readings.
+
+**TTA agreement is the best candidate for increasing 0-wrong coverage.** Run 3–5 deterministic reader transforms and require identical integer output plus stable boundary:
+
+```text
+TTA0: original
+TTA1: gamma 0.85
+TTA2: gamma 1.15
+TTA3: scale x/y 0.98 with recrop
+TTA4: scale x/y 1.02 with recrop
+```
+
+Accept a low-score reading only if all TTAs return the same integer, the same digit count, non-ambiguous slots, and boundary positions within `0.35–0.50 pitch`. Compute median digit score across TTAs for reporting, but use agreement as the safety signal.
+
+**Use DSEG only as a veto or second confirmation, not as an override.** AUC `0.76` is weak. It can catch some detector mistakes, but it is not strong enough to say “detector says 6, DSEG says 8, choose 8.” Safe use:
+
+```text
+if DSEG predicted class != detector class:
+    abstain
+if DSEG margin < calibrated threshold:
+    abstain on borderline detector cases
+```
+
+Do not let DSEG rescue a digit that the detector thinks is ambiguous unless TTA is unanimous and the gate was calibrated that way.
+
+**Use two pre-registered gates, not many fitted combinations.** Example:
+
+```text
+Gate A: current strict detector gate
+    status OK
+    no ambiguous slot
+    min_digit_score >= 0.55
+    max_runner_up_ratio < 0.50
+    boundary reliable
+
+Gate B: stable-low-score gate
+    status OK
+    no ambiguous slot
+    min_digit_score >= 0.35
+    max_runner_up_ratio < 0.60
+    all TTAs return same integer
+    boundary candidates agree within 0.50 pitch
+    DSEG agrees with every digit, or at least with every digit whose detector score < 0.55
+```
+
+Calibrate only the few numeric thresholds on m4 calibration. Do not search dozens of combinations on 73 photos.
+
+**If you want one scalar risk score, keep it monotone and simple.**
+
+```python
+def risk_features(reading):
+    return {
+        "bad_status": reading.status != "OK",
+        "ambiguous_slot": reading.ambiguous_slot,
+        "tta_disagree": not reading.tta_unanimous,
+        "boundary_disagree": reading.boundary_disagree,
+        "low_score": 0.55 - reading.min_digit_score,
+        "bad_margin": reading.max_alt_ratio - 0.50,
+        "bad_dseg": reading.max_dseg_disagreement,
+    }
+
+def accept_gate(r):
+    if r.status != "OK": return False
+    if r.ambiguous_slot: return False
+    if r.boundary_disagree: return False
+    if r.min_digit_score >= 0.55 and r.max_alt_ratio < 0.50:
+        return True
+    if (
+        r.min_digit_score >= 0.35
+        and r.max_alt_ratio < 0.60
+        and r.tta_unanimous
+        and r.dseg_all_agree
+    ):
+        return True
+    return False
+```
+
+This kind of monotone rule is less likely to overfit than logistic regression or isotonic regression on 73 samples.
+
+**Use selective prediction discipline.** The relevant literature is selective classification, Geifman and El-Yaniv, 2017, and conformal/risk-control ideas from Vovk et al., 2005, and Angelopoulos and Bates, 2021. In your case, the practical version is: fix a gate family, choose the most permissive gate with zero calibration errors, then report coverage and CP risk bounds on untouched data.
+
+---
+
+## 7. Next 3 days: stop/start priority
+
+**Stop seed fishing and recipe micro-tuning.** You already ran 31 reader seeds, EMA, soups, stronger tilt, locator aug variants, and fraction masking. The dominant failures are data/type mismatch, ghost decoding, and boundary ambiguity. More seeds are low expected value.
+
+**Stop using 49/34 for development decisions.** Keep them as a legacy audit. If a new candidate fails there after being locked, do not tune against that failure; add data and create a new holdout.
+
+**Stop treating human integer boxes as a clean reader oracle.** Mode L being worse than end-to-end shows that crop convention and boundary cues are part of the learned behavior. Use human boxes for diagnostics, but evaluate boundary and crop effects explicitly.
+
+**Day 1: implement slot-NMS and ghost metrics.** Add a raw-detection dump and an eval script that reports insertion/substitution/deletion against full display text where available. Run current model with:
+
+```text
+baseline decode
++ heatmap NMS 1x5
++ slot-NMS
++ slot-NMS ambiguity veto
+```
+
+on m4 validation/calibration and the diagnostic 38. Choose constants only from m4 calibration.
+
+**Day 1: freeze validation protocol.** Create cluster-grouped `train/select-val/calib-val` files. Add a single command that produces:
+
+```text
+end-to-end exact
+reader exact
+locator exact/IoU
+raw full-string exact
+ghost insertions
+boundary failures
+selective coverage
+accepted wrong
+CP bounds
+per-meter-type table
+```
+
+Do not manually inspect outputs before model/gate selection unless the inspected split is declared development.
+
+**Day 1–2: label the unused real data before more synthetic experiments.** Process the 134 labeled photos, the 79 owner-verified readings, the 41 suspicious 2-digit CRYSTAL labels, and the 19 unboxed photos. For the 41 CRYSTAL cases, either fix the V/A/PF poison or exclude them; poisoned short labels are worse than no labels. Add meter type tags and, where possible, boundary and `kWh` glyph labels.
+
+**Day 2: add boundary instrumentation, even before training a boundary head.** For every validation image, compute dot/height/lattice/locator boundary candidates and normalized error in pitch units. This tells you whether locator clipping deserves another try or should be only a veto.
+
+**Day 2: run the m4 seeds already training and select only from m4 select-val.** Evaluate seeds with the new ghost and boundary metrics, not only exact accuracy. Pick one reference candidate before confidence calibration.
+
+**Day 2: build `synth2_mt10` procedurally.** Generate same-height 8-cell dark-LCD lines with faint dots and low contrast. Train one reader variant with synth2 if CPU time allows. Do not use the 9 SMART_MT10 test cases to tune synth parameters beyond generic physical observations.
+
+**Day 2–3: implement TTA agreement gate and optional DSEG veto.** Use a fixed small set of TTAs. Calibrate Gate A/Gate B on m4 calibration only. Report coverage and accepted-wrong count with CP bounds.
+
+**Day 3: run one controlled 2× reader experiment only if CPU budget allows.** If it cannot finish in time, defer it; do not let it block the decoding/boundary fixes. If it finishes, compare against same-seed 1× using the frozen eval script.
+
+**Day 3: lock one candidate and run the legacy frozen sets once.** Produce a table like:
+
+```text
+overall 49
+overall 34
+trained types only
+SMART_MT10 only
+EMETER_GREEN
+CRYSTAL
+coverage under strict gate
+accepted wrong under strict gate
+CP upper bound
+```
+
+If SMART_MT10 remains poor, say so and ship with abstention for that pattern until 30–50 real MT10 photos are collected.
+
+**Parallel owner request: collect SMART_MT10 and EMETER_GREEN now.** Ask for 30–50 SMART_MT10 photos with owner-verified integer readings, plus 20–30 EMETER_GREEN if possible. Require varied tilt/lighting, but one clear close photo per meter. This is higher value than another augmentation sweep.

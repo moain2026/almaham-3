@@ -46,11 +46,12 @@ def evaluate(spec, tag):
 
 def mcnemar(a, b):
     """exact two-sided McNemar on paired per-photo outcomes."""
-    from scipy.stats import binom
+    from math import comb
+    def binom_cdf(k, n): return sum(comb(n, i) for i in range(k + 1)) / 2 ** n
     A = json.load(open(a)); Bj = json.load(open(b))
     oa = {r["i"]: r["ok"] for r in A["rows"]}; ob = {r["i"]: r["ok"] for r in Bj["rows"]}
     ids = sorted(set(oa) & set(ob)); b01 = sum(1 for i in ids if not oa[i] and ob[i]); b10 = sum(1 for i in ids if oa[i] and not ob[i])
-    nd = b01 + b10; p = min(1.0, 2 * binom.cdf(min(b01, b10), nd, 0.5)) if nd else 1.0
+    nd = b01 + b10; p = min(1.0, 2 * binom_cdf(min(b01, b10), nd)) if nd else 1.0
     print(f"{A['tag']} exact {A['exact']}/{A['n']}  vs  {Bj['tag']} exact {Bj['exact']}/{Bj['n']}")
     print(f"  discordant: only-B-right {b01}, only-A-right {b10}  -> exact McNemar p = {p:.3f}  ({'B better' if b01>b10 else 'A better' if b10>b01 else 'tie'}{', significant' if p<0.05 else ', not significant'})")
 
