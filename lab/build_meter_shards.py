@@ -15,7 +15,7 @@ and a review sheet data/review/meter_shards_<name>.jpg of 40 random samples for 
 
 Usage: python3 build_meter_shards.py <text_locate.json> <out_prefix> [--audit N]
 """
-import csv, json, sys, hashlib, glob
+import csv, json, os, sys, hashlib, glob
 import cv2
 import numpy as np
 import paths
@@ -63,10 +63,12 @@ def main():
     audit = int(sys.argv[sys.argv.index("--audit") + 1]) if "--audit" in sys.argv else 40
     labels = ef.load_labels(); boxes = load_meter_boxes(); multi = multi_meter()
     types = {r["filename"]: r["meter_type"] for r in csv.DictReader(open(paths.BENCH_DATA / "erp" / "labels_agentD.csv", encoding="utf-8"))}
+    _poison = paths.BENCH_DATA / "erp" / "poisoned_m3_short_2026-10-24.json"
+    poisoned = set(json.load(open(_poison))) if _poison.exists() else set()   # audited wrong-line short labels (S 2026-10-24)
     reasons = {"no_tl": 0, "no_meterbox": 0, "excluded": 0, "multi": 0, "low_score": 0, "short_unsafe": 0, "irregular": 0, "outside_meter": 0, "ok": 0}
     conf = {r["filename"]: r.get("confidence", "") for f in glob.glob(str(ef.LABELS / "labels_agentD.csv")) for r in csv.DictReader(open(f, encoding="utf-8"))}
     OWNER_W = 2.0   # agent D request 2026-10-21: owner_visual readings get higher sampling weight
-    X, B, LX, LB, keys, by_type, review, SW = [], [], [], [], [], {}, [], []
+    X, B, LX, LB, keys, by_type, review, SW, files_ok = [], [], [], [], [], {}, [], [], []
     for fn, res in sorted(tl.items()):
         text = labels.get(fn)
         if not res or not text:
@@ -74,18 +76,21 @@ def main():
         if fn not in boxes:
             reasons["no_meterbox"] += 1; continue
         p = ef.ERP / "photos" / fn
+        if fn in poisoned:
+            reasons["excluded"] += 1; continue
         if fn in ef.EXCLUDE_FILES or hashlib.sha256(open(p, "rb").read()).hexdigest() in ef.TEST_HASHES:
             reasons["excluded"] += 1; continue
         if fn in multi:
             reasons["multi"] += 1; continue
-        if res["score"] < MIN_SCORE:
-            reasons["low_score"] += 1; continue
+        human = bool(res.get("R"))   # box verified by agent R (2026-10-24): anti-poisoning filters are for UNREVIEWED weak labels
         t = types.get(fn, "?")
-        if len(text) < 5 and not (t in SHORT_OK and res["score"] >= 0.5):
+        if not human and res["score"] < MIN_SCORE:
+            reasons["low_score"] += 1; continue
+        if not human and len(text) < 5 and not (t in SHORT_OK and res["score"] >= 0.5):
             reasons["short_unsafe"] += 1; continue
         digs = sorted(res["digits"], key=lambda d: d[1])
         cx = np.array([(d[1] + d[3]) / 2 for d in digs]); hs = np.array([d[4] - d[2] for d in digs])
-        if len(digs) >= 2:
+        if len(digs) >= 2 and not human:
             gaps = np.diff(cx)
             if gaps.max() / max(gaps.min(), 1e-6) > ef.LATTICE_MAX_RATIO or hs.min() / hs.max() < 0.75:
                 reasons["irregular"] += 1; continue
@@ -108,7 +113,7 @@ def main():
             x1 = (d[1] - mx1 - sx1) * rs + rox; y1 = (d[2] - my1 - sy1) * rs + roy; x2 = (d[3] - mx1 - sx1) * rs + rox; y2 = (d[4] - my1 - sy1) * rs + roy
             B.append((i, int(chr_), x1, y1, x2, y2))
         B.append((i, CLS_LINE, (lx1 - mx1 - sx1) * rs + rox, (ly1 - my1 - sy1) * rs + roy, (lx2 - mx1 - sx1) * rs + rox, (ly2 - my1 - sy1) * rs + roy))
-        keys.append(fn.replace("pending-", "")[:8]); by_type[t] = by_type.get(t, 0) + 1; reasons["ok"] += 1
+        keys.append(fn.replace("pending-", "")[:8]); files_ok.append(fn); by_type[t] = by_type.get(t, 0) + 1; reasons["ok"] += 1
         SW.append(OWNER_W if conf.get(fn) == "owner_visual" else 1.0)
         if len(review) < audit * 3:
             vis = crop.copy(); cv2.rectangle(vis, (int(lx1 - mx1), int(ly1 - my1)), (int(lx2 - mx1), int(ly2 - my1)), (0, 0, 255), max(2, cw // 200))
@@ -117,6 +122,22 @@ def main():
     if not X:
         print("nothing", reasons); return
     X = np.stack(X); B = np.array(B, np.float32); LX = np.stack(LX); LB = np.array(LB, np.float32)
+    if os.environ.get("SPLIT", "key") == "phash":
+        # photo-similarity split (training audit 2026-10-24): same meter under different filenames must not straddle
+        # train/val. Union-find over 16x16 median-hash with hamming <= PHASH_T, then whole clusters go to val.
+        T = int(os.environ.get("PHASH_T", "24")); hs = []
+        for fn in files_ok:
+            g = cv2.resize(cv2.cvtColor(cv2.imread(str(ef.ERP / "photos" / fn)), cv2.COLOR_BGR2GRAY), (16, 16), interpolation=cv2.INTER_AREA)
+            hs.append((g > np.median(g)).flatten())
+        par = list(range(len(hs)))
+        def find(a):
+            while par[a] != a: par[a] = par[par[a]]; a = par[a]
+            return a
+        for i in range(len(hs)):
+            for j in range(i + 1, len(hs)):
+                if int((hs[i] != hs[j]).sum()) <= T: par[find(i)] = find(j)
+        keys = [f"c{find(i)}" for i in range(len(hs))]
+        print("phash clusters:", len(set(keys)), "of", len(keys), "photos (T=%d)" % T)
     uniq = sorted(set(keys)); rng = np.random.RandomState(0); rng.shuffle(uniq); val_keys = set(uniq[: max(1, int(0.15 * len(uniq)))])
     for name, pick in (("train", lambda k: k not in val_keys), ("val", lambda k: k in val_keys)):
         idx = [i for i, k in enumerate(keys) if pick(k)]; remap = {o: n for n, o in enumerate(idx)}
@@ -126,6 +147,9 @@ def main():
         LBi = np.array([(remap[int(b[0])], *b[1:]) for b in LB if int(b[0]) in remap], np.float32).reshape(-1, 6)
         np.save(f"{out}_loc_{name}_X.npy", LX[idx]); np.save(f"{out}_loc_{name}_B.npy", LBi)
         print(name, X[idx].shape, len(Bi), "boxes; locator", LX[idx].shape)
+    # photo-level split record (dev-set construction / leakage checks): which files landed in train vs val
+    json.dump({"train_keys": sorted(k for k in uniq if k not in val_keys), "val_keys": sorted(val_keys),
+               "files": {fn: ("val" if k in val_keys else "train") for fn, k in zip(files_ok, keys)}}, open(f"{out}_keys.json", "w"), indent=0)
     rep = {"reasons": reasons, "accepted": len(X), "by_type": by_type, "owner_visual": int(sum(1 for w in SW if w > 1)), "owner_w": OWNER_W, "n_train_keys": len(uniq) - len(val_keys), "n_val_keys": len(val_keys), "min_score": MIN_SCORE}
     json.dump(rep, open(f"{out}_report.json", "w"), indent=1); print(json.dumps(rep))
     rng = np.random.RandomState(1); sel = [review[i] for i in rng.choice(len(review), min(audit, len(review)), replace=False)]

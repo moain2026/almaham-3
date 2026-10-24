@@ -17,3 +17,7 @@ Auto-merging docs/training-log/runs.md
 --- 2026-10-24T06:51:48Z START auto_loc_s131 (locator) init=weights/locator_m1_augv2.pt real=../data/erp/ft/m3 synth=../data/synth/scene_s1 steps=3000 thr=3 env=[SEED=131 AUG_SEED=131]
 train rc=0 step 2999 loss 1.374 real_val_line_iou50 66/68 5250s (EMA)
 RESULT auto_loc_s131: 49 A=22 B=25 | 34: 22 {'CRYSTAL': '3/7', 'EMETER_GREEN': '1/6', 'OTHER': '3/4', 'SMART_MT10': '1/1', 'TAGADOD': '6/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG
+[auto_push] pushed auto-training ea18f67
+--- 2026-10-24T08:20:38Z START auto_loc_s132 (locator) init=weights/locator_m1_augv2.pt real=../data/erp/ft/m3 synth=../data/synth/scene_s1 steps=3000 thr=3 env=[SEED=132 AUG_SEED=132]
+train rc=0 step 2999 loss 1.347 real_val_line_iou50 66/68 5200s (EMA)
+RESULT auto_loc_s132: 49 A=22 B=21 | 34: 23 {'CRYSTAL': '3/7', 'EMETER_GREEN': '2/6', 'OTHER': '3/4', 'SMART_MT10': '0/1', 'TAGADOD': '7/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG

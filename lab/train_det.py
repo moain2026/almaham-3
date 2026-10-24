@@ -121,7 +121,7 @@ class Shards:
         xs, hs, ss, os_, ms, igs = [], [], [], [], [], []
         for si, i in picks:
             im, bx = self.item(si, i)
-            if AUG_MODE == "v2":  # recipe v2 (augment.py): geometric + photometric + degradation, boxes follow
+            if AUG_MODE in ("v2", "v3"):  # recipe v2 / v3 (tilt-robust) (augment.py): geometric + photometric + degradation, boxes follow
                 im, bx = augment.augment(im, bx, self.kind, AUG_RNG)
                 bx = bx.reshape(-1, 5)
             elif np.random.rand() < 0.5:  # legacy (v1): horizontal shift of a few pixels
