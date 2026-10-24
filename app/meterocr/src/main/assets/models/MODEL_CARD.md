@@ -37,3 +37,45 @@ Strict gate (`status OK & min_conf ≥ 0.55 & alt < 0.5·best`) on the 73 photos
 - SMART_MT10 is absent from the labelled pool (10,155 type labels): the model has never seen it. Product rule until data exists: abstain / manual entry.
 - Dark low-contrast LCDs (EMETER_GREEN, MT10) carry 11 of the 17 errors; the locator is on the correct line in 34/38 photos, the reader is the failing stage in 16/17 (`docs/research/training-audit-2026-10-24.md`).
 - Test-set look log: the 49 have been consulted after every autotrain cycle (≥60 looks) and the 34 after every candidate since 2026-10-21; treat both as dev-tests, not clean holdouts. New promotion rule: decide on val-m4 (pHash-cluster split, 177) with paired McNemar; report 49/34 once per milestone.
+
+---
+## Release candidate 2026-10-24 (agent S) — `locator_m4_s0.pt` + `reader_m4_s0.pt` (NOT yet in this APK)
+Lineage: both fine-tuned from the reference pair's parents (`locator_m1_augv2`, `reader_ft6m1_augv2`) on **m4** = 903 ERP photos (m3 + 381 line boxes verified by agent R; 9 poisoned labels excluded; pHash-cluster split 726 train / 177 val), synthetic `scene_s1` / `line_s1`, 3000 steps AdamW 2e-4 cosine, AUG v2, no EMA, seed 0 (locator checkpoint at step 2500 — run cut by sandbox cleanup; a full 3000-step rerun is in progress). Shards archived privately (`almaham-3-private-data/training_shards/2026-10-24_m4`). None of the 49/34 photos is in m4 (hash + filename exclusion, re-checked).
+
+### Numbers (all backed by `benchmark/results/engines/*loc_m4_s0_rd_m4_s0*`)
+| metric | reference pair | **candidate** |
+|---|---|---|
+| 49 mode A (39 readable) | 22 | **23** |
+| 49 mode B (shipped path) | 19 | **22** |
+| testset_human 34 | 21 | **23** |
+| strict gate on 73 (accepted / wrong) | 17 / 0 | **20 / 0** |
+| `OK & min_conf≥0.55` on 73 | 18 / 2 | **22 / 0** |
+| **val-m4 end-to-end, clean65** (never in any training) | 47/65 | **49/65** |
+| val-m4 e2e, all 177 | 140 | **145** |
+| val-m4 e2e strict gate 177 (accepted / wrong) | 72 / 4 | 75 / 4 |
+
+Honest reading: every axis moves the same way, but no single difference is statistically significant (McNemar clean65 p=0.63, 177 p=0.33; the 49/34 differences are within seed spread ±2). Claim: **no regression, consistent small gain** — nothing more.
+
+### Per meter type on the 49 (mode A) — Clopper–Pearson 95%
+| type | readable | exact | 95% CI |
+|---|---:|---:|---|
+| TOMAS_SMART | 13 | 9 | [39%, 91%] |
+| TOMAS_STATIC | 4 | 4 | [40%, 100%] |
+| TAGADOD | 2 | 2 | [16%, 100%] |
+| CRYSTAL | 5 | 4 | [28%, 99%] |
+| EMETER_GREEN | 6 | 1 | [0%, 64%] |
+| **SMART_MT10** (still 0 training examples) | 9 | 3 | [7%, 70%] |
+| all | 39 | 23 | [42%, 74%] |
+| trained types only | 30 | 20 | [47%, 83%] |
+
+### Selective prediction — the gate that will ship with this pair
+- Today's `confident` flag is **vacuous**: `SegmentVerifier` rejects 83–86% of the digits of fully *correct* readings, so `confident_total = 0` on all 177 val photos for both pairs. It must be removed from `uncertain` in Kotlin (kept as diagnostics only) before any "confident" number is quoted.
+- Gate v2 measured end-to-end on val-m4 (`docs/research/gate-v2-2026-10-24.md`): `OK & every digit score≥0.45 & alt<0.5·score` → 130 accepted / 11 wrong; **+ TTA agreement** (gamma 0.7/1.4, scale 0.92/1.08, identical string) → 106 / 2; **+ previous-reading window** (`prev ≤ v ≤ prev + 2×500`, previous reading simulated) → 104 / 0 (clean65 34 / 0). Rule-of-three upper bound on the accepted-error rate ≈ 3/104 ≈ 2.9% — far from the ~300 accepted-without-error needed to claim ≤1%.
+- Previous-reading window figures use a *simulated* previous reading; they must be re-measured on real (photo, previous, truth) triples from the owner's system before being quoted as product numbers.
+
+### Ship conditions (status)
+1. clean65 e2e ≥ reference — **met** (49 ≥ 47).
+2. Python↔Kotlin parity 49/49 on this pair — pending (Astra r4 permanent test).
+3. This card updated — done (this section).
+4. Owner phone run — pending.
+Not published to the web demo until 2 and 4 are done.
