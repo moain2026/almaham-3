@@ -12,3 +12,8 @@ fatal: could not read Username for 'https://github.com': No such device or addre
 --- 2026-10-24T05:28:14Z START auto_loc_s130 (locator) init=weights/locator_m1_augv2.pt real=../data/erp/ft/m3 synth=../data/synth/scene_s1 steps=3000 thr=3 env=[SEED=130 AUG_SEED=130]
 train rc=0 step 2999 loss 1.333 real_val_line_iou50 66/68 4923s
 RESULT auto_loc_s130: 49 A=18 B=20 | 34: 27 {'CRYSTAL': '4/7', 'EMETER_GREEN': '4/6', 'OTHER': '3/4', 'SMART_MT10': '0/1', 'TAGADOD': '7/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '2/2'} | accepted accepted correct correct wrong WRONG
+Auto-merging docs/training-log/runs.md
+[auto_push] pushed auto-training 7d51ca5
+--- 2026-10-24T06:51:48Z START auto_loc_s131 (locator) init=weights/locator_m1_augv2.pt real=../data/erp/ft/m3 synth=../data/synth/scene_s1 steps=3000 thr=3 env=[SEED=131 AUG_SEED=131]
+train rc=0 step 2999 loss 1.374 real_val_line_iou50 66/68 5250s (EMA)
+RESULT auto_loc_s131: 49 A=22 B=25 | 34: 22 {'CRYSTAL': '3/7', 'EMETER_GREEN': '1/6', 'OTHER': '3/4', 'SMART_MT10': '1/1', 'TAGADOD': '6/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG
