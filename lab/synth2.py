@@ -177,7 +177,7 @@ class SegStyle:
 # ----------------------------------------------------------------------------------------------
 def random_reading():
     style = random.choices(["six_dec2_big", "six_dec2_small", "six_dec1", "crystal", "five_dec2", "seven_dec1",
-                            "six_nodec"], [0.28, 0.3, 0.1, 0.14, 0.06, 0.05, 0.07])[0]
+                            "six_nodec"], [0.42, 0.18, 0.08, 0.14, 0.06, 0.05, 0.07] if SYNTH_DR else [0.28, 0.3, 0.1, 0.14, 0.06, 0.05, 0.07])[0]
     style = os.environ.get("SYNTH_STYLE", style)   # e.g. SYNTH_STYLE=crystal -> style-specific shard (opt2 Crystal, 2026-10-21)
     if style == "crystal":
         n = random.choices([1, 2, 3, 4, 5], [0.1, 0.35, 0.3, 0.15, 0.1])[0]
@@ -194,9 +194,13 @@ def random_reading():
     return style, ip, dec
 
 
+LINE_INT_ONLY = os.environ.get("SYNTH_LINE", "all") == "int"   # SYNTH_LINE=int -> LINE box = integer part only (ADR-0005 amendment 2026-10-24)
+SYNTH_DR = os.environ.get("SYNTH_DR", "0") == "1"               # domain randomisation v2 (consult #2 Q3): more dark panels, lower contrast
+
+
 def lcd_palette():
     kind = random.choices(["grey", "green", "blue", "white", "yellow", "dark", "amber"],
-                          [0.3, 0.17, 0.15, 0.12, 0.14, 0.06, 0.06])[0]
+                          [0.22, 0.14, 0.12, 0.10, 0.12, 0.22, 0.08] if SYNTH_DR else [0.3, 0.17, 0.15, 0.12, 0.14, 0.06, 0.06])[0]
     bg = {"grey": (160, 170, 165), "green": (120, 190, 140), "blue": (215, 180, 130), "white": (228, 232, 228),
           "yellow": (110, 185, 200), "dark": (60, 70, 65), "amber": (60, 150, 230)}[kind]
     bg = tuple(int(np.clip(c + random.randint(-30, 30), 15, 250)) for c in bg)
@@ -207,7 +211,7 @@ def lcd_palette():
     if kind == "blue" and random.random() < 0.5:  # bluish dark segments
         fg = (int(min(255, fg[0] + 60)), fg[1], fg[2])
     contrast = random.choices([random.uniform(0.1, 0.3), random.uniform(0.3, 0.65), random.uniform(0.65, 1.0)],
-                              [0.3, 0.35, 0.35])[0]
+                              [0.45, 0.35, 0.2] if SYNTH_DR else [0.3, 0.35, 0.35])[0]
     fg = mix(bg, fg, contrast)
     ga = random.choices([0.0, random.uniform(0.05, 0.2), random.uniform(0.2, 0.5)], [0.3, 0.4, 0.3])[0]
     ghost = mix(bg, fg, ga)
@@ -309,15 +313,25 @@ def render_display(lw, lh):
         dot_x = cx - st.pitch * random.uniform(0.08, 0.2)
         dot_y = y0 + dh - dot_r
         if dec_k >= 1 or random.random() < 0.9:  # full-size decimals always carry a visible dot
-            cv2.circle(panel, (int(dot_x), int(dot_y)), int(round(dot_r)), fg, -1, cv2.LINE_AA)
-            boxes.append((CLS_DOT, dot_x - dot_r, dot_y - dot_r, dot_x + dot_r, dot_y + dot_r))
+            if SYNTH_DR and random.random() < 0.5:   # faint / nearly absent dot (MT10-like), still labelled only if visible enough
+                a = random.uniform(0.0, 1.0); col = mix(bg, fg, a)
+                cv2.circle(panel, (int(dot_x), int(dot_y)), int(round(dot_r)), col, -1, cv2.LINE_AA)
+                if a >= 0.35:
+                    boxes.append((CLS_DOT, dot_x - dot_r, dot_y - dot_r, dot_x + dot_r, dot_y + dot_r))
+            else:
+                cv2.circle(panel, (int(dot_x), int(dot_y)), int(round(dot_r)), fg, -1, cv2.LINE_AA)
+                boxes.append((CLS_DOT, dot_x - dot_r, dot_y - dot_r, dot_x + dot_r, dot_y + dot_r))
         sst = st.scaled(dec_k) if dec_k < 1 else st
         sy = y0 + dh - sst.dh
         sx = cx + st.pitch * random.uniform(0.02, 0.2)
         bx2, cx = sst.draw_text(panel, dec, sx, sy, fg, ghost, ghost_on)
         for ch, b in bx2:
             boxes.append((int(ch), *b))
-        line_boxes += [b for _, b in bx2]
+        if LINE_INT_ONLY:
+            pass   # 2026-10-24 (training audit §synth): LINE = integer glyphs only, matching the real m3/m4 labels and
+                   # the reader's learned boundary (locator right-edge residual -0.22 w on the 49 ~= -2/8 cells)
+        else:
+            line_boxes += [b for _, b in bx2]
     lb = np.array(line_boxes)
     boxes.append((CLS_LINE, lb[:, 0].min(), lb[:, 1].min(), lb[:, 2].max(), lb[:, 3].max()))
     # unit text right of / above the line
