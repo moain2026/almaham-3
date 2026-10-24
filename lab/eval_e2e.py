@@ -46,6 +46,14 @@ class Engine:
         so.intra_op_num_threads = 2
         self.loc = ort.InferenceSession(str(Path(d) / "line_locator.onnx"), so, providers=["CPUExecutionProvider"])
         self.rd = ort.InferenceSession(str(Path(d) / "digit_reader.onnx"), so, providers=["CPUExecutionProvider"])
+        # Ensemble override (consult #2 D1): ENS_READER / ENS_LOCATOR = comma-separated .pt checkpoints -> heat-averaged
+        # torch ensemble with the same (peaks,size,offset) contract. Measured, not shipped: Kotlin has no mirror yet.
+        if _os.environ.get("ENS_READER") or _os.environ.get("ENS_LOCATOR"):
+            from ensemble import EnsembleSession
+            if _os.environ.get("ENS_READER"):
+                self.rd = EnsembleSession(_os.environ["ENS_READER"].split(","), "reader")
+            if _os.environ.get("ENS_LOCATOR"):
+                self.loc = EnsembleSession(_os.environ["ENS_LOCATOR"].split(","), "locator")
 
     def run(self, sess, img_bgr):
         x = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB).astype(np.float32)[None]
