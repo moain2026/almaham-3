@@ -4,3 +4,5 @@
 train rc=0 step 2999 loss 1.152 real_val_exact 147/173 2812s
 --- 2026-10-21T12:58:54Z START ft6m3_s2 (reader) init=weights/reader_ft6m1_augv2.pt real=../data/erp/ft/ft6m3 synth=../data/synth/line_s1 steps=3000 thr=1 env=[SEED=2 AUG_SEED=2]
 RESULT ft6m3_cry_s2: 49 A=22 B=19 | 34: 19 {'CRYSTAL': '2/7', 'EMETER_GREEN': '1/6', 'OTHER': '2/4', 'SMART_MT10': '0/1', 'TAGADOD': '7/7', 'TOMAS_SMART': '6/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG
+[auto_push] pushed auto-training 19dc97e
+--- 2026-10-21T12:59:35Z START ft6m3_cry_long_s1 (reader) init=weights/reader_ft6m2_s1.pt real=../data/erp/ft/ft6m3 synth=../data/synth/line_s1,../data/synth/line_crystal_opt2 steps=6000 thr=1 env=[SEED=1 AUG_SEED=1]

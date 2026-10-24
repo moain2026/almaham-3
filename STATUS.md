@@ -150,3 +150,11 @@ updated: 2026-10-21
 ## 2026-10-21 14:50 مكة — optical2 PR7 verified
 - segverify_v2 (optical2 PR#7, 7c75788): tests 24/24 here; on frozen 73: AUC 0.543→0.706; synthetic 19%→74.8% (<85% target). Candidate only; not in gate, not in Kotlin. Copied to lab/segverify_v2.py for comparison. PR#6 Android pending APK build + parity (successor queue).
 - Training: ft6m3_s0/s1, ft6m2_cry_s1, ft6m3_cry_s1 ~2000/3000; Contabo locator_m3 ~1250/3000.
+
+## 2026-10-21 15:05 مكة — HANDOFF STATE (agent S session ending; everything autonomous)
+- **Autotrain live:** Contabo systemd `almaham-autotrain-reader`/`-locator` + sandbox loops (`lab/autotrain/train_loop.sh`): train → eval (49 A/B, 34 by type, risk–coverage) → archive → runs.md → **push to branch `auto-training`**. First auto cycle done: ft6m3_cry_s2 → 49 A 22 / B 19. Queues `lab/autotrain/queue_*.txt`; empty ⇒ new seeds forever.
+- **Owner live results page (5-min refresh, downloadable):** https://basirapp.site/meter/results/ (+ snapshot.zip = runs.md, STATUS, JSON/CSV, .pt, logs). Field page: https://basirapp.site/meter/ (`new` = locator_m1 + reader_ft6m2_s1).
+- **Best measured:** locator_m1_augv2 + reader_ft6m2_s1 → 49: A 22/39, B 19/39; testset_human 21/34; strict gate 17 accepted / 0 wrong of 73.
+- Agents: D → `docs/handoff/agentS-to-agentD-2026-10-21.md`; optical2/GPT-Astra (`moain2026/almaham-optical2-private`, PR5/6/7) → `agentS-to-optical2-2026-10-21{,-r2,-r3,-r4}.md` (Crystal synth merged 722d1cc; segverify_v2 candidate AUC 0.71; Android PR6 awaits APK+parity).
+- Successor: `docs/prompts/SUCCESSOR-AGENT-S-2026-10-21.md`, `docs/runbooks/resume-training.md`, private `training_shards/2026-10-21_m3/`. Secrets with owner only.
+- Lesson: runs launched without `setsid` died twice with the tool shell; autotrain loop/systemd is the only safe way.

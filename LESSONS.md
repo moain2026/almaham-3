@@ -36,3 +36,5 @@
 - **2026-10-21 — A safety metric can be vacuous: `wrong_confident = 0` held because the `confident` gate accepted 0–1 of 73 readings (SegmentVerifier disagrees on 92% of digits, even synthetic). Always report the gate's acceptance count next to its error count; use a risk–coverage table (`lab/risk_coverage.py`).**
 
 - **2026-10-21 — The credit-limit interruption at ~13:15 مكة killed 2 of 4 training processes silently (ft6m3_s0 at 1500, s1 at 1250; the two started later survived). Always check `pgrep -c` + log mtime after any interruption; resume from the 250-step checkpoints (done: *_resume.log, remaining steps only, cosine restarts — note in runs.md).**
+
+- **2026-10-21 — Two silent kills of manual runs (no `setsid`). Always `setsid nohup … </dev/null &` or use lab/autotrain (systemd on Contabo).**
