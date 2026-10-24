@@ -12,3 +12,21 @@ RESULT ft6m3_s2: 49 A=20 B=19 | 34: 19 {'CRYSTAL': '2/7', 'EMETER_GREEN': '2/6',
 --- 2026-10-24T02:25:55Z START ft6m3_mask_cry_s1 (reader) init=weights/reader_ft6m1_augv2.pt real=../data/erp/ft/ft6m3 synth=../data/synth/line_s1,../data/synth/line_crystal_opt2 steps=3000 thr=1 env=[SEED=1 AUG_SEED=1 IGNORE_ROW=1]
 train rc=0 step 5999 loss 1.080 real_val_exact 141/173 225266s
 RESULT ft6m3_cry_long_s1: 49 A=23 B=20 | 34: 20 {'CRYSTAL': '2/7', 'EMETER_GREEN': '2/6', 'OTHER': '2/4', 'SMART_MT10': '0/1', 'TAGADOD': '6/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG
+Auto-merging benchmark/results/engines/digitnet_ft6m3_cry_long_s1_A.csv
+Auto-merging benchmark/results/engines/digitnet_ft6m3_cry_long_s1_A.json
+Auto-merging benchmark/results/engines/digitnet_ft6m3_cry_long_s1_B.csv
+Auto-merging benchmark/results/engines/digitnet_ft6m3_cry_long_s1_B.json
+Auto-merging benchmark/results/engines/risk_coverage_ft6m3_cry_long_s1.json
+Auto-merging benchmark/results/engines/testset_human_ft6m3_cry_long_s1.json
+Auto-merging docs/training-log/runs.md
+Auto-merging lab/autotrain/done_reader.txt
+Auto-merging lab/logs/autotrain_reader.log
+Auto-merging lab/logs/eval_ft6m3_cry_long_s1.log
+Auto-merging lab/logs/train_reader_ft6m3_cry_long_s1.log
+Auto-merging lab/logs/train_reader_ft6m3_mask_cry_s1.log
+Auto-merging lab/weights/reader_ft6m3_cry_long_s1.pt
+Auto-merging lab/weights/reader_ft6m3_mask_cry_s1.pt
+[auto_push] pushed auto-training c6ca4fb
+--- 2026-10-24T03:34:56Z START auto_rd_s103 (reader) init=weights/reader_ft6m2_s1.pt real=../data/erp/ft/ft6m3 synth=../data/synth/line_s1,../data/synth/line_crystal_opt2 steps=3000 thr=1 env=[SEED=103 AUG_SEED=103]
+train rc=0 step 2999 loss 1.110 real_val_exact 140/173 4243s
+RESULT ft6m3_mask_cry_s1: 49 A=18 B=19 | 34: 21 {'CRYSTAL': '2/7', 'EMETER_GREEN': '1/6', 'OTHER': '2/4', 'SMART_MT10': '1/1', 'TAGADOD': '7/7', 'TOMAS_SMART': '7/7', 'TOMAS_STATIC': '1/2'} | accepted accepted correct correct wrong WRONG

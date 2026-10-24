@@ -2,12 +2,12 @@
  "summary": {
   "models": "../data/models_ft6m3_mask_cry_s1",
   "n": 34,
-  "exact": 20,
+  "exact": 21,
   "by_type": {
    "CRYSTAL": "2/7",
    "EMETER_GREEN": "1/6",
    "OTHER": "2/4",
-   "SMART_MT10": "0/1",
+   "SMART_MT10": "1/1",
    "TAGADOD": "7/7",
    "TOMAS_SMART": "7/7",
    "TOMAS_STATIC": "1/2"
@@ -189,10 +189,10 @@
    "file": "document-4396ed10-d247-5e60-8477-895ca3a7e6c2.jpg",
    "type": "SMART_MT10",
    "truth": "009096",
-   "value": "96",
-   "raw": "000096",
+   "value": "9096",
+   "raw": "009096",
    "status": "OK",
-   "ok": false
+   "ok": true
   },
   {
    "file": "document-5ec8e27c-8622-5d05-829f-e918d1fee23c.jpg",
@@ -243,8 +243,8 @@
    "file": "pending-521c4f46-4c82-57ba-93c4-ae339b394cbe-2e291c7c73bf5298f472cf3b6320d828ce9a2c0e034f1dab89a3a28d4c862803.jpg",
    "type": "EMETER_GREEN",
    "truth": "016121",
-   "value": "279",
-   "raw": "00279",
+   "value": "27",
+   "raw": "0027",
    "status": "OK",
    "ok": false
   },
