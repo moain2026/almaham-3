@@ -3,6 +3,7 @@
 # Idempotent; safe to call every cycle. Never pushes photos (gitignored) or secrets (grep guard).
 # Usage: bash lab/autotrain/auto_push.sh "<message>"
 set -uo pipefail
+export HOME=${HOME:-/root}   # systemd services have no HOME -> git finds no credentials (64 cycles lost, 2026-10-24)
 ROOT=$(cd "$(dirname "$0")/../.." && pwd); cd "$ROOT"
 BR=${AUTO_BRANCH:-auto-training}
 MSG=${1:-"auto: $(hostname) $(date -u +%FT%H:%MZ)"}
