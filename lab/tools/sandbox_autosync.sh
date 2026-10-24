@@ -5,9 +5,9 @@
 # Logs to lab/logs/sandbox_autosync.log. Stops itself when no trainer has run for 2 hours (nothing new to push).
 cd "$(dirname "$0")/../.."
 if [ "${1:-}" = start ]; then
-  pgrep -f "sandbox_autosync.sh loop" >/dev/null && { echo "already running"; exit 0; }
+  [ -f lab/logs/sandbox_autosync.pid ] && kill -0 "$(cat lab/logs/sandbox_autosync.pid)" 2>/dev/null && { echo "already running"; exit 0; }
   setsid nohup bash "$0" loop >> lab/logs/sandbox_autosync.log 2>&1 < /dev/null &
-  echo "autosync started pid $!"; exit 0
+  echo $! > lab/logs/sandbox_autosync.pid; echo "autosync started pid $!"; exit 0
 fi
 [ "${1:-}" = loop ] || { echo "usage: $0 start"; exit 1; }
 idle=0
