@@ -27,17 +27,28 @@ ASPECT = RD_W / RD_H                 # 7:1 reader canvas; windows use a 3.5:1 co
 SCALES = (0.22, 0.32, 0.46, 0.66)   # window width as fraction of photo width (coarse; refined by a 2nd pass)
 STRIDE = 0.5                         # of window size
 WIN_ASPECT = 3.6
+# v2 (2026-10-24): search INSIDE agent D's meter box (the app's real input) with finer scales/stride and two aspects.
+# 462 verified photos were unlocated by v1 on the whole photo (CRYSTAL 74, SMART_YELLOW 96 among them).
+V2 = "--meter-box" in sys.argv
+if V2:
+    SCALES = (0.30, 0.40, 0.52, 0.66, 0.82, 1.0)
+    STRIDE = 0.34
+ASPECTS = (3.6, 2.6, 5.0) if V2 else (WIN_ASPECT,)
 
 
 def windows(W, H):
+  for asp in ASPECTS:
     for s in SCALES:
-        ww = int(W * s); wh = int(ww / WIN_ASPECT)
+        ww = int(W * s); wh = int(ww / asp)
         if wh < 24 or wh > H:
             continue
         sx = max(8, int(ww * STRIDE)); sy = max(8, int(wh * STRIDE))
         for y in range(0, max(1, H - wh + 1), sy):
             for x in range(0, max(1, W - ww + 1), sx):
                 yield x, y, min(W, x + ww), min(H, y + wh)
+        if H - wh > 0 and (H - wh) % sy:   # bottom row
+            for x in range(0, max(1, W - ww + 1), sx):
+                yield x, H - wh, min(W, x + ww), H
 
 
 def match(r, dets, text):
@@ -133,6 +144,14 @@ def main():
             if __import__("os").path.exists(f):
                 skip |= set(json.load(open(f)))
         print("skip", len(skip), flush=True)
+    mboxes = {}
+    if V2:
+        import build_meter_shards as _bms
+        mboxes = _bms.load_meter_boxes(); print("meter boxes", len(mboxes), flush=True)
+    only_un = sys.argv[sys.argv.index("--only-unlocated") + 1] if "--only-unlocated" in sys.argv else None
+    if only_un:   # restrict to files whose entry in that json is empty (v1 failed)
+        prev = json.load(open(only_un)); labels = {k: v for k, v in labels.items() if k in prev and not prev[k]}
+        print("only-unlocated:", len(labels), flush=True)
     t0 = time.time(); n = 0; found = 0
     for fn, text in sorted(labels.items()):
         if fn in done or fn in skip or n >= limit:
@@ -144,11 +163,20 @@ def main():
         if im is None:
             continue
         # work at <=1600px on the long side for speed; boxes are mapped back
-        H, W = im.shape[:2]; k = min(1.0, 1600 / max(H, W))
+        H, W = im.shape[:2]; mx0 = my0 = 0
+        if V2 and fn in mboxes:
+            bx1, by1, bx2, by2 = mboxes[fn]; mx0, my0 = int(bx1 * W), int(by1 * H)
+            im = im[my0:int(by2 * H), mx0:int(bx2 * W)]
+            if im.size == 0:
+                continue
+            H, W = im.shape[:2]
+        k = min(1.0, 1600 / max(H, W))
         small = cv2.resize(im, None, fx=k, fy=k, interpolation=cv2.INTER_AREA) if k < 1 else im
         res = locate(rd, small, text)
         if res:
-            res["line"] = [v / k for v in res["line"]]; res["digits"] = [[d[0]] + [v / k for v in d[1:]] for d in res["digits"]]
+            res["line"] = [v / k + (mx0 if i % 2 == 0 else my0) for i, v in enumerate(res["line"])]
+            res["digits"] = [[d[0]] + [v / k + (mx0 if i % 2 == 0 else my0) for i, v in enumerate(d[1:])] for d in res["digits"]]
+            res["v2"] = True
             found += 1
         done[fn] = res or {}
         n += 1
