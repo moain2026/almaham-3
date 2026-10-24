@@ -140,7 +140,9 @@ async function read(mode){
   let j; try { j = await (await fetch('read',{method:'POST',body:fd})).json(); } catch(e){ $('#result').innerHTML='<div class="reading empty">خطأ اتصال</div>'; return; }
   const dt=Math.round(performance.now()-t0);
   lastId=j.id;
-  const val = j.reading ? `<div class="reading">${j.reading}</div>` : `<div class="reading empty">لم تُقرأ (${j.status})</div>`;
+  const val = j.reading ? `<div class="reading">${j.reading}</div>`
+            : (j.guess ? `<div class="reading empty">غير مؤكدة — الحقل يبقى فارغًا<br><span style="font-size:22px;opacity:.8">تخمين: ${j.guess} · ثقة ${j.min_conf}${j.tta&&j.tta.length?' · إعادات: '+j.tta.join(',') : ''}</span></div>`
+                       : `<div class="reading empty">لم تُقرأ (${j.status})</div>`);
   $('#result').innerHTML = val + `<div class="meta">الوضع: ${ {frame:'الإطار الأخضر',full:'كاملة',rect:'المستطيل'}[mode] } · خام: ${j.raw||'—'} · سطر ${j.line_found?'وُجد':'لم يوجد'} (${j.line_score}) · المحرك ${j.ms} ms · إجمالي ${dt} ms</div>`
     + `<img id="crop" src="data:image/png;base64,${j.crop_png_b64}">`;
   $('#fb').style.display='flex'; $('#fbTruth').value=''; $('#rectLayer').style.display='block'; $('#sel').style.display='none'; rect=null;

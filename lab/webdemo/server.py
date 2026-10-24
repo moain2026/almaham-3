@@ -20,7 +20,8 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
-import eval_e2e as e2e  # noqa: E402
+import eval_e2e as e2e
+from gate_v2_study import tta_views  # noqa: E402
 
 MODELS = {}      # name -> Engine
 LOCK = threading.Lock()   # ORT sessions are per-engine; keep one request at a time (4 vCPU box, also runs training)
@@ -128,9 +129,16 @@ def read_photo(jpeg_bytes, rect, engine):
     t0 = time.perf_counter()
     with LOCK:
         r, line_rect, lscore, ms, ri = engine.read(crop)
+        # Gate v2 (docs/research/gate-v2-2026-10-24.md, measured on val-m4 e2e: 130/11 -> 106/2 wrong with TTA agreement):
+        # G0 = OK & every digit score>=0.45 & alt<0.5*score (no 7-segment veto) ; TTA = same string under gamma 0.7/1.4,
+        # scale 0.92/1.08. Only a gated reading fills the field; otherwise the field stays EMPTY and the guess is shown small.
+        g0 = r.status == "OK" and r.value != "" and all(d.score >= 0.45 and d.alt_score < 0.5 * d.score for d in r.digits)
+        tta = [engine.read(v)[0].value for v in tta_views(crop)] if g0 else []
+        gated = g0 and all(t == r.value for t in tta)
     total = (time.perf_counter() - t0) * 1e3
     ok, png = cv2.imencode(".png", ri)
-    return {"reading": r.value, "status": r.status, "raw": r.text, "line_found": line_rect is not None,
+    return {"reading": r.value if gated else "", "guess": r.value, "gated": bool(gated), "g0": bool(g0), "tta": tta,
+            "min_conf": round(float(r.min_conf), 3), "status": r.status, "raw": r.text, "line_found": line_rect is not None,
             "line_score": round(float(lscore or 0), 3), "ms": round(total, 1),
             "crop_png_b64": base64.b64encode(png.tobytes()).decode(), "img_w": W, "img_h": H}, None
 
