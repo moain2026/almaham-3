@@ -143,3 +143,5 @@
 | reader_m4_dr1_s1, s2 | rd | reader_ft6m1_augv2 | m4 | line_s1 + line_dr1 | 3000، بذرتان 1، 2 | sandbox (جارٍ) | — | — | لتأكيد مكسب dr1 (لا اختيار بذرة؛ ensemble/إجماع) |
 | reader_m5b_dr1_s0 | rd | reader_ft6m1_augv2 | m5b | line_s1 + line_dr1 | 3000 | Contabo (جارٍ) | — | — | الجمع بين الرافعتين |
 | reader_m5b_6k_s0 | rd | reader_ft6m1_augv2 | m5b | line_s1 | 6000 | sandbox (3750/6000، val 150) | — | — | — |
+| ens(rd_m4_s0, rd_dr1_s0) + loc_m4_s0 | rd | — | — | — | متوسط خرائط | sandbox 19:50 | — | — | e2e clean65 52، 177: 146، بوابة 74/5 — **ليس أفضل من dr1 وحده** (53، 146، 73/4) |
+| بوابة v2 على dr1 (`gate_v2_study`) | — | — | — | — | — | sandbox 19:55 | — | — | G0 128/9 → +TTA **110/2** (المرشح 106/2) → +نافذة prev 119/0 → TTA+prev **108/0** (المرشح 104/0). dr1 يرفع تغطية البوابة مع نفس الأمان |
