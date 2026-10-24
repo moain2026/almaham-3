@@ -4,7 +4,9 @@
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 git add -A lab/logs lab/weights benchmark/results docs STATUS.md CHANGELOG.md LESSONS.md 2>/dev/null || true
-git add -A lab/*.py lab/tools lab/autotrain scripts app 2>/dev/null || true
+git add -A lab/*.py lab/tools lab/autotrain lab/webdemo scripts app data/erp/ft/*.json 2>/dev/null || true
+# anything else modified but untracked by the lists above would block the rebase -> add it too (photos/secrets are gitignored)
+git add -u 2>/dev/null || true
 git diff --cached --quiet || git commit -qm "${1:-sync: live logs/weights}"
 git pull -q --rebase origin genspark_ai_developer
 git push -q origin genspark_ai_developer
