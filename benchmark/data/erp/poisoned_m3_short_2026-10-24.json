@@ -1,0 +1,10 @@
+{
+ "b41bc3db-fced-41d8-9877-d0d621944997.jpg": "b41bc3db: box on \"2 15.8V\" voltage line, label 21 (wrong line)",
+ "b54d742b-f698-4019-894d-80e0a26d6a91.jpg": "b54d742b: dark blue blob, no display (label 4)",
+ "e359dbe5-3065-403b-8f32-a5afce3f9759.jpg": "e359dbe5: box on \"0.634 PF\" line, label 63 (wrong line)",
+ "ea42a0d2-82c2-429f-bae3-b7c45471cbc5.jpg": "ea42a0d2: box on printed \"0000023\" serial text, label 0 (wrong object)",
+ "pending-2bf9b45a-4d0b-40c4-a6ab-909fdf2cca02-453519c16f64ffe7f763287f91e2df3ecf68350a5a4bfab581c997655c245006.jpg": "pending-2bf9: box on \"26.63 A\" current line, label 26 (wrong line)",
+ "pending-6867dc83-6f51-4d18-9800-cedaf6e6b0da-d94ba55c7243e218ebe249af99c80acf2ade849bf7024a05ab595ecbe24f9f79.jpg": "pending-6867: blurred \"0.99\" PF line, label 0 (wrong line)",
+ "pending-b4c03152-12dc-5d02-9053-ea5f1b3030bd-9aa649ea561fb1fe7617319a86a51d19e2d52f284e3f492421576a3b78df442b.jpg": "pending-b4c0: dark, no readable display, label 0",
+ "8f1915fe-e669-458e-86d4-b012bacb3d19.jpg": "8f1915fe: label 78 but display shows 1828? box over \"18\" — ambiguous (keep out)"
+}
