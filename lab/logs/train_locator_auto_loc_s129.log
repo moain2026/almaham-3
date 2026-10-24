@@ -4,3 +4,14 @@ ignore_row False
   peaks, size, offs = model.forward_export(torch.from_numpy(im[None]).float())
 step 0 loss 1.225 real_val_line_iou50 66/68 6s
 step 250 loss 1.451 real_val_line_iou50 66/68 467s
+step 500 loss 1.453 real_val_line_iou50 66/68 994s
+step 750 loss 1.485 real_val_line_iou50 66/68 1490s
+step 1000 loss 1.377 real_val_line_iou50 66/68 1905s
+step 1250 loss 1.405 real_val_line_iou50 66/68 2319s
+step 1500 loss 1.393 real_val_line_iou50 66/68 2711s
+step 1750 loss 1.340 real_val_line_iou50 66/68 3099s
+step 2000 loss 1.358 real_val_line_iou50 66/68 3468s
+step 2250 loss 1.306 real_val_line_iou50 66/68 3843s
+step 2500 loss 1.353 real_val_line_iou50 66/68 4217s
+step 2750 loss 1.337 real_val_line_iou50 66/68 4565s
+step 2999 loss 1.355 real_val_line_iou50 66/68 4960s

@@ -6,6 +6,7 @@
 # (run under setsid/systemd). Everything it produces is pushed to branch auto-training every cycle.
 # Usage: ROLE=reader|locator bash lab/autotrain/train_loop.sh
 set -uo pipefail
+export HOME=${HOME:-/root}   # systemd services have no HOME -> git finds no credentials (64 cycles lost, 2026-10-24)
 ROOT=$(cd "$(dirname "$0")/../.." && pwd); cd "$ROOT/lab"; source ../.venv/bin/activate
 ROLE=${ROLE:-reader}; Q=autotrain/queue_$ROLE.txt; DONE=autotrain/done_$ROLE.txt; touch "$Q" "$DONE"
 LOG=logs/autotrain_$ROLE.log; exec >>"$LOG" 2>&1

@@ -3,6 +3,7 @@
 # Idempotent; safe to call every cycle. Never pushes photos (gitignored) or secrets (grep guard).
 # Usage: bash lab/autotrain/auto_push.sh "<message>"
 set -uo pipefail
+export HOME=${HOME:-/root}   # systemd services have no HOME -> git finds no credentials (64 cycles lost, 2026-10-24)
 ROOT=$(cd "$(dirname "$0")/../.." && pwd); cd "$ROOT"
 BR=${AUTO_BRANCH:-auto-training}
 MSG=${1:-"auto: $(hostname) $(date -u +%FT%H:%MZ)"}
@@ -20,5 +21,7 @@ if git diff --cached | grep -qE "ghp_[A-Za-z0-9]{20,}|BEGIN OPENSSH PRIVATE KEY"
 git commit -q -m "$MSG" 2>/dev/null || true
 # merge remote auto-training (other machine) without losing anything; ours wins on conflicts in logs
 git pull -q --no-rebase -X ours origin "$BR" 2>/dev/null || true
-for i in 1 2 3; do git push -q origin "$BR" && { echo "[auto_push] pushed $BR $(git rev-parse --short HEAD)"; exit 0; }; sleep 10; git pull -q --no-rebase -X ours origin "$BR" 2>/dev/null; done
+for i in 1 2 3; do git push -q origin "$BR" && { rm -f "$ROOT/lab/autotrain/state/PUSH_FAILED"; echo "[auto_push] pushed $BR $(git rev-parse --short HEAD)"; exit 0; }; sleep 10; git pull -q --no-rebase -X ours origin "$BR" 2>/dev/null; done
+# visible alarm: the results page shows this file (LESSONS 2026-10-24: 64 cycles pushed into the void unnoticed)
+mkdir -p "$ROOT/lab/autotrain/state"; echo "$(date -u +%FT%TZ) $(hostname) push to $BR FAILED (pending $(git rev-list --count origin/$BR..HEAD 2>/dev/null || echo ?) commits)" >> "$ROOT/lab/autotrain/state/PUSH_FAILED"
 echo "[auto_push] push failed"; exit 1
