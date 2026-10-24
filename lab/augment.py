@@ -31,6 +31,13 @@ AUG = {
         "p_jpeg": 0.4, "jpeg_q": (35, 95), "p_glare": 0.2, "p_chan_perm": 0.15, "p_digit_perm": 0.0,
     },
 }
+# v3 (2026-10-24): tilt-robust profile. Field photos fail beyond ~±10° (measured 2026-10-21); consultation 2026-10-24
+# (6 models) agreed ±25° is reachable by augmentation alone: wider rotation + shear + perspective-like scale, more glare.
+# Selected with AUG=v3. Boxes still follow the single affine exactly.
+AUG_V3 = {
+    "reader": {**AUG["reader"], "p_geom": 0.75, "rot_deg": 22, "shear": 0.25, "scale": (0.7, 1.3), "shift": 0.08, "p_glare": 0.3},
+    "locator": {**AUG["locator"], "p_geom": 0.75, "rot_deg": 28, "shear": 0.22, "scale": (0.65, 1.35), "shift": 0.10, "p_glare": 0.3},
+}
 GREY = (128, 128, 128)
 MIN_KEEP_AREA = 0.6
 
@@ -142,7 +149,8 @@ def _digit_permutation(im, boxes, rng):
 
 def augment(im, boxes, kind="reader", rng=None, cfg=None):
     rng = rng if rng is not None else np.random.default_rng()
-    cfg = cfg or AUG[kind]
+    import os as _os
+    cfg = cfg or (AUG_V3 if _os.environ.get("AUG") == "v3" else AUG)[kind]
     boxes = np.asarray(boxes, np.float32).reshape(-1, 5)
     if cfg["p_digit_perm"] > 0 and rng.random() < cfg["p_digit_perm"]:
         im, boxes = _digit_permutation(im, boxes, rng)

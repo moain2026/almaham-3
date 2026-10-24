@@ -261,6 +261,10 @@ def train(init, real_prefix, synth_prefixes, steps, out, kind="reader", lr=2e-4)
     opt = torch.optim.AdamW(model.parameters(), lr, weight_decay=1e-4)
     sch = torch.optim.lr_scheduler.CosineAnnealingLR(opt, steps)
     B = BATCH[kind]
+    # EMA of weights (consultation 2026-10-24, all 6 models): decay 0.999 ramped, start after 500 steps; exported
+    # checkpoint = EMA weights (BN buffers copied from the live model). EMA=0 disables.
+    ema_decay = float(os.environ.get("EMA", "0.999"))
+    ema = {k: v.detach().clone() for k, v in model.state_dict().items()} if ema_decay > 0 else None
     run, t0 = None, time.time()
     for step in range(steps):
         xr, hr, sr, orr, mr, ir = real.batch(B // 2)
@@ -270,7 +274,25 @@ def train(init, real_prefix, synth_prefixes, steps, out, kind="reader", lr=2e-4)
         loss = focal_loss(hm, heat, ign) + 0.1 * reg_loss(wh, size, mask) + reg_loss(of, off, mask)
         opt.zero_grad(); loss.backward(); nn.utils.clip_grad_norm_(model.parameters(), 10); opt.step(); sch.step()
         run = loss.item() if run is None else 0.98 * run + 0.02 * loss.item()
+        if ema is not None and step >= 500:
+            d = min(ema_decay, (1 + step - 500) / (10 + step - 500))
+            with torch.no_grad():
+                for k, v in model.state_dict().items():
+                    if v.dtype.is_floating_point:
+                        ema[k].mul_(d).add_(v.detach(), alpha=1 - d)
+                    else:
+                        ema[k].copy_(v)
         if step % 250 == 0 or step == steps - 1:
+            if ema is not None and step >= 500:
+                live = {k: v.detach().clone() for k, v in model.state_dict().items()}
+                model.load_state_dict(ema); torch.save(model.state_dict(), out)
+                if kind == "reader":
+                    ok, n = real_exact(model, realval)
+                else:
+                    ok, n = validate(model, realval, 10**6)
+                model.load_state_dict(live)
+                print(f"step {step} loss {run:.3f} real_val_{'exact' if kind == 'reader' else 'line_iou50'} {ok}/{n} {time.time() - t0:.0f}s (EMA)", flush=True)
+                continue
             torch.save(model.state_dict(), out)
             if kind == "reader":
                 ok, n = real_exact(model, realval)
